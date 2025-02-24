@@ -1,11 +1,7 @@
-# Use the official AWS Lambda .NET 9 runtime base image
-FROM public.ecr.aws/lambda/dotnet:8.2025.02.18.01 AS base
+FROM --platform=linux/amd64 public.ecr.aws/lambda/dotnet:8 AS base
+
 WORKDIR /var/task
+COPY "bin/Release/lambda-publish"  .
 
-# Copy your published application
-COPY ./publish .
-
-# Set the Lambda function entry point. The format is:
-# "Assembly::Namespace.ClassName::MethodName"
-# By default, APIGatewayProxyFunction provides "FunctionHandlerAsync".
-ENTRYPOINT ["$ProjectName$::$ProjectName$.Aws.LambdaEntryPoint::FunctionHandlerAsync"]
+CMD ["dotnet","$ProjectName$.dll"]
+ENTRYPOINT ["dotnet", "$ProjectName$.dll"]

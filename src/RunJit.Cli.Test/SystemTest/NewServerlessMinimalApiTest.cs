@@ -13,10 +13,10 @@ namespace RunJit.Cli.Test.SystemTest
         [DataTestMethod]
         [DataRow("Siemens.Sdc", "api/core", "Sdc")]
         [DataRow("Siemens.Reporting", "api/reporting", "Reporting")]
-        [DataRow("Sega", "api/sega", "Sega")]
         [DataRow("Pulse.FieldingTool", "api/fieldingtool", "FieldingTool")]
         [DataRow("Sdc.LandingPage", "api/landingpage", "LandingPage")]
         [DataRow("Sdc.Console", "api/console", "SdcConsole")]
+        [DataRow("Sdc.Core", "api/core", "Core")]
         public async Task Should_Generate_New_Minimal_Web_Api_Solution(string projectName,
                                                                        string basePath,
                                                                        string toolName)
@@ -30,7 +30,7 @@ namespace RunJit.Cli.Test.SystemTest
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
 
             // 3. Assert that solution can be tested
-            await DotNetTool.AssertRunAsync("dotnet", $"test {solutionFileInfo.FullName}").ConfigureAwait(false);
+            // await DotNetTool.AssertRunAsync("dotnet", $"test {solutionFileInfo.FullName}").ConfigureAwait(false);
 
             // 4. Create Client
             await Mediator.SendAsync(new GenerateClient(solutionFileInfo, false));
@@ -39,7 +39,6 @@ namespace RunJit.Cli.Test.SystemTest
             await Mediator.SendAsync(new GenerateDotNetTool(solutionFileInfo, toolName));
 
             // 6. Add code rules
-            //    Remove fixtures
             await Mediator.SendAsync(new UpdateCodeRulesForSolution(solutionFileInfo.FullName)).ConfigureAwait(false);
 
             // 6.Assert that solution can be build

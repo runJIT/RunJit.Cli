@@ -66,11 +66,13 @@ namespace RunJit.Cli.New.MinimalApiProject
                 if (fileInfo.Extension == ".md")
                 {
                     solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "Docs", fileInfo);
+                    continue;
                 }
 
                 if (fileInfo.Extension == ".DotSettings")
                 {
                     solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "Resharper", fileInfo);
+                    continue;
                 }
 
                 if (fileInfo.Extension == ".gitignore" ||
@@ -78,18 +80,22 @@ namespace RunJit.Cli.New.MinimalApiProject
                     fileInfo.Name == "repolinter.json")
                 {
                     solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "Git", fileInfo);
+                    continue;
                 }
 
                 if (fileInfo.Extension == ".editorconfig" ||
                     fileInfo.Extension == ".runsettings" ||
-                    fileInfo.Extension == "global.json")
+                    fileInfo.Name == "global.json" ||
+                    fileInfo.Name == "Directory.Build.props")
                 {
                     solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "SolutionItems", fileInfo);
+                    continue;
                 }
                 
                 if (fileInfo.Name == "Dockerfile")
                 {
                     solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "Docker", fileInfo);
+                    continue;
                 }
             }
 

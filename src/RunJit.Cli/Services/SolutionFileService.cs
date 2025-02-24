@@ -115,7 +115,7 @@ namespace RunJit.Cli.Services
                                                          FileInfo solutionFile,
                                                          FileInfo[] files)
         {
-            var globalIndex = solutionLines.FindIndex(l => l.TrimStart().StartsWith("Global", StringComparison.OrdinalIgnoreCase));
+            var globalIndex = solutionLines.FindIndex(l => l.TrimStart().StartsWith("Global", StringComparison.Ordinal));
 
             if (globalIndex < 0)
             {

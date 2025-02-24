@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using Amazon.Runtime.Internal.Util;
 using Extensions.Pack;
 using Microsoft.Extensions.DependencyInjection;
 using RunJit.Cli.ErrorHandling;
@@ -7,6 +6,10 @@ using RunJit.Cli.Services;
 using RunJit.Cli.Services.AwsCodeCommit;
 using RunJit.Cli.Services.Git;
 using RunJit.Cli.Services.Net;
+using RunJit.Cli.Update.TargetPlatform;
+using SlackNet;
+using SlackNet.WebApi;
+using File = System.IO.File;
 
 namespace RunJit.Cli.Update.GlobalJson
 {
@@ -28,12 +31,13 @@ namespace RunJit.Cli.Update.GlobalJson
                                                  IGitService git,
                                                  IDotNet dotNet,
                                                  IAwsCodeCommit awsCodeCommit,
-                                                 FindSolutionFile findSolutionFile) : IUpdateGlobalJsonServiceStrategy
+                                                 FindSolutionFile findSolutionFile,
+                                                 SlackSettings slackSettings) : IUpdateGlobalJsonServiceStrategy
     {
-        private const string Globaljson = """
+        private const string GlobalJson = """
                                           {
                                             "sdk": {
-                                              "version": "9.0.102",
+                                              "version": "9.0.200",
                                               "rollForward": "disable"
                                             }
                                           }
@@ -48,16 +52,18 @@ namespace RunJit.Cli.Update.GlobalJson
         public async Task HandleAsync(UpdateGlobalJsonParameters parameters)
         {
             // 0. Check that precondition is met
+            // Ensure that the parameters meet the required conditions before proceeding.
             if (CanHandle(parameters).IsFalse())
             {
-                throw new RunJitException($"Please call {nameof(IUpdateGlobalJsonServiceStrategy.CanHandle)} before call {nameof(IUpdateGlobalJsonServiceStrategy.HandleAsync)}");
+                throw new RunJitException($"Please call {nameof(IUpdateGlobalJsonServiceStrategy.CanHandle)} before calling {nameof(IUpdateGlobalJsonServiceStrategy.HandleAsync)}");
             }
 
             // 1. Check if solution file is the file or directory
-            //    if it is null or whitespace we check current directory
+            // If the working directory is null or whitespace, use the current directory.
             var repos = parameters.GitRepos.Split(';');
             var orginalStartFolder = parameters.WorkingDirectory.IsNotNullOrWhiteSpace() ? parameters.WorkingDirectory : Environment.CurrentDirectory;
 
+            // Ensure the working directory exists.
             if (Directory.Exists(orginalStartFolder) == false)
             {
                 Directory.CreateDirectory(orginalStartFolder);
@@ -68,60 +74,97 @@ namespace RunJit.Cli.Update.GlobalJson
                 var index = repos.IndexOf(repo) + 1;
                 consoleService.WriteSuccess($"Try checking if backends are build-able. Backend {index} of {repos.Length}");
 
+                // Set the current directory to the original start folder.
                 Environment.CurrentDirectory = orginalStartFolder;
 
-                // 1. Git clone
+                // 2. Git clone
+                // Clone the repository into the working directory.
                 await git.CloneAsync(repo).ConfigureAwait(false);
 
-                // 2. Get created git folder
+                // 3. Get created git folder
+                // Extract the folder name from the repository URL and set it as the current directory.
                 var folder = repo.Split("//").Last();
                 var currentRepoEnvironment = Path.Combine(orginalStartFolder, folder);
                 Environment.CurrentDirectory = currentRepoEnvironment;
 
-                // 3. Checkout master branch
+                // 4. Checkout master branch
+                // Switch to the master branch of the cloned repository.
                 await git.CheckoutAsync("master").ConfigureAwait(false);
 
-                // NEW check for legacy branches and delete them all
+                // 5. Check for legacy branches and delete them all
+                // Identify and remove any legacy branches related to the update process.
                 var branches = await git.GetRemoteBranchesAsync().ConfigureAwait(false);
                 var branchName = "quality/update-global-json";
-
                 var legacyBranches = branches.Where(b => b.Name.Contains(branchName, StringComparison.OrdinalIgnoreCase)).ToImmutableList();
-
                 await git.DeleteBranchesAsync(legacyBranches).ConfigureAwait(false);
 
-                // 4. Create new branch, check that branch is unique
+                // 6. Create new branch, check that branch is unique
+                // Create a new branch for the update process.
                 var qualityCheckBackendBuildsPackages = branchName;
-
                 await git.CreateBranchAsync(qualityCheckBackendBuildsPackages).ConfigureAwait(false);
 
-                // 5. Check if solution file is the file or directory
-                //    if it is null or whitespace we check current directory 
+                // 7. Check if solution file is the file or directory
+                // Locate the solution file in the current directory.
                 var solutionFile = findSolutionFile.Find(Environment.CurrentDirectory);
 
-                // 6. Build the solution first
+                // 8. Build the solution first
+                // Attempt to build the solution to ensure it is functional.
                 var tryBuildResult = await dotNet.TryBuildAsync(solutionFile).ConfigureAwait(false);
 
-                // if backend build fails, we need to fix it.
-                if (tryBuildResult.WasSuccessful.IsFalse())
+                // 9. Check if global.json exists and is up-to-date
+                // Verify if the global.json file exists and matches the expected content.
+                var globalJsonFilePath = Path.Combine(solutionFile.Directory!.FullName, "global.json");
+                var globalJsonFile = new FileInfo(globalJsonFilePath);
+
+                if (globalJsonFile.Exists)
                 {
-                    // Create error txt -> hint pipeline can be green cause of different net versions !
-                    var errorFile = Path.Combine(solutionFile.Directory!.FullName, "build-errors.txt");
-                    await File.WriteAllTextAsync(errorFile, tryBuildResult.Message).ConfigureAwait(false);
+                    var globalJsonFileContent = await File.ReadAllTextAsync(globalJsonFile.FullName).ConfigureAwait(false);
 
-                    // 7. Add changes to git
-                    await git.AddAsync().ConfigureAwait(false);
+                    if (globalJsonFileContent == GlobalJson)
+                    {
+                        consoleService.WriteSuccess("Global json already up to date, nothing to do");
 
-                    // 8. Commit changes
-                    await git.CommitAsync("Build failed").ConfigureAwait(false);
-
-                    // 9. Push changes
-                    await git.PushAsync(qualityCheckBackendBuildsPackages).ConfigureAwait(false);
-
-                    // 10. Create pull request
-                    await awsCodeCommit.CreatePullRequestAsync("Build failed please check.",
-                                                               "Build failed. Please check the build errors.", qualityCheckBackendBuildsPackages).ConfigureAwait(false);
+                        return;
+                    }
                 }
 
+                // Update the global.json file with the new content.
+                await File.WriteAllTextAsync(globalJsonFile.FullName, GlobalJson);
+
+                // 11. Add changes to git
+                // Stage all changes for commit.
+                await git.AddAsync().ConfigureAwait(false);
+
+                // 12. Commit changes
+                // Commit the changes with a message indicating the build failure.
+                await git.CommitAsync("Update global.json").ConfigureAwait(false);
+
+                // 13. Push changes
+                // Push the committed changes to the remote repository.
+                await git.PushAsync(qualityCheckBackendBuildsPackages).ConfigureAwait(false);
+
+                // 14. Create pull request
+                // Open a pull request to notify others of the build failure and request a review.
+                var pullRequestInfo = await awsCodeCommit.CreatePullRequestAsync("Update of global json.",
+                                                           "Update of global json.", qualityCheckBackendBuildsPackages).ConfigureAwait(false);
+
+                
+                var slackApiClient = new SlackServiceBuilder().UseApiToken(slackSettings.Token)
+                                                              .GetApiClient();
+
+                var moduleName = folder.Split("-").Select(name => name.FirstCharToUpper()).Flatten(" ");
+
+                // Nachrichten aus dem Channel abrufen
+                // var historyResponse = await slackApiClient.Conversations.History(slackSettings.PullRequestChannel.Id).ConfigureAwait(false);
+                // var existingMessage = historyResponse.Messages.FirstOrDefault(m => m.Text.Contains($"{moduleName}: Update .Net version to:"));
+
+                await slackApiClient.Chat.PostMessage(new Message
+                                                      {
+                                                          Text = $"{moduleName}: Update global.json{Environment.NewLine}<{pullRequestInfo.AbsoluteUrl}>",
+                                                          Channel = slackSettings.PullRequestChannel.Name
+                                                      });
+                
+                // Log success message for the processed solution.
                 consoleService.WriteSuccess($"Solution: {solutionFile.FullName} was successfully checked and was buildable");
             }
         }

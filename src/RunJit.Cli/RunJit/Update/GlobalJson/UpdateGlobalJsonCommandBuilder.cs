@@ -23,7 +23,7 @@ namespace RunJit.Cli.Update.GlobalJson
     {
         public Command Build()
         {
-            var checkCommand = new Command("builds", "The command to check that all backends are buildable. Why we need it. Cause if new .Net updates comes out it could be new analyzer finds issues which do not before.");
+            var checkCommand = new Command("globaljson", "The command to check that all backends are buildable. Why we need it. Cause if new .Net updates comes out it could be new analyzer finds issues which do not before.");
 
             //checkBackendBuildsArgumentsBuilder.Build().ForEach(arg => checkCommand.AddArgument(arg));
             checkBackendBuildsOptionsBuilder.Build().ForEach(opt => checkCommand.AddOption(opt));

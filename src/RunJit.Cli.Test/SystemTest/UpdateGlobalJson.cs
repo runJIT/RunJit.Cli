@@ -40,7 +40,7 @@ namespace RunJit.Cli.Test.SystemTest
         [DataRow("codecommit::eu-central-1://pulse-common")]
         [DataRow("codecommit::eu-central-1://pulse-code-rules")]
         [DataRow("codecommit::eu-central-1://pulse-core")]
-        public async Task Should_Update_Net_Version_For_On_Repo(string gitUrl)
+        public async Task Should_Update_Global_Json(string gitUrl)
         {
             await Mediator.SendAsync(new UpdateGlobalJsonForGitRepos(gitUrl, @"D:\UpdateGlobalJson")).ConfigureAwait(false);
         }

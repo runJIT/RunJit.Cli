@@ -32,6 +32,7 @@ dotnet_diagnostic.IDE0058.severity = silent
 dotnet_diagnostic.IDE0072.severity = silent
 dotnet_diagnostic.IDE0130.severity = silent
 dotnet_diagnostic.IDE0005.severity = silent
+dotnet_diagnostic.IDE0057.severity = silent
 
 # All files
 [*]

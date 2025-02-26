@@ -3,6 +3,7 @@ using Extensions.Pack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RunJit.Cli.New.MinimalApiProject;
+using RunJit.Cli.New.RestMinimalApi;
 using RunJit.Cli.RunJit.New.Lambda;
 
 namespace RunJit.Cli.RunJit.New
@@ -14,6 +15,7 @@ namespace RunJit.Cli.RunJit.New
         {
             services.AddLambdaCommandBuilder();
             services.AddNewMinimalApiProjectCommandBuilder();
+            services.AddNewRestMinimalApiCommandBuilder();
 
             services.AddSingletonIfNotExists<IRunJitSubCommandBuilder, NewCommandBuilder>();
         }

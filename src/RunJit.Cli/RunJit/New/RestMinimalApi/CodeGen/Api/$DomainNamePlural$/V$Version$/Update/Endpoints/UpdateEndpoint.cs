@@ -2,7 +2,7 @@
 using $ProjectName$.Extensions;
 using Siemens.AspNet.ErrorHandling.Contracts;
 
-namespace $$DomainName$Name$.Api.$DomainNamePlural$.V$Version$.Update
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
 {
     public static class UpdateEndpoint
     {

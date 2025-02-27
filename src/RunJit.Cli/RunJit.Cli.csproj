@@ -203,6 +203,8 @@
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Startup.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Update\Endpoints\UpdateEndpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Update\Extensions\Startup.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Update\Mappers\Update%24DomainName%24RequestTo%24DomainName%24EntityMapper.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Update\Validations\Update%24DomainName%24RequestValidator.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\_Shared_\%24DomainName%24EntityTo%24DomainName%24Mapper.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\Startup.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Database\$DomainNamePlural$\Entities\$DomainName$Entity.cs" />
@@ -256,6 +258,8 @@
         <None Remove="RunJit\Update\ResharperSettings\Template\.editorconfig" />
     </ItemGroup>
     <ItemGroup>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\$DomainNamePlural$\V$Version$\Update\Mappers\Update$DomainName$RequestTo$DomainName$EntityMapper.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\$DomainNamePlural$\V$Version$\Update\Validations\Update$DomainName$RequestValidator.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\Startup.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V$Version$\GetAll\Responses\GetAllProjectsResponse.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V$Version$\_Shared_\$DomainName$EntityTo$DomainName$Mapper.cs" />

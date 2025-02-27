@@ -2,17 +2,17 @@
 
 namespace $ProjectName$.Api.Projects.V$Version$.Create
 {
-    public static class AddCreate$DomainModelName$RequestValidatorExtension
+    public static class AddCreate$DomainName$RequestValidatorExtension
     {
-        internal static void AddCreate$DomainModelName$RequestValidator(this IServiceCollection services)
+        internal static void AddCreate$DomainName$RequestValidator(this IServiceCollection services)
         {
-            services.AddSingletonIfNotExists<Create$DomainModelName$RequestValidator>();
+            services.AddSingletonIfNotExists<Create$DomainName$RequestValidator>();
         }
     }
 
-    internal sealed class Create$DomainModelName$RequestValidator
+    internal sealed class Create$DomainName$RequestValidator
     {
-        public Task ValidateAsync(Create$DomainModelName$Request request)
+        public Task ValidateAsync(Create$DomainName$Request request)
         {
             Console.WriteLine(request);
             return Task.CompletedTask;

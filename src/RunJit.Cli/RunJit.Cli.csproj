@@ -205,15 +205,18 @@
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Update\Extensions\Startup.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\_Shared_\%24DomainName%24EntityTo%24DomainName%24Mapper.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\Startup.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Database\$DomainNamePlural$\Entities\$DomainName$Entity.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\ApiTestBase.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Api\Health\GetHealthStateTest.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\OpenApi\OpenApiTest.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Api\Startup.cs" />
+      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Aws\DynamoDb\AmazonDynamoDbFactory.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Extensions\EndpointConventionBuilderExtensions.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AuthenticationBuilderExtensions.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AwsCognitoSettings.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\AppJsonSerializerContext.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonSerializeOptions.cs" />
+      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Mapping\IMapper.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\BearerSecuritySchemeTransformer.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\DocumentInfosTransformer.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiInfos.cs" />
@@ -289,6 +292,7 @@
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Update\Responses\Update%24DomainName%24Response.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\_Shared_\%24DomainName%24.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\Startup.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Database\%24DomainNamePlural%24\Entities\%24DomainName%24Entity.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\.editorconfig" />
         <EmbeddedResource Include="RunJit\Generate\Client\Templates\client.zip" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\.gitignore" />
@@ -300,11 +304,13 @@
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Api\Health\GetHealthStateTest.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\OpenApi\OpenApiTest.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Api\Startup.cs" />
+        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Aws\DynamoDb\AmazonDynamoDbFactory.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Extensions\EndpointConventionBuilderExtensions.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AuthenticationBuilderExtensions.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AwsCognitoSettings.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\AppJsonSerializerContext.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonSerializeOptions.cs" />
+        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Mapping\IMapper.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\BearerSecuritySchemeTransformer.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\DocumentInfosTransformer.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiInfos.cs" />
@@ -320,6 +326,7 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="RunJit\New\NugetProject\" />
+        <Folder Include="RunJit\New\RestMinimalApi\CodeGen\Database\%24DomainNamePlural%24\Migrations\" />
     </ItemGroup>
     <ItemGroup>
         <EditorConfigFiles Remove="D:\GitHub\RunJit.Cli\src\RunJit.Cli\RunJit\New\MinimalApiProject\CodeGen\.editorconfig" />

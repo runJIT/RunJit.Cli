@@ -78,7 +78,7 @@ namespace RunJit.Cli.New.RestMinimalApi
             var domainNamePlural = PluralizationProvider.Pluralize(domainName);
             var properties = record.IsNotNull() ? record.Properties : @class!.Properties;
             var propertyMapping = properties.Select(property => $"{property.Name} = source.{property.Name},").Flatten(Environment.NewLine);
-
+            var propertiesWithoutId = properties.Where(p => p.Name.NotEqualsTo("Id")).Select(p => p.SyntaxTree).Flatten(Environment.NewLine);
 
             var parsedClientSolution = new SolutionFileInfo(parameters.SolutionFile.FullName).Parse();
 
@@ -109,12 +109,14 @@ namespace RunJit.Cli.New.RestMinimalApi
                 Version = parameters.Version,
                 DomainModelSyntaxTree = simplifiedSyntaxTree,
                 DomainModelCode = parameters.DomainModel,
+                EntityModelCode = parameters.DomainModel.Replace($" {domainName}", $" {domainName}Entity"),
                 DomainName = domainName,
                 DomainNameLower = domainName.FirstCharToLower(),
                 DomainNamePlural = domainNamePlural,
                 DomainNamePluralLower = domainNamePlural.FirstCharToLower(),
                 PropertyMappings = propertyMapping,
-                ProjectName = programFile.ProjectFileInfo.FileNameWithoutExtenion
+                ProjectName = programFile.ProjectFileInfo.FileNameWithoutExtenion,
+                PropertiesWithoutId =propertiesWithoutId
             };
 
 

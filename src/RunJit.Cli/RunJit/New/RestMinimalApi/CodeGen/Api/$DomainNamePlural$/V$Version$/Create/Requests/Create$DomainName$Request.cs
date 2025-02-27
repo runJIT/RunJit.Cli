@@ -3,5 +3,8 @@ using $ProjectName$.Api.Projects.V$Version$._Shared_;
 
 namespace $ProjectName$.Api.Projects.V$Version$.Create
 {
-    $DomainModel$
+    public sealed record Create$DomainName$Request
+    {
+        $PropertiesWithoutId$
+    };
 }

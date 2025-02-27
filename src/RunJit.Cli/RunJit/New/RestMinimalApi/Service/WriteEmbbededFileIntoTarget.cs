@@ -30,11 +30,13 @@ namespace RunJit.Cli.New.RestMinimalApi
                                                 .Replace("$Namespace$", createRestApiInfos.ProjectName)
                                                 .Replace("$Version$", createRestApiInfos.Version.ToInvariantString())
                                                 .Replace("$DomainModel$", createRestApiInfos.DomainModelCode)
+                                                .Replace("$EntityModel$", createRestApiInfos.EntityModelCode)
                                                 .Replace("$DomainName$", createRestApiInfos.DomainName)
                                                 .Replace("$DomainNameLower$", createRestApiInfos.DomainNameLower)
                                                 .Replace("$DomainNamePlural$", createRestApiInfos.DomainNamePlural)
                                                 .Replace("$DomainNamePluralLower$", createRestApiInfos.DomainNamePluralLower)
-                                                .Replace("$PropertyMappings$", createRestApiInfos.PropertyMappings);
+                                                .Replace("$PropertyMappings$", createRestApiInfos.PropertyMappings)
+                                                .Replace("$PropertiesWithoutId$", createRestApiInfos.PropertiesWithoutId);
 
                 // Splitting at the double dot ".."
                 var parts = webApiProjectResource.Split(["New.RestMinimalApi.CodeGen."], StringSplitOptions.None);
@@ -52,7 +54,16 @@ namespace RunJit.Cli.New.RestMinimalApi
                                .Replace("_DomainNameLower_", createRestApiInfos.DomainNameLower)
                                .Replace("_DomainNamePlural_", createRestApiInfos.DomainNamePlural)
                                .Replace("_DomainNamePluralLower_", createRestApiInfos.DomainNamePluralLower)
-                               .Replace("_PropertyMappings_", createRestApiInfos.PropertyMappings);
+                               .Replace("_PropertyMappings_", createRestApiInfos.PropertyMappings)
+                               .Replace("$ProjectName$", createRestApiInfos.ProjectName)
+                               .Replace("$Namespace$", createRestApiInfos.ProjectName)
+                               .Replace("$Version$", createRestApiInfos.Version.ToInvariantString())
+                               .Replace("$DomainModel$", createRestApiInfos.DomainModelCode)
+                               .Replace("$DomainName$", createRestApiInfos.DomainName)
+                               .Replace("$DomainNameLower$", createRestApiInfos.DomainNameLower)
+                               .Replace("$DomainNamePlural$", createRestApiInfos.DomainNamePlural)
+                               .Replace("$DomainNamePluralLower$", createRestApiInfos.DomainNamePluralLower)
+                               .Replace("$PropertyMappings$", createRestApiInfos.PropertyMappings);
 
                     
                     var normalizedPart = part;

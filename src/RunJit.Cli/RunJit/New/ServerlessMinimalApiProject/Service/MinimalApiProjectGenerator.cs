@@ -159,6 +159,8 @@ namespace RunJit.Cli.New.MinimalApiProject
             }
 
             // 6. Add required nuget packages into project
+            // <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.405.29" />
+            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "AWSSDK.DynamoDBv2", "3.7.405.29").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Asp.Versioning.Http", "8.1.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Asp.Versioning.Mvc.ApiExplorer", "8.1.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Amazon.Lambda.AspNetCoreServer.Hosting", "1.7.2").ConfigureAwait(false);

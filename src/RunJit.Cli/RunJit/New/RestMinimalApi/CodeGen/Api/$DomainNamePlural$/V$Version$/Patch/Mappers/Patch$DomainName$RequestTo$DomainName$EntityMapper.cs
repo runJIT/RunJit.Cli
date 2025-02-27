@@ -20,7 +20,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
             // var stopWatchTotal = Stopwatch.StartNew();
             var $DomainNameLower$ = new $DomainName$Entity
                           {
-                              $PropertyMapping$
+                              $PropertyMappings$
                           };
 
             return $DomainNameLower$;

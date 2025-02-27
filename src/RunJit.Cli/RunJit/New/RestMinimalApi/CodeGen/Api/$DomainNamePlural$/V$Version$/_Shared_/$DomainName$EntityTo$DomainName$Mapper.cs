@@ -10,7 +10,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V1._Shared_
         {
             var $DomainNameLower$ = new $DomainName$()
                           {
-                              
+                              $PropertyMappings$
                           };
 
             return $DomainNameLower$;

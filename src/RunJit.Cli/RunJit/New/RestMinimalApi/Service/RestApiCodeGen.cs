@@ -14,22 +14,24 @@ namespace RunJit.Cli.New.RestMinimalApi
     {
         internal required string ProjectName { get; init; }
         internal required string DomainModelCode { get; init; }
+        internal required string EntityModelCode { get; init; }
         internal required string DomainNameLower { get; init; }
         internal required string DomainName { get; init; }
         internal required string DomainNamePlural { get; init; }
         internal required string DomainNamePluralLower { get; init; }
         internal required string PropertyMappings { get; init; }
+        internal required string PropertiesWithoutId { get; init; }
         internal required int Version { get; init; }
         internal required CSharpSyntaxTree DomainModelSyntaxTree { get; init; }
     }
-    
+
     internal interface IRestMinimalApiSpecificCodeGen
     {
         Task GenerateAsync(FileInfo solutionFileInfo,
                            FileInfo webApiProject,
                            CreateRestApiInfos createRestApiInfos);
     }
-    
+
     internal static class AddRestApiCodeGenExtension
     {
         internal static void AddRestApiCodeGen(this IServiceCollection services)

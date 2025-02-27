@@ -14,14 +14,10 @@ namespace RunJit.Cli.Test.SystemTest
         private const string BasePath = "api/lambdas";
 
         [TestMethod]
-        [DataRow("Pulse.Lambdas.Gpt1", "core", "CallGpt",
-                    "analytics-gpt-chat")]
-        [DataRow("Pulse.Lambdas.Gpt2", "Core", "CallGpt",
-                    "analytics-gpt-chat")]
-        [DataRow("Pulse.Lambdas.Gpt3", "Core", "CallGpt1",
-                    "analytics-gpt-chat")]
-        [DataRow("Pulse.Lambdas.Gpt4", "Core", "CallGpt1",
-                    "analytics-gpt-chat1")]
+        [DataRow("Pulse.Lambdas.Gpt1", "core", "CallGpt", "analytics-gpt-chat")]
+        [DataRow("Pulse.Lambdas.Gpt2", "Core", "CallGpt", "analytics-gpt-chat")]
+        [DataRow("Pulse.Lambdas.Gpt3", "Core", "CallGpt1", "analytics-gpt-chat")]
+        [DataRow("Pulse.Lambdas.Gpt4", "Core", "CallGpt1", "analytics-gpt-chat1")]
         public async Task Should_Create_A_New_Lambda_And_Integrate_It_Into_Target_Solution(string projectName,
                                                                                            string moduleName,
                                                                                            string functionName,

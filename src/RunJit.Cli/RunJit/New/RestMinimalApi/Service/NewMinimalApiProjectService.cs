@@ -11,6 +11,27 @@ using CSharpSyntaxTree = Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree;
 
 namespace RunJit.Cli.New.RestMinimalApi
 {
+    internal record CreateRestApiInfos()
+    {
+        internal required string ProjectName { get; init; }
+        internal required string DomainModelCode { get; init; }
+        internal required string EntityModelCode { get; init; }
+        internal required string DomainNameLower { get; init; }
+        internal required string DomainName { get; init; }
+        internal required string DomainNamePlural { get; init; }
+        internal required string DomainNamePluralLower { get; init; }
+        internal required string PropertyMappings { get; init; }
+        internal required string PropertiesWithoutId { get; init; }
+        internal required int Version { get; init; }
+    }
+
+    internal interface IRestMinimalApiSpecificCodeGen
+    {
+        Task GenerateAsync(FileInfo solutionFileInfo,
+                           FileInfo webApiProject,
+                           CreateRestApiInfos createRestApiInfos);
+    }
+
     internal static class AddNewRestMinimalApiServiceExtension
     {
         internal static void AddNewRestMinimalApiService(this IServiceCollection services)
@@ -19,6 +40,7 @@ namespace RunJit.Cli.New.RestMinimalApi
             services.AddProcessService();
             services.AddMinimalApiProjectCreator();
             services.AddWriteEmbbededFileIntoTarget();
+            services.AddStartupRegistration();
 
             services.AddSingletonIfNotExists<NewRestMinimalApiService>();
         }
@@ -107,7 +129,6 @@ namespace RunJit.Cli.New.RestMinimalApi
             var createRestApiInfos = new CreateRestApiInfos
             {
                 Version = parameters.Version,
-                DomainModelSyntaxTree = simplifiedSyntaxTree,
                 DomainModelCode = parameters.DomainModel,
                 EntityModelCode = parameters.DomainModel.Replace($" {domainName}", $" {domainName}Entity"),
                 DomainName = domainName,
@@ -116,7 +137,7 @@ namespace RunJit.Cli.New.RestMinimalApi
                 DomainNamePluralLower = domainNamePlural.FirstCharToLower(),
                 PropertyMappings = propertyMapping,
                 ProjectName = programFile.ProjectFileInfo.FileNameWithoutExtenion,
-                PropertiesWithoutId =propertiesWithoutId
+                PropertiesWithoutId = propertiesWithoutId
             };
 
 

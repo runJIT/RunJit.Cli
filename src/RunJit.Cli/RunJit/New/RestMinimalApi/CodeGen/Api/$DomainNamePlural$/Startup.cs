@@ -6,12 +6,12 @@ namespace $ProjectName$.Api.Projects
     {
         internal static void AddProjects(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            serviceCollection.AddProjectsV1(configuration);
+            services.AddProjectsV1(configuration);
         }
 
-        internal static void MapProjects(this IEndpointRouteBuilder application)
+        internal static void MapProjects(this IEndpointRouteBuilder endpoints)
         {
-            application.MapProjectsV1();
+            endpoints.MapProjectsV1();
         }
     }
 }

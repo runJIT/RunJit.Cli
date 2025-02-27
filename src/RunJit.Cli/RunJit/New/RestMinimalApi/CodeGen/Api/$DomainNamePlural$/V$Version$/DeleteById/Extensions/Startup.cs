@@ -7,9 +7,9 @@
             services.AddDelete$DomainName$Command(configuration);
         }
 
-        internal static void MapDelete$DomainName$ById(this IEndpointRouteBuilder routeGroupBuilder)
+        internal static void MapDelete$DomainName$ById(this IEndpointRouteBuilder endpoints)
         {
-            routeGroupBuilder.MapDelete$DomainName$();
+            endpoints.MapDelete$DomainName$();
         }
     }
 }

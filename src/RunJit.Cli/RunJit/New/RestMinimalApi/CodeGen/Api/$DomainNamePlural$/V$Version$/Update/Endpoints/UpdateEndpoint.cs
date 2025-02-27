@@ -6,9 +6,9 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
 {
     public static class UpdateEndpoint
     {
-        public static void MapUpdate$DomainName$(this IEndpointRouteBuilder routeGroupBuilder)
+        public static void MapUpdate$DomainName$(this IEndpointRouteBuilder endpoints)
         {
-            routeGroupBuilder.MapPut("$DomainNamePluralLower$/{$DomainNameLower$Id}", async (HttpContext httpContext,
+            endpoints.MapPut("$DomainNamePluralLower$/{$DomainNameLower$Id}", async (HttpContext httpContext,
                                                                     Update$DomainName$Request update$DomainName$Request,
                                                                     Guid $DomainNameLower$Id,
                                                                     Update$DomainName$Command update$DomainName$Command,

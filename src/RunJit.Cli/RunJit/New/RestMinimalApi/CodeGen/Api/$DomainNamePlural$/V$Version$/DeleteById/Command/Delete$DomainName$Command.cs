@@ -1,7 +1,7 @@
 ﻿using Extensions.Pack;
 using $ProjectName$.Aws.DynamoDb;
 
-namespace $ProjectName$.Api.$DomainNamePluralLower$.V$Version$.Delete
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Delete
 {
     internal static class AddDelete$DomainName$CommandExtension
     {

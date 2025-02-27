@@ -1,6 +1,4 @@
-﻿using $ProjectName$.Api.Projects.V$Version$;
-
-namespace $ProjectName$.Api.Projects.V$Version$.Create.Responses
+﻿namespace $ProjectName$.Api.Projects.V$Version$.Create
 {
     public sealed record Create$DomainName$Response($DomainName$ $DomainName$);
 }

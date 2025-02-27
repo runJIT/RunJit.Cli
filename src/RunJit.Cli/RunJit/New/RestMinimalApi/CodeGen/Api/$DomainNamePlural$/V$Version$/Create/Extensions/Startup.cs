@@ -7,9 +7,9 @@
             services.AddCreate$DomainName$Command(configuration);
         }
 
-        internal static void UseCreate$DomainName$(this IEndpointRouteBuilder routeGroupBuilder)
+        internal static void UseCreate$DomainName$(this IEndpointRouteBuilder endpoints)
         {
-            routeGroupBuilder.MapCreate$DomainName$();
+            endpoints.MapCreate$DomainName$();
         }
     }
 }

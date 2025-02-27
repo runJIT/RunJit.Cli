@@ -7,9 +7,9 @@
             services.AddUpdate$DomainName$Command(configuration);
         }
 
-        internal static void UseUpdate$DomainName$(this IEndpointRouteBuilder routeGroupBuilder)
+        internal static void UseUpdate$DomainName$(this IEndpointRouteBuilder endpoints)
         {
-            routeGroupBuilder.MapUpdate$DomainName$();
+            endpoints.MapUpdate$DomainName$();
         }
     }
 }

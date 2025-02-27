@@ -5,9 +5,9 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
 {
     public static class Create$DomainName$Endpoint
     {
-        public static void MapCreate$DomainName$(this IEndpointRouteBuilder routeGroupBuilder)
+        public static void MapCreate$DomainName$(this IEndpointRouteBuilder endpoints)
         {
-            routeGroupBuilder.MapPost("$DomainNamePluralLower$", async (HttpContext context,
+            endpoints.MapPost("$DomainNamePluralLower$", async (HttpContext context,
                                                          Create$DomainName$Request create$DomainName$Request,
                                                          Create$DomainName$Command create$DomainName$Command,
                                                          CancellationToken cancellationToken = default)

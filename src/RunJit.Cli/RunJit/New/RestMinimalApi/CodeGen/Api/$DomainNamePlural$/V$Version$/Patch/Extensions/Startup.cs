@@ -7,9 +7,9 @@
             services.AddPatch$DomainName$Command(configuration);
         }
 
-        internal static void UsePatch$DomainName$(this IEndpointRouteBuilder routeGroupBuilder)
+        internal static void UsePatch$DomainName$(this IEndpointRouteBuilder endpoints)
         {
-            routeGroupBuilder.MapPatch$DomainName$();
+            endpoints.MapPatch$DomainName$();
         }
     }
 }

@@ -21,9 +21,9 @@ namespace RunJit.Cli.Services
 
     //internal static class GetAllToDoEndpoints
     //{
-    //    public static RouteHandlerBuilder MapGetAll(this IEndpointRouteBuilder routeGroupBuilder)
+    //    public static RouteHandlerBuilder MapGetAll(this IEndpointRouteBuilder endpoints)
     //    {
-    //        return routeGroupBuilder.MapPut("todos", ([FromServices] GetAllToDosQuery getAllToDosQuery) =>
+    //        return endpoints.MapPut("todos", ([FromServices] GetAllToDosQuery getAllToDosQuery) =>
     //                                {
     //                                    return Results.Ok(getAllToDosQuery.Execute());
     //                                }).WithSummary("Get all ToDos")
@@ -459,7 +459,7 @@ namespace RunJit.Cli.Services
         //                                         IImmutableList<CSharpSyntaxTree> syntaxTrees,
         //                                         IImmutableList<Type> reflectionTypes)
         //{
-        //    //return routeGroupBuilder.MapGet("todos", ([FromServices] GetAllToDosQuery getAllToDosQuery) =>
+        //    //return endpoints.MapGet("todos", ([FromServices] GetAllToDosQuery getAllToDosQuery) =>
         //    //                        {
         //    //                            return Results.Ok(getAllToDosQuery.Execute());
         //    //                        }).WithSummary("Get all ToDos")

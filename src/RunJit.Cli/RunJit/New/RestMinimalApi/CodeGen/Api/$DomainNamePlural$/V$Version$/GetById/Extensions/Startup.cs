@@ -7,9 +7,9 @@
             services.AddGetByIdQuery(configuration);
         }
 
-        internal static void UseGetById(this IEndpointRouteBuilder routeGroupBuilder)
+        internal static void UseGetById(this IEndpointRouteBuilder endpoints)
         {
-            routeGroupBuilder.MapGetById();
+            endpoints.MapGetById();
         }
     }
 }

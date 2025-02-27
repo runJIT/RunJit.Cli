@@ -1,15 +1,15 @@
-﻿namespace $ProjectName$.Api.Projects.V$Version$.DeleteAll
+﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
 {
     internal static class Startup
     {
-        internal static void AddDeleteAllProjects(this IServiceCollection services, IConfiguration configuration)
+        internal static void AddDeleteAll$DomainNamePlural$(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDeleteAllProjectsCommand(configuration);
+            services.AddDeleteAll$DomainNamePlural$Command(configuration);
         }
 
-        internal static void MapDeleteAllProjects(this IEndpointRouteBuilder routeGroupBuilder)
+        internal static void MapDeleteAll$DomainNamePlural$(this IEndpointRouteBuilder endpoints)
         {
-            routeGroupBuilder.MapDeleteProject();
+            endpoints.MapDeleteProject();
         }
     }
 }

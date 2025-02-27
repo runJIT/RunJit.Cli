@@ -6,9 +6,9 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Delete
 {
     public static class Delete$DomainName$Endpoint
     {
-        public static void MapDelete$DomainName$(this IEndpointRouteBuilder routeGroupBuilder)
+        public static void MapDelete$DomainName$(this IEndpointRouteBuilder endpoints)
         {
-            routeGroupBuilder.MapDelete("$DomainNamePluralLower$/{$DomainNameLower$Id:guid}", async (
+            endpoints.MapDelete("$DomainNamePluralLower$/{$DomainNameLower$Id:guid}", async (
                                                                          Guid $DomainNameLower$Id,
                                                                          Delete$DomainName$Command delete$DomainName$Command,
                                                                          CancellationToken cancellationToken = default

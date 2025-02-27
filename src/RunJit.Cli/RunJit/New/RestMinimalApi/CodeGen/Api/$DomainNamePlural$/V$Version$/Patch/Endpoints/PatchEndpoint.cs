@@ -6,9 +6,9 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
 {
     public static class PatchEndpoint
     {
-        public static void MapPatch$DomainName$(this IEndpointRouteBuilder routeGroupBuilder)
+        public static void MapPatch$DomainName$(this IEndpointRouteBuilder endpoints)
         {
-            routeGroupBuilder.MapPut("$DomainNamePluralLower$/{$DomainNameLower$Id}", async (
+            endpoints.MapPut("$DomainNamePluralLower$/{$DomainNameLower$Id}", async (
                                                      JsonPatchDocument<$DomainName$> patchRequest,
                                                      Patch$DomainName$Command patch$DomainName$Command,
                                                      Guid $DomainNameLower$Id,

@@ -6,9 +6,9 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
 {
     public static class MapGetAllEndpoint
     {
-        public static RouteHandlerBuilder MapGetAll(this IEndpointRouteBuilder routeGroupBuilder)
+        public static RouteHandlerBuilder MapGetAll(this IEndpointRouteBuilder endpoints)
         {
-            return routeGroupBuilder.MapGet("$DomainNamePluralLower$", async (GetAllQuery getAllQuery) =>
+            return endpoints.MapGet("$DomainNamePluralLower$", async (GetAllQuery getAllQuery) =>
                                                         {
                                                             var $DomainNamePluralLower$ = await getAllQuery.ExecuteAsync().ConfigureAwait(false);
 

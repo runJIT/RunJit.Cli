@@ -7,9 +7,9 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
 
     public static class MapGetByIdEndpoint
     {
-        public static RouteHandlerBuilder MapGetById(this IEndpointRouteBuilder routeGroupBuilder)
+        public static RouteHandlerBuilder MapGetById(this IEndpointRouteBuilder endpoints)
         {
-            return routeGroupBuilder.MapGet("$DomainNamePluralLower$/{$DomainNameLower$Id:guid}",
+            return endpoints.MapGet("$DomainNamePluralLower$/{$DomainNameLower$Id:guid}",
                                             async (Guid $DomainNameLower$Id,
                                                    GetByIdQuery getByIdQuery,
                                                    CancellationToken cancellationToken = default) =>

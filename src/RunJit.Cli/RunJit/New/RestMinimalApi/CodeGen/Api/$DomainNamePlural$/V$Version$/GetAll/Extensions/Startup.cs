@@ -7,9 +7,9 @@
             services.AddGetAllQuery(configuration);
         }
 
-        internal static void UseGetAll(this IEndpointRouteBuilder routeGroupBuilder)
+        internal static void UseGetAll(this IEndpointRouteBuilder endpoints)
         {
-            routeGroupBuilder.MapGetAll();
+            endpoints.MapGetAll();
         }
     }
 }

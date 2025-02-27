@@ -2,19 +2,19 @@
 using $ProjectName$.Extensions;
 using Siemens.AspNet.ErrorHandling.Contracts;
 
-namespace $ProjectName$.Api.$DomainNamePluralLower$.V$Version$.DeleteAll
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
 {
-    public static class DeleteProjectEndpoint
+    public static class Delete$DomainName$Endpoint
     {
-        public static void MapDeleteProject(this IEndpointRouteBuilder routeGroupBuilder)
+        public static void MapDelete$DomainName$(this IEndpointRouteBuilder endpoints)
         {
-            routeGroupBuilder.MapDelete("$DomainNamePluralLower$/{$DomainNameLower$Id:guid}", async (
+            endpoints.MapDelete("$DomainNamePluralLower$/{$DomainNameLower$Id:guid}", async (
                                                                          Guid $DomainNameLower$Id,
-                                                                         DeleteAll$DomainNamePluralLower$Command deleteProjectCommand,
+                                                                         DeleteAll$DomainNamePluralLower$Command delete$DomainName$Command,
                                                                          CancellationToken cancellationToken = default
                                                                      ) =>
                                                                      {
-                                                                         await deleteProjectCommand.ExecuteAsync(projectId, cancellationToken).ConfigureAwait(false);
+                                                                         await delete$DomainName$Command.ExecuteAsync(projectId, cancellationToken).ConfigureAwait(false);
                                                                          return Results.NoContent();
                                                                      })
                              .Produces<NoContent>(204)
@@ -25,10 +25,10 @@ namespace $ProjectName$.Api.$DomainNamePluralLower$.V$Version$.DeleteAll
                              .Produces<ProblemDetails>(500)
                              .Produces<ProblemDetails>(503)
                              .WithTags("$DomainNamePluralLower$")
-                             .WithName("delete$DomainNamePluralLower$V1")
+                             .WithName("delete$DomainNamePluralLower$V$Version$")
                              .MapToApiVersion(1)
-                             .WithDescriptionFromFile("V1.Delete.Documentations.Description.txt")
-                             .WithSummaryFromFile("V1.Delete.Documentations.Summary.txt");
+                             .WithDescriptionFromFile("V$Version$.Delete.Documentations.Description.txt")
+                             .WithSummaryFromFile("V$Version$.Delete.Documentations.Summary.txt");
         }
     }
 }

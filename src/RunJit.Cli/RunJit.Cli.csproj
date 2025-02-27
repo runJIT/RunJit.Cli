@@ -168,9 +168,14 @@
         <EmbeddedResource Include="**\*.DotSettings" Exclude="bin\**\*;obj\**\*" />
     </ItemGroup>
     <ItemGroup>
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\$DomainNamePlural$\V$Version$\Create\Command\Create$DomainName$Command.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\$DomainNamePlural$\V$Version$\Create\Endpoints\Create$DomainName$Endpoint.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\$DomainNamePlural$\V$Version$\DeleteAll\Endpoints\Delete$DomainName$Endpoint.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\$DomainNamePlural$\V$Version$\DeleteById\Command\Delete$DomainName$Command.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\$DomainNamePlural$\V$Version$\DeleteById\Endpoints\Delete$DomainName$Endpoint.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\$DomainNamePlural$\V$Version$\GetAll\Endpoints\GetAll$DomainNamePlural$Endpoint.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\$DomainNamePlural$\V$Version$\GetAll\Responses\GetAll$DomainNamePlural$Response.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\Startup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V$Version$\Create\Command\Add$DomainName$Command.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V$Version$\Create\Endpoints\Add$DomainName$Endpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V$Version$\Create\Mappers\Create$DomainName$RequestTo$DomainName$EntityMapper.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V$Version$\Create\Requests\Create$DomainName$Request.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V$Version$\Create\Responses\Create$DomainName$Response.cs" />
@@ -185,15 +190,10 @@
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V$Version$\Update\Responses\Update$DomainName$Response.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V$Version$\_Shared_\$DomainName$.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Create\Extensions\Startup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Endpoints\DeleteProjectEndpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Extensions\Startup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Command\DeleteProjectCommand.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Endpoints\DeleteProjectEndpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Extensions\Startup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Endpoints\GetAllProjectsEndpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Extensions\Startup.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Queries\GetAllQuery.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Responses\GetAllProjectsResponse.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Endpoints\GetByIdEndpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Extensions\Startup.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Queries\GetByIdQuery.cs" />
@@ -206,7 +206,6 @@
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Update\Mappers\Update%24DomainName%24RequestTo%24DomainName%24EntityMapper.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Update\Validations\Update%24DomainName%24RequestValidator.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\_Shared_\%24DomainName%24EntityTo%24DomainName%24Mapper.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Api\Startup.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\Database\$DomainNamePlural$\Entities\$DomainName$Entity.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\ApiTestBase.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Api\Health\GetHealthStateTest.cs" />
@@ -261,22 +260,22 @@
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\$DomainNamePlural$\V$Version$\Update\Mappers\Update$DomainName$RequestTo$DomainName$EntityMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\$DomainNamePlural$\V$Version$\Update\Validations\Update$DomainName$RequestValidator.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\Startup.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V$Version$\GetAll\Responses\GetAllProjectsResponse.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Responses\GetAll%24DomainNamePlural%24Response.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V$Version$\_Shared_\$DomainName$EntityTo$DomainName$Mapper.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Create\Command\Add%24DomainName%24Command.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Create\Endpoints\Add%24DomainName%24Endpoint.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Create\Command\Create%24DomainName%24Command.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Create\Endpoints\Create%24DomainName%24Endpoint.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Create\Extensions\Startup.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Create\Mappers\Create%24DomainName%24RequestTo%24DomainName%24EntityMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Create\Requests\Create%24DomainName%24Request.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Create\Responses\Create%24DomainName%24Response.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Create\Validations\Create%24DomainName%24RequestValidator.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Command\DeleteAll%24DomainNamePlural%24Command.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Endpoints\DeleteProjectEndpoint.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Endpoints\Delete%24DomainName%24Endpoint.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Extensions\Startup.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Command\DeleteProjectCommand.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Endpoints\DeleteProjectEndpoint.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Command\Delete%24DomainName%24Command.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Endpoints\Delete%24DomainName%24Endpoint.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Extensions\Startup.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Endpoints\GetAllProjectsEndpoint.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Endpoints\GetAll%24DomainNamePlural%24Endpoint.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Extensions\Startup.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Queries\GetAllQuery.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Endpoints\GetByIdEndpoint.cs" />
@@ -296,7 +295,6 @@
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Update\Requests\Update%24DomainName%24Request.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\Update\Responses\Update%24DomainName%24Response.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\%24DomainNamePlural%24\V%24Version%24\_Shared_\%24DomainName%24.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Api\Startup.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\Database\%24DomainNamePlural%24\Entities\%24DomainName%24Entity.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\.editorconfig" />
         <EmbeddedResource Include="RunJit\Generate\Client\Templates\client.zip" />

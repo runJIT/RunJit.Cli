@@ -38,7 +38,7 @@ namespace RunJit.Cli.New.RestMinimalApi
                                                 .Replace("$PropertyMappings$", createRestApiInfos.PropertyMappings)
                                                 .Replace("$PropertiesWithoutId$", createRestApiInfos.PropertiesWithoutId);
 
-                if (newFileContent.Contains("$"))
+                if (newFileContent.Contains("GetAllProjectsResponse"))
                 {
 
                 }

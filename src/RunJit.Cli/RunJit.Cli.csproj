@@ -223,6 +223,7 @@
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiVersionInfo.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Program.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Startup\ServerlessMinimalApplication.cs" />
+      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Validations\IRequestValidator.cs" />
     </ItemGroup>
     <ItemGroup>
         <None Remove="RunJit\Generate\Client\Templates\client.zip" />
@@ -317,6 +318,7 @@
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiVersionInfo.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Program.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Startup\ServerlessMinimalApplication.cs" />
+        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Validations\IRequestValidator.cs" />
         <EmbeddedResource Include="RunJit\Update\BuildConfig\Templates\Directory.Build.props" />
         <EmbeddedResource Include="RunJit\Update\CodeRules\Templates\RunJITCodeRules.zip" />
         <EmbeddedResource Include="RunJit\Update\ResharperSettings\Template\.editorconfig" />

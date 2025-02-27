@@ -1,4 +1,4 @@
-﻿using $ProjectName$.Api.Projects.V$Version$._Shared_;
+﻿using $ProjectName$.Api.Projects.V$Version$;
 
 namespace $ProjectName$.Api.Projects.V$Version$.Create.Responses
 {

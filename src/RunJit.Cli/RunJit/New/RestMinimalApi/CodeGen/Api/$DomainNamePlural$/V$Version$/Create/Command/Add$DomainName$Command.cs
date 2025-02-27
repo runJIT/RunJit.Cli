@@ -1,9 +1,8 @@
-﻿using System.Collections.Immutable;
-using System.Security.Claims;
-using Extensions.Pack;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$._Shared_;
+﻿using Extensions.Pack;
+using $ProjectName$.Aws.DynamoDb;
 using $ProjectName$.Database.$DomainNamePlural$;
 using $ProjectName$.Mapping;
+using $ProjectName$.Validations;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
 {
@@ -13,14 +12,13 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
                                                      IConfiguration configuration)
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
-            services.AddTelemetryClientAdapter();
             services.AddSingletonIfNotExists<Create$DomainName$Command>();
         }
     }
 
     // Domain command Create project
     internal sealed class Create$DomainName$Command(IAmazonDynamoDbClientFactory dynamoDbClientFactory,
-                                               Create$DomainName$RequestValidator requestValidator,
+                                               IRequestValidator<Create$DomainName$Request> requestValidator,
                                                IRequestMapper<Create$DomainName$Request, $DomainName$Entity> requestMapper,
                                                IMapper<$DomainName$Entity, $DomainName$> domainMapper)
     {
@@ -32,11 +30,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
             await requestValidator.ValidateAsync(create$DomainName$Request).ConfigureAwait(false);
 
             // 2. Map the request data to the internal db data (ACL)
-            var $DomainNameLower$Entity = requestMapper.MapTo(create$DomainNameLower$Request, httpContext);
+            var $DomainNameLower$Entity = requestMapper.MapTo(create$DomainName$Request, httpContext);
 
             // 3. Add data into database
             using var dbContext = dynamoDbClientFactory.Create();
-            await dbContext.SaveAsync(projectEntity, cancellationToken).ConfigureAwait(false);
+            await dbContext.SaveAsync($DomainNameLower$Entity, cancellationToken).ConfigureAwait(false);
 
             // 4. Return created project
             var $DomainNameLower$ = domainMapper.MapTo($DomainNameLower$Entity);

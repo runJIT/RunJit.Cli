@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using $ProjectName$.Extensions;
 using Siemens.AspNet.ErrorHandling.Contracts;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$._Shared_;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
 {
@@ -12,11 +11,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
             routeGroupBuilder.MapPut("$DomainNamePluralLower$/{$DomainNameLower$Id}", async (
                                                      JsonPatchDocument<$DomainName$> patchRequest,
                                                      Patch$DomainName$Command patch$DomainName$Command,
-                                                     Guid id,
+                                                     Guid $DomainNameLower$Id,
                                                      CancellationToken cancellationToken = default
                                                  ) =>
                                                  {
-                                                     var patched$DomainName$ = await patch$DomainName$Command.ExecuteAsync(patchRequest, projectId, cancellationToken).ConfigureAwait(false);
+                                                     var patched$DomainName$ = await patch$DomainName$Command.ExecuteAsync(patchRequest, $DomainNameLower$Id, cancellationToken).ConfigureAwait(false);
 
                                                      return patched$DomainName$;
                                                  }

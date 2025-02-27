@@ -170,9 +170,10 @@ namespace RunJit.Cli.New.MinimalApiProject
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "AspNetCore.HealthChecks.UI", "9.0.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "AspNetCore.HealthChecks.UI.Client", "9.0.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Microsoft.Extensions.Diagnostics.HealthChecks", "9.0.1").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Microsoft.AspNetCore.JsonPatch", "9.0.1").ConfigureAwait(false);
 
-            // 7. Load csproj content to avoid multiple IO write actions to disk which cause io exceptions
-            var xdocument = XDocument.Load(dotnetToolProject.FullName);
+                                                                                   // 7. Load csproj content to avoid multiple IO write actions to disk which cause io exceptions
+                                                                                   var xdocument = XDocument.Load(dotnetToolProject.FullName);
 
             // 8. Generate the whole command structure with arguments, options
             foreach (var codeGenerator in codeGenerators)

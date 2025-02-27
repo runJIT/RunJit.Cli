@@ -1,7 +1,8 @@
 ﻿using Extensions.Pack;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$._Shared_;
-using $ProjectName$.Shared.AmazonFactories.DynamoDb;
-using $ProjectName$.Shared.OpenTelemetry;
+using $ProjectName$.Aws.DynamoDb;
+using $ProjectName$.Database.Projects;
+using $ProjectName$.Mapping;
+using $ProjectName$.Validations;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
 {
@@ -11,15 +12,14 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
                                                      IConfiguration configuration)
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
-            services.AddTelemetryClientAdapter();
             services.AddSingletonIfNotExists<Update$DomainName$Command>();
         }
     }
 
     internal sealed class Update$DomainName$Command(IAmazonDynamoDbClientFactory dynamoDbClientFactory,
-                                               Update$DomainName$RequestValidator requestValidator,
-                                               IRequestMapper<Update$DomainName$Request, $DomainName$Entity> requestMapper,
-                                               IMapper<$DomainName$Entity, $DomainName$> domainMapper)
+                                                    IRequestValidator<Update$DomainName$Request> requestValidator,
+                                                    IRequestMapper<Update$DomainName$Request, $DomainName$Entity> requestMapper,
+                                                    IMapper<$DomainName$Entity, $DomainName$> domainMapper)
     {
         internal async Task<$DomainName$> ExecuteAsync(HttpContext httpContext,
                                                   Guid $DomainNameLower$Id,

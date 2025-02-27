@@ -17,7 +17,6 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
         public $DomainName$Entity MapTo(Create$DomainName$Request source,
                                    HttpContext httpContext)
         {
-            // var stopWatchTotal = Stopwatch.StartNew();
             var $DomainNameLower$ = new $DomainName$Entity
                           {
                               $PropertyMappings$

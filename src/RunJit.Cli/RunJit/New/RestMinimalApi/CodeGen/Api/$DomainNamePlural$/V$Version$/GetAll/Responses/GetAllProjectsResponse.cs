@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
-using $ProjectName$.Api.$DomainNamePlural$.V1._Shared_;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V1.GetAll
+namespace Sdc.Core.Api.Projects.V1.GetAll
 {
-    public sealed record GetAllProjectsResponse(IImmutableList<$DomainModel$> $DomainNamePlural$);
+    public sealed record GetAll$DomainNamePlural$Response(IImmutableList<$DomainModel$> $DomainNamePlural$);
 }
+

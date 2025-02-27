@@ -1,12 +1,9 @@
 ﻿using System.Collections.Immutable;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$._Shared_;
 using $ProjectName$.Extensions;
 using Siemens.AspNet.ErrorHandling.Contracts;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
 {
-    public sealed record GetAll$DomainNamePlural$Response(IImmutableList<$DomainModel$> $DomainNamePlural$);
-
     public static class MapGetAllEndpoint
     {
         public static RouteHandlerBuilder MapGetAll(this IEndpointRouteBuilder routeGroupBuilder)

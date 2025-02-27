@@ -1,7 +1,5 @@
 ﻿using Extensions.Pack;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$._Shared_;
-using $ProjectName$.Shared.AmazonFactories.DynamoDb;
-using $ProjectName$.Shared.OpenTelemetry;
+using $ProjectName$.Aws.DynamoDb;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
 {
@@ -10,7 +8,6 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
         internal static void AddDeleteAll$DomainNamePlural$Command(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
-            services.AddTelemetryClientAdapter();
             services.AddSingletonIfNotExists<DeleteAll$DomainNamePlural$Command>();
         }
     }

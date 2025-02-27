@@ -1,11 +1,9 @@
 ﻿using System.Collections.Immutable;
 using Amazon.DynamoDBv2.DocumentModel;
 using Extensions.Pack;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$._Shared_;
-using $ProjectName$.Database.$DomainNamePlural$;
+using $ProjectName$.Aws.DynamoDb;
+using $ProjectName$.Database.Projects;
 using $ProjectName$.Mapping;
-using $ProjectName$.Shared.AmazonFactories.DynamoDb;
-using $ProjectName$.Shared.OpenTelemetry;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
 {
@@ -15,7 +13,6 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
             services.AddSingletonIfNotExists<GetAllQuery>();
-            services.AddTelemetryClientAdapter();
         }
     }
 

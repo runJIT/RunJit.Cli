@@ -1,12 +1,8 @@
 ﻿using Extensions.Pack;
 using Microsoft.AspNetCore.JsonPatch;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$._Shared_;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch.Validators;
-using $ProjectName$.Database.$DomainNamePlural$;
+using $ProjectName$.Aws.DynamoDb;
+using $ProjectName$.Database.Projects;
 using $ProjectName$.Mapping;
-using $ProjectName$.Shared.AmazonFactories.DynamoDb;
-using $ProjectName$.Shared.OpenTelemetry;
 using Siemens.AspNet.ErrorHandling.Contracts;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
@@ -16,7 +12,6 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
         internal static void AddPatch$DomainName$Command(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
-            services.AddTelemetryClientAdapter();
             services.AddSingletonIfNotExists<Patch$DomainName$Command>();
         }
     }

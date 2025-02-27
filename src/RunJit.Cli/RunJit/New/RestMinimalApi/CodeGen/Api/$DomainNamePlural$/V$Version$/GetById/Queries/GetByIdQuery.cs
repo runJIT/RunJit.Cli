@@ -1,11 +1,8 @@
-﻿using System.Collections.Immutable;
-using System.Text.Json;
-using Extensions.Pack;
+﻿using Extensions.Pack;
 using Siemens.AspNet.ErrorHandling.Contracts;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$._Shared_;
-using $ProjectName$.Database.$DomainNamePlural$;
-using $ProjectName$.Shared.AmazonFactories.DynamoDb;
-using $ProjectName$.Shared.OpenTelemetry;
+using $ProjectName$.Aws.DynamoDb;
+using $ProjectName$.Database.Projects;
+using $ProjectName$.Mapping;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
 {
@@ -14,7 +11,6 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
         internal static void AddGetByIdQuery(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
-            services.AddTelemetryClientAdapter();
             services.AddSingletonIfNotExists<GetByIdQuery>();
         }
     }

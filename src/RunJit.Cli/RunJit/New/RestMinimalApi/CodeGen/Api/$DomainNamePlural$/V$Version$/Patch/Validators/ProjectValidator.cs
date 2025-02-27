@@ -1,5 +1,4 @@
 ﻿using Extensions.Pack;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$._Shared_;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch.Validators
 {

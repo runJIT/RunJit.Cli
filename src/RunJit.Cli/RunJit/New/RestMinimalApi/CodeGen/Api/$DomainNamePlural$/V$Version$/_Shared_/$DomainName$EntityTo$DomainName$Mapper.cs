@@ -2,7 +2,7 @@
 using $ProjectName$.Database.$DomainNamePlural$;
 using $ProjectName$.Mapping;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V1._Shared_
+namespace $ProjectName$.Api.$DomainNamePlural$.V1
 {
     public class $DomainName$EntityTo$DomainName$Mapper : IMapper<$DomainName$Entity, $DomainName$>
     {

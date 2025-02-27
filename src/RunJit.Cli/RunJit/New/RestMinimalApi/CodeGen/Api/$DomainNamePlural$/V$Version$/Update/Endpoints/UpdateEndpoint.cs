@@ -1,4 +1,5 @@
-﻿using $$DomainName$Name$.Extensions;
+﻿using $ProjectName$.Api.$DomainNamePlural$.V1.Update;
+using $ProjectName$.Extensions;
 using Siemens.AspNet.ErrorHandling.Contracts;
 
 namespace $$DomainName$Name$.Api.$DomainNamePlural$.V$Version$.Update

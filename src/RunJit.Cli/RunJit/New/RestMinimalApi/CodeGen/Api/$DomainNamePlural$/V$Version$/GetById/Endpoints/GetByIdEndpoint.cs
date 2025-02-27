@@ -1,5 +1,4 @@
-﻿using $ProjectName$.Api.$DomainNamePlural$.V$Version$._Shared_;
-using $ProjectName$.Extensions;
+﻿using $ProjectName$.Extensions;
 using Siemens.AspNet.ErrorHandling.Contracts;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
@@ -10,12 +9,12 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
     {
         public static RouteHandlerBuilder MapGetById(this IEndpointRouteBuilder routeGroupBuilder)
         {
-            return routeGroupBuilder.MapGet("$DomainNamePluralLower$/{projectId:guid}",
-                                            async (Guid projectId,
+            return routeGroupBuilder.MapGet("$DomainNamePluralLower$/{$DomainNameLower$Id:guid}",
+                                            async (Guid $DomainNameLower$Id,
                                                    GetByIdQuery getByIdQuery,
                                                    CancellationToken cancellationToken = default) =>
                                             {
-                                                var $DomainNameLower$ = await getByIdQuery.ExecuteAsync(projectId, cancellationToken).ConfigureAwait(false); 
+                                                var $DomainNameLower$ = await getByIdQuery.ExecuteAsync($DomainNameLower$Id, cancellationToken).ConfigureAwait(false); 
                                                 return new Get$DomainName$ByIdResponse($DomainNameLower$);
                                             })
 

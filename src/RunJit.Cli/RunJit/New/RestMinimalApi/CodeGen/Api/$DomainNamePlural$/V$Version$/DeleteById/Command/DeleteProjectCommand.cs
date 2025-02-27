@@ -1,27 +1,24 @@
 ﻿using Extensions.Pack;
-using $ProjectName$.Api.Projects.V$Version$._Shared_;
-using $ProjectName$.Shared.AmazonFactories.DynamoDb;
-using $ProjectName$.Shared.OpenTelemetry;
+using $ProjectName$.Aws.DynamoDb;
 
-namespace $ProjectName$.Api.Projects.V$Version$.Delete
+namespace $ProjectName$.Api.$DomainNamePluralLower$.V$Version$.Delete
 {
-    internal static class AddDeleteProjectCommandExtension
+    internal static class AddDelete$DomainName$CommandExtension
     {
-        internal static void AddDeleteProjectCommand(this IServiceCollection services, IConfiguration configuration)
+        internal static void AddDelete$DomainName$Command(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
-            services.AddTelemetryClientAdapter();
-            services.AddSingletonIfNotExists<DeleteProjectCommand>();
+            services.AddSingletonIfNotExists<Delete$DomainName$Command>();
         }
     }
 
-    internal sealed class DeleteProjectCommand(IAmazonDynamoDbClientFactory dynamoDbClientFactory)
+    internal sealed class Delete$DomainName$Command(IAmazonDynamoDbClientFactory dynamoDbClientFactory)
     {
-        internal async Task ExecuteAsync(Guid projectId, CancellationToken cancellationToken)
+        internal async Task ExecuteAsync(Guid $DomainNameLower$Id, CancellationToken cancellationToken)
         {
             using var dbContext = dynamoDbClientFactory.Create();
 
-            await dbContext.DeleteAsync<Project>(projectId, cancellationToken).ConfigureAwait(false);
+            await dbContext.DeleteAsync<$DomainName$>($DomainNameLower$Id, cancellationToken).ConfigureAwait(false);
         }
     }
 }

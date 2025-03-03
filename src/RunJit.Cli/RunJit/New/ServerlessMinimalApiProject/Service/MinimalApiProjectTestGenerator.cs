@@ -63,9 +63,9 @@ namespace RunJit.Cli.New.MinimalApiProject
             await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "AspNetCore.Simple.MsTest.Sdk", "6.0.5").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "DotNetTool.Service", "0.3.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "Microsoft.NET.Test.Sdk", "17.12.0").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "MSTest", "3.7.3").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "MSTest.TestAdapter", "3.7.3").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "MSTest.TestFramework", "3.7.3").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "MSTest", "3.8.2").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "MSTest.TestAdapter", "3.8.2").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "MSTest.TestFramework", "3.8.2").ConfigureAwait(false);
 
             // 7. Add needed project references
             await dotNet.AddProjectReference(webApiProjectFileInfo, testProjectFileInfo).ConfigureAwait(false);

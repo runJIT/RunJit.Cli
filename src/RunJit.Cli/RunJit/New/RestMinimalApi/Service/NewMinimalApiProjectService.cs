@@ -11,7 +11,7 @@ using CSharpSyntaxTree = Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree;
 
 namespace RunJit.Cli.New.RestMinimalApi
 {
-    internal record CreateRestApiInfos()
+    internal sealed record CreateRestApiInfos()
     {
         internal required string ProjectName { get; init; }
         internal required string DomainModelCode { get; init; }

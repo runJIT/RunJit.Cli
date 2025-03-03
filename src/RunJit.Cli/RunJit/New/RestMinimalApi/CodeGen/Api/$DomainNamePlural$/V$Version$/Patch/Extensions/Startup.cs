@@ -4,10 +4,13 @@
     {
         internal static void AddPatch$DomainName$(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Add$DomainName$ValidatorValidator();
+            services.AddPatch$DomainName$RequestTo$DomainName$EntityMapper();
+
             services.AddPatch$DomainName$Command(configuration);
         }
 
-        internal static void UsePatch$DomainName$(this IEndpointRouteBuilder endpoints)
+        internal static void MapPatch$DomainName$(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapPatch$DomainName$();
         }

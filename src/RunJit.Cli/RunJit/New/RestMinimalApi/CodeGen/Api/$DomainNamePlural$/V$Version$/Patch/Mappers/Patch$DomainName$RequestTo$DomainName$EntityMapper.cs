@@ -2,7 +2,7 @@
 using $ProjectName$.Database.$DomainNamePlural$;
 using $ProjectName$.Mapping;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
 {
     internal static class AddPatch$DomainName$RequestTo$DomainName$EntityMapperExtension
     {
@@ -12,7 +12,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
         }
     }
 
-    internal class Patch$DomainName$RequestTo$DomainName$EntityMapper : IRequestMapper<Patch$DomainName$Request, $DomainName$Entity>
+    internal sealed class Patch$DomainName$RequestTo$DomainName$EntityMapper : IRequestMapper<Patch$DomainName$Request, $DomainName$Entity>
     {
         public $DomainName$Entity MapTo(Patch$DomainName$Request source,
                                    HttpContext httpContext)

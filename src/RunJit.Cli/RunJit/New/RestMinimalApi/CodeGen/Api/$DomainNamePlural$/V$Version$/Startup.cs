@@ -17,8 +17,8 @@ namespace $ProjectName$.Api.Projects.V1
             serviceCollection.AddDeleteById(configuration);
             serviceCollection.AddGetAll(configuration);
             serviceCollection.AddGetById(configuration);
-            serviceCollection.AddPatchProject(configuration);
-            serviceCollection.AddUpdateProject(configuration);
+            serviceCollection.AddPatch(configuration);
+            serviceCollection.AddUpdate(configuration);
         }
 
         internal static void MapProjectsV1(this IEndpointRouteBuilder endpointRouteBuilder)

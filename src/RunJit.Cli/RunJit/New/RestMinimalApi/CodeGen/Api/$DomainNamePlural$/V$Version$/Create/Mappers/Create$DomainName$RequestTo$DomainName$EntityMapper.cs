@@ -12,7 +12,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
         }
     }
 
-    internal class Create$DomainName$RequestTo$DomainName$EntityMapper : IRequestMapper<Create$DomainName$Request, $DomainName$Entity>
+    internal sealed class Create$DomainName$RequestTo$DomainName$EntityMapper : IRequestMapper<Create$DomainName$Request, $DomainName$Entity>
     {
         public $DomainName$Entity MapTo(Create$DomainName$Request source,
                                    HttpContext httpContext)

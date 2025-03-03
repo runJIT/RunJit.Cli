@@ -1,4 +1,5 @@
-﻿using Extensions.Pack;
+﻿using System.Diagnostics;
+using Extensions.Pack;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace RunJit.Cli.Services
@@ -63,6 +64,7 @@ namespace RunJit.Cli.Services
         private void WriteLine(string value)
         {
             Console.WriteLine(value);
+            Debug.WriteLine(value);
         }
     }
 }

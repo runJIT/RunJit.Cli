@@ -1,6 +1,6 @@
 ﻿using Extensions.Pack;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch.Validators
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
 {
     public static class Add$DomainName$ValidatorValidatorExtension
     {

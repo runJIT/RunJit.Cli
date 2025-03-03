@@ -7,7 +7,7 @@
             services.AddGetByIdQuery(configuration);
         }
 
-        internal static void UseGetById(this IEndpointRouteBuilder endpoints)
+        internal static void MapGetById(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapGetById();
         }

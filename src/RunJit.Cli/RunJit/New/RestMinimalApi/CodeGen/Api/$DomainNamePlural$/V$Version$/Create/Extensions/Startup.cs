@@ -4,10 +4,13 @@
     {
         internal static void AddCreate$DomainName$(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddCreate$DomainName$RequestTo$DomainName$EntityMapper();
+            services.AddCreate$DomainName$RequestValidator();
+            
             services.AddCreate$DomainName$Command(configuration);
         }
 
-        internal static void UseCreate$DomainName$(this IEndpointRouteBuilder endpoints)
+        internal static void MapCreate$DomainName$(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapCreate$DomainName$();
         }

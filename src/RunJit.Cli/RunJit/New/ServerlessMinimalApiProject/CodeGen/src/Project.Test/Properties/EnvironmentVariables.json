@@ -4,7 +4,7 @@
   "Logging__LogLevel__Microsoft.AspNetCore": "Warning",
   "AllowedHosts": "*",
   "AWS__Region": "eu-west-1",
-  "AWS__Profile": "sdcdev",
+  "AWS__Profile": "default",
   "AWS__DynamoDbServiceUrl": "http://localhost:8001",
   "AwsCognitoSettings__Authority": "https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_WWflkHNwn",
   "AwsCognitoSettings__Audience": "7oup5j6busol448gnor8lv0qi6",

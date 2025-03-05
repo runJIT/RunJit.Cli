@@ -1,5 +1,4 @@
 ﻿using Extensions.Pack;
-using Microsoft.Build.Construction;
 using Microsoft.Extensions.DependencyInjection;
 using PluralizeService.Core;
 using RunJit.Cli.ErrorHandling;
@@ -70,18 +69,19 @@ namespace RunJit.Cli.New.RestMinimalApi
             }
 
 
-            var syntaxTree = CSharpSyntaxTree.ParseText(parameters.DomainModel);
+            var syntaxTree = CSharpSyntaxTree.ParseText(parameters.DbEntityModel);
             var simplifiedSyntaxTree = syntaxTree.Parse(string.Empty);
 
 
-            if (simplifiedSyntaxTree.Records.IsEmpty() &&
-                simplifiedSyntaxTree.Classes.IsEmpty())
+            if (simplifiedSyntaxTree.Records.IsEmpty())
             {
 
                 var sample = """
-                             public record User
+                             [DynamoDBTable("Project")]
+                             public record ProjectEntity
                              {
-                                 public Guid Id { get; init; } = Guid.Empty;
+                                 [DynamoDBHashKey]
+                                 public Guid ProjectId { get; init; } = Guid.Empty;
                              
                                  public string Name { get; init; } = string.Empty;
                              
@@ -89,18 +89,105 @@ namespace RunJit.Cli.New.RestMinimalApi
                              }
                              """;
 
-                throw new RunJitException($"The passed domain model does not have a class or a record please pass a valid c# class or record syntax. Sample: {Environment.NewLine}{sample}");
+                throw new RunJitException($"The passed domain model must be a record type in c#. Sample: {Environment.NewLine}{sample}");
             }
 
-            var record = simplifiedSyntaxTree.Records.FirstOrDefault();
-            var @class = simplifiedSyntaxTree.Classes.FirstOrDefault();
+            if (simplifiedSyntaxTree.Records.Count > 1)
+            {
 
-            var domainName = record.IsNotNull() ? record.Name.FirstCharToUpper() : @class!.Name.FirstCharToUpper();
+                var sample = """
+                             [DynamoDBTable("Project")]
+                             public record ProjectEntity
+                             {
+                                 [DynamoDBHashKey]
+                                 public Guid ProjectId { get; init; } = Guid.Empty;
+                             
+                                 public string Name { get; init; } = string.Empty;
+                             
+                                 public string Description { get; init; } = string.Empty;
+                             }
+                             """;
 
-            var domainNamePlural = PluralizationProvider.Pluralize(domainName);
-            var properties = record.IsNotNull() ? record.Properties : @class!.Properties;
+                throw new RunJitException($"Please support only 1 simple record declaration in C#. At the moment we are not supporting multiple entities at once. Sample: {Environment.NewLine}{sample}");
+            }
+
+            var record = simplifiedSyntaxTree.Records.First();
+
+
+            if (record.Attributes.Any(a => a.Name.Contains("DynamoDBTable").IsFalse()))
+            {
+
+                var sample = """
+                             [DynamoDBTable("Project")]
+                             public record ProjectEntity
+                             {
+                                 [DynamoDBHashKey]
+                                 public Guid ProjectId { get; init; } = Guid.Empty;
+                             
+                                 public string Name { get; init; } = string.Empty;
+                             
+                                 public string Description { get; init; } = string.Empty;
+                             }
+                             """;
+
+                throw new RunJitException($"Your provided record type does not have a mandatory [DynamoDBTable(\"Project\")] attribute. Sample: {Environment.NewLine}{sample}");
+            }
+
+            if (record.Properties.Any(a => a.Name.Contains("DynamoDBHashKey").IsFalse()))
+            {
+
+                var sample = """
+                             [DynamoDBTable("Project")]
+                             public record ProjectEntity
+                             {
+                                 [DynamoDBHashKey]
+                                 public Guid ProjectId { get; init; } = Guid.Empty;
+                             
+                                 public string Name { get; init; } = string.Empty;
+                             
+                                 public string Description { get; init; } = string.Empty;
+                             }
+                             """;
+
+                throw new RunJitException($"Your provided record type does not have a mandatory [DynamoDBHashKey] attribute. Sample: {Environment.NewLine}{sample}");
+            }
+
+            if (record.Name.EndsWith("Entity").IsFalse())
+            {
+
+                var sample = """
+                             [DynamoDBTable("Project")]
+                             public record ProjectEntity
+                             {
+                                 [DynamoDBHashKey]
+                                 public Guid ProjectId { get; init; } = Guid.Empty;
+                             
+                                 public string Name { get; init; } = string.Empty;
+                             
+                                 public string Description { get; init; } = string.Empty;
+                             }
+                             """;
+
+                throw new RunJitException($"Your provided record type does not have the correct post fix 'Entity'. Sample: {Environment.NewLine}{sample}");
+            }
+
+
+            var properties = record.Properties;
+            var propertiesWithoutId = properties.Where(p => p.Name.NotEqualsTo("Id")).Select(p => p.SyntaxTree).Flatten($"    {Environment.NewLine}");
+            var domainModel = $@"""
+                          public record {record.Name.Replace("Entity", string.Empty)}                                 
+                          {{
+                          {propertiesWithoutId}
+                          }}
+                          """;
+
+
+            var domainNamePlural = PluralizationProvider.Pluralize(parameters.DomainName);
+            var domainName = PluralizationProvider.Pluralize(parameters.DomainName);
+
             var propertyMapping = properties.Select(property => $"{property.Name} = source.{property.Name},").Flatten(Environment.NewLine);
-            var propertiesWithoutId = properties.Where(p => p.Name.NotEqualsTo("Id")).Select(p => p.SyntaxTree).Flatten(Environment.NewLine);
+
+
 
             var parsedClientSolution = new SolutionFileInfo(parameters.SolutionFile.FullName).Parse();
 
@@ -129,8 +216,8 @@ namespace RunJit.Cli.New.RestMinimalApi
             var createRestApiInfos = new CreateRestApiInfos
             {
                 Version = parameters.Version,
-                DomainModelCode = parameters.DomainModel,
-                EntityModelCode = parameters.DomainModel.Replace($" {domainName}", $" {domainName}Entity"),
+                DomainModelCode = domainModel,
+                EntityModelCode = parameters.DbEntityModel,
                 DomainName = domainName,
                 DomainNameLower = domainName.FirstCharToLower(),
                 DomainNamePlural = domainNamePlural,

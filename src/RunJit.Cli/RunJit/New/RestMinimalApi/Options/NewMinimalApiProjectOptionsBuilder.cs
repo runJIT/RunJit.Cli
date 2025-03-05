@@ -19,9 +19,10 @@ namespace RunJit.Cli.New.RestMinimalApi.Options
             yield return GitRepos();
             yield return SolutionFile();
             yield return WorkingDirectory();
-            yield return DomainModel();
+            yield return EntityModel();
             yield return Version();
             yield return QueryProperty();
+            yield return DomainName();
         }
 
         public Option GitRepos()
@@ -51,9 +52,9 @@ namespace RunJit.Cli.New.RestMinimalApi.Options
             };
         }
         
-        public Option DomainModel()
+        public Option EntityModel()
         {
-            return new Option(new[] { "--domain-model", "-dm" }, "Option to pass the domain model as c# class. Sample: public record User(string Name)")
+            return new Option(new[] { "--entity", "-e" }, "Option to pass the entity for the database as c# class. Sample: public record User(string Name)")
             {
                 Required = true,
                 Argument = new Argument<string>("domainModel") { Description = "Option to pass the domain model as c# class. Sample: public record User(string Name)" }
@@ -76,6 +77,15 @@ namespace RunJit.Cli.New.RestMinimalApi.Options
                 Required = true,
                 Argument = new Argument<string>("filterProperty") { Description = "Property which is used to filter by by GetAll or DeleteAll operations. Sample 'Name'" }
             };
+        }
+        
+        public Option DomainName()
+        {
+            return new Option(new[] { "--domain-name", "-dn" }, "Option to set the domain name. Sample: Users, Projects, Cars, Resources. Rest api's are in plural.")
+                   {
+                       Required = true,
+                       Argument = new Argument<string>("domainName") { Description = "Option to set the domain name. Sample: Users, Projects, Cars, Resources. Rest api's are in plural." }
+                   };
         }
     }
 }

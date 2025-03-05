@@ -21,10 +21,21 @@ namespace RunJit.Cli.Test.SystemTest
     [TestClass]
     public class NewMinimalRestApiTest : GlobalSetup
     {
-        private const string ProjectDomainModel = """
-                                                  public record Project
+        // Source gen für migration script
+        // 
+        //      aws dynamodb create-table \
+        //         --table-name Project \
+        //         --attribute-definitions AttributeName=ProjectId,AttributeType=S \
+        //         --key-schema AttributeName=ProjectId,KeyType=HASH \
+        //         --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 \
+        //         --endpoint-url http://localhost:8001
+        
+        private const string ProjectEntityModel = """
+                                                  [DynamoDBTable("Project")]
+                                                  public record ProjectEntity
                                                   {
-                                                      public Guid Id { get; init; } = Guid.Empty;
+                                                      [DynamoDBHashKey]
+                                                      public Guid ProjectId { get; init; } = Guid.Empty;
                                                   
                                                       public string Name { get; init; } = string.Empty;
                                                   
@@ -33,7 +44,6 @@ namespace RunJit.Cli.Test.SystemTest
                                                   """;
 
         [DataTestMethod]
-
         //[DataRow("Siemens.Sdc", "api/core", "Sdc")]
         //[DataRow("Siemens.Reporting", "api/reporting", "Reporting")]
         //[DataRow("Pulse.FieldingTool", "api/fieldingtool", "FieldingTool")]
@@ -50,7 +60,7 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add rest api
-            await Mediator.SendAsync(new NewMinimalRestApi(ProjectDomainModel, "Name", solutionFileInfo.FullName));
+            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, "Name", solutionFileInfo.FullName));
 
             // 2. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
@@ -59,8 +69,9 @@ namespace RunJit.Cli.Test.SystemTest
             // await DotNetTool.AssertRunAsync("dotnet", $"test {solutionFileInfo.FullName}").ConfigureAwait(false);
         }
 
-        internal sealed record NewMinimalRestApi(string DomainModel,
+        internal sealed record NewMinimalRestApi(string DbEntityModel,
                                                  string QueryProperty,
+                                                 string DomainName,
                                                  string SolutionFile = "",
                                                  string GitRepos = "",
                                                  string WorkingDirectory = "",
@@ -123,14 +134,17 @@ namespace RunJit.Cli.Test.SystemTest
                     yield return request.WorkingDirectory;
                 }
 
-                yield return "--domain-model";
-                yield return request.DomainModel;
+                yield return "--entity";
+                yield return request.DbEntityModel;
                 
                 yield return "--filter-property";
                 yield return request.QueryProperty;
                 
                 yield return "--version";
                 yield return request.Version.ToInvariantString();
+                
+                yield return "--domain-name";
+                yield return request.DomainName;
             }
         }
     }

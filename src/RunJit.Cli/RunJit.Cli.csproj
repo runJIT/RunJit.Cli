@@ -303,6 +303,7 @@
         <EmbeddedResource Include="RunJit\Generate\Client\Templates\client.zip" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\.gitignore" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\.runsettings" />
+        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\CODEOWNERS" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\commitlint.config.js" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\Directory.Build.props" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\Dockerfile" />

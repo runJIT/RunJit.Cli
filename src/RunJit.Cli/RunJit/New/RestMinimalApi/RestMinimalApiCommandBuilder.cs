@@ -28,7 +28,7 @@ namespace RunJit.Cli.New.RestMinimalApi
             var command = new Command("minimal-rest-api", "The command to create a rest api with all CRUD operations");
             optionsBuilder.Build().ToList().ForEach(option => command.AddOption(option));
 
-            command.Handler = CommandHandler.Create<FileInfo, string, string, string, int, string>((solution, gitRepos, workingDirectory, domainModel, version, filterProperty) => minimalApiProjectService.HandleAsync(new NewRestMinimalApiParameters(solution, gitRepos, workingDirectory, domainModel, version, filterProperty)));
+            command.Handler = CommandHandler.Create<FileInfo, string, string, string, int, string, string>((solution, gitRepos, workingDirectory, domainModel, version, filterProperty, domainName) => minimalApiProjectService.HandleAsync(new NewRestMinimalApiParameters(solution, gitRepos, workingDirectory, domainModel, version, filterProperty, domainName)));
 
             return command;
         }

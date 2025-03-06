@@ -7,21 +7,20 @@ namespace $ProjectName$.Aws.DynamoDb
 {
     internal static class DynamoDbExtensions
     {
-        internal static async Task DeleteAll<TEntity>(this DynamoDBContext dynamoDbContext,
-                                                      string queryProperty = "",
-                                                      CancellationToken cancellationToken = default) where TEntity : class
+        internal static async Task DeleteAllAsync<TEntity>(this DynamoDBContext dynamoDbContext,
+                                                           string filterProperty = "",
+                                                           CancellationToken cancellationToken = default) where TEntity : class
         {
             var scanConfig = new ScanOperationConfig
             {
                 Filter = new ScanFilter()
             };
 
-            if (queryProperty.IsNotNullOrWhiteSpace())
+            if (filterProperty.IsNotNullOrWhiteSpace())
             {
                 scanConfig.Filter.AddCondition(nameof(ProjectEntity.Name),
                                                ScanOperator.Equal,
-                                               queryProperty);
-
+                                               filterProperty);
             }
 
             var projectsToDelete = await dynamoDbContext.FromScanAsync<TEntity>(scanConfig)
@@ -32,6 +31,32 @@ namespace $ProjectName$.Aws.DynamoDb
             {
                 await dynamoDbContext.DeleteAsync(project, cancellationToken).ConfigureAwait(false);
             }
+        }
+
+        internal static async Task<List<TEntity>> GetAllAsync<TEntity>(this DynamoDBContext dynamoDbContext,
+                                                        string filterProperty = "",
+                                                        CancellationToken cancellationToken = default) where TEntity : class
+        {
+            var scanConfig = new ScanOperationConfig
+            {
+                Filter = new ScanFilter()
+            };
+
+            if (filterProperty.IsNotNullOrWhiteSpace())
+            {
+                scanConfig.Filter.AddCondition(nameof(ProjectEntity.Name),
+                                               ScanOperator.Equal,
+                                               filterProperty);
+            }
+
+            
+            // Do not use .ToImmutableList(), because this objects will be mapped
+            // to the domain models -> avoid another useless loop !
+            var projectsToDelete = await dynamoDbContext.FromScanAsync<TEntity>(scanConfig)
+                                                        .GetRemainingAsync(cancellationToken)
+                                                        .ConfigureAwait(false);
+
+            return projectsToDelete;
         }
     }
 }

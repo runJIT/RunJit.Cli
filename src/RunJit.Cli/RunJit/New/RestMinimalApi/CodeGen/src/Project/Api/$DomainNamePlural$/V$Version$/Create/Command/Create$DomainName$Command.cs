@@ -1,5 +1,6 @@
 ﻿using Extensions.Pack;
 using $ProjectName$.Aws.DynamoDb;
+using $ProjectName$.Validations;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
 {
@@ -29,7 +30,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
             await requestValidator.ValidateAsync(create$DomainName$Request).ConfigureAwait(false);
 
             // 2. Map the request data to the internal db data (AntiCorruptionLayer ACL)
-            var $DomainNameLower$Entity = requestMapper.MapFrom(create$DomainName$Request, httpContext);
+            var $DomainNameLower$Entity = requestMapper.MapFrom(create$DomainName$Request);
 
             // 3. Add data into database
             using var dbContext = dynamoDbClientFactory.Create();

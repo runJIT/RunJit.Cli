@@ -1,4 +1,5 @@
 ﻿using Extensions.Pack;
+using $ProjectName$.Validations;
 
 namespace $ProjectName$.Api.Projects.V$Version$.Create
 {

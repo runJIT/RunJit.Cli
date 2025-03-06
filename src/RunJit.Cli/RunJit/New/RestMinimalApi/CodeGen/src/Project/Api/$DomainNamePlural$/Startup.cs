@@ -4,7 +4,7 @@ namespace $ProjectName$.Api.Projects
 {
     internal static class Startup
     {
-        internal static void AddProjects(this IServiceCollection serviceCollection, IConfiguration configuration)
+        internal static void AddProjects(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddProjectsV1(configuration);
         }

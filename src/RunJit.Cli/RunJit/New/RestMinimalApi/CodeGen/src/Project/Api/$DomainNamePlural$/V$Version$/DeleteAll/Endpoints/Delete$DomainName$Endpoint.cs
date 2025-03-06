@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using $ProjectName$.Extensions;
-using Siemens.AspNet.ErrorHandling.Contracts;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
 {

@@ -1,8 +1,5 @@
 ﻿using Extensions.Pack;
 using $ProjectName$.Aws.DynamoDb;
-using $ProjectName$.Database.Projects;
-using $ProjectName$.Mapping;
-using $ProjectName$.Validations;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
 {

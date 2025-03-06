@@ -38,13 +38,12 @@ namespace RunJit.Cli.New.RestMinimalApi
                                                 .Replace("$PropertyMappings$", createRestApiInfos.PropertyMappings)
                                                 .Replace("$PropertiesWithoutId$", createRestApiInfos.PropertiesWithoutId)
                                                 .Replace("$IdPropertyName$", createRestApiInfos.IdPropertyName)
-                                                .Replace("$IdUrlName$", createRestApiInfos.IdPropertyName.FirstCharToLower());
+                                                .Replace("$IdPropertyNameLower$", createRestApiInfos.IdPropertyName.FirstCharToLower())
+                                                .Replace("$IdUrlName$", createRestApiInfos.IdPropertyName.FirstCharToLower())
+                                                .Replace("$QueryPropertyName$", createRestApiInfos.QueryPropertyName)
+                                                .Replace("$QueryPropertyNameLower$", createRestApiInfos.QueryPropertyName.FirstCharToLower());
 
-                if (newFileContent.Contains("GetAllProjectsResponse"))
-                {
 
-                }
-                
                 // Splitting at the double dot ".."
                 var parts = webApiProjectResource.Split(["New.RestMinimalApi.CodeGen."], StringSplitOptions.None);
 
@@ -54,34 +53,61 @@ namespace RunJit.Cli.New.RestMinimalApi
                     // Important  from $ becomes _ in embedded resources
                     var part = parts[1];
 
-                    part = part.Replace("Project", createRestApiInfos.ProjectName)
-                               .Replace("_ProjectName_", createRestApiInfos.ProjectName)
+                    part = part.Replace("_ProjectName_", createRestApiInfos.ProjectName)
                                .Replace("_Namespace_", createRestApiInfos.ProjectName)
                                .Replace("_Version_", createRestApiInfos.Version.ToInvariantString())
                                .Replace("_DomainModel_", createRestApiInfos.DomainModelCode)
+                               .Replace("_EntityModel_", createRestApiInfos.EntityModelCode)
                                .Replace("_DomainName_", createRestApiInfos.DomainName)
                                .Replace("_DomainNameLower_", createRestApiInfos.DomainNameLower)
                                .Replace("_DomainNamePlural_", createRestApiInfos.DomainNamePlural)
                                .Replace("_DomainNamePluralLower_", createRestApiInfos.DomainNamePluralLower)
                                .Replace("_PropertyMappings_", createRestApiInfos.PropertyMappings)
+                               .Replace("_PropertiesWithoutId_", createRestApiInfos.PropertiesWithoutId)
+                               .Replace("_IdPropertyName_", createRestApiInfos.IdPropertyName)
+                               .Replace("_IdUrlName_", createRestApiInfos.IdPropertyName.FirstCharToLower())
+                               .Replace("_QueryPropertyName_", createRestApiInfos.QueryPropertyName)
+                               .Replace("_QueryPropertyNameLower_", createRestApiInfos.QueryPropertyName.FirstCharToLower())
                                .Replace("$ProjectName$", createRestApiInfos.ProjectName)
                                .Replace("$Namespace$", createRestApiInfos.ProjectName)
                                .Replace("$Version$", createRestApiInfos.Version.ToInvariantString())
                                .Replace("$DomainModel$", createRestApiInfos.DomainModelCode)
+                               .Replace("$EntityModel$", createRestApiInfos.EntityModelCode)
                                .Replace("$DomainName$", createRestApiInfos.DomainName)
                                .Replace("$DomainNameLower$", createRestApiInfos.DomainNameLower)
                                .Replace("$DomainNamePlural$", createRestApiInfos.DomainNamePlural)
                                .Replace("$DomainNamePluralLower$", createRestApiInfos.DomainNamePluralLower)
                                .Replace("$PropertyMappings$", createRestApiInfos.PropertyMappings)
+                               .Replace("$PropertiesWithoutId$", createRestApiInfos.PropertiesWithoutId)
                                .Replace("$IdPropertyName$", createRestApiInfos.IdPropertyName)
-                               .Replace("$IdUrlName$", createRestApiInfos.IdPropertyName.FirstCharToLower());
+                               .Replace("$IdUrlName$", createRestApiInfos.IdPropertyName.FirstCharToLower())
+                               .Replace("$QueryPropertyName$", createRestApiInfos.QueryPropertyName)
+                               .Replace("$QueryPropertyNameLower$", createRestApiInfos.QueryPropertyName.FirstCharToLower());
 
-                    
-                    var normalizedPart = part;
+
+                    var isRelativePath = part.Contains(".github.") || part.Contains("src.");
+
+                    if (isRelativePath.IsFalse())
+                    {
+                        var rootPathFile = Path.Combine(solutionFileInfo.Directory!.FullName, part);
+                        var rootPathFileInfo = new FileInfo(rootPathFile);
+
+                        if (rootPathFileInfo.Directory!.NotExists())
+                        {
+                            rootPathFileInfo.Directory!.Create();
+                        }
+
+                        await File.WriteAllTextAsync(rootPathFileInfo.FullName, newFileContent).ConfigureAwait(false);
+
+                        continue;
+                    }
+
+                    var nameWithoutExtension = solutionFileInfo.NameWithoutExtension();
+                    var normalizedPart = part.StartsWith("src.") ? part.Replace(".Project.", $".{nameWithoutExtension}.") : part;
 
                     var removeFileExtensions = part.Replace(fileExtension, string.Empty);
 
-                    var transformedPath = removeFileExtensions.TrimStart('.').Replace('.', Path.DirectorySeparatorChar);
+                    var transformedPath = isRelativePath ? removeFileExtensions.TrimStart('.').Replace('.', Path.DirectorySeparatorChar) : part;
 
                     // Concatenating the final path
                     // Special folders have to be carefully handled !
@@ -92,12 +118,12 @@ namespace RunJit.Cli.New.RestMinimalApi
 
                     var withFileExtension = $"{transformedPath.TrimEnd(Path.DirectorySeparatorChar)}{fileExtension}".Replace("..", ".");
 
-                    var finalPath = Path.Combine(webApiProject.Directory!.FullName, withFileExtension.TrimStart(Path.DirectorySeparatorChar));
+                    var finalPath = Path.Combine(solutionFileInfo.Directory!.FullName, withFileExtension.TrimStart(Path.DirectorySeparatorChar));
 
-                    //var projectNamePath = finalPath.Replace(@$"{Path.DirectorySeparatorChar}Project{Path.DirectorySeparatorChar}Test{Path.DirectorySeparatorChar}", $@"{Path.DirectorySeparatorChar}{createRestApiInfos.ProjectName}.Test{Path.DirectorySeparatorChar}")
-                    //                               .Replace(@$"{Path.DirectorySeparatorChar}Project{Path.DirectorySeparatorChar}", $@"{Path.DirectorySeparatorChar}{createRestApiInfos.ProjectName}{Path.DirectorySeparatorChar}");
+                    var projectNamePath = finalPath.Replace(@$"{Path.DirectorySeparatorChar}Project{Path.DirectorySeparatorChar}Test{Path.DirectorySeparatorChar}", $@"{Path.DirectorySeparatorChar}{createRestApiInfos.ProjectName}.Test{Path.DirectorySeparatorChar}")
+                                                   .Replace(@$"{Path.DirectorySeparatorChar}Project{Path.DirectorySeparatorChar}", $@"{Path.DirectorySeparatorChar}{createRestApiInfos.ProjectName}{Path.DirectorySeparatorChar}");
 
-                    var fileInfo = new FileInfo(finalPath);
+                    var fileInfo = new FileInfo(projectNamePath);
 
                     if (fileInfo.Directory!.NotExists())
                     {

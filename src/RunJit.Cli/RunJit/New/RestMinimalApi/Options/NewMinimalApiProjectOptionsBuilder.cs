@@ -72,10 +72,10 @@ namespace RunJit.Cli.New.RestMinimalApi.Options
 
         public Option QueryProperty()
         {
-            return new Option(new[] { "--filter-property", "-fp" }, "Property which is used to filter by by GetAll or DeleteAll operations. Sample 'Name'")
+            return new Option(new[] { "--query-property", "-fp" }, "Property which is used to filter by by GetAll or DeleteAll operations. Sample 'Name'")
             {
                 Required = true,
-                Argument = new Argument<string>("filterProperty") { Description = "Property which is used to filter by by GetAll or DeleteAll operations. Sample 'Name'" }
+                Argument = new Argument<string>("queryProperty") { Description = "Property which is used to filter by by GetAll or DeleteAll operations. Sample 'Name'" }
             };
         }
         

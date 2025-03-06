@@ -2,12 +2,12 @@
 {
     internal static class Startup
     {
-        internal static void AddDelete$DomainName$ById(this IServiceCollection services, IConfiguration configuration)
+        internal static void AddDeleteById(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDelete$DomainName$Command(configuration);
         }
 
-        internal static void MapDelete$DomainName$ById(this IEndpointRouteBuilder endpoints)
+        internal static void MapDeleteById(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapDelete$DomainName$();
         }

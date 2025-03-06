@@ -29,7 +29,7 @@ namespace $ProjectName$.Test.Api.Health
         public async Task Should_Be_Able_To_Get_All_$DomainNamePlural$_Matching_The_Query_Filter()
         {
             // 0. Get all first by $DomainNameLower$ name to go sure already existing data not exists
-            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"api/core/v1/$DomainNamePluralLower$?name={UniqueName}",
+            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"api/core/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={UniqueName}",
                                                                 "No$DomainNamePlural$.json",
                                                                 differenceFunc: IgnoreAutoValues,
                                                                 [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
@@ -49,7 +49,7 @@ namespace $ProjectName$.Test.Api.Health
                                                                 [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
 
             // 4. Eval that all $DomainNamePluralLower$ with the specific name was added
-            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"api/core/v1/$DomainNamePluralLower$?name={UniqueName}",
+            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"api/core/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={UniqueName}",
                                                                 "GetAll$DomainNamePlural$.json",
                                                                 differenceFunc: IgnoreAutoValues,
                                                                 [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
@@ -59,7 +59,7 @@ namespace $ProjectName$.Test.Api.Health
         [TestCleanup]
         public Task CleanupAsync()
         {
-            return Client.AssertDeleteAsync($"api/core/v1/$DomainNamePluralLower$?name={UniqueName}");
+            return Client.AssertDeleteAsync($"api/core/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={UniqueName}");
         }
 
         private IEnumerable<Difference> IgnoreAutoValues(IImmutableList<Difference> differences)

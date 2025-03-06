@@ -1,6 +1,5 @@
 ﻿using Extensions.Pack;
 using $ProjectName$.Database.$DomainNamePlural$;
-using $ProjectName$.Mapping;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
 {
@@ -12,21 +11,23 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
         }
     }
 
-    internal $DomainName$Entity MapFrom(Create$DomainName$Request source)
-    {
-        return MapFrom(source, Guid.NewGuid());
-    }
-
     internal sealed class Create$DomainName$RequestMapper
     {
-        public $DomainName$Entity MapTo(Create$DomainName$Request source)
+        public $DomainName$Entity MapFrom(Create$DomainName$Request source)
+        {
+            return MapFrom(source, Guid.NewGuid());
+        }
+
+        public $DomainName$Entity MapFrom(Create$DomainName$Request source,
+                                          Guid $IdPropertyNameLower$)
         {
             var $DomainNameLower$ = new $DomainName$Entity
-                          {
-                              $PropertyMappings$
-                          };
+            {
+                $IdPropertyName$ = $IdPropertyNameLower$,
+                $PropertyMappings$
+            };
 
-            return project;
+            return $DomainNameLower$;
         }
     }
 }

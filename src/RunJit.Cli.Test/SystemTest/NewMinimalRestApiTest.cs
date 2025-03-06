@@ -29,7 +29,7 @@ namespace RunJit.Cli.Test.SystemTest
         //         --key-schema AttributeName=ProjectId,KeyType=HASH \
         //         --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 \
         //         --endpoint-url http://localhost:8001
-        
+
         private const string ProjectEntityModel = """
                                                   [DynamoDBTable("Project")]
                                                   public record ProjectEntity
@@ -49,11 +49,12 @@ namespace RunJit.Cli.Test.SystemTest
         //[DataRow("Pulse.FieldingTool", "api/fieldingtool", "FieldingTool")]
         //[DataRow("Sdc.LandingPage", "api/landingpage", "LandingPage")]
         //[DataRow("Sdc.Console", "api/console", "SdcConsole")]
-        [DataRow("Sdc.Core", "api/core", "Core", "Projects")]
+        [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name")]
         public async Task Should_Add_New_Rest_Api_Into_Solution(string projectName,
                                                                 string basePath,
                                                                 string toolName,
-                                                                string domainName)
+                                                                string domainName,
+                                                                string queryPropertyName)
         {
             var targetDirectory = Path.Combine(Environment.CurrentDirectory, projectName);
 
@@ -61,7 +62,7 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add rest api
-            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, "Name", domainName, solutionFileInfo.FullName));
+            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, queryPropertyName, domainName, solutionFileInfo.FullName));
 
             // 2. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
@@ -135,15 +136,15 @@ namespace RunJit.Cli.Test.SystemTest
                     yield return request.WorkingDirectory;
                 }
 
-                yield return "--filter-property";
+                yield return "--query-property";
                 yield return request.QueryProperty;
-                
+
                 yield return "--version";
                 yield return request.Version.ToInvariantString();
-                
+
                 yield return "--domain-name";
                 yield return request.DomainName;
-                
+
 
                 yield return "--entity";
                 yield return request.DbEntityModel;

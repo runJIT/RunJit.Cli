@@ -47,7 +47,7 @@ namespace $ProjectName$.Test.Api.Health
             await Client.AssertDeleteAsync($"api/core/v1/$DomainNamePluralLower$/{create$DomainName$Response.$DomainName$.$IdPropertyName$}").ConfigureAwait(false);
             
             // 3. Get all first by $DomainNameLower$ name to go sure already existing data not exists
-            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"api/core/v1/$DomainNamePluralLower$?name={UniqueName}",
+            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"api/core/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={UniqueName}",
                                                                 "No$DomainNamePlural$.json",
                                                                 differenceFunc: IgnoreAutoValues,
                                                                 [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
@@ -56,7 +56,7 @@ namespace $ProjectName$.Test.Api.Health
         [TestCleanup]
         public Task CleanupAsync()
         {
-            return Client.AssertDeleteAsync($"api/core/v1/$DomainNamePluralLower$?name={UniqueName}");
+            return Client.AssertDeleteAsync($"api/core/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={UniqueName}");
         }
 
         private IEnumerable<Difference> IgnoreAutoValues(IImmutableList<Difference> differences)

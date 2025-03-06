@@ -4,12 +4,12 @@
     {
         internal static void AddGetById(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddGetByIdQuery(configuration);
+            services.AddGet$DomainName$ByIdQuery(configuration);
         }
 
         internal static void MapGetById(this IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapGetById();
+            endpoints.MapGet$DomainName$ById();
         }
     }
 }

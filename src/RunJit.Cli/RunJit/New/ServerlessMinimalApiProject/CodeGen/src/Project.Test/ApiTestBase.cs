@@ -1,4 +1,5 @@
-﻿using AspNetCore.Simple.MsTest.Sdk;
+﻿using System.Runtime.CompilerServices;
+using AspNetCore.Simple.MsTest.Sdk;
 using DotNetTool.Service;
 using Extensions.Pack;
 using $ProjectName$.Test.Utils;
@@ -54,6 +55,12 @@ namespace $ProjectName$.Test
 
             // 4. We need once the http client to communicate with the started api
             Client = _apiTestBase.CreateClient();
+        }
+    
+        protected static string GetUniqueRunnerName([CallerFilePath] string callerFilePath = "")
+        {
+            var fileNameWithExtensions = Path.GetFileNameWithoutExtension(callerFilePath);
+            return $"{fileNameWithExtensions}_{Environment.MachineName}";
         }
 
         [AssemblyCleanup]

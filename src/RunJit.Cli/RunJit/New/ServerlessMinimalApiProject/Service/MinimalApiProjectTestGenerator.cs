@@ -59,10 +59,19 @@ namespace RunJit.Cli.New.MinimalApiProject
                 throw new RunJitException($"Expected .NetTool project does not exists. {testProjectFileInfo.FullName}");
             }
 
+            //<ItemGroup>
+            //    <PackageReference Include="AspNetCore.Simple.MsTest.Sdk" Version="6.0.7" />
+            //    <PackageReference Include="DotNetTool.Service" Version="0.3.0" />
+            //    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+            //    <PackageReference Include="MSTest" Version="3.8.2" />
+            //    <PackageReference Include="MSTest.TestAdapter" Version="3.8.2" />
+            //    <PackageReference Include="MSTest.TestFramework" Version="3.8.2" />
+            //    </ItemGroup>
+            
             // 6. Add required nuget packages into project
-            await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "AspNetCore.Simple.MsTest.Sdk", "6.0.5").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "AspNetCore.Simple.MsTest.Sdk", "6.0.7").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "DotNetTool.Service", "0.3.0").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "Microsoft.NET.Test.Sdk", "17.12.0").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "Microsoft.NET.Test.Sdk", "17.13.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "MSTest", "3.8.2").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "MSTest.TestAdapter", "3.8.2").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "MSTest.TestFramework", "3.8.2").ConfigureAwait(false);

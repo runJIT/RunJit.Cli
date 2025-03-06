@@ -3,23 +3,22 @@ using Amazon.DynamoDBv2.DocumentModel;
 using Extensions.Pack;
 using $ProjectName$.Aws.DynamoDb;
 using $ProjectName$.Database.Projects;
-using $ProjectName$.Mapping;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
 {
-    internal static class AddGetAllQueryExtension
+    internal static class AddGetAll$DomainNamePlural$QueryExtension
     {
-        internal static void AddGetAllQuery(this IServiceCollection services,
+        internal static void AddGetAll$DomainNamePlural$Query(this IServiceCollection services,
                                             IConfiguration configuration)
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
             services.Add$DomainName$EntityMapper();
 
-            services.AddSingletonIfNotExists<GetAllQuery>();
+            services.AddSingletonIfNotExists<GetAll$DomainNamePlural$Query>();
         }
     }
 
-    internal sealed class GetAllQuery(IAmazonDynamoDbClientFactory amazonDynamoDbClientFactory,
+    internal sealed class GetAll$DomainNamePlural$Query(IAmazonDynamoDbClientFactory amazonDynamoDbClientFactory,
                                       $DomainName$EntityMapper mapper)
     {
         internal async Task<IImmutableList<$DomainName$>> ExecuteAsync(string name)

@@ -1,12 +1,11 @@
-﻿using System.Collections.Immutable;
+﻿using Microsoft.AspNetCore.Mvc;
 using $ProjectName$.Extensions;
-using Siemens.AspNet.ErrorHandling.Contracts;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
 {
-    public static class MapGetAllEndpoint
+    public static class MapGetAll$DomainNamePluralLower$Endpoint
     {
-        public static RouteHandlerBuilder MapGetAll(this IEndpointRouteBuilder endpoints)
+        public static RouteHandlerBuilder MapGetAll$DomainNamePluralLower$(this IEndpointRouteBuilder endpoints)
         {
             return endpoints.MapGet("$DomainNamePluralLower$", HandleAsync)
                             .Produces<GetAll$DomainNamePlural$Response>()
@@ -22,10 +21,10 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
                             .WithDescriptionFromFile("Description.txt")
                             .WithSummaryFromFile("Summary.txt");
                 
-            static async Task<GetAll$DomainNamePlural$Response> HandleAsync(GetAllQuery getAllQuery,
+            static async Task<GetAll$DomainNamePlural$Response> HandleAsync(GetAll$DomainNamePlural$Query getAll$DomainNamePlural$Query,
                                                                             [FromQuery] string $QueryPropertyNameLower$ = "")
             {
-                var $DomainNamePluralLower$ = await getAllQuery.ExecuteAsync($QueryPropertyNameLower$).ConfigureAwait(false);
+                var $DomainNamePluralLower$ = await getAll$DomainNamePlural$Query.ExecuteAsync($QueryPropertyNameLower$).ConfigureAwait(false);
 
                 return new GetAll$DomainNamePlural$Response($DomainNamePluralLower$);
             }

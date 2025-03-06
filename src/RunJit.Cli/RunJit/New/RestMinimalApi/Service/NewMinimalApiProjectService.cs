@@ -71,7 +71,7 @@ namespace RunJit.Cli.New.RestMinimalApi
                 throw new RunJitException($"The api version must be greater than 0. It can be 1 but not smaller");
             }
 
-            if (parameters.QueryProperty.IsNotNullOrWhiteSpace())
+            if (parameters.QueryProperty.IsNullOrWhiteSpace())
             {
                 throw new RunJitException($"Query property name must not be null, empty or whitespace");
             }
@@ -189,18 +189,19 @@ namespace RunJit.Cli.New.RestMinimalApi
 
 
             var properties = record.Properties;
-            var propertiesWithoutId = properties.Where(p => p.Name.NotEqualsTo("Id")).Select(p => $"public {p.Type} {p.Name} {{ get; init; }}").Flatten($"{Environment.NewLine}");
+            var propertiesWithoutId = properties.Where(p => p.Name.NotEqualsTo(hashKeyPropertyId.Name)).Select(p => p.SyntaxTree.Split(Environment.NewLine).Last()).Flatten($"{Environment.NewLine}");
+            var allPropertiesNeutral = properties.Select(p => p.SyntaxTree.Split(Environment.NewLine).Last()).Flatten($"{Environment.NewLine}");
             var domainModel = $@"public record {record.Name.Replace("Entity", string.Empty)}                                 
                                 {{
-                                {propertiesWithoutId}
+                                {allPropertiesNeutral}
                                 }}
                                 ".FormatSyntaxTree();
 
 
             var domainNamePlural = PluralizationProvider.Pluralize(parameters.DomainName);
-            var domainName = PluralizationProvider.Pluralize(parameters.DomainName);
+            var domainName = PluralizationProvider.Singularize(parameters.DomainName);
 
-            var propertyMapping = properties.Select(property => $"{property.Name} = source.{property.Name},").Flatten(Environment.NewLine);
+            var propertyMapping = properties.Where(p => p.Name.NotEqualsTo(hashKeyPropertyId.Name)).Select(property => $"{property.Name} = source.{property.Name},").Flatten(Environment.NewLine);
 
 
 

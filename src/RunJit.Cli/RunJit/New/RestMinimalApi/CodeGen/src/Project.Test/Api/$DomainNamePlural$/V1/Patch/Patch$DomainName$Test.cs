@@ -83,7 +83,7 @@ namespace $ProjectName$.Test.Api.Health
         [TestCleanup]
         public Task CleanupAsync()
         {
-            return Client.AssertDeleteAsync($"api/core/v1/$DomainNamePluralLower$?name={UniqueName}");
+            return Client.AssertDeleteAsync($"api/core/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={UniqueName}");
         }
 
         private IEnumerable<Difference> IgnoreAutoValues(IImmutableList<Difference> differences)

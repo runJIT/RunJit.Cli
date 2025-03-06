@@ -13,11 +13,6 @@ namespace Sdc.Core.Api.Projects.V1.Patch
 
     internal sealed class Patch$DomainName$RequestMapper
     {
-        public $DomainName$Entity MapFrom(Patch$DomainName$Request source)
-        {
-            return MapFrom(source, Guid.NewGuid());
-        }
-
         public $DomainName$Entity MapFrom(Patch$DomainName$Request source,
                                      Guid id)
         {

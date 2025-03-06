@@ -5,18 +5,18 @@ using Siemens.AspNet.ErrorHandling.Contracts;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
 {
-    internal static class AddGetByIdQueryExtension
+    internal static class AddGet$DomainName$ByIdQueryExtension
     {
-        internal static void AddGetByIdQuery(this IServiceCollection services, IConfiguration configuration)
+        internal static void AddGet$DomainName$ByIdQuery(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
             services.Add$DomainName$EntityMapper();
             
-            services.AddSingletonIfNotExists<GetByIdQuery>();
+            services.AddSingletonIfNotExists<Get$DomainName$ByIdQuery>();
         }
     }
 
-    internal sealed class GetByIdQuery(IAmazonDynamoDbClientFactory dynamoDbClientFactory,
+    internal sealed class Get$DomainName$ByIdQuery(IAmazonDynamoDbClientFactory dynamoDbClientFactory,
                                        $DomainName$EntityMapper mapper)
     {
         internal async Task<$DomainName$> ExecuteAsync(Guid $IdUrlName$, CancellationToken cancellationToken)
@@ -25,7 +25,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
 
             var $DomainNameLower$Entity = await dbContext.LoadAsync<$DomainName$Entity>($IdUrlName$, cancellationToken).ConfigureAwait(false) ?? throw new NotFoundDetailsException("Project not found", "The requested Project with the id: {projectId} was not found.", ("projectId", projectId));
 
-            var $DomainNameLower$ = mapper.MapTo($DomainNameLower$Entity);
+            var $DomainNameLower$ = mapper.MapFrom($DomainNameLower$Entity);
 
             return $DomainNameLower$;
         }

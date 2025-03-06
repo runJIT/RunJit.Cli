@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using System.Net.Mime;
+using System.Text.Json.Nodes;
 using $ProjectName$.Extensions;
 using Siemens.AspNet.ErrorHandling.Contracts;
 

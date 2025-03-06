@@ -1,4 +1,5 @@
 ﻿using Extensions.Pack;
+using $ProjectName$.Validations;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
 {
@@ -10,9 +11,9 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
         }
     }
 
-    internal sealed class Update$DomainName$RequestValidator(IJsonDiffer jsonDiffer) : UpdateRequestValidator<Update$DomainName$Request>(jsonDiffer)
+    internal sealed class Update$DomainName$RequestValidator : RequestValidator<Update$DomainName$Request>
     {
-        protected override IEnumerable<(string Key, string Value)> GetValidationErrors(Update$DomainName$Request request)
+        protected override IEnumerable<(string PropertyName, string Error)> GetValidationErrors(Update$DomainName$Request request)
         {
             // Sample: Remove the yield break and replace it with your validation logic
             // if (request.Name.IsNotNullOrWhiteSpace())

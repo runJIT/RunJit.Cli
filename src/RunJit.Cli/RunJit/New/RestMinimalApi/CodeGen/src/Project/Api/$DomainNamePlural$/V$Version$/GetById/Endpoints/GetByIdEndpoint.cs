@@ -1,20 +1,20 @@
 ﻿using $ProjectName$.Extensions;
 using Siemens.AspNet.ErrorHandling.Contracts;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Get$DomainName$ById
 {
     public sealed record Get$DomainName$ByIdResponse($DomainName$ $DomainName$);
 
-    public static class MapGetByIdEndpoint
+    public static class MapGet$DomainName$ByIdEndpoint
     {
-        public static RouteHandlerBuilder MapGetById(this IEndpointRouteBuilder endpoints)
+        public static RouteHandlerBuilder MapGet$DomainName$ById(this IEndpointRouteBuilder endpoints)
         {
             return endpoints.MapGet("$DomainNamePluralLower$/{$IdUrlName$:guid}",
                                             async (Guid $DomainNameLower$Id,
-                                                   GetByIdQuery getByIdQuery,
+                                                   Get$DomainName$ByIdQuery get$DomainName$ByIdQuery,
                                                    CancellationToken cancellationToken = default) =>
                                             {
-                                                var $DomainNameLower$ = await getByIdQuery.ExecuteAsync($IdUrlName$, cancellationToken).ConfigureAwait(false); 
+                                                var $DomainNameLower$ = await get$DomainName$ByIdQuery.ExecuteAsync($IdUrlName$, cancellationToken).ConfigureAwait(false); 
                                                 return new Get$DomainName$ByIdResponse($DomainNameLower$);
                                             })
 

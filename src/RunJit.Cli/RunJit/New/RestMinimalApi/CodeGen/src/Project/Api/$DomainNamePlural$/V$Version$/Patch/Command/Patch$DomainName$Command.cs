@@ -1,9 +1,11 @@
-﻿using Extensions.Pack;
-using Microsoft.AspNetCore.JsonPatch;
+﻿using System.Text.Json.Nodes;
+using Extensions.Pack;
+using Newtonsoft.Json;
 using $ProjectName$.Aws.DynamoDb;
 using $ProjectName$.Database.Projects;
-using $ProjectName$.Mapping;
+using $ProjectName$.JsonSerializing;
 using Siemens.AspNet.ErrorHandling.Contracts;
+
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
 {

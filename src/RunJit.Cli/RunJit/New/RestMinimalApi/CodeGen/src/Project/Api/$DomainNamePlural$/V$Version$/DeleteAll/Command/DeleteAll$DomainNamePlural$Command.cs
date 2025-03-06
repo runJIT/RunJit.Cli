@@ -1,5 +1,6 @@
 ﻿using Extensions.Pack;
 using $ProjectName$.Aws.DynamoDb;
+using $ProjectName$.Database.Projects;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
 {
@@ -21,7 +22,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
             using var dbContext = dynamoDbClientFactory.Create();
 
             // 2. Delete all projects or those which are matching the filter criteria
-            await dbContext.DeleteAll<$DomainName$Entity>($QueryPropertyNameLower$, cancellationToken).ConfigureAwait(false);
+            await dbContext.DeleteAllAsync<$DomainName$Entity>($QueryPropertyNameLower$, cancellationToken).ConfigureAwait(false);
         }
     }
 }

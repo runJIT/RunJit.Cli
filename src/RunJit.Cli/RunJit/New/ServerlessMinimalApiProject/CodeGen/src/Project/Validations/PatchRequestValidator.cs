@@ -16,8 +16,8 @@ namespace $ProjectName$.Validations
             var errors = GetValidationErrorsInternal(jsonObject, request).ToList();
             if (errors.Any())
             {
-                var errorInfos = errors.GroupBy(item => item.Key)
-                                       .ToDictionary(item => item.Key, item => item.Select(i => i.Value).ToArray());
+                var errorInfos = errors.GroupBy(item => item.PropertyName)
+                                       .ToDictionary(item => item.Key, item => item.Select(i => i.Error).ToArray());
 
                 throw new ValidationProblemDetailsException(HttpStatusCode.BadRequest,
                                                             $"Your {typeof(TRequest).Name} was invalid",
@@ -28,9 +28,9 @@ namespace $ProjectName$.Validations
             return Task.CompletedTask;
         }
 
-        protected abstract IEnumerable<(string Key, string Value)> GetValidationErrors(TRequest request);
+        protected abstract IEnumerable<(string PropertyName, string Error)> GetValidationErrors(TRequest request);
 
-        private IEnumerable<(string Key, string Value)> GetValidationErrorsInternal(JsonObject jsonObject, TRequest request)
+        private IEnumerable<(string PropertyName, string Error)> GetValidationErrorsInternal(JsonObject jsonObject, TRequest request)
         {
             // 1. First we evaluate the json structures
             var differences = jsonDiffer.FindDifferences(jsonObject.ToString(), request.ToJson());

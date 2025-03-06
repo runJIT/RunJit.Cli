@@ -168,13 +168,13 @@
         <EmbeddedResource Include="**\*.DotSettings" Exclude="bin\**\*;obj\**\*" />
     </ItemGroup>
     <ItemGroup>
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\Create\CreateProjectTest.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\DeleteAll\DeleteAllProjectsTest.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\DeleteById\DeleteProjectByIdTest.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\GetAll\GetAllProjectsTest.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\GetById\GetAllProjectsTest.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\Patch\PatchProjectTest.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\Update\UpdateProjectTest.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\DeleteAll\DeleteAll$DomainNamePlural$Test.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\DeleteById\Delete$DomainName$ByIdTest.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\GetAll\GetAll$DomainNamePlural$Test.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\Patch\Patch$DomainName$Test.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\Update\Update$DomainName$Test.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V1\Create\CreateProjectTest.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V1\GetById\GetAllProjectsTest.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Command\Create$DomainName$Command.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Endpoints\Create$DomainName$Endpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteAll\Endpoints\Delete$DomainName$Endpoint.cs" />
@@ -272,13 +272,13 @@
         <None Remove="RunJit\Update\ResharperSettings\Template\.editorconfig" />
     </ItemGroup>
     <ItemGroup>
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\Create\CreateProjectTest.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\DeleteAll\DeleteAllProjectsTest.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\DeleteById\DeleteProjectByIdTest.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\GetAll\GetAllProjectsTest.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\GetById\GetAllProjectsTest.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\Patch\PatchProjectTest.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\Update\UpdateProjectTest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V1\Create\CreateProjectTest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V1\DeleteAll\DeleteAll%24DomainNamePlural%24Test.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V1\DeleteById\Delete%24DomainName%24ByIdTest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V1\GetAll\GetAll%24DomainNamePlural%24Test.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V1\GetById\GetAllProjectsTest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V1\Patch\Patch%24DomainName%24Test.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V1\Update\Update%24DomainName%24Test.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Mappers\$DomainName$EntityToPatch$DomainName$RequestMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Mappers\Update$DomainName$RequestMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Validations\Update%24DomainName%24RequestValidator.cs" />

@@ -28,10 +28,10 @@ namespace $ProjectName$.Test.Api.Health
         }
 
         [TestMethod]
-        public Task Should_Not_Be_Able_To_Patch_If_Id_Is_Not_A_Guid()
+        public Task Should_Not_Be_Able_To_Patch_If_$IdPropertyName$_Is_Not_A_Guid()
         {
             return Client.AssertPatchAsync<ProblemDetails>("api/core/v1/$DomainNamePluralLower$/not-a-guid",
-                                                           "InvalidId.json");
+                                                           "Invalid$IdPropertyName$.json");
         }
 
         [TestMethod]

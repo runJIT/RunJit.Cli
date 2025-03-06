@@ -125,7 +125,7 @@ namespace RunJit.Cli.New.RestMinimalApi
 
             if (queryPropertyName.IsNull())
             {
-                throw new RunJitException($"Your passed query property name: {parameters.QueryProperty} does not exists on your passed entity model:{Environment.NewLine}{parameters.DbEntityModel}")
+                throw new RunJitException($"Your passed query property name: {parameters.QueryProperty} does not exists on your passed entity model:{Environment.NewLine}{parameters.DbEntityModel}");
             }
             
 

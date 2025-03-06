@@ -53,7 +53,9 @@ namespace RunJit.Cli.New.RestMinimalApi
                     // Replacing dots with backslashes in the file path part
                     // Important  from $ becomes _ in embedded resources
                     var part = parts[1];
-                    part = part.Replace("_ProjectName_", createRestApiInfos.ProjectName)
+
+                    part = part.Replace("Project", createRestApiInfos.ProjectName)
+                               .Replace("_ProjectName_", createRestApiInfos.ProjectName)
                                .Replace("_Namespace_", createRestApiInfos.ProjectName)
                                .Replace("_Version_", createRestApiInfos.Version.ToInvariantString())
                                .Replace("_DomainModel_", createRestApiInfos.DomainModelCode)

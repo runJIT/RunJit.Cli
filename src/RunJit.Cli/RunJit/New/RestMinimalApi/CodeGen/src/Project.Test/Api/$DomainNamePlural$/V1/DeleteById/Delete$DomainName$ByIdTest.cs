@@ -10,7 +10,7 @@ namespace $ProjectName$.Test.Api.Health
     [TestClass]
     [TestCategory("$DomainNamePlural$")]
     [TestCategory("$DomainNamePlural$ V1")]
-    public class Delete_$DomainName$_By_Id_Test : ApiTestBase
+    public class Delete_$DomainName$_By_$IdPropertyName$_Test : ApiTestBase
     {
         private static readonly string UniqueName = GetUniqueRunnerName();
 
@@ -21,16 +21,16 @@ namespace $ProjectName$.Test.Api.Health
         }
         
         [TestMethod]
-        public Task Should_Not_Be_Able_To_Delete_By_Id_If_Caller_Is_Not_Authorized()
+        public Task Should_Not_Be_Able_To_Delete_By_$IdPropertyName$_If_Caller_Is_Not_Authorized()
         {
             return Client.AssertDeleteAsUnauthorizedAsync($"api/core/v1/$DomainNamePluralLower$/{Guid.Empty}");
         }
 
         [TestMethod]
-        public Task Should_Not_Be_Able_To_Delete_By_Id_If_Id_Is_Not_A_Guid()
+        public Task Should_Not_Be_Able_To_Delete_By_$IdPropertyName$_If_$IdPropertyName$_Is_Not_A_Guid()
         {
             return Client.AssertDeleteAsErrorAsync<ProblemDetails>("api/core/v1/$DomainNamePluralLower$/not-a-guid",
-                                                                   "InvalidId.json");
+                                                                   "Invalid$IdPropertyName$.json");
         }
 
         [TestMethod]

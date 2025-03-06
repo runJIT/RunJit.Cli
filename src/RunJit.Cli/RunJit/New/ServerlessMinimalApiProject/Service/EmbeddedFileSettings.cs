@@ -33,13 +33,21 @@ namespace RunJit.Cli.New.MinimalApiProject
 
             // 2. Add wildcards for files which should be embedded
             var itemGroup = new XElement("ItemGroup");
-            var embeddedResource = new XElement("EmbeddedResource");
-            var includeAttribute = new XAttribute("Include", @"**\*.json");
-            var excludeAttribute = new XAttribute("Exclude", @"bin\**\*;obj\**\*");
-
-            embeddedResource.Add(includeAttribute);
-            embeddedResource.Add(excludeAttribute);
-            itemGroup.Add(embeddedResource);
+            var jsonEmbeddedResource = new XElement("EmbeddedResource");
+            var jsonIncludeAttribute = new XAttribute("Include", @"**\*.json");
+            var jsonExcludeAttribute = new XAttribute("Exclude", @"bin\**\*;obj\**\*");
+            jsonEmbeddedResource.Add(jsonIncludeAttribute);
+            jsonEmbeddedResource.Add(jsonExcludeAttribute);
+            
+            var txtEmbeddedResource = new XElement("EmbeddedResource");
+            var txtIncludeAttribute = new XAttribute("Include", @"**\*.txt");
+            var txtExcludeAttribute = new XAttribute("Exclude", @"bin\**\*;obj\**\*");
+            txtEmbeddedResource.Add(txtIncludeAttribute);
+            txtEmbeddedResource.Add(txtExcludeAttribute);
+      
+            
+            itemGroup.Add(jsonEmbeddedResource);
+            itemGroup.Add(txtEmbeddedResource);
 
             // 3. Add the comment and new PropertyGroup to the root of the project file
             projectDocument.Root!.Add(toolEmbeddedFileSettingsComment, itemGroup);

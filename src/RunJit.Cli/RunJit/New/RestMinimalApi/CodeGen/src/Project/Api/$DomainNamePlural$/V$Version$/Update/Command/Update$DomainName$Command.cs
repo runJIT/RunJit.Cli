@@ -10,6 +10,8 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
             services.AddUpdate$DomainName$RequestValidator();
+            services.AddUpdate$DomainName$RequestMapper();
+            services.Add$DomainName$EntityMapper();
             
             services.AddSingletonIfNotExists<Update$DomainName$Command>();
         }

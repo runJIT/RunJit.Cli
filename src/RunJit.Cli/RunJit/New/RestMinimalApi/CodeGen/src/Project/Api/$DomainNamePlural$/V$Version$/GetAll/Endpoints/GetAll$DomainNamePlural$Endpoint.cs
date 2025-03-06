@@ -5,7 +5,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
 {
     public static class MapGetAll$DomainNamePluralLower$Endpoint
     {
-        public static RouteHandlerBuilder MapGetAll$DomainNamePluralLower$(this IEndpointRouteBuilder endpoints)
+        public static RouteHandlerBuilder MapGetAll$DomainNamePlural$(this IEndpointRouteBuilder endpoints)
         {
             return endpoints.MapGet("$DomainNamePluralLower$", HandleAsync)
                             .Produces<GetAll$DomainNamePlural$Response>()

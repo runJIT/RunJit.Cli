@@ -1,10 +1,8 @@
 ﻿using $ProjectName$.Extensions;
 using Siemens.AspNet.ErrorHandling.Contracts;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Get$DomainName$ById
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
 {
-    public sealed record Get$DomainName$ByIdResponse($DomainName$ $DomainName$);
-
     public static class MapGet$DomainName$ByIdEndpoint
     {
         public static RouteHandlerBuilder MapGet$DomainName$ById(this IEndpointRouteBuilder endpoints)

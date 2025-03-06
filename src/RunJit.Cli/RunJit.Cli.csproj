@@ -207,6 +207,7 @@
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Extensions\Startup.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Endpoints\GetByIdEndpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Extensions\Startup.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Responses\Get%24DomainName%24ByIdResponse.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Endpoints\PatchEndpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Extensions\Startup.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Mappers\%24DomainName%24EntityToPatch%24DomainName%24RequestMapper.cs" />
@@ -279,6 +280,7 @@
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V1\GetById\GetAllProjectsTest.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V1\Patch\Patch%24DomainName%24Test.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V1\Update\Update%24DomainName%24Test.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Responses\Get$DomainName$ByIdResponse.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Mappers\$DomainName$EntityToPatch$DomainName$RequestMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Mappers\Update$DomainName$RequestMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Validations\Update%24DomainName%24RequestValidator.cs" />

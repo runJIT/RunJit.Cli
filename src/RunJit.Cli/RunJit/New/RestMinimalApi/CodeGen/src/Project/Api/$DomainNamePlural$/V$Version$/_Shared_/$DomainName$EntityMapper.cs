@@ -12,7 +12,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V1
         }
     }
 
-    internal class $DomainName$EntityMapper
+    internal sealed class $DomainName$EntityMapper
     {
         public $DomainName$ MapFrom($DomainName$Entity source)
         {

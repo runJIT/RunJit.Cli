@@ -1,17 +1,17 @@
 ﻿using System.Collections.Immutable;
 using System.Reflection;
 using AspNetCore.Simple.MsTest.Sdk;
-using Sdc.Core.Api.Projects.V1;
-using Sdc.Core.Api.Projects.V1.Create;
-using Sdc.Core.Api.Projects.V1.GetById;
+using $ProjectName$.Api.$DomainNamePlural$.V1;
+using $ProjectName$.Api.$DomainNamePlural$.V1.Create;
+using $ProjectName$.Api.$DomainNamePlural$.V1.GetById;
 using Siemens.AspNet.ErrorHandling.Contracts;
 
-namespace Sdc.Core.Test.Api.Health
+namespace $ProjectName$.Test.Api.Health
 {
     [TestClass]
-    [TestCategory("Projects")]
-    [TestCategory("Projects V1")]
-    public class Create_Project_Test : ApiTestBase
+    [TestCategory("$DomainNamePlural$")]
+    [TestCategory("$DomainNamePlural$ V1")]
+    public class Create_$DomainName$_Test : ApiTestBase
     {
         private static readonly string UniqueName = GetUniqueRunnerName();
 
@@ -24,15 +24,15 @@ namespace Sdc.Core.Test.Api.Health
         [TestMethod]
         public Task Should_Not_Be_Able_To_Call_If_Caller_Is_Not_Authorized()
         {
-            return Client.AssertGetAsUnauthorizedAsync($"api/core/v1/projects");
+            return Client.AssertGetAsUnauthorizedAsync($"api/core/v1/$DomainNamePluralLower$");
         }
 
 
         [DataTestMethod]
-        [DataRow("InvalidProject.json", "InvalidProject.json")]
+        [DataRow("Invalid$DomainName$.json", "Invalid$DomainName$.json")]
         public Task Should_Return_Bad_Request_If_Create_Request_Data_Are_Invalid(string request, string response)
         {
-            return Client.AssertPatchAsErrorAsync<ValidationProblemDetails>($"api/core/v1/projects/{Guid.Empty}",
+            return Client.AssertPatchAsErrorAsync<ValidationProblemDetails>($"api/core/v1/$DomainNamePluralLower$/{Guid.Empty}",
                                                                             request,
                                                                             response);
 
@@ -40,34 +40,34 @@ namespace Sdc.Core.Test.Api.Health
 
 
         [TestMethod]
-        public async Task Should_Be_Able_To_Create_A_Project_With_Valid_Data()
+        public async Task Should_Be_Able_To_Create_A_$DomainName$_With_Valid_Data()
         {
-            // 1. Create a new project
-            var createProjectResponse = await Client.AssertPostAsync<CreateProjectResponse>("api/core/v1/projects/",
-                                                                "CreateProject.json",
-                                                                "CreateProject.json",
+            // 1. Create a new $DomainNameLower$
+            var create$DomainName$Response = await Client.AssertPostAsync<Create$DomainName$Response>("api/core/v1/$DomainNamePluralLower$/",
+                                                                "Create$DomainName$.json",
+                                                                "Create$DomainName$.json",
                                                                 differenceFunc: IgnoreAutoValues,
-                                                                [("$ProjectName$", UniqueName)]).ConfigureAwait(false);
+                                                                [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
 
-            // 2. Get the currently created project
-            await Client.AssertGetAsync<GetProjectByIdResponse>($"api/core/v1/projects/{createProjectResponse.Project.Id}",
-                                                                "CreateProject.json",
+            // 2. Get the currently created $DomainNameLower$
+            await Client.AssertGetAsync<Get$DomainName$ByIdResponse>($"api/core/v1/$DomainNamePluralLower$/{create$DomainName$Response.$DomainName$.$IdPropertyName$}",
+                                                                "Create$DomainName$.json",
                                                                 differenceFunc: IgnoreAutoValues,
-                                                                [("$ProjectName$", UniqueName)]).ConfigureAwait(false);
+                                                                [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
 
         }
 
         [TestCleanup]
         public Task CleanupAsync()
         {
-            return Client.AssertDeleteAsync($"api/core/v1/projects?name={UniqueName}");
+            return Client.AssertDeleteAsync($"api/core/v1/$DomainNamePluralLower$?name={UniqueName}");
         }
 
         private IEnumerable<Difference> IgnoreAutoValues(IImmutableList<Difference> differences)
         {
             foreach (var difference in differences)
             {
-                if (difference.MemberPath.Contains($".{nameof(Project.Id)}"))
+                if (difference.MemberPath.Contains($".{nameof($DomainName$.$IdPropertyName$)}"))
                 {
                     continue;
                 }

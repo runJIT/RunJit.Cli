@@ -1,15 +1,15 @@
 ﻿using System.Collections.Immutable;
 using AspNetCore.Simple.MsTest.Sdk;
-using Sdc.Core.Api.Projects.V1;
-using Sdc.Core.Api.Projects.V1.Create;
-using Sdc.Core.Api.Projects.V1.GetAll;
+using $ProjectName$.Api.$DomainNamePlural$.V1;
+using $ProjectName$.Api.$DomainNamePlural$.V1.Create;
+using $ProjectName$.Api.$DomainNamePlural$.V1.GetAll;
 
-namespace Sdc.Core.Test.Api.Health
+namespace $ProjectName$.Test.Api.Health
 {
     [TestClass]
-    [TestCategory("Projects")]
-    [TestCategory("Projects V1")]
-    public class Delete_All_Projects_Test : ApiTestBase
+    [TestCategory("$DomainNamePlural$")]
+    [TestCategory("$DomainNamePlural$ V1")]
+    public class Delete_All_$DomainNamePlural$_Test : ApiTestBase
     {
         private static readonly string UniqueName = GetUniqueRunnerName();
         
@@ -22,53 +22,53 @@ namespace Sdc.Core.Test.Api.Health
         [TestMethod]
         public Task Should_Not_Be_Able_To_Call_If_Caller_Is_Not_Authorized()
         {
-            return Client.AssertDeleteAsUnauthorizedAsync($"api/core/v1/projects");
+            return Client.AssertDeleteAsUnauthorizedAsync($"api/core/v1/$DomainNamePluralLower$");
         }
 
         [TestMethod]
-        public async Task Should_Be_Able_Delete_All_Projects_Matching_The_Query_Filter()
+        public async Task Should_Be_Able_Delete_All_$DomainNamePlural$_Matching_The_Query_Filter()
         {
-            // 0. Get all first by project name to go sure already existing data not exists
-            await Client.AssertGetAsync<GetAllProjectsResponse>($"api/core/v1/projects?name={UniqueName}",
-                                                                "NoProjects.json",
+            // 0. Get all first by $DomainNameLower$ name to go sure already existing data not exists
+            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"api/core/v1/$DomainNamePluralLower$?name={UniqueName}",
+                                                                "No$DomainNamePlural$.json",
                                                                 differenceFunc: IgnoreAutoValues,
-                                                                [("$ProjectName$", UniqueName)]).ConfigureAwait(false);
+                                                                [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
             
-            // 1. Create a new project
-            await Client.AssertPostAsync<CreateProjectResponse>("api/core/v1/projects/",
-                                                                "CreateProject.json",
-                                                                "CreateProject.json",
+            // 1. Create a new $DomainNameLower$
+            await Client.AssertPostAsync<Create$DomainName$Response>("api/core/v1/$DomainNamePluralLower$/",
+                                                                "Create$DomainName$.json",
+                                                                "Create$DomainName$.json",
                                                                 differenceFunc: IgnoreAutoValues,
-                                                                [("$ProjectName$", UniqueName)]).ConfigureAwait(false);
+                                                                [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
 
-            // 2. Check that the created projects exists
-            await Client.AssertGetAsync<GetAllProjectsResponse>($"api/core/v1/projects?name={UniqueName}",
-                                                                "GetAllProjects.json",
+            // 2. Check that the created $DomainNamePluralLower$ exists
+            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"api/core/v1/$DomainNamePluralLower$?name={UniqueName}",
+                                                                "GetAll$DomainNamePlural$.json",
                                                                 differenceFunc: IgnoreAutoValues,
-                                                                [("$ProjectName$", UniqueName)]).ConfigureAwait(false);
+                                                                [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
             
-            // 3. Delete all projects which matching the name
-            await Client.AssertDeleteAsync($"api/core/v1/projects?name={UniqueName}").ConfigureAwait(false);
+            // 3. Delete all $DomainNamePluralLower$ which matching the name
+            await Client.AssertDeleteAsync($"api/core/v1/$DomainNamePluralLower$?name={UniqueName}").ConfigureAwait(false);
             
-            // 4. Eval that all projects with the specific name was deleted
-            await Client.AssertGetAsync<GetAllProjectsResponse>($"api/core/v1/projects?name={UniqueName}",
-                                                                "NoProjects.json",
+            // 4. Eval that all $DomainNamePluralLower$ with the specific name was deleted
+            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"api/core/v1/$DomainNamePluralLower$?name={UniqueName}",
+                                                                "No$DomainNamePlural$.json",
                                                                 differenceFunc: IgnoreAutoValues,
-                                                                [("$ProjectName$", UniqueName)]).ConfigureAwait(false);
+                                                                [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
 
         }
         
         [TestCleanup]
         public Task CleanupAsync()
         {
-            return Client.AssertDeleteAsync($"api/core/v1/projects?name={UniqueName}");
+            return Client.AssertDeleteAsync($"api/core/v1/$DomainNamePluralLower$?name={UniqueName}");
         }
 
         private IEnumerable<Difference> IgnoreAutoValues(IImmutableList<Difference> differences)
         {
             foreach (var difference in differences)
             {
-                if (difference.MemberPath.Contains($".{nameof(Project.Id)}"))
+                if (difference.MemberPath.Contains($".{nameof($DomainName$.$IdPropertyName$)}"))
                 {
                     continue;
                 }

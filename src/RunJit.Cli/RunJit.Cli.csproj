@@ -265,6 +265,12 @@
         <None Remove="RunJit\Update\ResharperSettings\Template\.editorconfig" />
     </ItemGroup>
     <ItemGroup>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\DeleteAll\DeleteAllProjectsTest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\DeleteById\DeleteProjectByIdTest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\GetAll\GetAllProjectsTest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\GetById\GetAllProjectsTest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\Patch\PatchProjectTest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\Projects\V1\Update\UpdateProjectTest.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Mappers\$DomainName$EntityToPatch$DomainName$RequestMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Mappers\Update$DomainName$RequestMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Validations\Update%24DomainName%24RequestValidator.cs" />
@@ -348,7 +354,6 @@
     <ItemGroup>
         <Folder Include="RunJit\New\NugetProject\" />
         <Folder Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Database\%24DomainNamePlural%24\Migrations\" />
-        <Folder Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\" />
     </ItemGroup>
     <ItemGroup>
         <EditorConfigFiles Remove="D:\GitHub\RunJit.Cli\src\RunJit.Cli\RunJit\New\MinimalApiProject\CodeGen\.editorconfig" />

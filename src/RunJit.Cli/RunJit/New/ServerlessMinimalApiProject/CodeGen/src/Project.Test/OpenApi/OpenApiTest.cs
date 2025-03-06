@@ -11,10 +11,12 @@ namespace $ProjectName$.Test.OpenApi
         {
             // ToDo: We need version provider / collector to know all versions
             //       Or we use the generated static versions :) which is needed fot Native AOT
-            var versions = new int[] { 1 };
+            var versions = new[] { 1 };
+
             foreach (var version in versions)
             {
-                await Client.AssertGetAsync($"openapi/v{version}.json").ConfigureAwait(false);
+                await Client.AssertGetAsync<string>($"openapi/v{version}.json",
+                                                    $"V{version}.json").ConfigureAwait(false);
             }
         }
     }

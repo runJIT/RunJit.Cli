@@ -1,0 +1,20 @@
+﻿{
+  "Content": {
+    "Headers": [
+      {
+        "Key": "Content-Type",
+        "Value": [ "application/json; charset=utf-8" ]
+      }
+    ],
+    "Value": { "Project": null }
+  },
+  "StatusCode": "OK",
+  "Headers": [
+    {
+      "Key": "api-supported-versions",
+      "Value": [ "1" ]
+    }
+  ],
+  "TrailingHeaders": [],
+  "IsSuccessStatusCode": true
+}

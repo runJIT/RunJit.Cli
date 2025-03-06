@@ -1,0 +1,26 @@
+﻿{
+  "Content": {
+    "Headers": [
+      {
+        "Key": "Content-Type",
+        "Value": [ "application/json; charset=utf-8" ]
+      }
+    ],
+    "Value": {
+      "Project": {
+        "Id": "40b8c693-fc99-4bc2-92a2-68d6af5f2973",
+        "Name": "Test",
+        "Description": "Update description"
+      }
+    }
+  },
+  "StatusCode": "OK",
+  "Headers": [
+    {
+      "Key": "api-supported-versions",
+      "Value": [ "1" ]
+    }
+  ],
+  "TrailingHeaders": [],
+  "IsSuccessStatusCode": true
+}

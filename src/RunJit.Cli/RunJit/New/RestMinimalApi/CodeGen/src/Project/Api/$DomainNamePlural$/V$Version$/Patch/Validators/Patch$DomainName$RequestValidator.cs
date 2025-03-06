@@ -1,18 +1,18 @@
 ﻿using Extensions.Pack;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
 {
-    internal static class AddUpdate$DomainName$RequestValidatorExtension
+    internal static class AddPatch$DomainName$RequestValidatorExtension
     {
-        internal static void AddUpdate$DomainName$RequestValidator(this IServiceCollection services)
+        internal static void AddPatch$DomainName$RequestValidator(this IServiceCollection services)
         {
-            services.AddSingletonIfNotExists<Update$DomainName$RequestValidator>();
+            services.AddSingletonIfNotExists<Patch$DomainName$RequestValidator>();
         }
     }
 
-    internal sealed class Update$DomainName$RequestValidator(IJsonDiffer jsonDiffer) : UpdateRequestValidator<Update$DomainName$Request>(jsonDiffer)
+    internal sealed class Patch$DomainName$RequestValidator(IJsonDiffer jsonDiffer) : PatchRequestValidator<Patch$DomainName$Request>(jsonDiffer)
     {
-        protected override IEnumerable<(string Key, string Value)> GetValidationErrors(Update$DomainName$Request request)
+        protected override IEnumerable<(string Key, string Value)> GetValidationErrors(Patch$DomainName$Request request)
         {
             // Sample: Remove the yield break and replace it with your validation logic
             // if (request.Name.IsNotNullOrWhiteSpace())

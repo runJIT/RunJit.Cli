@@ -175,6 +175,9 @@
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Endpoints\Delete$DomainName$Endpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Endpoints\GetAll$DomainNamePlural$Endpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Responses\GetAll$DomainNamePlural$Response.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Mappers\Patch$DomainName$RequestMapper.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Validators\Patch$DomainName$RequestValidator.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Validations\Update$DomainName$RequestValidator.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\Startup.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Create\Mappers\Create$DomainName$RequestTo$DomainName$EntityMapper.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Create\Requests\Create$DomainName$Request.cs" />
@@ -182,7 +185,6 @@
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Create\Validations\Create$DomainName$RequestValidator.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\DeleteAll\Command\DeleteAll$DomainNamePlural$Command.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Patch\Command\Patch$DomainName$Command.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Patch\Mappers\Patch$DomainName$RequestTo$DomainName$EntityMapper.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Patch\Requests\Patch$DomainName$Request.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Patch\Responses\Patch$DomainName$Response.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Update\Command\Update$DomainName$Command.cs" />
@@ -199,12 +201,11 @@
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Queries\GetByIdQuery.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Endpoints\PatchEndpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Extensions\Startup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Validators\ProjectValidator.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Mappers\%24DomainName%24EntityToPatch%24DomainName%24RequestMapper.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Startup.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Endpoints\UpdateEndpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Extensions\Startup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Mappers\Update%24DomainName%24RequestTo%24DomainName%24EntityMapper.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Validations\Update%24DomainName%24RequestValidator.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Mappers\Update%24DomainName%24RequestMapper.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\_Shared_\%24DomainName%24EntityTo%24DomainName%24Mapper.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Database\$DomainNamePlural$\Entities\$DomainName$Entity.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\ApiTestBase.cs" />
@@ -215,19 +216,23 @@
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Utils\MigrationScriptExecutor.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Api\Startup.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Aws\DynamoDb\AmazonDynamoDbFactory.cs" />
+      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Aws\DynamoDb\DynamoDbExtensions.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Extensions\EndpointConventionBuilderExtensions.cs" />
+      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Helpers\EmbeddedFileLocalizer.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AuthenticationBuilderExtensions.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AwsCognitoSettings.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\AppJsonSerializerContext.cs" />
+      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonDiffer.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonSerializeOptions.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Mapping\IMapper.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\BearerSecuritySchemeTransformer.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\DocumentInfosTransformer.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiInfos.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiVersionInfo.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Program.cs" />
+      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Regex\GlobalRegex.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Startup\ServerlessMinimalApplication.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Validations\IRequestValidator.cs" />
+      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Validations\PatchRequestValidator.cs" />
+      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Validations\RequestValidator.cs" />
     </ItemGroup>
     <ItemGroup>
         <None Remove="RunJit\Generate\Client\Templates\client.zip" />
@@ -260,8 +265,10 @@
         <None Remove="RunJit\Update\ResharperSettings\Template\.editorconfig" />
     </ItemGroup>
     <ItemGroup>
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Mappers\Update$DomainName$RequestTo$DomainName$EntityMapper.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Validations\Update$DomainName$RequestValidator.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Mappers\$DomainName$EntityToPatch$DomainName$RequestMapper.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Mappers\Update$DomainName$RequestMapper.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Validations\Update%24DomainName%24RequestValidator.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Mappers\Patch%24DomainName%24RequestMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\Startup.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Responses\GetAll%24DomainNamePlural%24Response.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\_Shared_\$DomainName$EntityTo$DomainName$Mapper.cs" />
@@ -287,10 +294,9 @@
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Command\Patch%24DomainName%24Command.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Endpoints\PatchEndpoint.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Extensions\Startup.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Mappers\Patch%24DomainName%24RequestTo%24DomainName%24EntityMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Requests\Patch%24DomainName%24Request.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Responses\Patch%24DomainName%24Response.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Validators\ProjectValidator.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Validators\Patch%24DomainName%24RequestValidator.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Startup.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Command\Update%24DomainName%24Command.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Endpoints\UpdateEndpoint.cs" />
@@ -315,19 +321,23 @@
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Utils\MigrationScriptExecutor.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Api\Startup.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Aws\DynamoDb\AmazonDynamoDbFactory.cs" />
+        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Aws\DynamoDb\DynamoDbExtensions.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Extensions\EndpointConventionBuilderExtensions.cs" />
+        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Helpers\EmbeddedFileLocalizer.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AuthenticationBuilderExtensions.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AwsCognitoSettings.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\AppJsonSerializerContext.cs" />
+        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonDiffer.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonSerializeOptions.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Mapping\IMapper.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\BearerSecuritySchemeTransformer.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\DocumentInfosTransformer.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiInfos.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiVersionInfo.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Program.cs" />
+        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Regex\GlobalRegex.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Startup\ServerlessMinimalApplication.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Validations\IRequestValidator.cs" />
+        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Validations\PatchRequestValidator.cs" />
+        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Validations\RequestValidator.cs" />
         <EmbeddedResource Include="RunJit\Update\BuildConfig\Templates\Directory.Build.props" />
         <EmbeddedResource Include="RunJit\Update\CodeRules\Templates\RunJITCodeRules.zip" />
         <EmbeddedResource Include="RunJit\Update\ResharperSettings\Template\.editorconfig" />

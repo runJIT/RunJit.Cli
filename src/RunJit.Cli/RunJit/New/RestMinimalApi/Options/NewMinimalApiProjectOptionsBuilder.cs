@@ -57,7 +57,7 @@ namespace RunJit.Cli.New.RestMinimalApi.Options
             return new Option(new[] { "--entity", "-e" }, "Option to pass the entity for the database as c# class. Sample: public record User(string Name)")
             {
                 Required = true,
-                Argument = new Argument<string>("domainModel") { Description = "Option to pass the domain model as c# class. Sample: public record User(string Name)" }
+                Argument = new Argument<string>("entity") { Description = "Option to pass the domain model as c# class. Sample: public record User(string Name)" }
             };
         }
 

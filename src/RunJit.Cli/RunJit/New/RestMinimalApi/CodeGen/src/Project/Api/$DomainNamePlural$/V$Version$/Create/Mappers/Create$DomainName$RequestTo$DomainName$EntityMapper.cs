@@ -4,18 +4,22 @@ using $ProjectName$.Mapping;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
 {
-    internal static class AddCreate$DomainName$RequestTo$DomainName$EntityMapperExtension
+    internal static class AddCreate$DomainName$RequestMapperExtension
     {
-        internal static void AddCreate$DomainName$RequestTo$DomainName$EntityMapper(this IServiceCollection services)
+        internal static void AddCreate$DomainName$RequestMapper(this IServiceCollection services)
         {
-            services.AddSingletonIfNotExists<IRequestMapper<Create$DomainName$Request, $DomainName$Entity>, Create$DomainName$RequestTo$DomainName$EntityMapper>();
+            services.AddSingletonIfNotExists<Create$DomainName$RequestMapper>();
         }
     }
 
-    internal sealed class Create$DomainName$RequestTo$DomainName$EntityMapper : IRequestMapper<Create$DomainName$Request, $DomainName$Entity>
+    internal $DomainName$Entity MapFrom(Create$DomainName$Request source)
     {
-        public $DomainName$Entity MapTo(Create$DomainName$Request source,
-                                   HttpContext httpContext)
+        return MapFrom(source, Guid.NewGuid());
+    }
+
+    internal sealed class Create$DomainName$RequestMapper
+    {
+        public $DomainName$Entity MapTo(Create$DomainName$Request source)
         {
             var $DomainNameLower$ = new $DomainName$Entity
                           {

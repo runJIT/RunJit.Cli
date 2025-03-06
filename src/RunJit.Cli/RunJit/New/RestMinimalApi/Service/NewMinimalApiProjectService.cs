@@ -21,6 +21,9 @@ namespace RunJit.Cli.New.RestMinimalApi
         internal required string DomainNamePluralLower { get; init; }
         internal required string PropertyMappings { get; init; }
         internal required string PropertiesWithoutId { get; init; }
+        internal required string IdPropertyName { get; init; }
+        internal required string QueryPropertyName { get; init; }
+        internal required string QueryPropertyNameLower { get; init; }
         internal required int Version { get; init; }
     }
 
@@ -68,6 +71,11 @@ namespace RunJit.Cli.New.RestMinimalApi
                 throw new RunJitException($"The api version must be greater than 0. It can be 1 but not smaller");
             }
 
+            if (parameters.QueryProperty.IsNotNullOrWhiteSpace())
+            {
+                throw new RunJitException($"Query property name must not be null, empty or whitespace");
+            }
+            
 
             var syntaxTree = CSharpSyntaxTree.ParseText(parameters.DbEntityModel);
             var simplifiedSyntaxTree = syntaxTree.Parse(string.Empty);
@@ -113,6 +121,13 @@ namespace RunJit.Cli.New.RestMinimalApi
 
             var record = simplifiedSyntaxTree.Records.First();
 
+            var queryPropertyName = record.Properties.FirstOrDefault(p => p.Name == parameters.QueryProperty);
+
+            if (queryPropertyName.IsNull())
+            {
+                throw new RunJitException($"Your passed query property name: {parameters.QueryProperty} does not exists on your passed entity model:{Environment.NewLine}{parameters.DbEntityModel}")
+            }
+            
 
             if (record.Attributes.Any(a => a.Name.Contains("DynamoDBTable").IsFalse()))
             {
@@ -133,7 +148,8 @@ namespace RunJit.Cli.New.RestMinimalApi
                 throw new RunJitException($"Your provided record type does not have a mandatory [DynamoDBTable(\"Project\")] attribute. Sample: {Environment.NewLine}{sample}");
             }
 
-            if (record.Properties.Any(a => a.Name.Contains("DynamoDBHashKey").IsFalse()))
+            var hashKeyPropertyId = record.Properties.FirstOrDefault(p => p.SyntaxTree.Contains("DynamoDBHashKey"));
+            if (hashKeyPropertyId.IsNull())
             {
 
                 var sample = """
@@ -173,13 +189,12 @@ namespace RunJit.Cli.New.RestMinimalApi
 
 
             var properties = record.Properties;
-            var propertiesWithoutId = properties.Where(p => p.Name.NotEqualsTo("Id")).Select(p => p.SyntaxTree).Flatten($"    {Environment.NewLine}");
-            var domainModel = $@"""
-                          public record {record.Name.Replace("Entity", string.Empty)}                                 
-                          {{
-                          {propertiesWithoutId}
-                          }}
-                          """;
+            var propertiesWithoutId = properties.Where(p => p.Name.NotEqualsTo("Id")).Select(p => $"public {p.Type} {p.Name} {{ get; init; }}").Flatten($"{Environment.NewLine}");
+            var domainModel = $@"public record {record.Name.Replace("Entity", string.Empty)}                                 
+                                {{
+                                {propertiesWithoutId}
+                                }}
+                                ".FormatSyntaxTree();
 
 
             var domainNamePlural = PluralizationProvider.Pluralize(parameters.DomainName);
@@ -224,7 +239,10 @@ namespace RunJit.Cli.New.RestMinimalApi
                 DomainNamePluralLower = domainNamePlural.FirstCharToLower(),
                 PropertyMappings = propertyMapping,
                 ProjectName = programFile.ProjectFileInfo.FileNameWithoutExtenion,
-                PropertiesWithoutId = propertiesWithoutId
+                PropertiesWithoutId = propertiesWithoutId,
+                IdPropertyName = hashKeyPropertyId.Name,
+                QueryPropertyName = parameters.QueryProperty,
+                QueryPropertyNameLower = parameters.QueryProperty.FirstCharToLower()
             };
 
 

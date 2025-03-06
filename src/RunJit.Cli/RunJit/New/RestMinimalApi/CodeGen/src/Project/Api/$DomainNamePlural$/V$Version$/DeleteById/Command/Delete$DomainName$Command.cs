@@ -14,11 +14,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Delete
 
     internal sealed class Delete$DomainName$Command(IAmazonDynamoDbClientFactory dynamoDbClientFactory)
     {
-        internal async Task ExecuteAsync(Guid $DomainNameLower$Id, CancellationToken cancellationToken)
+        internal async Task ExecuteAsync(Guid $IdUrlName$, CancellationToken cancellationToken)
         {
             using var dbContext = dynamoDbClientFactory.Create();
 
-            await dbContext.DeleteAsync<$DomainName$>($DomainNameLower$Id, cancellationToken).ConfigureAwait(false);
+            await dbContext.DeleteAsync<$DomainName$>($IdUrlName$, cancellationToken).ConfigureAwait(false);
         }
     }
 }

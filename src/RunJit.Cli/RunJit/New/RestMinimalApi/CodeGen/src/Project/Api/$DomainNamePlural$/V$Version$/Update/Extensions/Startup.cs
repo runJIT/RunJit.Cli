@@ -4,9 +4,6 @@
     {
         internal static void AddUpdate$DomainName$(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddUpdate$DomainName$RequestTo$DomainName$EntityMapper();
-            services.AddUpdate$DomainName$RequestValidator();
-            
             services.AddUpdate$DomainName$Command(configuration);
         }
 

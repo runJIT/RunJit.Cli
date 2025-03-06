@@ -9,12 +9,12 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
     {
         public static RouteHandlerBuilder MapGetById(this IEndpointRouteBuilder endpoints)
         {
-            return endpoints.MapGet("$DomainNamePluralLower$/{$DomainNameLower$Id:guid}",
+            return endpoints.MapGet("$DomainNamePluralLower$/{$IdUrlName$:guid}",
                                             async (Guid $DomainNameLower$Id,
                                                    GetByIdQuery getByIdQuery,
                                                    CancellationToken cancellationToken = default) =>
                                             {
-                                                var $DomainNameLower$ = await getByIdQuery.ExecuteAsync($DomainNameLower$Id, cancellationToken).ConfigureAwait(false); 
+                                                var $DomainNameLower$ = await getByIdQuery.ExecuteAsync($IdUrlName$, cancellationToken).ConfigureAwait(false); 
                                                 return new Get$DomainName$ByIdResponse($DomainNameLower$);
                                             })
 
@@ -28,8 +28,8 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
                                     .WithTags("$DomainNamePlural$")
                                     .WithName("get$DomainName$ByIdV$Version$")
                                     .MapToApiVersion(1)
-                                    .WithDescriptionFromFile("V$Version$.GetById.Documentations.Description.txt")
-                                    .WithSummaryFromFile("V$Version$.GetById.Documentations.Summary.txt");
+                                    .WithDescriptionFromFile("Description.txt")
+                                    .WithSummaryFromFile("Summary.txt");
         }
     }
 }

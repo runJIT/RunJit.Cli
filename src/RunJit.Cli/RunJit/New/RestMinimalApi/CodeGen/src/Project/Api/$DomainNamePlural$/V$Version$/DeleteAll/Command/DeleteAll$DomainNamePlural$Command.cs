@@ -14,11 +14,14 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
 
     internal sealed class DeleteAll$DomainNamePlural$Command(IAmazonDynamoDbClientFactory dynamoDbClientFactory)
     {
-        internal async Task ExecuteAsync(Guid $DomainNameLower$Id, CancellationToken cancellationToken)
+        internal async Task ExecuteAsync(string $QueryPropertyNameLower$,
+                                         CancellationToken cancellationToken)
         {
+            // 1. Create dynamo db context
             using var dbContext = dynamoDbClientFactory.Create();
 
-            await dbContext.DeleteAsync<$DomainName$>($DomainNameLower$Id, cancellationToken).ConfigureAwait(false);
+            // 2. Delete all projects or those which are matching the filter criteria
+            await dbContext.DeleteAll<$DomainName$Entity>($QueryPropertyNameLower$, cancellationToken).ConfigureAwait(false);
         }
     }
 }

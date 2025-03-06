@@ -10,12 +10,22 @@ namespace $ProjectName$.Api.Projects.V$Version$.Create
         }
     }
 
-    internal sealed class Create$DomainName$RequestValidator
+    internal sealed class Create$DomainName$RequestValidator : RequestValidator<Create$DomainName$Request>
     {
-        public Task ValidateAsync(Create$DomainName$Request request)
+        protected override IEnumerable<(string PropertyName, string Error)> GetValidationErrors(Create$DomainName$Request request)
         {
-            Console.WriteLine(request);
-            return Task.CompletedTask;
+            // Sample: Remove the yield break and replace it with your validation logic
+            //
+            // if (request.Name.IsNotNullOrWhiteSpace())
+            // {
+            //     yield return (nameof(request.Name), "Name must not be null, empty or whitespace");
+            // }
+            //    
+            // if (request.Name.Length > 18)
+            // {
+            //     yield return (nameof(request.Name), "Name must not be longer than 18 characters");
+            // }
+            yield break;
         }
     }
 }

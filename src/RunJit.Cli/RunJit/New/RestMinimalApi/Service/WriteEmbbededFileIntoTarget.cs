@@ -36,7 +36,9 @@ namespace RunJit.Cli.New.RestMinimalApi
                                                 .Replace("$DomainNamePlural$", createRestApiInfos.DomainNamePlural)
                                                 .Replace("$DomainNamePluralLower$", createRestApiInfos.DomainNamePluralLower)
                                                 .Replace("$PropertyMappings$", createRestApiInfos.PropertyMappings)
-                                                .Replace("$PropertiesWithoutId$", createRestApiInfos.PropertiesWithoutId);
+                                                .Replace("$PropertiesWithoutId$", createRestApiInfos.PropertiesWithoutId)
+                                                .Replace("$IdPropertyName$", createRestApiInfos.IdPropertyName)
+                                                .Replace("$IdUrlName$", createRestApiInfos.IdPropertyName.FirstCharToLower());
 
                 if (newFileContent.Contains("GetAllProjectsResponse"))
                 {
@@ -68,7 +70,9 @@ namespace RunJit.Cli.New.RestMinimalApi
                                .Replace("$DomainNameLower$", createRestApiInfos.DomainNameLower)
                                .Replace("$DomainNamePlural$", createRestApiInfos.DomainNamePlural)
                                .Replace("$DomainNamePluralLower$", createRestApiInfos.DomainNamePluralLower)
-                               .Replace("$PropertyMappings$", createRestApiInfos.PropertyMappings);
+                               .Replace("$PropertyMappings$", createRestApiInfos.PropertyMappings)
+                               .Replace("$IdPropertyName$", createRestApiInfos.IdPropertyName)
+                               .Replace("$IdUrlName$", createRestApiInfos.IdPropertyName.FirstCharToLower());
 
                     
                     var normalizedPart = part;

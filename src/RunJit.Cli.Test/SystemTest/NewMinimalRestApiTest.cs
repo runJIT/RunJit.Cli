@@ -49,10 +49,11 @@ namespace RunJit.Cli.Test.SystemTest
         //[DataRow("Pulse.FieldingTool", "api/fieldingtool", "FieldingTool")]
         //[DataRow("Sdc.LandingPage", "api/landingpage", "LandingPage")]
         //[DataRow("Sdc.Console", "api/console", "SdcConsole")]
-        [DataRow("Sdc.Core", "api/core", "Core")]
+        [DataRow("Sdc.Core", "api/core", "Core", "Projects")]
         public async Task Should_Add_New_Rest_Api_Into_Solution(string projectName,
                                                                 string basePath,
-                                                                string toolName)
+                                                                string toolName,
+                                                                string domainName)
         {
             var targetDirectory = Path.Combine(Environment.CurrentDirectory, projectName);
 
@@ -60,7 +61,7 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add rest api
-            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, "Name", solutionFileInfo.FullName));
+            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, "Name", domainName, solutionFileInfo.FullName));
 
             // 2. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
@@ -134,9 +135,6 @@ namespace RunJit.Cli.Test.SystemTest
                     yield return request.WorkingDirectory;
                 }
 
-                yield return "--entity";
-                yield return request.DbEntityModel;
-                
                 yield return "--filter-property";
                 yield return request.QueryProperty;
                 
@@ -145,6 +143,15 @@ namespace RunJit.Cli.Test.SystemTest
                 
                 yield return "--domain-name";
                 yield return request.DomainName;
+                
+
+                yield return "--entity";
+                yield return request.DbEntityModel;
+
+                //yield return $""" "{request.DbEntityModel.Replace("\"", "\"\"")          // Escape double quotes
+                //                           .Replace(Environment.NewLine, " ") // Replace Windows newlines with space
+                //                           .Replace("\n", " ")                // Replace Unix newlines with space
+                //                           .Replace("\r", " ")}" """;          // Just in case
             }
         }
     }

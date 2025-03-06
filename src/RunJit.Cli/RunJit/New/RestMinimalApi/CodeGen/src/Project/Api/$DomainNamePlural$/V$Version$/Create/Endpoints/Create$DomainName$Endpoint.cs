@@ -3,32 +3,32 @@ using Siemens.AspNet.ErrorHandling.Contracts;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
 {
-    public static class Create$DomainName$Endpoint
+    internal static class CreateProjectEndpoint
     {
-        public static void MapCreate$DomainName$(this IEndpointRouteBuilder endpoints)
+        internal static void MapCreateProject(this IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapPost("$DomainNamePluralLower$", async (HttpContext context,
-                                                         Create$DomainName$Request create$DomainName$Request,
-                                                         Create$DomainName$Command create$DomainName$Command,
-                                                         CancellationToken cancellationToken = default)
-                                                      =>
-                                                  {
-                                                      var project = await create$DomainName$Command.ExecuteAsync(context, create$DomainName$Request, cancellationToken).ConfigureAwait(false);
+            endpoints.MapPost("$DomainNamePluralLower$", HandleAsync)
+                     .Produces<CreateProjectResponse>()
+                     .Produces<ProblemDetails>(401)
+                     .Produces<ProblemDetails>(403)
+                     .Produces<ProblemDetails>(404)
+                     .Produces<ValidationProblemDetails>(422)
+                     .Produces<ProblemDetails>(500)
+                     .Produces<ProblemDetails>(503)
+                     .WithTags("$DomainNamePlural$")
+                     .WithName("createProjectV$Version$")
+                     .MapToApiVersion($Version$)
+                     .WithDescriptionFromFile("Description.txt")
+                     .WithSummaryFromFile("Summary.txt");
+                
+            static async Task<CreateProjectResponse> HandleAsync(CreateProjectRequest createProjectRequest,
+                                                                 CreateProjectCommand createProjectCommand,
+                                                                 CancellationToken cancellationToken = default)
+            {
+                var project = await createProjectCommand.ExecuteAsync(createProjectRequest, cancellationToken).ConfigureAwait(false);
 
-                                                      return new Create$DomainName$Response(project);
-                                                  })
-                             .Produces<Create$DomainName$Response>()
-                             .Produces<ProblemDetails>(401)
-                             .Produces<ProblemDetails>(403)
-                             .Produces<ProblemDetails>(404)
-                             .Produces<ValidationProblemDetails>(422)
-                             .Produces<ProblemDetails>(500)
-                             .Produces<ProblemDetails>(503)
-                             .WithTags("$DomainName$s")
-                             .WithName("create$DomainName$V$Version$")
-                             .MapToApiVersion(1)
-                             .WithDescriptionFromFile("V$Version$.Create.Documentations.Description.txt")
-                             .WithSummaryFromFile("V$Version$.Create.Documentations.Summary.txt");
+                return new CreateProjectResponse(project);
+            }
         }
     }
 }

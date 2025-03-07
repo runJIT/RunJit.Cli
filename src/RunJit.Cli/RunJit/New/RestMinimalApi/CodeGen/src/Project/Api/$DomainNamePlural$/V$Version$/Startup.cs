@@ -10,7 +10,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class Startup
     {
-        internal static void AddProjectsV1(this IServiceCollection serviceCollection, IConfiguration configuration)
+        internal static void Add$DomainNamePlural$V$Version$(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
             serviceCollection.AddCreate(configuration);
             serviceCollection.AddDeleteAll(configuration);
@@ -21,7 +21,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             serviceCollection.AddUpdate(configuration);
         }
 
-        internal static void MapProjectsV1(this IEndpointRouteBuilder endpointRouteBuilder)
+        internal static void Map$DomainNamePlural$V$Version$(this IEndpointRouteBuilder endpointRouteBuilder)
         {
             endpointRouteBuilder.MapCreate();
             endpointRouteBuilder.MapDeleteAll();

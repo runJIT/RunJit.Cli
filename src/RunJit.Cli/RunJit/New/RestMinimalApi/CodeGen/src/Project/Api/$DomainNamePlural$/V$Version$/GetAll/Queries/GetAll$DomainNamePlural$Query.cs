@@ -27,7 +27,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
             using var dbContext = amazonDynamoDbClientFactory.Create();
 
             // 2. Get all $DomainNameLower$ entities by filter criteria or all
-            var $DomainNameLower$Entities = await dbContext.GetAllAsync<ProjectEntity>(name).ConfigureAwait(false);
+            var $DomainNameLower$Entities = await dbContext.GetAllAsync<$DomainName$Entity>(name).ConfigureAwait(false);
 
             // 3. Map to api models (AntiCorruptionLayer - ACL)
             var $DomainNamePluralLower$ = mapper.MapFrom($DomainNameLower$Entities);

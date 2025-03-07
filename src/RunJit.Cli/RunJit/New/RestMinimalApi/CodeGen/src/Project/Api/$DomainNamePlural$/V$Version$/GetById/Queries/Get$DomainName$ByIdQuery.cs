@@ -23,8 +23,15 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
         {
             using var dbContext = dynamoDbClientFactory.Create();
 
-            var $DomainNameLower$Entity = await dbContext.LoadAsync<$DomainName$Entity>($IdUrlName$, cancellationToken).ConfigureAwait(false) ?? throw new NotFoundDetailsException("Project not found", "The requested Project with the id: {projectId} was not found.", ("projectId", projectId));
-
+            var $DomainNameLower$Entity = await dbContext.LoadAsync<$DomainName$Entity>($IdUrlName$, cancellationToken).ConfigureAwait(false);
+            
+            if ($DomainNameLower$Entity.IsNull())
+            {
+                throw new NotFoundDetailsException("$DomainName$ not found", 
+                                                   $"The requested User with the id: {$IdUrlName$} was not found.", 
+                                                   ("$IdPropertyName$", $IdUrlName$));    
+            }
+            
             var $DomainNameLower$ = mapper.MapFrom($DomainNameLower$Entity);
 
             return $DomainNameLower$;

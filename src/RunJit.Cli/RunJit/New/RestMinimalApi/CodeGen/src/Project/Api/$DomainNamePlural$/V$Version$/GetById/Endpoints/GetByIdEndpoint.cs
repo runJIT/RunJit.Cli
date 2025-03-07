@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
 {
-    public static class MapGet$DomainName$ByIdEndpoint
+    internal static class MapGet$DomainName$ByIdEndpoint
     {
-        public static RouteHandlerBuilder MapGet$DomainName$ById(this IEndpointRouteBuilder endpoints)
+        internal static RouteHandlerBuilder MapGet$DomainName$ById(this IEndpointRouteBuilder endpoints)
         {
             return endpoints.MapGet("$DomainNamePluralLower$/{$IdUrlName$:guid}",
                                             async (Guid $DomainNameLower$Id,

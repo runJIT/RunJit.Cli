@@ -1,6 +1,6 @@
 ﻿using Extensions.Pack;
 using $ProjectName$.Aws.DynamoDb;
-using $ProjectName$.Database.Projects;
+using $ProjectName$.Database.$DomainNamePlural$;
 using Siemens.AspNet.ErrorHandling.Contracts;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById

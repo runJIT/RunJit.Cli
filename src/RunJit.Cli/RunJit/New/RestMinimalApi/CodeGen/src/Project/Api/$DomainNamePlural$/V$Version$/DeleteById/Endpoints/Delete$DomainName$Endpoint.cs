@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Delete
 {
-    public static class DeleteProjectEndpoint
+    internal static class Delete$DomainName$Endpoint
     {
-        public static void MapDeleteProject(this IEndpointRouteBuilder endpoints)
+        internal static void MapDelete$DomainName$(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapDelete("$DomainNamePluralLower$/{$IdUrlName$:guid}", HandleAsync)
                      .Produces<NoContent>(204)
@@ -23,10 +23,10 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Delete
                      .WithSummaryFromFile("Summary.txt");
 
             static async Task<IResult> HandleAsync(Guid $IdUrlName$,
-                                                   DeleteProjectCommand deleteProjectCommand,
+                                                   Delete$DomainName$Command delete$DomainName$Command,
                                                    CancellationToken cancellationToken = default)
             {
-                await deleteProjectCommand.ExecuteAsync($IdUrlName$, cancellationToken).ConfigureAwait(false);
+                await delete$DomainName$Command.ExecuteAsync($IdUrlName$, cancellationToken).ConfigureAwait(false);
 
                 return Results.NoContent();
             }

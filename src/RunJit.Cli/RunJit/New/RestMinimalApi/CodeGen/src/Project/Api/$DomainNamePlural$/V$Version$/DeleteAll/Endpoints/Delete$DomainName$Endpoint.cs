@@ -4,9 +4,9 @@ using $ProjectName$.Extensions;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
 {
-    internal static class DeleteProjectEndpoint
+    internal static class Delete$DomainName$Endpoint
     {
-        internal static void MapDeleteProject(this IEndpointRouteBuilder endpoints)
+        internal static void MapDelete$DomainName$(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapDelete("$DomainNamePluralLower$", HandleAsync)
                      .Produces<NoContent>(204)
@@ -22,11 +22,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
                      .WithDescriptionFromFile("Description.txt")
                      .WithSummaryFromFile("Summary.txt");
 
-            static async Task<IResult> HandleAsync(DeleteAll$DomainNamePlural$Command deleteProjectCommand,
+            static async Task<IResult> HandleAsync(DeleteAll$DomainNamePlural$Command delete$DomainName$Command,
                                                    [FromQuery] string $QueryPropertyNameLower$ = "",
                                                    CancellationToken cancellationToken = default)
             {
-                await deleteProjectCommand.ExecuteAsync($QueryPropertyNameLower$, cancellationToken).ConfigureAwait(false);
+                await delete$DomainName$Command.ExecuteAsync($QueryPropertyNameLower$, cancellationToken).ConfigureAwait(false);
 
                 return Results.NoContent();
             }

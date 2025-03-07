@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
 {
-    public static class UpdateEndpoint
+    internal static class UpdateEndpoint
     {
-        public static void MapUpdate$DomainName$(this IEndpointRouteBuilder endpoints)
+        internal static void MapUpdate$DomainName$(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapPut("$DomainNamePluralLower$/{$IdUrlName$:guid}", HandleAsync)
                      .Produces<Update$DomainName$Response>()

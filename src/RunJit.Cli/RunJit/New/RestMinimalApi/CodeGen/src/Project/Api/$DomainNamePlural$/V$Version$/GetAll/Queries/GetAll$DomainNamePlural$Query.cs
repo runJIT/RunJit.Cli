@@ -2,7 +2,7 @@
 using Amazon.DynamoDBv2.DocumentModel;
 using Extensions.Pack;
 using $ProjectName$.Aws.DynamoDb;
-using $ProjectName$.Database.Projects;
+using $ProjectName$.Database.$DomainNamePlural$;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
 {

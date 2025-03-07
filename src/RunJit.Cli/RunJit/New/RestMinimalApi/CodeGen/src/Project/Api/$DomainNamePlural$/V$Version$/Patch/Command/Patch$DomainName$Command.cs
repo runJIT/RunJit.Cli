@@ -2,7 +2,7 @@
 using Extensions.Pack;
 using Newtonsoft.Json;
 using $ProjectName$.Aws.DynamoDb;
-using $ProjectName$.Database.Projects;
+using $ProjectName$.Database.$DomainNamePlural$;
 using $ProjectName$.JsonSerializing;
 using Siemens.AspNet.ErrorHandling.Contracts;
 

@@ -1,17 +1,17 @@
-﻿using $ProjectName$.Api.Projects.V1;
+﻿using $ProjectName$.Api.$DomainNamePlural$.V$Version$;
 
-namespace $ProjectName$.Api.Projects
+namespace $ProjectName$.Api.$DomainNamePlural$
 {
     internal static class Startup
     {
-        internal static void AddProjects(this IServiceCollection services, IConfiguration configuration)
+        internal static void Add$DomainNamePlural$(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddProjectsV1(configuration);
+            services.Add$DomainNamePlural$V1(configuration);
         }
 
-        internal static void MapProjects(this IEndpointRouteBuilder endpoints)
+        internal static void Map$DomainNamePlural$(this IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapProjectsV1();
+            endpoints.Map$DomainNamePlural$V1();
         }
     }
 }

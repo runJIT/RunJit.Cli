@@ -3,9 +3,9 @@ using $ProjectName$.Extensions;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
 {
-    public static class MapGetAll$DomainNamePluralLower$Endpoint
+    internal static class MapGetAll$DomainNamePluralLower$Endpoint
     {
-        public static RouteHandlerBuilder MapGetAll$DomainNamePlural$(this IEndpointRouteBuilder endpoints)
+        internal static RouteHandlerBuilder MapGetAll$DomainNamePlural$(this IEndpointRouteBuilder endpoints)
         {
             return endpoints.MapGet("$DomainNamePluralLower$", HandleAsync)
                             .Produces<GetAll$DomainNamePlural$Response>()

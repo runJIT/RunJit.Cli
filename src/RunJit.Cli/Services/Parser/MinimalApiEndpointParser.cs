@@ -177,6 +177,11 @@ namespace RunJit.Cli.Services
             {
                 foreach (var @class in syntaxTree.Classes)
                 {
+                    if (@class.Name.ToLower() == "startup")
+                    {
+                        continue;
+                    }
+                    
                     foreach (var method in @class.Methods)
                     {
                         foreach (var methodStatement in method.Statements)

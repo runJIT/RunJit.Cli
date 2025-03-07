@@ -3,6 +3,7 @@ using AspNetCore.Simple.Sdk.Mediator;
 using Extensions.Pack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RunJit.Cli.Test.Extensions;
+using static RunJit.Cli.Test.SystemTest.NewMinimalRestApiTest;
 
 namespace RunJit.Cli.Test.SystemTest
 {
@@ -32,6 +33,63 @@ namespace RunJit.Cli.Test.SystemTest
             // 3. Assert that solution can be tested
             // await DotNetTool.AssertRunAsync("dotnet", $"test {solutionFileInfo.FullName}").ConfigureAwait(false);
 
+            // 4. Create Client
+            await Mediator.SendAsync(new GenerateClient(solutionFileInfo, false));
+
+            // 5. Create .Net tool
+            await Mediator.SendAsync(new GenerateDotNetTool(solutionFileInfo, toolName));
+
+            // 6. Add code rules
+            await Mediator.SendAsync(new UpdateCodeRulesForSolution(solutionFileInfo.FullName)).ConfigureAwait(false);
+
+            // 6.Assert that solution can be build
+            // await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
+
+            // 7.Assert that solution can be tested
+            // await DotNetTool.AssertRunAsync("dotnet", $"test {solutionFileInfo.FullName}").ConfigureAwait(false);
+
+            // 8. Pack
+            //  wait DotNetTool.AssertRunAsync("dotnet", $@"pack {solutionFileInfo.FullName} -o D:\Nuget").ConfigureAwait(false);
+
+            // 9. Publish
+            // await DotNetTool.AssertRunAsync("dotnet", $@"pack {solutionFileInfo.FullName} -o D:\Nuget").ConfigureAwait(false);
+        }
+
+        private const string ProjectEntityModel = """
+                                                  [DynamoDBTable("Project")]
+                                                  public record ProjectEntity
+                                                  {
+                                                      [DynamoDBHashKey]
+                                                      public Guid ProjectId { get; init; } = Guid.Empty;
+                                                  
+                                                      public string Name { get; init; } = string.Empty;
+                                                  
+                                                      public string Description { get; init; } = string.Empty;
+                                                  }
+                                                  """;
+        
+        [DataTestMethod]
+        [DataRow("Siemens.Sdc", "api/core", "Sdc")]
+        [DataRow("Siemens.Reporting", "api/reporting", "Reporting")]
+        [DataRow("Pulse.FieldingTool", "api/fieldingtool", "FieldingTool")]
+        [DataRow("Sdc.LandingPage", "api/landingpage", "LandingPage")]
+        [DataRow("Sdc.Console", "api/console", "SdcConsole")]
+        [DataRow("Sdc.Core", "api/core", "Core")]
+        public async Task Should_Generate_New_Minimal_Web_Api_Solution_With_Api_Endpoint(string projectName,
+                                                                                         string basePath,
+                                                                                         string toolName)
+        {
+            var targetDirectory = Path.Combine(Environment.CurrentDirectory, projectName);
+
+            // 1. Create new solution and projects
+            var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
+
+            // 2. Assert that solution can be build and needed for client as well
+            await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
+
+            // 3. Add rest api
+            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, "Name", "Projects", solutionFileInfo.FullName));
+            
             // 4. Create Client
             await Mediator.SendAsync(new GenerateClient(solutionFileInfo, false));
 

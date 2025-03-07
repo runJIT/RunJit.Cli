@@ -1,16 +1,16 @@
 ﻿using System.Collections.Immutable;
 using AspNetCore.Simple.MsTest.Sdk;
-using $ProjectName$.Api.$DomainNamePlural$.V1;
-using $ProjectName$.Api.$DomainNamePlural$.V1.Create;
-using $ProjectName$.Api.$DomainNamePlural$.V1.GetById;
-using $ProjectName$.Api.$DomainNamePlural$.V1.Update;
+using $ProjectName$.Api.$DomainNamePlural$.V$Version$;
+using $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create;
+using $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById;
+using $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update;
 using Microsoft.AspNetCore.Mvc;
 
 namespace $ProjectName$.Test.Api.Health
 {
     [TestClass]
     [TestCategory("$DomainNamePlural$")]
-    [TestCategory("$DomainNamePlural$ V1")]
+    [TestCategory("$DomainNamePlural$ V$Version$")]
     public class Update_$DomainName$_Test : ApiTestBase
     {
         private static readonly string UniqueName = GetUniqueRunnerName();

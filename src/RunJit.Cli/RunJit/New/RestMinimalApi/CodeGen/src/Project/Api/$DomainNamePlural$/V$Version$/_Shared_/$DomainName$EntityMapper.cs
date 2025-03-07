@@ -2,7 +2,7 @@
 using Extensions.Pack;
 using $ProjectName$.Database.$DomainNamePlural$;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V1
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class Add$DomainName$EntityMapperExtension
     {

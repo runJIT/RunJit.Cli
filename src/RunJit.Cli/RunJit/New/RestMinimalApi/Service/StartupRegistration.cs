@@ -52,35 +52,52 @@ namespace RunJit.Cli.New.RestMinimalApi
             var addApiMethod = methods.FirstOrDefault(m => m.Name == "AddApi");
             if (addApiMethod.IsNotNull())
             {
-                var newLineStatements = addApiMethod.LineStatements.Add($"services.Add{createRestApiInfos.DomainNamePlural}(configuration);");
-                var orgLines = addApiMethod.LineStatements.ToFlattenString(Environment.NewLine);
-                var flattenString = newLineStatements.ToFlattenString(Environment.NewLine);
+                var newRegistration = $"services.Add{createRestApiInfos.DomainNamePlural}(configuration);";
 
-                newSyntaxTree = newSyntaxTree.Replace(orgLines, flattenString);
+                if (addApiMethod.SyntaxTree.DoesNotContain(newRegistration))
+                {
+                    var newLineStatements = addApiMethod.LineStatements.Add(newRegistration);
+                    var orgLines = addApiMethod.LineStatements.ToFlattenString(Environment.NewLine);
+                    var flattenString = newLineStatements.ToFlattenString(Environment.NewLine);
+
+                    newSyntaxTree = newSyntaxTree.Replace(orgLines, flattenString);    
+                }
+                
             }
 
             var mapMethod = methods.FirstOrDefault(m => m.Name == "MapApi");
             if (mapMethod.IsNotNull())
             {
-                var newLineStatements = mapMethod.LineStatements.Add($"endpoints.Map{createRestApiInfos.DomainNamePlural}();");
-                var orgLines = mapMethod.LineStatements.ToFlattenString(Environment.NewLine);
-                var flattenString = newLineStatements.ToFlattenString(Environment.NewLine);
+                var mapRegistration = $"endpoints.Map{createRestApiInfos.DomainNamePlural}();";
 
-                newSyntaxTree = newSyntaxTree.Replace(orgLines, flattenString);
+                if (mapMethod.SyntaxTree.DoesNotContain(mapRegistration))
+                {
+                    var newLineStatements = mapMethod.LineStatements.Add(mapRegistration);
+                    var orgLines = mapMethod.LineStatements.ToFlattenString(Environment.NewLine);
+                    var flattenString = newLineStatements.ToFlattenString(Environment.NewLine);
+
+                    newSyntaxTree = newSyntaxTree.Replace(orgLines, flattenString);
+                }
             }
 
-            var originalUsings = syntaxTree.Usings.Select(u => u.Value).ToList();
-            var newUsings = originalUsings.Concat($"using {createRestApiInfos.ProjectName}.Api.{createRestApiInfos.DomainNamePlural};").ToFlattenString(Environment.NewLine);
-
-            if (originalUsings.IsEmpty())
-            {
-                newSyntaxTree = $"{newUsings}{Environment.NewLine}{Environment.NewLine}{newSyntaxTree}";
-            }
-            else
-            {
-                newSyntaxTree = newSyntaxTree.Replace(originalUsings.ToFlattenString(Environment.NewLine), newUsings);    
-            }
             
+            var newUsing = $"using {createRestApiInfos.ProjectName}.Api.{createRestApiInfos.DomainNamePlural};";
+
+            if (newSyntaxTree.DoesNotContain(newUsing))
+            {
+                var originalUsings = syntaxTree.Usings.Select(u => $"using {u.Value};").ToList();
+            
+                var newUsings = originalUsings.Concat(newUsing).Distinct().ToFlattenString(Environment.NewLine);
+
+                if (originalUsings.IsEmpty())
+                {
+                    newSyntaxTree = $"{newUsings}{Environment.NewLine}{Environment.NewLine}{newSyntaxTree}";
+                }
+                else
+                {
+                    newSyntaxTree = newSyntaxTree.Replace(originalUsings.ToFlattenString(Environment.NewLine), newUsings);    
+                }
+            }
             
             
             //internal static class Startup

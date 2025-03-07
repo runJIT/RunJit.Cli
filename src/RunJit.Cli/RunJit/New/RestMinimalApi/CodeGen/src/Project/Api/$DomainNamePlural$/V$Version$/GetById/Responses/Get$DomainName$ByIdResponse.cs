@@ -1,4 +1,4 @@
-﻿namespace $ProjectName$.Api.$DomainNamePlural$.V1.GetById
+﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
 {
     public sealed record Get$DomainName$ByIdResponse($DomainName$ $DomainName$);
 }

@@ -1,4 +1,4 @@
-﻿using $ProjectName$.Api.$DomainNamePlural$.V1.Update;
+﻿using $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update;
 using $ProjectName$.Extensions;
 using Microsoft.AspNetCore.Mvc;
 

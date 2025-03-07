@@ -13,7 +13,8 @@ namespace $ProjectName$.Test.Utils
             //            the migration scripts are not executed as expected in the API startup!
             //            All databases are already pre-setup (with all pros and cons)
             var migrationScriptFiles = assembly.GetManifestResourceNames()
-                                               .Where(name => name.Contains("Database.Migrations."))
+                                               .Where(name => name.Contains("Database") &&
+                                                              name.EndsWith(".sh"))
                                                .ToList();
 
             foreach (var migrationScriptAsFile in migrationScriptFiles)

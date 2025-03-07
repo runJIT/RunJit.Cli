@@ -18,6 +18,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V1
         {
             var $DomainNameLower$ = new $DomainName$()
                           {
+                              $IdPropertyName$ = source.$IdPropertyName$,
                               $PropertyMappings$
                           };
 

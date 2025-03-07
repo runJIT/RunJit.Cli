@@ -33,21 +33,8 @@ namespace RunJit.Cli.New.MinimalApiProject
 
             // 2. Add wildcards for files which should be embedded
             var itemGroup = new XElement("ItemGroup");
-            var jsonEmbeddedResource = new XElement("EmbeddedResource");
-            var jsonIncludeAttribute = new XAttribute("Include", @"**\*.json");
-            var jsonExcludeAttribute = new XAttribute("Exclude", @"bin\**\*;obj\**\*");
-            jsonEmbeddedResource.Add(jsonIncludeAttribute);
-            jsonEmbeddedResource.Add(jsonExcludeAttribute);
-            
-            var txtEmbeddedResource = new XElement("EmbeddedResource");
-            var txtIncludeAttribute = new XAttribute("Include", @"**\*.txt");
-            var txtExcludeAttribute = new XAttribute("Exclude", @"bin\**\*;obj\**\*");
-            txtEmbeddedResource.Add(txtIncludeAttribute);
-            txtEmbeddedResource.Add(txtExcludeAttribute);
-      
-            
-            itemGroup.Add(jsonEmbeddedResource);
-            itemGroup.Add(txtEmbeddedResource);
+            var embeddedFileElements = GetEmbeddedResources(".txt", ".json", ".sh").ToList();
+            embeddedFileElements.ForEach(element => itemGroup.Add(element));
 
             // 3. Add the comment and new PropertyGroup to the root of the project file
             projectDocument.Root!.Add(toolEmbeddedFileSettingsComment, itemGroup);
@@ -56,6 +43,25 @@ namespace RunJit.Cli.New.MinimalApiProject
             consoleService.WriteSuccess($"Successfully modified {projectFileInfo.FullName} with .Net tool specific settings");
 
             return Task.CompletedTask;
+        }
+
+        private IEnumerable<XElement> GetEmbeddedResources(params string[] fileExtensions)
+        {
+            foreach (var fileExtension in fileExtensions)
+            {
+                yield return BuildEmbeddedResourceElement(fileExtension);
+            }
+        }
+
+        private XElement BuildEmbeddedResourceElement(string extension)
+        {
+            var embeddedResourceElement = new XElement("EmbeddedResource");
+            var includeAttribute = new XAttribute("Include", @$"**\*.{extension.TrimStart('.')}");
+            var excludeAttribute = new XAttribute("Exclude", @"bin\**\*;obj\**\*");
+            embeddedResourceElement.Add(includeAttribute);
+            embeddedResourceElement.Add(excludeAttribute);
+
+            return embeddedResourceElement;
         }
     }
 }

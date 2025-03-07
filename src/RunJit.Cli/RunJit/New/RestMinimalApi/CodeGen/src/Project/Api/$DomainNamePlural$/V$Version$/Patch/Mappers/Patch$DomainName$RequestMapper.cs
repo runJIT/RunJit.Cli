@@ -1,7 +1,7 @@
 ﻿using Extensions.Pack;
-using Sdc.Core.Database.Projects;
+using $ProjectName$.Database.Projects;
 
-namespace Sdc.Core.Api.Projects.V1.Patch
+namespace $ProjectName$.Api.Projects.V1.Patch
 {
     internal static class AddPatch$DomainName$RequestMapperExtension
     {

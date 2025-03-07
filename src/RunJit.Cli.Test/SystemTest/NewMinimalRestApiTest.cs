@@ -42,6 +42,17 @@ namespace RunJit.Cli.Test.SystemTest
                                                       public string Description { get; init; } = string.Empty;
                                                   }
                                                   """;
+        
+        private const string UserEntityModel = """
+                                                  [DynamoDBTable("User")]
+                                                  public record UserEntity
+                                                  {
+                                                      [DynamoDBHashKey]
+                                                      public Guid UserId { get; init; } = Guid.Empty;
+                                                  
+                                                      public string Name { get; init; } = string.Empty;
+                                                  }
+                                                  """;
 
         [DataTestMethod]
         //[DataRow("Siemens.Sdc", "api/core", "Sdc")]
@@ -49,12 +60,14 @@ namespace RunJit.Cli.Test.SystemTest
         //[DataRow("Pulse.FieldingTool", "api/fieldingtool", "FieldingTool")]
         //[DataRow("Sdc.LandingPage", "api/landingpage", "LandingPage")]
         //[DataRow("Sdc.Console", "api/console", "SdcConsole")]
-        [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name")]
+        [DataRow("$ProjectName$", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Users", "Name", UserEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_Solution(string projectName,
                                                                 string basePath,
                                                                 string toolName,
                                                                 string domainName,
-                                                                string queryPropertyName)
+                                                                string queryPropertyName,
+                                                                string entityModel)
         {
             var targetDirectory = Path.Combine(Environment.CurrentDirectory, projectName);
 
@@ -62,9 +75,9 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add rest api
-            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, queryPropertyName, domainName, solutionFileInfo.FullName));
-
-            // 2. Assert that solution can be build and needed for client as well
+            await Mediator.SendAsync(new NewMinimalRestApi(entityModel, queryPropertyName, domainName, solutionFileInfo.FullName));
+            
+            // 3. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
 
             // 3. Assert that solution can be tested

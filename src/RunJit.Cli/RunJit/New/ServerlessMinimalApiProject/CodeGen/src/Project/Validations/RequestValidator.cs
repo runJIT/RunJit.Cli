@@ -1,5 +1,6 @@
-﻿using Siemens.AspNet.ErrorHandling.Contracts;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Siemens.AspNet.ErrorHandling.Contracts;
 
 namespace $ProjectName$.Validations
 {

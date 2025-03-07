@@ -1,5 +1,5 @@
 ﻿using $ProjectName$.Extensions;
-using Siemens.AspNet.ErrorHandling.Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
 {

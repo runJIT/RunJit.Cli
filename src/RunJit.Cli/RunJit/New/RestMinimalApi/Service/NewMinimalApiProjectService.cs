@@ -1,8 +1,11 @@
-﻿using Extensions.Pack;
+﻿using System.Collections.Generic;
+using System.Text;
+using Extensions.Pack;
 using Microsoft.Extensions.DependencyInjection;
 using PluralizeService.Core;
 using RunJit.Cli.ErrorHandling;
 using RunJit.Cli.New.MinimalApiProject;
+using RunJit.Cli.RunJit.New.RestMinimalApi.Service;
 using RunJit.Cli.Services;
 using Solution.Parser.CSharp;
 using Solution.Parser.Solution;
@@ -24,7 +27,9 @@ namespace RunJit.Cli.New.RestMinimalApi
         internal required string IdPropertyName { get; init; }
         internal required string QueryPropertyName { get; init; }
         internal required string QueryPropertyNameLower { get; init; }
+        internal required string MigrationScript { get; init; }
         internal required int Version { get; init; }
+
     }
 
     internal interface IRestMinimalApiSpecificCodeGen
@@ -43,12 +48,14 @@ namespace RunJit.Cli.New.RestMinimalApi
             services.AddMinimalApiProjectCreator();
             services.AddWriteEmbbededFileIntoTarget();
             services.AddStartupRegistration();
+            services.AddGenerateMigrationScript();
 
             services.AddSingletonIfNotExists<NewRestMinimalApiService>();
         }
     }
 
     internal sealed class NewRestMinimalApiService(ConsoleService consoleService,
+                                                   GenerateMigrationScript generateMigrationScript,
                                                    IEnumerable<IRestMinimalApiSpecificCodeGen> codeGenerators)
     {
         public async Task<int> HandleAsync(NewRestMinimalApiParameters parameters)
@@ -75,7 +82,7 @@ namespace RunJit.Cli.New.RestMinimalApi
             {
                 throw new RunJitException($"Query property name must not be null, empty or whitespace");
             }
-            
+
 
             var syntaxTree = CSharpSyntaxTree.ParseText(parameters.DbEntityModel);
             var simplifiedSyntaxTree = syntaxTree.Parse(string.Empty);
@@ -127,7 +134,7 @@ namespace RunJit.Cli.New.RestMinimalApi
             {
                 throw new RunJitException($"Your passed query property name: {parameters.QueryProperty} does not exists on your passed entity model:{Environment.NewLine}{parameters.DbEntityModel}");
             }
-            
+
 
             if (record.Attributes.Any(a => a.Name.Contains("DynamoDBTable").IsFalse()))
             {
@@ -229,6 +236,8 @@ namespace RunJit.Cli.New.RestMinimalApi
                 throw new RunJitException("Cant find a project files which is using ServerlessMinimalWebApi(). This new REST-API gen is only made for this new type of web api projects");
             }
 
+            var migrationScript = generateMigrationScript.Generate(record);
+
             var createRestApiInfos = new CreateRestApiInfos
             {
                 Version = parameters.Version,
@@ -243,7 +252,8 @@ namespace RunJit.Cli.New.RestMinimalApi
                 PropertiesWithoutId = propertiesWithoutId,
                 IdPropertyName = hashKeyPropertyId.Name,
                 QueryPropertyName = parameters.QueryProperty,
-                QueryPropertyNameLower = parameters.QueryProperty.FirstCharToLower()
+                QueryPropertyNameLower = parameters.QueryProperty.FirstCharToLower(),
+                MigrationScript = migrationScript
             };
 
 
@@ -258,4 +268,6 @@ namespace RunJit.Cli.New.RestMinimalApi
             return 0;
         }
     }
+
+    
 }

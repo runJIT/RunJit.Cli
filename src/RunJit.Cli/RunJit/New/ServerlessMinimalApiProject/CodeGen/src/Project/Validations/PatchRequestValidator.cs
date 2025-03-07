@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using Extensions.Pack;
 using $ProjectName$.JsonSerializing;
+using Microsoft.AspNetCore.Mvc;
 using Siemens.AspNet.ErrorHandling.Contracts;
 using System.Net;
 using System.Text.Json.Nodes;

@@ -4,7 +4,7 @@ using $ProjectName$.Api.$DomainNamePlural$.V1;
 using $ProjectName$.Api.$DomainNamePlural$.V1.Create;
 using $ProjectName$.Api.$DomainNamePlural$.V1.GetById;
 using $ProjectName$.Api.$DomainNamePlural$.V1.Update;
-using Siemens.AspNet.ErrorHandling.Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace $ProjectName$.Test.Api.Health
 {

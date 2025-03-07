@@ -1,6 +1,6 @@
 ﻿using $ProjectName$.Api.$DomainNamePlural$.V1.Update;
 using $ProjectName$.Extensions;
-using Siemens.AspNet.ErrorHandling.Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
 {

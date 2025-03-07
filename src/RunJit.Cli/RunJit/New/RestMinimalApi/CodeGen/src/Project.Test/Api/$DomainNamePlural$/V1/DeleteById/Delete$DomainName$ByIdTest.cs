@@ -3,7 +3,7 @@ using AspNetCore.Simple.MsTest.Sdk;
 using $ProjectName$.Api.$DomainNamePlural$.V1;
 using $ProjectName$.Api.$DomainNamePlural$.V1.Create;
 using $ProjectName$.Api.$DomainNamePlural$.V1.GetAll;
-using Siemens.AspNet.ErrorHandling.Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace $ProjectName$.Test.Api.Health
 {

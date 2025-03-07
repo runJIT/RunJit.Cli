@@ -1,7 +1,7 @@
 ﻿using Extensions.Pack;
-using $ProjectName$.Database.Projects;
+using $ProjectName$.Database.$DomainNamePlural$;
 
-namespace $ProjectName$.Api.Projects.V1.Patch
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
 {
     internal static class AddPatch$DomainName$RequestMapperExtension
     {

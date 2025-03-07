@@ -16,7 +16,7 @@ namespace RunJit.Cli.Test.SystemTest
         [DataRow("Pulse.FieldingTool", "api/fieldingtool", "FieldingTool")]
         [DataRow("Sdc.LandingPage", "api/landingpage", "LandingPage")]
         [DataRow("Sdc.Console", "api/console", "SdcConsole")]
-        [DataRow("$ProjectName$", "api/core", "Core")]
+        [DataRow("Sdc.Core", "api/core", "Core")]
         public async Task Should_Generate_New_Minimal_Web_Api_Solution(string projectName,
                                                                        string basePath,
                                                                        string toolName)

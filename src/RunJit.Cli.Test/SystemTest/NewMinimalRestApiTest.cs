@@ -60,7 +60,7 @@ namespace RunJit.Cli.Test.SystemTest
         //[DataRow("Pulse.FieldingTool", "api/fieldingtool", "FieldingTool")]
         //[DataRow("Sdc.LandingPage", "api/landingpage", "LandingPage")]
         //[DataRow("Sdc.Console", "api/console", "SdcConsole")]
-        [DataRow("$ProjectName$", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
+        [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
         [DataRow("Sdc.UserManagement", "api/core", "um", "Users", "Name", UserEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_Solution(string projectName,
                                                                 string basePath,

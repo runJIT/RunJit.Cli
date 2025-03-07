@@ -1,4 +1,4 @@
-﻿namespace $ProjectName$.Api.Projects.V$Version$.Create
+﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
 {
     public sealed record Create$DomainName$Request
     {

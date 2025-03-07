@@ -1,4 +1,4 @@
-﻿namespace $ProjectName$.Api.Projects.V$Version$
+﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     $DomainModel$
 }

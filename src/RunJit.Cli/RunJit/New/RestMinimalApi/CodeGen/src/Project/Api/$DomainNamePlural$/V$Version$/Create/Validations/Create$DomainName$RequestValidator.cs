@@ -1,7 +1,7 @@
 ﻿using Extensions.Pack;
 using $ProjectName$.Validations;
 
-namespace $ProjectName$.Api.Projects.V$Version$.Create
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
 {
     public static class AddCreate$DomainName$RequestValidatorExtension
     {

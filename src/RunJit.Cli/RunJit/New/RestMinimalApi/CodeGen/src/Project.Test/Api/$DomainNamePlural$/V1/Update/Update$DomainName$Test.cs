@@ -24,14 +24,15 @@ namespace $ProjectName$.Test.Api.Health
         [TestMethod]
         public Task Should_Not_Be_Able_To_Call_If_Caller_Is_Not_Authorized()
         {
-            return Client.AssertPutAsUnauthorizedAsync($"api/core/v1/$DomainNamePluralLower$");
+            return Client.AssertPutAsUnauthorizedAsync($"api/core/v1/$DomainNamePluralLower$/not-a-guid");
         }
 
         [TestMethod]
-        public Task Should_Not_Be_Able_To_Patch_If_$IdPropertyName$_Is_Not_A_Guid()
+        public Task Should_Not_Be_Able_To_Put_If_$IdPropertyName$_Is_Not_A_Guid()
         {
-            return Client.AssertPatchAsync<ProblemDetails>("api/core/v1/$DomainNamePluralLower$/not-a-guid",
-                                                           "Invalid$IdPropertyName$.json");
+            return Client.AssertPutAsync<ProblemDetails>("api/core/v1/$DomainNamePluralLower$/not-a-guid",
+                                                         "Invalid$IdPropertyName$.json",
+                                                         "Invalid$IdPropertyName$.json");
         }
         
 

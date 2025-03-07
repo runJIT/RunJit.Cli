@@ -81,8 +81,43 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
+        [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Users", "Name", UserEntityModel)]
+        public async Task Should_Add_New_Rest_Api_Into_Solution_From_File(string projectName,
+                                                                          string basePath,
+                                                                          string toolName,
+                                                                          string domainName,
+                                                                          string queryPropertyName,
+                                                                          string entityModel)
+        {
+            var targetDirectory = Path.Combine(Environment.CurrentDirectory, projectName);
+
+            // 1. Create new solution and projects
+            var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
+
+            // 2. Simulate file path
+            var fileInfo = new FileInfo(Path.Combine(Environment.CurrentDirectory, "TestFile", "Entity.cs"));
+            if (fileInfo.Directory!.NotExists())
+            {
+                fileInfo.Directory!.Create();
+            }
+            await File.WriteAllTextAsync(fileInfo.FullName, entityModel);
+            
+            // 3. Add rest api
+            await Mediator.SendAsync(new NewMinimalRestApi(fileInfo.FullName, queryPropertyName, domainName, solutionFileInfo.FullName));
+
+            // 4. Assert that solution can be build and needed for client as well
+            await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
+
+            // 5. Assert that solution can be tested
+            // await DotNetTool.AssertRunAsync("dotnet", $"test {solutionFileInfo.FullName}").ConfigureAwait(false);
+        }
+
+        [DataTestMethod]
+        [DataRow("Sdc.Core", "api/core", "Core",
+                    "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um",
+                    "Name")]
         public async Task Should_Be_Able_To_Create_Multiple_Domains(string projectName,
                                                                     string basePath,
                                                                     string toolName,
@@ -94,10 +129,12 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add project api
-            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, queryPropertyName, "Projects", solutionFileInfo.FullName));
+            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, queryPropertyName, "Projects",
+                                                           solutionFileInfo.FullName));
 
             // 3. Add user api
-            await Mediator.SendAsync(new NewMinimalRestApi(UserEntityModel, queryPropertyName, "Users", solutionFileInfo.FullName));
+            await Mediator.SendAsync(new NewMinimalRestApi(UserEntityModel, queryPropertyName, "Users",
+                                                           solutionFileInfo.FullName));
 
             // 4. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
@@ -107,8 +144,10 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
+        [DataRow("Sdc.Core", "api/core", "Core",
+                    "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um",
+                    "Name")]
         public async Task Should_Be_Able_To_Create_Same_Domain_In_Different_Versions(string projectName,
                                                                                      string basePath,
                                                                                      string toolName,
@@ -120,10 +159,12 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add project api
-            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, queryPropertyName, "Projects", solutionFileInfo.FullName, Version: 1));
+            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, queryPropertyName, "Projects",
+                                                           solutionFileInfo.FullName, Version: 1));
 
             // 3. Add user api
-            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, queryPropertyName, "Projects", solutionFileInfo.FullName, Version: 2));
+            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, queryPropertyName, "Projects",
+                                                           solutionFileInfo.FullName, Version: 2));
 
             // 4. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);

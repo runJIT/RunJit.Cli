@@ -143,7 +143,7 @@ namespace RunJit.Cli.Generate.DotNetTool
             await dotNet.AddProjectToSolutionAsync(solutionFileInfo, dotnetToolProject, "Cli").ConfigureAwait(false);
 
             // 11. Cleanup code to be in sync with target solution settings :)
-            // await solutionCodeCleanup.CleanupSolutionAsync(solutionFileInfo).ConfigureAwait(false);
+            await solutionCodeCleanup.CleanupSolutionAsync(solutionFileInfo).ConfigureAwait(false);
 
             // 12. Return the created csproj file
             return dotnetToolProject;

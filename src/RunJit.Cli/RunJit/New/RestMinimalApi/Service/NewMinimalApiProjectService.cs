@@ -84,7 +84,9 @@ namespace RunJit.Cli.New.RestMinimalApi
             }
 
 
-            var syntaxTree = CSharpSyntaxTree.ParseText(parameters.DbEntityModel);
+
+
+            var syntaxTree = parameters.DbEntityModel.EndsWith(".cs") ? CSharpSyntaxTree.ParseText(await File.ReadAllTextAsync(parameters.DbEntityModel)) : CSharpSyntaxTree.ParseText(parameters.DbEntityModel);
             var simplifiedSyntaxTree = syntaxTree.Parse(string.Empty);
 
 
@@ -132,7 +134,7 @@ namespace RunJit.Cli.New.RestMinimalApi
 
             if (queryPropertyName.IsNull())
             {
-                throw new RunJitException($"Your passed query property name: {parameters.QueryProperty} does not exists on your passed entity model:{Environment.NewLine}{parameters.DbEntityModel}");
+                throw new RunJitException($"Your passed query property name: {parameters.QueryProperty} does not exists on your passed entity model:{Environment.NewLine}{syntaxTree}");
             }
 
 
@@ -242,7 +244,7 @@ namespace RunJit.Cli.New.RestMinimalApi
             {
                 Version = parameters.Version,
                 DomainModelCode = domainModel,
-                EntityModelCode = parameters.DbEntityModel,
+                EntityModelCode = record.SyntaxTree,
                 DomainName = domainName,
                 DomainNameLower = domainName.FirstCharToLower(),
                 DomainNamePlural = domainNamePlural,
@@ -269,5 +271,5 @@ namespace RunJit.Cli.New.RestMinimalApi
         }
     }
 
-    
+
 }

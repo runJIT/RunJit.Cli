@@ -7,7 +7,7 @@
       }
     ],
     "Value": {
-      "Projects": []
+      "$DomainNamePlural$": []
     }
   },
   "StatusCode": "OK",

@@ -10,7 +10,7 @@
       "Projects": [
         {
           "Id": "1e8ad441-4732-4580-8ebe-e09ab8f5b567",
-          "Name": "$ProjectName$",
+          Name": "$UniqueProjectName$",
           "Description": "This is the first project"
         }
       ]

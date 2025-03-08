@@ -29,8 +29,9 @@ namespace RunJit.Cli.New.RestMinimalApi
         internal required string QueryPropertyName { get; init; }
         internal required string QueryPropertyNameLower { get; init; }
         internal required string MigrationScript { get; init; }
+        internal required string TestRequestJson { get; init; }
+        internal required string TestResponseJson { get; init; }
         internal required int Version { get; init; }
-
     }
 
     internal interface IRestMinimalApiSpecificCodeGen
@@ -39,7 +40,7 @@ namespace RunJit.Cli.New.RestMinimalApi
                            FileInfo webApiProject,
                            CreateRestApiInfos createRestApiInfos);
     }
-    
+
     internal interface IRestMinimalApiTestSpecificCodeGen
     {
         Task GenerateAsync(FileInfo solutionFileInfo,
@@ -60,7 +61,7 @@ namespace RunJit.Cli.New.RestMinimalApi
             services.AddGenerateMigrationScript();
             services.AddApiNamespaceProviderCleanup();
             services.AddDatabaseNamespaceProviderCleanup();
-            
+
             services.AddSingletonIfNotExists<NewRestMinimalApiService>();
         }
     }
@@ -244,21 +245,49 @@ namespace RunJit.Cli.New.RestMinimalApi
 
                                                                                          return false;
                                                                                      });
-            
+
 
             if (programFile.IsNull())
             {
                 throw new RunJitException("Cant find a project files which is using ServerlessMinimalWebApi(). This new REST-API gen is only made for this new type of web api projects");
             }
 
-            var testProject  = parsedClientSolution.UnitTestProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.StartsWith($"{programFile.ProjectFileInfo.FileNameWithoutExtenion}.Test"));
-            
+            var testProject = parsedClientSolution.UnitTestProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.StartsWith($"{programFile.ProjectFileInfo.FileNameWithoutExtenion}.Test"));
+
             if (testProject.IsNull())
             {
                 throw new RunJitException($"Cant find the test project for the web api. Please check the naming. Expected: {programFile}.Test.csproj");
             }
-            
+
             var migrationScript = generateMigrationScript.Generate(record);
+
+
+            var testPayloadJson = properties.Where(p => p.Name.NotEqualsTo(hashKeyPropertyId.Name))
+                                            .ToDictionary(item => item.Name, item =>
+                                                                             {
+                                                                                 if (item.Name == queryPropertyName.Name)
+                                                                                 {
+                                                                                     return "$Unique$DomainName$Name$";
+                                                                                 }
+                                                                                 return item.Name;
+                                                                             })
+                                            .ToJsonIntended();
+
+            var testResponseJson = properties.ToDictionary(item => item.Name, item =>
+                                                                                {
+                                                                                    if (item.Name == hashKeyPropertyId.Name)
+                                                                                    {
+                                                                                        return Guid.NewGuid().ToString();
+                                                                                    }
+
+                                                                                    if (item.Name == queryPropertyName.Name)
+                                                                                    {
+                                                                                        return "$Unique$DomainName$Name$";
+                                                                                    }
+                                                                                    return item.Name;
+                                                                                })
+                                             .ToJsonIntended();
+
 
             var createRestApiInfos = new CreateRestApiInfos
             {
@@ -275,7 +304,9 @@ namespace RunJit.Cli.New.RestMinimalApi
                 IdPropertyName = hashKeyPropertyId.Name,
                 QueryPropertyName = parameters.QueryProperty,
                 QueryPropertyNameLower = parameters.QueryProperty.FirstCharToLower(),
-                MigrationScript = migrationScript
+                MigrationScript = migrationScript,
+                TestRequestJson = testPayloadJson,
+                TestResponseJson = testResponseJson
             };
 
 

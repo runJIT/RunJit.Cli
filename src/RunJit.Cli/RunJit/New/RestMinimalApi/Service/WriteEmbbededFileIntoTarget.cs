@@ -42,7 +42,9 @@ namespace RunJit.Cli.New.RestMinimalApi
                                                 .Replace("$IdUrlName$", createRestApiInfos.IdPropertyName.FirstCharToLower())
                                                 .Replace("$QueryPropertyName$", createRestApiInfos.QueryPropertyName)
                                                 .Replace("$QueryPropertyNameLower$", createRestApiInfos.QueryPropertyName.FirstCharToLower())
-                                                .Replace("$MigrationScript$", createRestApiInfos.MigrationScript);
+                                                .Replace("$MigrationScript$", createRestApiInfos.MigrationScript)
+                                                .Replace("$TestRequestJson$", createRestApiInfos.TestRequestJson)
+                                                .Replace("$TestResponseJson$", createRestApiInfos.TestResponseJson);
 
 
                 // Splitting at the double dot ".."

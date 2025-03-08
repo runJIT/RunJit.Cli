@@ -9,11 +9,7 @@
       }
     ],
     "Value": {
-      "Project": {
-        "Id": "44b148cf-3387-4908-a374-d62020204502",
-        "Name": "$Unique$DomainName$Name$",
-        "Description": "This is the first project"
-      }
+      "$DomainName$": $TestResponseJson$
     }
   },
   "StatusCode": "OK",

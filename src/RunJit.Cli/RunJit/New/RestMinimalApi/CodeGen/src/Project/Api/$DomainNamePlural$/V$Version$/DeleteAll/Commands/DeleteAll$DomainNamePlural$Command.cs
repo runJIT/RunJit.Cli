@@ -22,7 +22,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             using var dbContext = dynamoDbClientFactory.Create();
 
             // 2. Delete all projects or those which are matching the filter criteria
-            await dbContext.DeleteAllAsync<$DomainName$Entity>([(nameof($DomainName$Entity.$QueryPropertyName$), $QueryPropertyNameLower$)]).ConfigureAwait(false);
+            await dbContext.DeleteAllAsync<$DomainName$Entity>([(nameof($DomainName$Entity.$QueryPropertyName$), $QueryPropertyNameLower$)], cancellationToken).ConfigureAwait(false);
         }
     }
 }

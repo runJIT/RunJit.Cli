@@ -5,16 +5,16 @@ using RunJit.Cli.Services;
 
 namespace RunJit.Cli.New.RestMinimalApi
 {
-    internal static class AddNamespaceProviderCleanupExtension
+    internal static class AddApiNamespaceProviderCleanupExtension
     {
-        internal static void AddNamespaceProviderCleanup(this IServiceCollection services)
+        internal static void AddApiNamespaceProviderCleanup(this IServiceCollection services)
         {
-            services.AddSingletonIfNotExists<IRestMinimalApiSpecificCodeGen, NamespaceProviderCleanup>();
-            services.AddSingletonIfNotExists<IRestMinimalApiTestSpecificCodeGen, NamespaceProviderCleanup>();
+            services.AddSingletonIfNotExists<IRestMinimalApiSpecificCodeGen, ApiNamespaceProviderCleanup>();
+            services.AddSingletonIfNotExists<IRestMinimalApiTestSpecificCodeGen, ApiNamespaceProviderCleanup>();
         }
     }
 
-    internal sealed class NamespaceProviderCleanup(ConsoleService consoleService,
+    internal sealed class ApiNamespaceProviderCleanup(ConsoleService consoleService,
                                                    NamespaceProvider namespaceProvider) : IRestMinimalApiSpecificCodeGen, IRestMinimalApiTestSpecificCodeGen
     {
         public Task GenerateAsync(FileInfo solutionFileInfo,

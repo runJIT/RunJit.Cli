@@ -3,7 +3,7 @@ using AspNetCore.Simple.MsTest.Sdk;
 using $ProjectName$.Api.$DomainNamePlural$.V$Version$;
 using Microsoft.AspNetCore.Mvc;
 
-namespace $ProjectName$.Test.Api.$DomainNamePlural$.V$Version$.Update
+namespace $ProjectName$.Test.Api.$DomainNamePlural$.V$Version$
 {
     [TestClass]
     [TestCategory("$DomainNamePlural$")]

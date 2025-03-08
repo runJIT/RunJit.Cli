@@ -20,7 +20,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .Produces<ProblemDetails>(503)
                      .WithTags("$DomainNamePlural$")
                      .WithName("patch$DomainName$V1")
-                     .MapToApiVersion(1)
+                     .MapToApiVersion($Version$)
                      .WithDescriptionFromFile("Description.txt")
                      .WithSummaryFromFile("Summary.txt");
                 

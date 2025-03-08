@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Extensions.Pack;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +39,13 @@ namespace RunJit.Cli.New.RestMinimalApi
                            FileInfo webApiProject,
                            CreateRestApiInfos createRestApiInfos);
     }
+    
+    internal interface IRestMinimalApiTestSpecificCodeGen
+    {
+        Task GenerateAsync(FileInfo solutionFileInfo,
+                           FileInfo webApiProject,
+                           CreateRestApiInfos createRestApiInfos);
+    }
 
     internal static class AddNewRestMinimalApiServiceExtension
     {
@@ -58,7 +66,8 @@ namespace RunJit.Cli.New.RestMinimalApi
 
     internal sealed class NewRestMinimalApiService(ConsoleService consoleService,
                                                    GenerateMigrationScript generateMigrationScript,
-                                                   IEnumerable<IRestMinimalApiSpecificCodeGen> codeGenerators)
+                                                   IEnumerable<IRestMinimalApiSpecificCodeGen> codeGenerators,
+                                                   IEnumerable<IRestMinimalApiTestSpecificCodeGen> testCodeGenerators)
     {
         public async Task<int> HandleAsync(NewRestMinimalApiParameters parameters)
         {
@@ -234,12 +243,20 @@ namespace RunJit.Cli.New.RestMinimalApi
 
                                                                                          return false;
                                                                                      });
+            
 
             if (programFile.IsNull())
             {
                 throw new RunJitException("Cant find a project files which is using ServerlessMinimalWebApi(). This new REST-API gen is only made for this new type of web api projects");
             }
 
+            var testProject  = parsedClientSolution.UnitTestProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.StartsWith($"{programFile.ProjectFileInfo.FileNameWithoutExtenion}.Test"));
+            
+            if (testProject.IsNull())
+            {
+                throw new RunJitException($"Cant find the test project for the web api. Please check the naming. Expected: {programFile}.Test.csproj");
+            }
+            
             var migrationScript = generateMigrationScript.Generate(record);
 
             var createRestApiInfos = new CreateRestApiInfos
@@ -264,6 +281,11 @@ namespace RunJit.Cli.New.RestMinimalApi
             foreach (var restMinimalApiSpecificCodeGen in codeGenerators)
             {
                 await restMinimalApiSpecificCodeGen.GenerateAsync(parameters.SolutionFile, programFile.ProjectFileInfo.Value, createRestApiInfos);
+            }
+
+            foreach (var restMinimalApiTestSpecificCodeGen in testCodeGenerators)
+            {
+                await restMinimalApiTestSpecificCodeGen.GenerateAsync(parameters.SolutionFile, testProject.ProjectFileInfo.Value, createRestApiInfos);
             }
 
             // 3. Write success message

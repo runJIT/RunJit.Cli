@@ -23,40 +23,47 @@ namespace RunJit.Cli.Services
                                         </wpf:ResourceDictionary>
                                         """;
 
+
+
+
+        //private const string test = """
+        //                            <wpf:ResourceDictionary xml:space="preserve"
+        //                                                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        //                                                    xmlns:s="clr-namespace:System;assembly=mscorlib"
+        //                                                    xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml"
+        //                                                    xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        //                              <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=api_005Cprojects_005Cv1_005C_005Fshared_005F/@EntryIndexedValue">
+        //                                True
+        //                              </s:Boolean>
+        //                            </wpf:ResourceDictionary>
+                                    
+        //                            """;
         
-        
-        //<wpf:ResourceDictionary xml:space="preserve" x
-        //    mlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-        //    xmlns:s="clr-namespace:System;assembly=mscorlib" 
-        //    xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" 
-        //    xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-        //
-        //    <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=api_005Cprojects_005Cv1_005Ccreate/@EntryIndexedValue">True</s:Boolean>
-        //    <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=api_005Cprojects_005Cv1_005Cdeleteall/@EntryIndexedValue">True</s:Boolean>
-        //</wpf:ResourceDictionary>
         
         
         internal void SetNamespaceProvider(FileInfo projectFile,
                                            string ns,
-                                           bool value)
+                                           bool nameSpaceProviderState)
         {
-            // Remove the project's default namespace prefix.
-            var projectName = Path.GetFileNameWithoutExtension(projectFile.Name);
-            var normalizedNamespace = ns.Replace($"{projectName}.", string.Empty);
-
-            // Compute the Resharper ignore entry by joining the lower-cased parts with the escape sequence.
-            var resharperIgnoreEntry = normalizedNamespace.Split('.').Select(p => p.ToLowerInvariant()).Flatten("_005C");
+            // R# needs to invert the Namespace provider UI = true means false in dot settings file :/ 
+            var value = !nameSpaceProviderState;
             
+            // Use the full namespace as provided, converting parts to lower case
+            var resharperIgnoreEntry = ns.Split('.')
+                                         .Select(p => p.ToLowerInvariant().Replace("_", "_005F"))
+                                         .Flatten("_005C");
+
+
             // Load or create the DotSettings XML document.
             var (document, filePath) = LoadOrCreateDotSettings(projectFile);
 
             // Define the XNamespace for the x:Key attribute.
             XNamespace xNs = "http://schemas.microsoft.com/winfx/2006/xaml";
 
-            // Build the expected key value.
+            // Build the expected key value using the full namespace.
             var keyValue = $"/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/={resharperIgnoreEntry}/@EntryIndexedValue";
 
-            // Check if an element with this key already exists.
+            // Search for an existing element with this key.
             var existingElement = document.Root?
                                           .Elements()
                                           .FirstOrDefault(e => e.Attribute(xNs + "Key")?.Value == keyValue);
@@ -80,14 +87,14 @@ namespace RunJit.Cli.Services
                                               new XAttribute(xNs + "Key", keyValue),
                                               value.ToString());
 
-            // Add the element to the document and save.
+            // Add the new element to the document and save.
             document.Root?.Add(booleanElement);
             document.Save(filePath);
         }
 
         private (XDocument document, string filePath) LoadOrCreateDotSettings(FileInfo projectFile)
         {
-            // Try to find an existing .DotSettings file in the same directory.
+            // Look for an existing .DotSettings file in the same directory.
             var dotSettingsFile = projectFile.Directory?
                                              .GetFiles($"{projectFile.Name}.DotSettings")
                                              .FirstOrDefault();
@@ -97,7 +104,7 @@ namespace RunJit.Cli.Services
                 return (XDocument.Load(dotSettingsFile.FullName), dotSettingsFile.FullName);
             }
 
-            // If not found, create a new XDocument from the template.
+            // If none found, create a new document from the template.
             var newDocument = XDocument.Parse(Template);
             var filePath = Path.Combine(projectFile.Directory!.FullName, $"{projectFile.Name}.DotSettings");
 

@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using RunJit.Cli.RunJit.Generate.Client;
 using RunJit.Cli.Services;
-using StringExtensions = Extensions.Pack.StringExtensions;
 
 namespace RunJit.Cli.New.RestMinimalApi
 {
@@ -11,11 +10,12 @@ namespace RunJit.Cli.New.RestMinimalApi
         internal static void AddNamespaceProviderCleanup(this IServiceCollection services)
         {
             services.AddSingletonIfNotExists<IRestMinimalApiSpecificCodeGen, NamespaceProviderCleanup>();
+            services.AddSingletonIfNotExists<IRestMinimalApiTestSpecificCodeGen, NamespaceProviderCleanup>();
         }
     }
 
     internal sealed class NamespaceProviderCleanup(ConsoleService consoleService,
-                                                   NamespaceProvider namespaceProvider) : IRestMinimalApiSpecificCodeGen
+                                                   NamespaceProvider namespaceProvider) : IRestMinimalApiSpecificCodeGen, IRestMinimalApiTestSpecificCodeGen
     {
         public Task GenerateAsync(FileInfo solutionFileInfo,
                                   FileInfo webApiProject,

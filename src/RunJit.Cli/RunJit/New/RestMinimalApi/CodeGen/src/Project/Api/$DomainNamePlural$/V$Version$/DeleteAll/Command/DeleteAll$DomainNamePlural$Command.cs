@@ -2,7 +2,7 @@
 using $ProjectName$.Aws.DynamoDb;
 using $ProjectName$.Database.$DomainNamePlural$;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddDeleteAll$DomainNamePlural$CommandExtension
     {

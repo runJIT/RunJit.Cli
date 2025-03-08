@@ -1,6 +1,6 @@
-﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
+﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class Startup
+    internal static class GetByIdStartup
     {
         internal static void AddGetById(this IServiceCollection services, IConfiguration configuration)
         {

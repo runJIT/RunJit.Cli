@@ -2,7 +2,7 @@
 using $ProjectName$.JsonSerializing;
 using $ProjectName$.Validations;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddPatch$DomainName$RequestValidatorExtension
     {

@@ -1,7 +1,7 @@
 ﻿using Extensions.Pack;
 using $ProjectName$.Aws.DynamoDb;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddUpdate$DomainName$CommandExtension
     {

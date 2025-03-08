@@ -7,7 +7,7 @@ using $ProjectName$.JsonSerializing;
 using Siemens.AspNet.ErrorHandling.Contracts;
 
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddPatch$DomainName$CommandExtension
     {

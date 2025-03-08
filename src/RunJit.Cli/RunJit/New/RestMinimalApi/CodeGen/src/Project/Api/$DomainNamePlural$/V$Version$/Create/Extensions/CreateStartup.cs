@@ -1,6 +1,6 @@
-﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
+﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class Startup
+    internal static class CreateStartup
     {
         internal static void AddCreate(this IServiceCollection services, IConfiguration configuration)
         {

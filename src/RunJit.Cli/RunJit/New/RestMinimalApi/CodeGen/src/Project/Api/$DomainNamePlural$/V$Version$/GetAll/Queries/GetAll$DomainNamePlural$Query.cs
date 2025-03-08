@@ -4,7 +4,7 @@ using Extensions.Pack;
 using $ProjectName$.Aws.DynamoDb;
 using $ProjectName$.Database.$DomainNamePlural$;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddGetAll$DomainNamePlural$QueryExtension
     {

@@ -3,7 +3,7 @@ using System.Text.Json.Nodes;
 using $ProjectName$.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class PatchEndpoint
     {

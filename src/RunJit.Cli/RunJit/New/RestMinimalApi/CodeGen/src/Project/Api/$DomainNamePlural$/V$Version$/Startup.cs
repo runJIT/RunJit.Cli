@@ -1,12 +1,4 @@
-﻿using $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$.Delete;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update;
-
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
+﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class Startup
     {

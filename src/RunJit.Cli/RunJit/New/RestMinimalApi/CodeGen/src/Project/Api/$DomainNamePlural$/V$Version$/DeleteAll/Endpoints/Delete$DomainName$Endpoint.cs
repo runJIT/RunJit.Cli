@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using $ProjectName$.Extensions;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class Delete$DomainNamePluralLower$Endpoint
     {

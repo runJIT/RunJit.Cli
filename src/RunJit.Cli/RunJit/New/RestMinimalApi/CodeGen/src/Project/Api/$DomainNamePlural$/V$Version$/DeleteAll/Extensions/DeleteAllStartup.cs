@@ -1,6 +1,6 @@
-﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.DeleteAll
+﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class Startup
+    internal static class DeleteAllStartup
     {
         internal static void AddDeleteAll(this IServiceCollection services, IConfiguration configuration)
         {

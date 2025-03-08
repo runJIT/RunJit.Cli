@@ -2,7 +2,7 @@
 using $ProjectName$.Aws.DynamoDb;
 using $ProjectName$.Validations;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddCreate$DomainName$CommandExtension
     {

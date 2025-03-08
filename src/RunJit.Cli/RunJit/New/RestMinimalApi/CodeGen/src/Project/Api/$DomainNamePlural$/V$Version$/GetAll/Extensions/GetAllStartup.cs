@@ -1,6 +1,6 @@
-﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
+﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class Startup
+    internal static class GetAllStartup
     {
         internal static void AddGetAll(this IServiceCollection services, IConfiguration configuration)
         {

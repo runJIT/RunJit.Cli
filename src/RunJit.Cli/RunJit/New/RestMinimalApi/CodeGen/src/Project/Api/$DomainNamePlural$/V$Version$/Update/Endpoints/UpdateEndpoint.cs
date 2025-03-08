@@ -1,8 +1,7 @@
-﻿using $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update;
-using $ProjectName$.Extensions;
+﻿using $ProjectName$.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Update
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class UpdateEndpoint
     {

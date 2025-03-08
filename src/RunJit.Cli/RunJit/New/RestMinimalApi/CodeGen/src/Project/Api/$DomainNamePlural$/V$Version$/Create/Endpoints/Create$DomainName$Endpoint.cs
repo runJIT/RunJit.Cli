@@ -1,7 +1,7 @@
 ﻿using $ProjectName$.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class Create$DomainName$Endpoint
     {

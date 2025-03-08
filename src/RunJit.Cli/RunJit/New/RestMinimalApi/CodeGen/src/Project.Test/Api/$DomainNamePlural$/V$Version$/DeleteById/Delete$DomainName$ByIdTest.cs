@@ -1,11 +1,9 @@
 ﻿using System.Collections.Immutable;
 using AspNetCore.Simple.MsTest.Sdk;
 using $ProjectName$.Api.$DomainNamePlural$.V$Version$;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$.Create;
-using $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll;
 using Microsoft.AspNetCore.Mvc;
 
-namespace $ProjectName$.Test.Api.Health
+namespace $ProjectName$.Test.Api.$DomainNamePlural$.V$Version$
 {
     [TestClass]
     [TestCategory("$DomainNamePlural$")]

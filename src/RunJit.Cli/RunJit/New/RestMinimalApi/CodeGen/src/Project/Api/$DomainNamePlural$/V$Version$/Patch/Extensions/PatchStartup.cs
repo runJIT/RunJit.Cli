@@ -1,6 +1,6 @@
-﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.Patch
+﻿namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class Startup
+    internal static class PatchStartup
     {
         internal static void AddPatch(this IServiceCollection services, IConfiguration configuration)
         {

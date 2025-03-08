@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using $ProjectName$.Extensions;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class MapGetAll$DomainNamePluralLower$Endpoint
     {

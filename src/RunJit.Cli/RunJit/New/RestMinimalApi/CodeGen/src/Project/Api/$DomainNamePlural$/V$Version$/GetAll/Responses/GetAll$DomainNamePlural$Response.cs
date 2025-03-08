@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetAll
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     public sealed record GetAll$DomainNamePlural$Response(IImmutableList<$DomainName$> $DomainNamePlural$);
 }

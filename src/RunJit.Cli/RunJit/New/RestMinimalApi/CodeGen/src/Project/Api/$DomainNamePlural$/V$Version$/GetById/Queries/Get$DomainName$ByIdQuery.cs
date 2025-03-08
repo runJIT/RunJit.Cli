@@ -3,7 +3,7 @@ using $ProjectName$.Aws.DynamoDb;
 using $ProjectName$.Database.$DomainNamePlural$;
 using Siemens.AspNet.ErrorHandling.Contracts;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$.GetById
+namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddGet$DomainName$ByIdQueryExtension
     {

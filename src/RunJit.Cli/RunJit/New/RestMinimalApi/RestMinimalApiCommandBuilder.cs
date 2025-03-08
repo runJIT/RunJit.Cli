@@ -28,7 +28,15 @@ namespace RunJit.Cli.New.RestMinimalApi
             var command = new Command("minimal-rest-api", "The command to create a rest api with all CRUD operations");
             optionsBuilder.Build().ToList().ForEach(option => command.AddOption(option));
 
-            command.Handler = CommandHandler.Create<FileInfo, string, string, string, int, string, string>((solution, gitRepos, workingDirectory, entity, version, queryProperty, domainName) => minimalApiProjectService.HandleAsync(new NewRestMinimalApiParameters(solution, gitRepos, workingDirectory, entity, version, queryProperty, domainName)));
+            command.Handler = CommandHandler.Create<FileInfo, string, string, string, int, string, string>((solution,
+                                                                                                                    gitRepos,
+                                                                                                                    workingDirectory,
+                                                                                                                    entity,
+                                                                                                                    version,
+                                                                                                                    queryProperty,
+                                                                                                                    domainName) => minimalApiProjectService.HandleAsync(new NewRestMinimalApiParameters(solution, gitRepos, workingDirectory,
+                                                                                                                                                                                                          entity, version, queryProperty,
+                                                                                                                                                                                                          domainName)));
 
             return command;
         }

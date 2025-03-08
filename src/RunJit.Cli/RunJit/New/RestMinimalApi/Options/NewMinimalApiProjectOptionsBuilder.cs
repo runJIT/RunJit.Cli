@@ -23,6 +23,8 @@ namespace RunJit.Cli.New.RestMinimalApi.Options
             yield return Version();
             yield return QueryProperty();
             yield return DomainName();
+            // Currently we reached max args of 7
+            // yield return CreateEntityRequestJson();
         }
 
         public Option GitRepos()
@@ -85,6 +87,15 @@ namespace RunJit.Cli.New.RestMinimalApi.Options
                    {
                        Required = true,
                        Argument = new Argument<string>("domainName") { Description = "Option to set the domain name. Sample: Users, Projects, Cars, Resources. Rest api's are in plural." }
+                   };
+        }
+        
+        public Option CreateEntityRequestJson()
+        {
+            return new Option(new[] { "--create-entity-json", "-ce" }, "Option to set a json payload for a valid creation scenario. This helps you to create even fast valid test cases")
+                   {
+                       Required = false,
+                       Argument = new Argument<string>("createEntityJson") { Description = "Option to set a json payload for a valid creation scenario. This helps you to create even fast valid test cases" }
                    };
         }
     }

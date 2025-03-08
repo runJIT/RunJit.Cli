@@ -51,6 +51,14 @@ namespace RunJit.Cli.Test.SystemTest
                                                    public Guid UserId { get; init; } = Guid.Empty;
                                                
                                                    public string Name { get; init; } = string.Empty;
+                                                   
+                                                   public string Phone { get; init; } = string.Empty;
+                                                   
+                                                   public string Hobby { get; init; } = string.Empty;
+                                                   
+                                                   public string Car { get; init; } = string.Empty;
+                                                   
+                                                   public string FavoriteColor { get; init; } = string.Empty;
                                                }
                                                """;
 

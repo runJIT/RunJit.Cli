@@ -267,7 +267,7 @@ namespace RunJit.Cli.New.RestMinimalApi
                                                                              {
                                                                                  if (item.Name == queryPropertyName.Name)
                                                                                  {
-                                                                                     return "$Unique$DomainName$Name$";
+                                                                                     return $"$Unique{domainName}Name$";
                                                                                  }
                                                                                  return item.Name;
                                                                              })
@@ -282,7 +282,7 @@ namespace RunJit.Cli.New.RestMinimalApi
 
                                                                                     if (item.Name == queryPropertyName.Name)
                                                                                     {
-                                                                                        return "$Unique$DomainName$Name$";
+                                                                                        return $"$Unique{domainName}Name$";
                                                                                     }
                                                                                     return item.Name;
                                                                                 })

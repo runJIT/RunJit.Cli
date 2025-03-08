@@ -87,7 +87,7 @@ namespace RunJit.Cli.Generate.DotNetTool
             await File.WriteAllTextAsync(file, formattedTemplate).ConfigureAwait(false);
 
             // 3. Adjust namespace provider
-            namespaceProvider.SetNamespaceProviderAsync(projectFileInfo, $"{dotNetToolInfos.ProjectName}.HttpRequestMessageBuilder", true);
+            namespaceProvider.SetNamespaceProvider(projectFileInfo, $"{dotNetToolInfos.ProjectName}.HttpRequestMessageBuilder", true);
 
             // 4. Print success message
             consoleService.WriteSuccess($"Successfully created {file}");

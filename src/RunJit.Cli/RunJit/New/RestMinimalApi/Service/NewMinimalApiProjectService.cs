@@ -50,7 +50,8 @@ namespace RunJit.Cli.New.RestMinimalApi
             services.AddStartupRegistration();
             services.AddStartupRegistrationVersions();
             services.AddGenerateMigrationScript();
-
+            services.AddNamespaceProviderCleanup();
+            
             services.AddSingletonIfNotExists<NewRestMinimalApiService>();
         }
     }

@@ -15,53 +15,93 @@ namespace RunJit.Cli.Services
     internal sealed class NamespaceProvider
     {
         private const string Template = """
-                                        <wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                        <wpf:ResourceDictionary xml:space="preserve"
+                                                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                                                                 xmlns:s="clr-namespace:System;assembly=mscorlib"
                                                                 xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml"
                                                                 xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                                         </wpf:ResourceDictionary>
                                         """;
 
-        internal void SetNamespaceProviderAsync(FileInfo projectFile,
-                                                string @namespace,
-                                                bool value)
+        
+        
+        //<wpf:ResourceDictionary xml:space="preserve" x
+        //    mlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        //    xmlns:s="clr-namespace:System;assembly=mscorlib" 
+        //    xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" 
+        //    xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        //
+        //    <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=api_005Cprojects_005Cv1_005Ccreate/@EntryIndexedValue">True</s:Boolean>
+        //    <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=api_005Cprojects_005Cv1_005Cdeleteall/@EntryIndexedValue">True</s:Boolean>
+        //</wpf:ResourceDictionary>
+        
+        
+        internal void SetNamespaceProvider(FileInfo projectFile,
+                                           string ns,
+                                           bool value)
         {
-            var normalizedNamespace = @namespace.Replace($"{projectFile.NameWithoutExtension()}.", string.Empty);
+            // Remove the project's default namespace prefix.
+            var projectName = Path.GetFileNameWithoutExtension(projectFile.Name);
+            var normalizedNamespace = ns.Replace($"{projectName}.", string.Empty);
 
-            // runjit_005Cgenerate_005Cclient_005Cbuilders
-            var resharperIgnoreEntry = normalizedNamespace.Split('.').Select(part => part.ToLower()).Flatten("_005C");
+            // Compute the Resharper ignore entry by joining the lower-cased parts with the escape sequence.
+            var resharperIgnoreEntry = normalizedNamespace.Split('.').Select(p => p.ToLowerInvariant()).Flatten("_005C");
+            
+            // Load or create the DotSettings XML document.
+            var (document, filePath) = LoadOrCreateDotSettings(projectFile);
 
-            var xDocument = GetXDocument(projectFile);
+            // Define the XNamespace for the x:Key attribute.
+            XNamespace xNs = "http://schemas.microsoft.com/winfx/2006/xaml";
 
-            if (xDocument.ToString().Contains($"/={normalizedNamespace.ToLower()}/"))
+            // Build the expected key value.
+            var keyValue = $"/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/={resharperIgnoreEntry}/@EntryIndexedValue";
+
+            // Check if an element with this key already exists.
+            var existingElement = document.Root?
+                                          .Elements()
+                                          .FirstOrDefault(e => e.Attribute(xNs + "Key")?.Value == keyValue);
+
+            if (existingElement != null)
             {
+                // Update the value if it differs.
+                if (!string.Equals(existingElement.Value, value.ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    existingElement.Value = value.ToString();
+                    document.Save(filePath);
+                }
+
                 return;
             }
 
-            XNamespace sNamespace = "clr-namespace:System;assembly=mscorlib";
-            XNamespace xNamespace = "http://schemas.microsoft.com/winfx/2006/xaml";
-            var element = new XElement(sNamespace + "Boolean");
-            element.SetAttributeValue(xNamespace + "Key", $"/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/={resharperIgnoreEntry}/@EntryIndexedValue");
-            element.Value = value.ToString();
-            xDocument.XDocument.Root!.Add(element);
+            // Create a new s:Boolean element.
+            XNamespace sNs = "clr-namespace:System;assembly=mscorlib";
 
-            xDocument.XDocument.Save(xDocument.Path);
+            var booleanElement = new XElement(sNs + "Boolean",
+                                              new XAttribute(xNs + "Key", keyValue),
+                                              value.ToString());
+
+            // Add the element to the document and save.
+            document.Root?.Add(booleanElement);
+            document.Save(filePath);
         }
 
-        private (System.Xml.Linq.XDocument XDocument, string Path) GetXDocument(FileInfo projectFile)
+        private (XDocument document, string filePath) LoadOrCreateDotSettings(FileInfo projectFile)
         {
-            var dotSetttings = projectFile.Directory!.EnumerateFiles($"{projectFile.Name}.DotSettings").FirstOrDefault();
+            // Try to find an existing .DotSettings file in the same directory.
+            var dotSettingsFile = projectFile.Directory?
+                                             .GetFiles($"{projectFile.Name}.DotSettings")
+                                             .FirstOrDefault();
 
-            if (dotSetttings.IsNotNull())
+            if (dotSettingsFile != null)
             {
-                return (XDocument.Load(dotSetttings.FullName), dotSetttings.FullName);
+                return (XDocument.Load(dotSettingsFile.FullName), dotSettingsFile.FullName);
             }
 
-            var path = $"{projectFile.FullName}.DotSettings";
+            // If not found, create a new XDocument from the template.
+            var newDocument = XDocument.Parse(Template);
+            var filePath = Path.Combine(projectFile.Directory!.FullName, $"{projectFile.Name}.DotSettings");
 
-            var xDocument = XDocument.Parse(Template);
-
-            return (xDocument, path);
+            return (newDocument, filePath);
         }
     }
 }

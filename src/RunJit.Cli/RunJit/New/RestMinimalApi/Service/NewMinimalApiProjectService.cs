@@ -48,6 +48,7 @@ namespace RunJit.Cli.New.RestMinimalApi
             services.AddMinimalApiProjectCreator();
             services.AddWriteEmbbededFileIntoTarget();
             services.AddStartupRegistration();
+            services.AddStartupRegistrationVersions();
             services.AddGenerateMigrationScript();
 
             services.AddSingletonIfNotExists<NewRestMinimalApiService>();

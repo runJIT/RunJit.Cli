@@ -102,7 +102,7 @@ namespace RunJit.Cli.Test.SystemTest
                 fileInfo.Directory!.Create();
             }
             await File.WriteAllTextAsync(fileInfo.FullName, entityModel);
-            
+
             // 3. Add rest api
             await Mediator.SendAsync(new NewMinimalRestApi(fileInfo.FullName, queryPropertyName, domainName, solutionFileInfo.FullName));
 
@@ -114,10 +114,8 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core",
-                    "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um",
-                    "Name")]
+        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
         public async Task Should_Be_Able_To_Create_Multiple_Domains(string projectName,
                                                                     string basePath,
                                                                     string toolName,
@@ -144,10 +142,8 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core",
-                    "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um",
-                    "Name")]
+        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
         public async Task Should_Be_Able_To_Create_Same_Domain_In_Different_Versions(string projectName,
                                                                                      string basePath,
                                                                                      string toolName,

@@ -6,7 +6,7 @@
         "Value": [ "application/json; charset=utf-8" ]
       }
     ],
-    "Value": { "Project": null }
+    "Value": {}
   },
   "StatusCode": "OK",
   "Headers": [

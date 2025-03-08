@@ -3,31 +3,29 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class MapGet$DomainName$ByIdEndpoint
+    internal static RouteHandlerBuilder MapGet$DomainName$ById(this IEndpointRouteBuilder endpoints)
     {
-        internal static RouteHandlerBuilder MapGet$DomainName$ById(this IEndpointRouteBuilder endpoints)
-        {
-            return endpoints.MapGet("$DomainNamePluralLower$/{$IdUrlName$:guid}",
-                                            async (Guid $DomainNameLower$Id,
-                                                   Get$DomainName$ByIdQuery get$DomainName$ByIdQuery,
-                                                   CancellationToken cancellationToken = default) =>
-                                            {
-                                                var $DomainNameLower$ = await get$DomainName$ByIdQuery.ExecuteAsync($IdUrlName$, cancellationToken).ConfigureAwait(false); 
-                                                return new Get$DomainName$ByIdResponse($DomainNameLower$);
-                                            })
+        return endpoints.MapGet("$DomainNamePluralLower$/{$IdUrlName$:guid}", Handler)
+                        .Produces<Get$DomainName$ByIdResponse>()
+                        .Produces<ProblemDetails>(401)
+                        .Produces<ProblemDetails>(403)
+                        .Produces<ProblemDetails>(404)
+                        .Produces<ValidationProblemDetails>(422)
+                        .Produces<ProblemDetails>(500)
+                        .Produces<ProblemDetails>(503)
+                        .WithTags("$DomainNamePlural$")
+                        .WithName("get$DomainName$ByIdV$Version$")
+                        .MapToApiVersion(1)
+                        .WithDescriptionFromFile("Description.txt")
+                        .WithSummaryFromFile("Summary.txt");
 
-                                    .Produces<Get$DomainName$ByIdResponse>()
-                                    .Produces<ProblemDetails>(401)
-                                    .Produces<ProblemDetails>(403)
-                                    .Produces<ProblemDetails>(404)
-                                    .Produces<ValidationProblemDetails>(422)
-                                    .Produces<ProblemDetails>(500)
-                                    .Produces<ProblemDetails>(503)
-                                    .WithTags("$DomainNamePlural$")
-                                    .WithName("get$DomainName$ByIdV$Version$")
-                                    .MapToApiVersion($Version$)
-                                    .WithDescriptionFromFile("Description.txt")
-                                    .WithSummaryFromFile("Summary.txt");
+        static async Task<Get$DomainName$ByIdResponse> Handler(Guid $DomainNameLower$Id,
+                                                          Get$DomainName$ByIdQuery get$DomainName$ByIdQuery,
+                                                          CancellationToken cancellationToken = default)
+        {
+            var $DomainNameLower$ = await get$DomainName$ByIdQuery.ExecuteAsync($DomainNameLower$Id, cancellationToken).ConfigureAwait(false);
+
+            return new Get$DomainName$ByIdResponse($DomainNameLower$);
         }
     }
 }

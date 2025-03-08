@@ -22,9 +22,10 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                             .WithSummaryFromFile("Summary.txt");
                 
             static async Task<GetAll$DomainNamePlural$Response> HandleAsync(GetAll$DomainNamePlural$Query getAll$DomainNamePlural$Query,
-                                                                            [FromQuery] string $QueryPropertyNameLower$ = "")
+                                                                            [FromQuery] string $QueryPropertyNameLower$ = "",
+                                                                            CancellationToken cancellationToken = default)
             {
-                var $DomainNamePluralLower$ = await getAll$DomainNamePlural$Query.ExecuteAsync($QueryPropertyNameLower$).ConfigureAwait(false);
+                var $DomainNamePluralLower$ = await getAll$DomainNamePlural$Query.ExecuteAsync($QueryPropertyNameLower$, cancellationToken).ConfigureAwait(false);
 
                 return new GetAll$DomainNamePlural$Response($DomainNamePluralLower$);
             }

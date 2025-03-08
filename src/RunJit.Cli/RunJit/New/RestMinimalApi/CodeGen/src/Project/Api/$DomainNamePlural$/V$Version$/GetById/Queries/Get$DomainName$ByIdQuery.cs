@@ -19,7 +19,8 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
     internal sealed class Get$DomainName$ByIdQuery(IAmazonDynamoDbClientFactory dynamoDbClientFactory,
                                        $DomainName$EntityMapper mapper)
     {
-        internal async Task<$DomainName$> ExecuteAsync(Guid $IdUrlName$, CancellationToken cancellationToken)
+        internal async Task<$DomainName$> ExecuteAsync(Guid $IdUrlName$, 
+                                                       CancellationToken cancellationToken)
         {
             using var dbContext = dynamoDbClientFactory.Create();
 

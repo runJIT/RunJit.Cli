@@ -21,13 +21,14 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
     internal sealed class GetAll$DomainNamePlural$Query(IAmazonDynamoDbClientFactory amazonDynamoDbClientFactory,
                                       $DomainName$EntityMapper mapper)
     {
-        internal async Task<IImmutableList<$DomainName$>> ExecuteAsync(string name)
+        internal async Task<IImmutableList<$DomainName$>> ExecuteAsync(string $QueryPropertyNameLower$,
+                                                                       CancellationToken cancellationToken)
         {
             // 1. Create dynamo db context
             using var dbContext = amazonDynamoDbClientFactory.Create();
 
             // 2. Get all $DomainNameLower$ entities by filter criteria or all
-            var $DomainNameLower$Entities = await dbContext.GetAllAsync<$DomainName$Entity>(name).ConfigureAwait(false);
+            var $DomainNameLower$Entities = await dbContext.GetAllAsync<$DomainName$Entity>([(nameof($DomainName$Entity.$QueryPropertyName$), $QueryPropertyNameLower$)], cancellationToken).ConfigureAwait(false);
 
             // 3. Map to api models (AntiCorruptionLayer - ACL)
             var $DomainNamePluralLower$ = mapper.MapFrom($DomainNameLower$Entities);

@@ -10,7 +10,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V$Version$
     [TestCategory("$DomainNamePlural$ V$Version$")]
     public class Patch_$DomainName$_Test : ApiTestBase
     {
-        private static readonly string UniqueName = GetUniqueRunnerName();
+        private static readonly string Unique$DomainName$Name = GetUniqueRunnerName();
 
         [TestInitialize]
         public Task InitAsync()
@@ -21,13 +21,13 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V$Version$
         [TestMethod]
         public Task Should_Not_Be_Able_To_Call_If_Caller_Is_Not_Authorized()
         {
-            return Client.AssertPatchAsUnauthorizedAsync("api/core/v1/$DomainNamePluralLower$");
+            return Client.AssertPatchAsUnauthorizedAsync("api/core/v$Version$/$DomainNamePluralLower$");
         }
 
         [TestMethod]
         public Task Should_Not_Be_Able_To_Patch_If_$IdPropertyName$_Is_Not_A_Guid()
         {
-            return Client.AssertPatchAsync<ProblemDetails>("api/core/v1/$DomainNamePluralLower$/not-a-guid",
+            return Client.AssertPatchAsync<ProblemDetails>("api/core/v$Version$/$DomainNamePluralLower$/not-a-guid",
                                                            "Invalid$IdPropertyName$.json");
         }
 
@@ -35,24 +35,24 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V$Version$
         public async Task Should_Be_Able_To_Patch_A_$DomainName$_With_Valid_Data()
         {
             // 1. Create a new $DomainNameLower$
-            var create$DomainName$Response = await Client.AssertPostAsync<Create$DomainName$Response>("api/core/v1/$DomainNamePluralLower$/",
+            var create$DomainName$Response = await Client.AssertPostAsync<Create$DomainName$Response>("api/core/v$Version$/$DomainNamePluralLower$/",
                                                                                             "Create$DomainName$.json",
                                                                                             "Create$DomainName$.json",
                                                                                             IgnoreAutoValues,
-                                                                                            [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
+                                                                                            [("$Unique$DomainName$Name$", Unique$DomainName$Name)]).ConfigureAwait(false);
 
             // 2. Get the currently created $DomainNameLower$
-            await Client.AssertGetAsync<Get$DomainName$ByIdResponse>($"api/core/v1/$DomainNamePluralLower$/{create$DomainName$Response.$DomainName$.$IdPropertyName$}",
+            await Client.AssertGetAsync<Get$DomainName$ByIdResponse>($"api/core/v$Version$/$DomainNamePluralLower$/{create$DomainName$Response.$DomainName$.$IdPropertyName$}",
                                                                 "Create$DomainName$.json",
                                                                 IgnoreAutoValues,
-                                                                [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
+                                                                [("$Unique$DomainName$Name$", Unique$DomainName$Name)]).ConfigureAwait(false);
 
             // 3. Patch the existing $DomainNameLower$
-            await Client.AssertPatchAsync<Patch$DomainName$Response>($"api/core/v1/$DomainNamePluralLower$/{create$DomainName$Response.$DomainName$.$IdPropertyName$}",
+            await Client.AssertPatchAsync<Patch$DomainName$Response>($"api/core/v$Version$/$DomainNamePluralLower$/{create$DomainName$Response.$DomainName$.$IdPropertyName$}",
                                                                 "Patch$DomainName$.json",
                                                                 "Patch$DomainName$.json",
                                                                 IgnoreAutoValues,
-                                                                [("$$DomainName$Name$", UniqueName)]).ConfigureAwait(false);
+                                                                [("$Unique$DomainName$Name$", Unique$DomainName$Name)]).ConfigureAwait(false);
         }
 
         [DataTestMethod]
@@ -61,26 +61,26 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V$Version$
                                                                          string response)
         {
             // 1. Create a new $DomainNameLower$
-            var create$DomainName$Response = await Client.AssertPostAsync<Create$DomainName$Response>("api/core/v1/$DomainNamePluralLower$/",
+            var create$DomainName$Response = await Client.AssertPostAsync<Create$DomainName$Response>("api/core/v$Version$/$DomainNamePluralLower$/",
                                                                                             "Create$DomainName$.json",
                                                                                             "Create$DomainName$.json",
                                                                                             IgnoreAutoValues,
-                                                                                            [("$$DomainName$Name$", UniqueName)],
+                                                                                            [("$Unique$DomainName$Name$", Unique$DomainName$Name)],
                                                                                             writeResponse: true).ConfigureAwait(false);
 
             // 2. Try to patch $DomainNameLower$ with properties which not exists.
-            await Client.AssertPatchAsErrorAsync<ValidationProblemDetails>($"api/core/v1/$DomainNamePluralLower$/{create$DomainName$Response.$DomainName$.$IdPropertyName$}",
+            await Client.AssertPatchAsErrorAsync<ValidationProblemDetails>($"api/core/v$Version$/$DomainNamePluralLower$/{create$DomainName$Response.$DomainName$.$IdPropertyName$}",
                                                                            request,
                                                                            response,
                                                                            IgnoreAutoValues,
-                                                                           [("$$DomainName$Name$", UniqueName),
+                                                                           [("$Unique$DomainName$Name$", Unique$DomainName$Name),
                                                                             ("$$DomainName$Id$", create$DomainName$Response.$DomainName$.$IdPropertyName$)]).ConfigureAwait(false);
         }
 
         [TestCleanup]
         public Task CleanupAsync()
         {
-            return Client.AssertDeleteAsync($"api/core/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={UniqueName}");
+            return Client.AssertDeleteAsync($"api/core/v$Version$/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}");
         }
 
         private IEnumerable<Difference> IgnoreAutoValues(IImmutableList<Difference> differences)

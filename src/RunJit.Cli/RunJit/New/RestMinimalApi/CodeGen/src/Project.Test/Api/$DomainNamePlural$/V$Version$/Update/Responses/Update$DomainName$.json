@@ -9,7 +9,7 @@
     "Value": {
       "Project": {
         "Id": "40b8c693-fc99-4bc2-92a2-68d6af5f2973",
-        "Name": "Test",
+        "Name": "$Unique$DomainName$Name$",
         "Description": "Update description"
       }
     }

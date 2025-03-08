@@ -24,7 +24,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             static async Task<Update$DomainName$Response> HandleAsync(Update$DomainName$Request update$DomainName$Request,
                                                                  Guid $IdUrlName$,
                                                                  Update$DomainName$Command update$DomainName$Command,
-                                                                 CancellationToken cancellationToken = default)
+                                                                 CancellationToken cancellationToken)
             {
                 var updated$DomainName$ = await update$DomainName$Command.ExecuteAsync($IdUrlName$, update$DomainName$Request, cancellationToken).ConfigureAwait(false);
 

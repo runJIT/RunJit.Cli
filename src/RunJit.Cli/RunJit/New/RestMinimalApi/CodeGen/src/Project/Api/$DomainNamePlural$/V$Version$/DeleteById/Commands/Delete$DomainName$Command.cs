@@ -14,7 +14,8 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 
     internal sealed class Delete$DomainName$Command(IAmazonDynamoDbClientFactory dynamoDbClientFactory)
     {
-        internal async Task ExecuteAsync(Guid $IdUrlName$, CancellationToken cancellationToken)
+        internal async Task ExecuteAsync(Guid $IdUrlName$,
+                                         CancellationToken cancellationToken)
         {
             using var dbContext = dynamoDbClientFactory.Create();
 

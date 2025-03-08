@@ -6,56 +6,53 @@ namespace $ProjectName$.Aws.DynamoDb
 {
     internal static class DynamoDbExtensions
     {
+        internal static Task DeleteAllAsync<TEntity>(this DynamoDBContext dynamoDbContext,
+                                                     CancellationToken cancellationToken = default) where TEntity : class
+        {
+            return dynamoDbContext.DeleteAllAsync<TEntity>([], cancellationToken);
+        }
+
         internal static async Task DeleteAllAsync<TEntity>(this DynamoDBContext dynamoDbContext,
-                                                           string queryProperty = "",
+                                                           (string PropertyName, DynamoDBEntry Value)[] queryProperties,
                                                            CancellationToken cancellationToken = default) where TEntity : class
         {
-            var scanConfig = new ScanOperationConfig
-            {
-                Filter = new ScanFilter()
-            };
+            var entitiesToDelete = await dynamoDbContext.GetAllAsync<TEntity>(queryProperties, cancellationToken).ConfigureAwait(false);
 
-            if (queryProperty.IsNotNullOrWhiteSpace())
+            foreach (var entity in entitiesToDelete)
             {
-                scanConfig.Filter.AddCondition(queryProperty,
-                                               ScanOperator.Equal,
-                                               queryProperty);
-            }
-
-            var projectsToDelete = await dynamoDbContext.FromScanAsync<TEntity>(scanConfig)
-                                                        .GetRemainingAsync(cancellationToken)
-                                                        .ConfigureAwait(false);
-
-            foreach (var project in projectsToDelete)
-            {
-                await dynamoDbContext.DeleteAsync(project, cancellationToken).ConfigureAwait(false);
+                await dynamoDbContext.DeleteAsync(entity, cancellationToken).ConfigureAwait(false);
             }
         }
 
-        internal static async Task<List<TEntity>> GetAllAsync<TEntity>(this DynamoDBContext dynamoDbContext,
-                                                        string queryProperty = "",
-                                                        CancellationToken cancellationToken = default) where TEntity : class
+        internal static Task<List<TEntity>> GetAllAsync<TEntity>(this DynamoDBContext dynamoDbContext,
+                                                                 CancellationToken cancellationToken = default) where TEntity : class
         {
-            var scanConfig = new ScanOperationConfig
-            {
-                Filter = new ScanFilter()
-            };
+            return dynamoDbContext.GetAllAsync<TEntity>([], cancellationToken);
+        }
 
-            if (queryProperty.IsNotNullOrWhiteSpace())
+        internal static async Task<List<TEntity>> GetAllAsync<TEntity>(this DynamoDBContext dynamoDbContext,
+                                                                       (string PropertyName, DynamoDBEntry Value)[] queryProperties,
+                                                                       CancellationToken cancellationToken = default) where TEntity : class
+        {
+            var scanConfig = new ScanOperationConfig { Filter = new ScanFilter() };
+
+            foreach (var queryProperty in queryProperties)
             {
-                scanConfig.Filter.AddCondition(queryProperty,
-                                               ScanOperator.Equal,
-                                               queryProperty);
+                if (queryProperty.PropertyName.IsNotNullOrWhiteSpace())
+                {
+                    scanConfig.Filter.AddCondition(queryProperty.PropertyName,
+                                                   ScanOperator.Equal,
+                                                   queryProperty.Value);
+                }
             }
-
 
             // Do not use .ToImmutableList(), because this objects will be mapped
             // to the domain models -> avoid another useless loop !
-            var projectsToDelete = await dynamoDbContext.FromScanAsync<TEntity>(scanConfig)
-                                                        .GetRemainingAsync(cancellationToken)
-                                                        .ConfigureAwait(false);
+            var entities = await dynamoDbContext.FromScanAsync<TEntity>(scanConfig)
+                                                .GetRemainingAsync(cancellationToken)
+                                                .ConfigureAwait(false);
 
-            return projectsToDelete;
+            return entities;
         }
     }
 }

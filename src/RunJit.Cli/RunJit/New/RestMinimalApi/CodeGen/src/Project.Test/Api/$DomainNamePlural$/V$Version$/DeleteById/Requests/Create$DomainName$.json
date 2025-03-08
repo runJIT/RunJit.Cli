@@ -1,4 +1,4 @@
 ﻿{
-  "Name": "$ProjectName$",
+  "Name": "$Unique$DomainName$Name$",
   "Description": "This is the first project"
 }

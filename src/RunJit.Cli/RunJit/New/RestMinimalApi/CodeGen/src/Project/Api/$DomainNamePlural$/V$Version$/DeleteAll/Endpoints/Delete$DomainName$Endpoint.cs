@@ -4,9 +4,9 @@ using $ProjectName$.Extensions;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class Delete$DomainNamePluralLower$Endpoint
+    internal static class Delete$DomainNamePlural$Endpoint
     {
-        internal static void MapDelete$DomainNamePluralLower$(this IEndpointRouteBuilder endpoints)
+        internal static void MapDelete$DomainNamePlural$(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapDelete("$DomainNamePluralLower$", HandleAsync)
                      .Produces<NoContent>(204)

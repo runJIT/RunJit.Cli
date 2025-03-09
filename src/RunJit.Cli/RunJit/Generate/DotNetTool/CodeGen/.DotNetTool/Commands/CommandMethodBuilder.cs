@@ -106,7 +106,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                            {
                                                                if (p.IsOptional)
                                                                {
-                                                                   return $$"""var {{p.Name}} = callInfos.GetValueOrDefault({{p.Name}}"); // Optional""";
+                                                                   return $"var {p.Name} = DictionaryExtensions.GetValueOrDefault(callInfos,\"{p.Name}\"); // Optional";
                                                                }
 
                                                                return $$"""var {{p.Name}} = callInfos["{{p.Name}}"]; // Mandatory""";

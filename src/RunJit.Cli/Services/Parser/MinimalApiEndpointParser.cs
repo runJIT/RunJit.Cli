@@ -1,11 +1,16 @@
 ﻿using System.Collections.Immutable;
+using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using Extensions.Pack;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.DependencyInjection;
+using RunJit.Cli.Generate.Client;
 using RunJit.Cli.RunJit.Generate.Client;
 using RunJit.Cli.Services.Endpoints;
 using Solution.Parser.CSharp;
 using Attribute = Solution.Parser.CSharp.Attribute;
+using Parameter = Solution.Parser.CSharp.Parameter;
 
 namespace RunJit.Cli.Services
 {
@@ -70,7 +75,8 @@ namespace RunJit.Cli.Services
     //    public ImmutableList<DeclarationBase> Models { get; init; } = ImmutableList<DeclarationBase>.Empty;
     //}
 
-    internal sealed class MinimalApiEndpointParser(DataTypeFinder dataTypeFinder)
+    internal sealed class MinimalApiEndpointParser(DataTypeFinder dataTypeFinder,
+                                                   Generate.Client.QueryBuilder queryBuilder)
     {
         private readonly string[] _mapActions = new[]
                                                 {
@@ -91,17 +97,17 @@ namespace RunJit.Cli.Services
             if (addHealthEndpoint)
             {
                 var healthEndpoint = new EndpointInfo
-                                     {
-                                         BaseUrl = basePath,
-                                         DomainName = "Health",
-                                         GroupName = "Health",
-                                         HttpAction = "Get",
-                                         ResponseType = new ResponseType("HealthStatusResponse",
+                {
+                    BaseUrl = basePath,
+                    DomainName = "Health",
+                    GroupName = "Health",
+                    HttpAction = "Get",
+                    ResponseType = new ResponseType("HealthStatusResponse",
                                                                          "HealthStatusResponse"),
-                                         ProduceResponseTypes = ImmutableList<ProduceResponseTypes>.Empty,
-                                         RelativeUrl = "health",
-                                         Name = "GetHealthStatusAsync",
-                                         Models = ImmutableList.Create(new DeclarationBase("HealthStatusResponse",
+                    ProduceResponseTypes = ImmutableList<ProduceResponseTypes>.Empty,
+                    RelativeUrl = "health",
+                    Name = "GetHealthStatusAsync",
+                    Models = ImmutableList.Create(new DeclarationBase("HealthStatusResponse",
                                                                                            "HealthStatusResponse",
                                                                                            """
                                                                                            public sealed record HealthStatusResponse(string Status, 
@@ -109,15 +115,15 @@ namespace RunJit.Cli.Services
                                                                                                                                      Dictionary<string, object> Entries);
                                                                                            """,
                                                                                            string.Empty)),
-                                         Version = null,
-                                         SwaggerOperationId = "getHealthStatus",
-                                         Parameters = ImmutableList<Parameter>.Empty,
-                                         RequestType = null,
-                                         ObsoleteInfo = null
-                                     };
+                    Version = null,
+                    SwaggerOperationId = "getHealthStatus",
+                    Parameters = ImmutableList<Parameter>.Empty,
+                    RequestType = null,
+                    ObsoleteInfo = null
+                };
+
                 endpointMappings = endpointMappings.Add(healthEndpoint);
             }
-           
 
             return endpointMappings;
 
@@ -129,38 +135,17 @@ namespace RunJit.Cli.Services
 
         internal string FindBasePath(IImmutableList<CSharpSyntaxTree> syntaxTrees)
         {
+            var pattern = @"UsePathBase\(\$""([^""]+)""\)";
+
             foreach (var cSharpSyntaxTree in syntaxTrees)
             {
-                foreach (var statement in cSharpSyntaxTree.Statements)
+                var match = Regex.Match(cSharpSyntaxTree.SyntaxTree, pattern);
+
+                if (match.Success)
                 {
-                    if (statement.SyntaxTree.Contains("MapGroup") && statement.SyntaxTree.Contains(".WithApiVersionSet"))
-                    {
-                        var result = Regex.Match(statement.SyntaxTree, @"MapGroup\(\""(.*?)\""");
+                    var extractedPath = match.Groups[1].Value;
 
-                        if (result.Success)
-                        {
-                            return result.Groups[1].Value;
-                        }
-                    }
-                }
-
-                foreach (var @class in cSharpSyntaxTree.Classes)
-                {
-                    foreach (var method in @class.Methods)
-                    {
-                        foreach (var statement in method.Statements)
-                        {
-                            if (statement.Contains("MapGroup") && statement.Contains(".WithApiVersionSet"))
-                            {
-                                var result = Regex.Match(statement, @"MapGroup\(\""(.*?)\""");
-
-                                if (result.Success)
-                                {
-                                    return result.Groups[1].Value;
-                                }
-                            }
-                        }
-                    }
+                    return extractedPath;
                 }
             }
 
@@ -181,7 +166,7 @@ namespace RunJit.Cli.Services
                     {
                         continue;
                     }
-                    
+
                     foreach (var method in @class.Methods)
                     {
                         foreach (var methodStatement in method.Statements)
@@ -192,13 +177,19 @@ namespace RunJit.Cli.Services
                                 {
                                     var version = ExtractVersion(methodStatement);
                                     var produceResponseTypes = ExtractProduceResponseTypes(methodStatement);
-                                    var payloads = ExtractPayload(methodStatement).ToList();
+                                    // var payloads = ExtractPayload(methodStatement).ToList();
                                     var normalizedBasePath = basePath.Replace("{apiVersion:apiVersion}", version.Original);
                                     var relativeUrl = ExtractRelativeUrl(methodStatement);
-                                    var url = $"{normalizedBasePath}/{relativeUrl}";
+                                    var queryParameters = ExtractQueryParameters(method.SyntaxTree);
+                                    var urlQueryPart = queryBuilder.BuildFrom(queryParameters);
+                                    var url = $"{normalizedBasePath}/{version.Normalized.ToLowerInvariant()}/{relativeUrl}{urlQueryPart}";
+                                    var allParameters = ExtractParameters(method.SyntaxTree);
+                                    var parameters = allParameters.Where(p => p.Type.EndsWith("Request") || IsPrimitiveType(p.Type)).ToImmutableList();
+                                    var payloads = allParameters.Where(p => p.Type.EndsWith("Request")).Select(p => p.Type).ToList();
 
                                     var allUsedModels = GetAllUsedModels(produceResponseTypes, syntaxTrees, reflectionTypes,
                                                                          version, payloads);
+
 
                                     var endpointInfo = new EndpointInfo
                                     {
@@ -210,7 +201,7 @@ namespace RunJit.Cli.Services
                                         SwaggerOperationId = ExtractSwaggerOperationId(methodStatement, version),
                                         HttpAction = ExtractHttpAction(methodStatement),
                                         RelativeUrl = url,
-                                        Parameters = ExtractParameters(methodStatement),
+                                        Parameters = parameters,
                                         RequestType = ExtractRequestType(payloads, allUsedModels, reflectionTypes),
                                         ResponseType = ExtractResponseType(produceResponseTypes),
                                         ProduceResponseTypes = produceResponseTypes,
@@ -243,7 +234,7 @@ namespace RunJit.Cli.Services
                 responseType = match.Groups[0].Value.TrimStart('<').TrimEnd('>');
             }
 
-            var allModelsToFind = payloads.Concat(responseType);
+            var allModelsToFind = payloads.Concat(responseType).ToList();
 
             var classes = syntaxTrees.SelectMany(tree => tree.Classes).Where(c => allModelsToFind.Any(x => x == c.Name) && c.FullQualifiedName.Contains(versionInfo.Normalized)).ToList();
             var records = syntaxTrees.SelectMany(tree => tree.Records).Where(c => allModelsToFind.Any(x => x == c.Name) && c.FullQualifiedName.Contains(versionInfo.Normalized)).ToList();
@@ -341,56 +332,143 @@ namespace RunJit.Cli.Services
 
         private IImmutableList<Parameter> ExtractParameters(string code)
         {
-            var regex = new Regex(@"\((.*?)\)\s*=>");
+            // Parse the source code.
+            var parameters = ImmutableList.CreateBuilder<Parameter>();
+            var tree = Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree.ParseText(code);
+            var root = tree.GetRoot();
 
-            var match = regex.Match(code);
+            // 1. Extract the route URL from the MapDelete invocation.
+            var mapInvocation = root.DescendantNodes()
+                                    .OfType<InvocationExpressionSyntax>()
+                                    .FirstOrDefault(inv => inv.Expression.ToString().Contains(".Map"));
 
-            if (match.Success)
+            string? routeUrl;
+
+            // Use a hash set for quick lookup of URL parameter names.
+            var urlParameters = new HashSet<string>();
+
+            if (mapInvocation != null)
             {
-                var method = match.Value.Replace(" =>", string.Empty);
+                var arguments = mapInvocation.ArgumentList.Arguments;
 
-                var parameters = method.TrimStart('(').TrimEnd(')').Split(",", StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim().TrimStart('(').TrimEnd(')'));
-                var ignoreServices = parameters.Where(p => p.DoesNotContain("[FromService") && p.DoesNotContain("Http")).Where(p => p.Contains(" ")).ToList();
-                var result = Parse(ignoreServices).ToImmutableList();
-
-                // now we have to filter out all non api used parameters like HttpContext -> only primitive types
-                var primitiveTypesOnly = result.Where(t => IsPrimitiveType(t.Type) ||
-                                                           t.Name.EndsWith("Request")).ToImmutableList();
-
-                return primitiveTypesOnly;
-            }
-
-            // Regex to match the async delegate parameter block
-            var pattern = @"async\s*\(([\s\S]*?)\)\s*=>";
-
-            // Extract the match
-            match = Regex.Match(code, pattern);
-
-            if (match.Success)
-            {
-                // Regex, um Parameter-Typ und -Namen zu extrahieren
-                pattern = @"(\w[\w<>,\s]+)\s+(\w+)(?:\s*=\s*[^,)]+)?";
-
-                // Alle Matches finden
-                regex = new Regex(pattern);
-                var matches = regex.Matches(match.Value);
-
-                foreach (Match newMatch in matches)
+                if (arguments.Count > 0 && arguments[0].Expression is LiteralExpressionSyntax literal)
                 {
-                    var splitt = newMatch.Value.Replace(Environment.NewLine, string.Empty).Split(",", StringSplitOptions.RemoveEmptyEntries).Select(a => a.Trim());
+                    routeUrl = literal.Token.ValueText;
+                    Console.WriteLine("Route URL: " + routeUrl);
 
-                    var result = Parse(splitt).ToImmutableList();
+                    // Use a regex to extract segments like {projectId:guid}.
+                    // Group 1 captures the parameter name (ignoring any colon constraints).
+                    var regex = new Regex(@"\{([^:}]+)(:[^}]+)?\}");
+                    var matches = regex.Matches(routeUrl);
 
-                    // now we have to filter out all non api used parameters like HttpContext -> only primitive types
-                    var primitiveTypesOnly = result.Where(t => IsPrimitiveType(t.Type) ||
-                                                               t.Name.EndsWith("Request")).ToImmutableList();
-
-                    return primitiveTypesOnly;
+                    foreach (var match in matches.Cast<Match>())
+                    {
+                        var paramName = match.Groups[1].Value;
+                        urlParameters.Add(paramName);
+                        Console.WriteLine("URL Parameter (extracted): " + paramName);
+                    }
                 }
             }
 
-            return ImmutableList<Parameter>.Empty;
+            // 2. Find the local function "HandleAsync".
+            var handleAsyncMethod = root.DescendantNodes()
+                                        .OfType<LocalFunctionStatementSyntax>()
+                                        .FirstOrDefault();
+
+            if (handleAsyncMethod != null)
+            {
+                foreach (var param in handleAsyncMethod.ParameterList.Parameters)
+                {
+                    // If [FromQuery] is present, it's a query parameter.
+                    // Also, if no binding attribute exists (and it isn't a CancellationToken), treat it as a query parameter.
+                    var parameter = Parse(param.ToString());
+                    parameters.Add(parameter);
+                }
+            }
+
+            return parameters.ToImmutable();
         }
+
+        private IImmutableList<Parameter> ExtractQueryParameters(string code)
+        {
+            // Parse the source code.
+            var parameters = ImmutableList.CreateBuilder<Parameter>();
+            var tree = Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree.ParseText(code);
+            var root = tree.GetRoot();
+
+            // 1. Extract the route URL from the MapDelete invocation.
+            var mapInvocation = root.DescendantNodes()
+                                    .OfType<InvocationExpressionSyntax>()
+                                    .FirstOrDefault(inv => inv.Expression.ToString().Contains(".Map"));
+
+            string? routeUrl;
+
+            // Use a hash set for quick lookup of URL parameter names.
+            var urlParameters = new HashSet<string>();
+
+            if (mapInvocation != null)
+            {
+                var arguments = mapInvocation.ArgumentList.Arguments;
+
+                if (arguments.Count > 0 && arguments[0].Expression is LiteralExpressionSyntax literal)
+                {
+                    routeUrl = literal.Token.ValueText;
+                    Console.WriteLine("Route URL: " + routeUrl);
+
+                    // Use a regex to extract segments like {projectId:guid}.
+                    // Group 1 captures the parameter name (ignoring any colon constraints).
+                    var regex = new Regex(@"\{([^:}]+)(:[^}]+)?\}");
+                    var matches = regex.Matches(routeUrl);
+
+                    foreach (var match in matches.Cast<Match>())
+                    {
+                        var paramName = match.Groups[1].Value;
+                        urlParameters.Add(paramName);
+                        Console.WriteLine("URL Parameter (extracted): " + paramName);
+                    }
+                }
+            }
+
+            // 2. Find the local function "HandleAsync".
+            var handleAsyncMethod = root.DescendantNodes()
+                                        .OfType<LocalFunctionStatementSyntax>()
+                                        .FirstOrDefault(m => m.Identifier.Text == "HandleAsync");
+
+            if (handleAsyncMethod != null)
+            {
+                foreach (var param in handleAsyncMethod.ParameterList.Parameters)
+                {
+                    var parameter = Parse(param.ToString());
+
+                    if (IsPrimitiveType(parameter.Type).IsFalse())
+                    {
+                        continue;
+                    }
+
+                    if (parameter.Name.Contains("cancellation", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+                    
+                    var paramName = param.Identifier.Text;
+
+                    // Check for explicit [FromUrl] attribute.
+                    var hasFromUrl = param.AttributeLists
+                                          .SelectMany(attrList => attrList.Attributes)
+                                          .Any(attr => attr.Name.ToString().Contains("FromUrl"));
+
+                    
+                    // If parameter name matches one extracted from the URL or is marked with [FromUrl], classify it as URL.
+                    if (hasFromUrl || urlParameters.Contains(paramName).IsFalse())
+                    {
+                        parameters.Add(parameter);
+                    }
+                }
+            }
+
+            return parameters.ToImmutable();
+        }
+
 
         private static IEnumerable<Parameter> Parse(IEnumerable<string> parameters)
         {
@@ -417,6 +495,30 @@ namespace RunJit.Cli.Services
                                            parameter, isOptional, defaultValue,
                                            string.Empty);
             }
+        }
+
+        private static Parameter Parse(string parameter)
+        {
+            // int i
+            // int i = 0
+            // [FromQuery] string search
+            // [FromServices] IService service
+            var isOptional = parameter.Contains("=");
+
+            var splitted = parameter.Split(" = ").First().Split(" ");
+            var defaultValue = isOptional ? parameter.Split(" = ").Last() : null;
+
+            var attribute = parameter.StartsWith('[')
+                                ? ImmutableList.Create(new Attribute(splitted[0].TrimStart('[').TrimEnd(']'), ImmutableList<string>.Empty, parameter,
+                                                                     string.Empty))
+                                : ImmutableList<Attribute>.Empty;
+
+            var type = splitted.Length == 3 ? splitted[1] : splitted[0];
+            var name = splitted.Length == 3 ? splitted[2] : splitted[1];
+
+            return new Parameter(type, name, attribute,
+                          parameter, isOptional, defaultValue,
+                          string.Empty);
         }
 
         private static bool IsPrimitiveType(string typeName)

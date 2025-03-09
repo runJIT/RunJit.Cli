@@ -7,7 +7,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
     {
         internal static RouteHandlerBuilder MapGet$DomainName$ById(this IEndpointRouteBuilder endpoints)
         {
-            return endpoints.MapGet("$DomainNamePluralLower$/{$IdUrlName$:guid}", Handler)
+            return endpoints.MapGet("$DomainNamePluralLower$/{$IdUrlName$:guid}", HandleAsync)
                             .Produces<Get$DomainName$ByIdResponse>()
                             .Produces<ProblemDetails>(401)
                             .Produces<ProblemDetails>(403)
@@ -21,9 +21,9 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                             .WithDescriptionFromFile("Description.txt")
                             .WithSummaryFromFile("Summary.txt");
 
-            static async Task<Get$DomainName$ByIdResponse> Handler(Guid $DomainNameLower$Id,
-                                                              Get$DomainName$ByIdQuery get$DomainName$ByIdQuery,
-                                                              CancellationToken cancellationToken = default)
+            static async Task<Get$DomainName$ByIdResponse> HandleAsync(Guid $DomainNameLower$Id,
+                                                                       Get$DomainName$ByIdQuery get$DomainName$ByIdQuery,
+                                                                       CancellationToken cancellationToken = default)
             {
                 var $DomainNameLower$ = await get$DomainName$ByIdQuery.ExecuteAsync($DomainNameLower$Id, cancellationToken).ConfigureAwait(false);
 

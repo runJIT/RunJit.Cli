@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 $usings$
 
@@ -6,7 +7,8 @@ namespace $namespace$
 {
     public static class Add$name$Extension
     {
-        public static void Add$name$(this IServiceCollection services)
+        public static void Add$name$(this IServiceCollection services,
+                                     IConfiguration configuration)
         {
 $serviceRegistrations$
         }

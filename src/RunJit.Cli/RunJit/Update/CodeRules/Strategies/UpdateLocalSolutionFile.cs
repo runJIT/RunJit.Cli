@@ -227,7 +227,7 @@ namespace RunJit.Cli.RunJit.Update.CodeRules
             }
 
             // 6. Build the solution first
-            await dotNet.BuildAsync(solutionFile).ConfigureAwait(false);
+            // await dotNet.BuildAsync(solutionFile).ConfigureAwait(false);
 
             // 7. Get infos which packages are outdated
             // var outdatedCodeRulesResponse = await dotNet.ListOutdatedPackagesAsync(solutionFile).ConfigureAwait(false);

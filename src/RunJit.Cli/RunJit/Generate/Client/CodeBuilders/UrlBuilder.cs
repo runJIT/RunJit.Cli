@@ -53,7 +53,7 @@ namespace RunJit.Cli.Generate.Client
             // Specific file parameter notation have to be replaced too.
             relativeUrl = relativeUrl.Replace("**", string.Empty);
 
-            var parameters = queryBuilder.BuildFrom(method);
+            var parameters = queryBuilder.BuildFrom(method.Parameters);
 
             var urlWithParams = $"{relativeUrl.TrimEnd('/')}{parameters}";
 

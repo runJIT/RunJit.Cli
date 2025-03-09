@@ -17,7 +17,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .Produces<ProblemDetails>(500)
                      .Produces<ProblemDetails>(503)
                      .WithTags("$DomainNamePlural$")
-                     .WithName("delete$DomainNamePlural$ByIdV$Version$")
+                     .WithName("delete$DomainName$ByIdV$Version$")
                      .MapToApiVersion($Version$)
                      .WithDescriptionFromFile("Description.txt")
                      .WithSummaryFromFile("Summary.txt");

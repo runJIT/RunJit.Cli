@@ -9,7 +9,7 @@
 
         internal static void MapDeleteAll(this IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapDelete$DomainNamePluralLower$();
+            endpoints.MapDelete$DomainNamePlural$();
         }
     }
 }

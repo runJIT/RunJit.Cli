@@ -36,7 +36,7 @@ namespace RunJit.Cli.Generate.Client
 
         internal string BuildFrom(IGrouping<string, GeneratedClientCodeForController> groupedEndpoints)
         {
-            var parameters = groupedEndpoints.Select(f => $"\t\t\tservices.Add{f.Domain}();")
+            var parameters = groupedEndpoints.Select(f => $"\t\t\tservices.Add{f.Domain}(configuration);")
                                              .Flatten(Environment.NewLine);
 
             return parameters;

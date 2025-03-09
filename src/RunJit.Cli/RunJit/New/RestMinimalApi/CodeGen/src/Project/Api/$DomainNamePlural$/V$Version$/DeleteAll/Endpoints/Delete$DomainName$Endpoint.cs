@@ -16,7 +16,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .Produces<ValidationProblemDetails>(422)
                      .Produces<ProblemDetails>(500)
                      .Produces<ProblemDetails>(503)
-                     .WithTags("$DomainNamePluralLower$")
+                     .WithTags("$DomainNamePlural$")
                      .WithName("deleteAll$DomainNamePlural$V$Version$")
                      .MapToApiVersion($Version$)
                      .WithDescriptionFromFile("Description.txt")

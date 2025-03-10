@@ -19,7 +19,7 @@ namespace RunJit.Cli.Services
                                        string? Value2,
                                        MismatchType MismatchType);
 
-    public static class AddJsonSerializationExtensions
+    public static class AddJsonDifferExtension
     {
         public static void AddJsonDiffer(this IServiceCollection services)
         {

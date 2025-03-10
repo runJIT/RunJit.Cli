@@ -29,7 +29,8 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
     internal sealed class Patch$DomainName$Command(IAmazonDynamoDbClientFactory dynamoDbClientFactory,
                                               Patch$DomainName$RequestValidator patch$DomainName$RequestValidator,
                                               $DomainName$EntityToPatch$DomainName$RequestMapper $DomainNameLower$RequestMapper,
-                                              $DomainName$EntityMapper $DomainNameLower$Mapper)
+                                              $DomainName$EntityMapper $DomainNameLower$Mapper,
+                                              Patch$DomainName$RequestMapper patch$DomainName$RequestMapper)
     {
         internal async Task<$DomainName$> ExecuteAsync(JsonObject patchRequest,
                                                   Guid $DomainNameLower$Id,
@@ -53,22 +54,25 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                                                    ("PatchValues", patchRequest));
             }
 
-            // 3. Map to domain model
+            // 3. Map current entity to request model
             var patch$DomainName$Request = $DomainNameLower$RequestMapper.MapFrom($DomainNameLower$Entity);
 
-            // 4. Apply requested changes 
+            // 4. Apply requested changes to request model
             JsonConvert.PopulateObject(patchRequest.ToString(), patch$DomainName$Request);
 
             // 5. We have to validate the applied changes
             await patch$DomainName$RequestValidator.ValidateAsync(patchRequest, patch$DomainName$Request, $DomainNameLower$Id).ConfigureAwait(false);
 
-            // 6. Save updated/patched $DomainNameLower$
-            await dbContext.SaveAsync($DomainNameLower$Entity, cancellationToken).ConfigureAwait(false);
-
-            // 7. Mapping the entity to the domain / api model
-            var $DomainNameLower$ = $DomainNameLower$Mapper.MapFrom($DomainNameLower$Entity);
+            // 6. Map the request to the DB entity
+            var patched$DomainName$ = patch$DomainName$RequestMapper.MapFrom(patch$DomainName$Request, $DomainNameLower$Id);
             
-            // 7. Return the whole $DomainNameLower$
+            // 7. Save updated/patched $DomainNameLower$
+            await dbContext.SaveAsync(patched$DomainName$, cancellationToken).ConfigureAwait(false);
+
+            // 8. Mapping the entity to the domain / api model
+            var $DomainNameLower$ = $DomainNameLower$Mapper.MapFrom(patched$DomainName$);
+
+            // 9. Return the whole $DomainNameLower$
             return $DomainNameLower$;
         }
     }

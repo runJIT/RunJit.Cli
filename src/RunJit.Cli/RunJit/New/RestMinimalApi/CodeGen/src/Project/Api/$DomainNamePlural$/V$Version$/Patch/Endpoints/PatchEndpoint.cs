@@ -24,14 +24,14 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .WithDescriptionFromFile("Description.txt")
                      .WithSummaryFromFile("Summary.txt");
                 
-            static async Task<$DomainName$> HandleAsync(JsonObject patchRequest,
-                                                   Patch$DomainName$Command patch$DomainName$Command,
-                                                   Guid $IdUrlName$,
-                                                   CancellationToken cancellationToken = default)
+            static async Task<Patch$DomainName$Response> HandleAsync(JsonObject patchRequest,
+                                                                     Patch$DomainName$Command patch$DomainName$Command,
+                                                                     Guid $IdUrlName$,
+                                                                     CancellationToken cancellationToken = default)
             {
                 var patched$DomainName$ = await patch$DomainName$Command.ExecuteAsync(patchRequest, $IdUrlName$, cancellationToken).ConfigureAwait(false);
 
-                return patched$DomainName$;
+                return new Patch$DomainName$Response(patched$DomainName$);
             }
         }
     }

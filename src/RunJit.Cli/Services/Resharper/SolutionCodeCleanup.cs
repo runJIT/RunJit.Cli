@@ -80,17 +80,17 @@ namespace RunJit.Cli.Services.Resharper
             }
 
             // 6. Run R# code cleanup
-            consoleService.WriteInfo($"Start code cleanup for solution: {solutionFile.FullName}");
+            consoleService.WriteInfo($"Start C# code cleanup for solution: {solutionFile.FullName}");
             var cleanupResult = await dotnetTool.RunAsync(jbTool.FullName, $"cleanupcode {solutionFile.FullName} --settings={dotSettingsFile.FullName}").ConfigureAwait(false);
 
             // 7. Print execution result
             if (cleanupResult.ExitCode == 0)
             {
-                consoleService.WriteSuccess($"Code cleanup in solution {solutionFile.FullName} was successful");
+                consoleService.WriteSuccess($"C# Code cleanup in solution {solutionFile.FullName} was successful");
             }
             else
             {
-                consoleService.WriteError($"Code cleanup in solution {solutionFile.FullName} failed");
+                consoleService.WriteError($"C# Code cleanup in solution {solutionFile.FullName} failed");
             }
         }
     }

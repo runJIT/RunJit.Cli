@@ -15,7 +15,7 @@ namespace $ProjectName$.Test.OpenApi
 
             foreach (var version in versions)
             {
-                await Client.AssertGetAsync<string>($"openapi/v{version}.json",
+                await Client.AssertGetAsync<object>($"openapi/v{version}.json",
                                                     $"V{version}.json").ConfigureAwait(false);
             }
         }

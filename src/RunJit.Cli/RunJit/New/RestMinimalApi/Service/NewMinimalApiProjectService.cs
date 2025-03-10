@@ -8,6 +8,7 @@ using RunJit.Cli.ErrorHandling;
 using RunJit.Cli.New.MinimalApiProject;
 using RunJit.Cli.RunJit.New.RestMinimalApi.Service;
 using RunJit.Cli.Services;
+using RunJit.Cli.Services.Resharper;
 using Solution.Parser.CSharp;
 using Solution.Parser.Solution;
 using CSharpSyntaxTree = Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree;
@@ -69,7 +70,8 @@ namespace RunJit.Cli.New.RestMinimalApi
     internal sealed class NewRestMinimalApiService(ConsoleService consoleService,
                                                    GenerateMigrationScript generateMigrationScript,
                                                    IEnumerable<IRestMinimalApiSpecificCodeGen> codeGenerators,
-                                                   IEnumerable<IRestMinimalApiTestSpecificCodeGen> testCodeGenerators)
+                                                   IEnumerable<IRestMinimalApiTestSpecificCodeGen> testCodeGenerators,
+                                                   SolutionCodeCleanup solutionCodeCleanup)
     {
         public async Task<int> HandleAsync(NewRestMinimalApiParameters parameters)
         {
@@ -320,6 +322,9 @@ namespace RunJit.Cli.New.RestMinimalApi
                 await restMinimalApiTestSpecificCodeGen.GenerateAsync(parameters.SolutionFile, testProject.ProjectFileInfo.Value, createRestApiInfos);
             }
 
+            
+            await solutionCodeCleanup.CleanupSolutionAsync(parameters.SolutionFile).ConfigureAwait(false);
+            
             // 3. Write success message
             consoleService.WriteSuccess($"Enjoy your new rest api endpoint :)");
 

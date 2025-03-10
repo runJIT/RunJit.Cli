@@ -19,7 +19,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         {
             using var dbContext = dynamoDbClientFactory.Create();
 
-            await dbContext.DeleteAsync<$DomainName$>($IdUrlName$, cancellationToken).ConfigureAwait(false);
+            await dbContext.DeleteAsync<$DomainName$Entity>($IdUrlName$, cancellationToken).ConfigureAwait(false);
         }
     }
 }

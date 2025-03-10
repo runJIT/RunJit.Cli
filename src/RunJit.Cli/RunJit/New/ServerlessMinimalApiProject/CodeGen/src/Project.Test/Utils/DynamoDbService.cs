@@ -19,7 +19,7 @@ namespace $ProjectName$.Test.Utils
             }
         }
 
-        internal async Task TearDown(string dynamoDbContainerName)
+        internal async Task TearDownAsync(string dynamoDbContainerName)
         {
             // 3. When we are in debug mode (DEV local) we start the needed docker container
             //    and we have to shut down and remove it ! to have a clean container next startup

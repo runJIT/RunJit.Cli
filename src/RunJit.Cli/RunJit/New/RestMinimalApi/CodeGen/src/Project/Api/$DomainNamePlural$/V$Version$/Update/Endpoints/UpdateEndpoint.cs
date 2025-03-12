@@ -15,6 +15,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .Produces<ValidationProblemDetails>(StatusCodes.Status422UnprocessableEntity)
                      .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError)
                      .Produces<ProblemDetails>(StatusCodes.Status503ServiceUnavailable)
+                     .Produces<string>(StatusCodes.Status504GatewayTimeout) // AWS handled error -> returns HTML
                      .WithTags("$DomainNamePlural$")
                      .WithName("update$DomainName$V$Version$")
                      .MapToApiVersion($Version$)

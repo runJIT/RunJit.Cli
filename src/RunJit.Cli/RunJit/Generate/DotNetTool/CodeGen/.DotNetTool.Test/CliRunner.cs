@@ -109,7 +109,7 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
                                                 private static readonly EmbeddedFileLocalizer EmbeddedFileLocalizer = new(new TestCreatorSettings());
                                         
                                                 [GeneratedRegex(@"(\S+)\s+(\S+)\s+(\S+)\s+({.*})")]
-                                                private static partial Regex ConsoleArgsSplitterRegex();
+                                                private static partial System.Text.RegularExpressions.Regex ConsoleArgsSplitterRegex();
                                         
                                                 /// <summary>
                                                 ///     Runs the specified CLI command and asserts the output.

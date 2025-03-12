@@ -1,5 +1,6 @@
 ﻿using Extensions.Pack;
 using $ProjectName$.Aws.DynamoDb;
+using $ProjectName$.Database.$DomainNamePlural$;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {

@@ -79,7 +79,7 @@ namespace $ProjectName$.Test
             }
 
             // 3. Tear down dynamo database
-            await DynamoDbService.TearDown(DynamoDbContainerName).ConfigureAwait(false);
+            await DynamoDbService.TearDownAsync(DynamoDbContainerName).ConfigureAwait(false);
         }
     }
 }

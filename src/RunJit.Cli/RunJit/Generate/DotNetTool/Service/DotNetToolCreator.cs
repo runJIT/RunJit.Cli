@@ -42,7 +42,7 @@ namespace RunJit.Cli.Generate.DotNetTool
             services.AddProjectSettingsCodeGen();
 
             services.AddProjectEmbeddedFilesCodeGen();
-            services.AddProjectTypeCodeGen();
+            // services.AddProjectTypeCodeGen();
 
             // HttpCallHandlers
             services.AddHttpCallHandlerCodeGen();

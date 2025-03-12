@@ -5,13 +5,13 @@ using RunJit.Cli.Services;
 
 namespace RunJit.Cli.Generate.DotNetTool
 {
-    internal static class AddProjectTypeCodeGenExtension
-    {
-        internal static void AddProjectTypeCodeGen(this IServiceCollection services)
-        {
-            services.AddSingletonIfNotExists<IDotNetToolSpecificCodeGen, ProjectTypeCodeGen>();
-        }
-    }
+    //internal static class AddProjectTypeCodeGenExtension
+    //{
+    //    internal static void AddProjectTypeCodeGen(this IServiceCollection services)
+    //    {
+    //        services.AddSingletonIfNotExists<IDotNetToolSpecificCodeGen, ProjectTypeCodeGen>();
+    //    }
+    //}
 
     internal sealed class ProjectTypeCodeGen(ConsoleService consoleService) : IDotNetToolSpecificCodeGen
     {

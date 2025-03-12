@@ -23,6 +23,8 @@ namespace RunJit.Cli.Generate.DotNetTool
                                         using System.Net.Mime;
                                         using Extensions.Pack;
                                         using Microsoft.AspNetCore.Mvc;
+                                        using Microsoft.Extensions.Configuration;
+                                        using Microsoft.Extensions.DependencyInjection;
 
                                         namespace $namespace$
                                         {

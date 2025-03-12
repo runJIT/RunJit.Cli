@@ -23,6 +23,8 @@ namespace RunJit.Cli.Generate.DotNetTool
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using Extensions.Pack;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace $namespace$
 {                    

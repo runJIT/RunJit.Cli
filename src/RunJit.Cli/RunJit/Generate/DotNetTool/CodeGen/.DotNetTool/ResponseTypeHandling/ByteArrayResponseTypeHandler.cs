@@ -21,6 +21,8 @@ namespace RunJit.Cli.Generate.DotNetTool
     {
         private const string Template = """
                                         using Extensions.Pack;
+                                        using Microsoft.Extensions.Configuration;
+                                        using Microsoft.Extensions.DependencyInjection;
 
                                         namespace $namespace$
                                         {

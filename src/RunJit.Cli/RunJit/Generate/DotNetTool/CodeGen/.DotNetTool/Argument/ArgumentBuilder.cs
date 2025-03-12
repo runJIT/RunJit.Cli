@@ -1,5 +1,6 @@
 ﻿using Argument.Check;
 using Extensions.Pack;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RunJit.Cli.Generate.DotNetTool.Models;
 using Solution.Parser.CSharp;
@@ -19,6 +20,8 @@ namespace RunJit.Cli.Generate.DotNetTool
         private const string Template =
             @"
 using Extensions.Pack;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace $namespace$
 {    

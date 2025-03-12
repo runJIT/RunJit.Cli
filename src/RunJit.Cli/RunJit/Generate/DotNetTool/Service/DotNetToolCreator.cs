@@ -151,6 +151,8 @@ namespace RunJit.Cli.Generate.DotNetTool
     {
         private const string GetConfigTemplate = """
                                                  using Extensions.Pack;
+                                                 using Microsoft.Extensions.Configuration;
+                                                 using Microsoft.Extensions.DependencyInjection;
 
                                                  namespace $namespace$
                                                  {
@@ -188,6 +190,8 @@ namespace RunJit.Cli.Generate.DotNetTool
 
         private const string SetConfigTemplate = """
                                                  using Extensions.Pack;
+                                                 using Microsoft.Extensions.Configuration;
+                                                 using Microsoft.Extensions.DependencyInjection;
 
                                                  namespace $namespace$
                                                  {

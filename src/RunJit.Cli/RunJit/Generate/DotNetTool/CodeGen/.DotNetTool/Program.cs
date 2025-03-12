@@ -17,6 +17,9 @@ namespace RunJit.Cli.Generate.DotNetTool
     internal sealed class ProgramCodeGen(ConsoleService consoleService) : IDotNetToolSpecificCodeGen
     {
         private const string Template = """
+                                        using Microsoft.Extensions.Configuration;
+                                        using Microsoft.Extensions.DependencyInjection;
+
                                         namespace $namespace$
                                         {
                                             // Needed public to run automated tests which are debugable

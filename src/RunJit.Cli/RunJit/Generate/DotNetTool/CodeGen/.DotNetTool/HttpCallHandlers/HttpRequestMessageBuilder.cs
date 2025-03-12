@@ -26,6 +26,8 @@ namespace RunJit.Cli.Generate.DotNetTool
                                         using System.Text;
                                         using System.Text.Json;
                                         using Extensions.Pack;
+                                        using Microsoft.Extensions.Configuration;
+                                        using Microsoft.Extensions.DependencyInjection;
 
                                         namespace $namespace$
                                         {

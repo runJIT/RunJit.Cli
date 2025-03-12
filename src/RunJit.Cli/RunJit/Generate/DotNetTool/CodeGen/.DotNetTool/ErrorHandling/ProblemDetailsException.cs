@@ -20,6 +20,8 @@ namespace RunJit.Cli.Generate.DotNetTool
                                         using System.Collections.Immutable;
                                         using System.Net;
                                         using Extensions.Pack;
+                                        using Microsoft.Extensions.Configuration;
+                                        using Microsoft.Extensions.DependencyInjection;
 
                                         namespace $namespace$
                                         {

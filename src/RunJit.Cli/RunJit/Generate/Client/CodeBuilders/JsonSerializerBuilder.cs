@@ -201,7 +201,7 @@ namespace RunJit.Cli.Generate.Client
                                                       {
                                                           public string Serialize<T>(T source)
                                                           {
-                                                              return System.Text.Json.JsonSerializer.Serialize(source, serializeOptions);
+                                                              return System.Text.Json.JsonSerializer.Serialize(source, jsonSerializerOptions);
                                                           }
                                                   
                                                           public string? SerializeOrDefault<T>(T source,
@@ -209,7 +209,7 @@ namespace RunJit.Cli.Generate.Client
                                                           {
                                                               try
                                                               {
-                                                                  return System.Text.Json.JsonSerializer.Serialize(source, serializeOptions);
+                                                                  return System.Text.Json.JsonSerializer.Serialize(source, jsonSerializerOptions);
                                                               }
                                                               catch (Exception e)
                                                               {
@@ -226,7 +226,7 @@ namespace RunJit.Cli.Generate.Client
                                                   
                                                               try
                                                               {
-                                                                  deserializeResult = System.Text.Json.JsonSerializer.Deserialize<T>(json, serializeOptions);
+                                                                  deserializeResult = System.Text.Json.JsonSerializer.Deserialize<T>(json, jsonSerializerOptions);
                                                               }
                                                               catch (Exception e)
                                                               {
@@ -256,7 +256,7 @@ namespace RunJit.Cli.Generate.Client
                                                           {
                                                               try
                                                               {
-                                                                  var deserializeResult = System.Text.Json.JsonSerializer.Deserialize<T>(json, serializeOptions);
+                                                                  var deserializeResult = System.Text.Json.JsonSerializer.Deserialize<T>(json, jsonSerializerOptions);
                                                   
                                                                   return deserializeResult;
                                                               }
@@ -274,7 +274,7 @@ namespace RunJit.Cli.Generate.Client
                                                   
                                                               try
                                                               {
-                                                                  deserializeResult = System.Text.Json.JsonSerializer.Deserialize(json, returnType, serializeOptions);
+                                                                  deserializeResult = System.Text.Json.JsonSerializer.Deserialize(json, returnType, jsonSerializerOptions);
                                                               }
                                                               catch (Exception e)
                                                               {
@@ -304,7 +304,7 @@ namespace RunJit.Cli.Generate.Client
                                                           {
                                                               try
                                                               {
-                                                                  var deserializeResult = System.Text.Json.JsonSerializer.Deserialize(json, returnType, serializeOptions);
+                                                                  var deserializeResult = System.Text.Json.JsonSerializer.Deserialize(json, returnType, jsonSerializerOptions);
                                                   
                                                                   return deserializeResult;
                                                               }

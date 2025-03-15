@@ -155,11 +155,11 @@
         <Compile Include="RunJit\Generate\DotNetTool\CodeGen\.DotNetTool\Services\OutputWriter.cs" />
         <Compile Include="RunJit\Generate\DotNetTool\CodeGen\.DotNetTool\Services\TypeService.cs" />
         <Compile Include="RunJit\Generate\DotNetTool\CodeGen\.DotNetTool\Startup.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Create\CreateProjectTest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Create%24DomainName%24Test.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\DeleteAll\DeleteAll$DomainNamePlural$Test.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\DeleteById\Delete$DomainName$ByIdTest.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\GetAll\GetAll$DomainNamePlural$Test.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\GetById\GetAllProjectsTest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\GetAll%24DomainNamePlural%24Test.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Patch\Patch$DomainName$Test.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Update\Update$DomainName$Test.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Commands\Create$DomainName$Command.cs" />
@@ -181,16 +181,16 @@
         <EmbeddedResource Include="**\*.DotSettings" Exclude="bin\**\*;obj\**\*" />
     </ItemGroup>
     <ItemGroup>
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Create\Create$DomainName$Test.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\GetById\GetAll$DomainNamePlural$Test.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\DeleteAll\DeleteAll$DomainNamePlural$Test.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\DeleteById\Delete$DomainName$ByIdTest.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\GetAll\GetAll$DomainNamePlural$Test.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\Patch\Patch$DomainName$Test.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\Update\Update$DomainName$Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\CreateProjectTest.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\DeleteAll%24DomainNamePlural%24Test.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Delete%24DomainName%24ByIdTest.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\GetAll%24DomainNamePlural%24Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\GetAllProjectsTest.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Patch%24DomainName%24Test.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Update\Update%24DomainName%24Test.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Command\Create$DomainName$Command.cs" />

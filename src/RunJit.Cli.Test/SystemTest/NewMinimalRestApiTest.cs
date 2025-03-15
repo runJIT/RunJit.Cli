@@ -65,7 +65,7 @@ namespace RunJit.Cli.Test.SystemTest
         [DataTestMethod]
         [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
         [DataRow("Sdc.UserManagement", "api/core", "um", "Users", "Name", UserEntityModel)]
-        public async Task Should_Add_New_Rest_Api_Into_Solution(string projectName,
+        public async Task Should_Add_New_Rest_Api_Into_New_Solution(string projectName,
                                                                 string basePath,
                                                                 string toolName,
                                                                 string domainName,
@@ -175,6 +175,46 @@ namespace RunJit.Cli.Test.SystemTest
 
             // 3. Assert that solution can be tested
             // await DotNetTool.AssertRunAsync("dotnet", $"test {solutionFileInfo.FullName}").ConfigureAwait(false);
+        }
+
+        private const string FormsConfigurationEntity = """
+                                      [DynamoDBTable("FormsConfiguration")]
+                                      public sealed record FormsConfigurationEntity
+                                      {
+                                          [DynamoDBHashKey]
+                                          public required string FormsId { get; init; } // SDC --> FormsId GUID // Pulse --> SurveyInstanceId long
+                                      
+                                          public required string ProjectId { get; init; } // SDC --> GUID // Pulse --> ProjectId long
+                                      
+                                          public required string Title { get; init; } // unique runner id
+                                      
+                                          public required FormsType FormsType { get; init; } // property??
+                                          
+                                          public DateTime StartDate { get; init; } = DateTime.UtcNow;
+                                      
+                                          public DateTime? EndDate { get; init; }
+                                      
+                                          public long SessionTimeoutInSeconds { get; init; }
+                                      
+                                          public bool HasUpdate { get; init; }
+                                      
+                                          public List<Language> Languages { get; init; }
+                                      
+                                          // public Contact? Contact { get; init; }
+                                          
+                                          public Dictionary<string, object> Properties { get; init; } // HasInterviewExport = 1 // ContactInformation // SkipLandingPage // 
+                                      }
+                                      """;
+        
+        [DataTestMethod]
+        [DataRow(@"D:\Siemens\pulse-fieldingtool\Pulse.FieldingTool.sln", "FormsConfigurations", "Title", FormsConfigurationEntity)]
+        public async Task Should_Add_New_Rest_Api_Into_Existing_Solution(string solutionFilePath,
+                                                                         string domainName,
+                                                                         string queryPropertyName,
+                                                                         string entityModel)
+        {
+            // 2. Add rest api
+            await Mediator.SendAsync(new NewMinimalRestApi(entityModel, queryPropertyName, domainName, solutionFilePath));
         }
 
         internal sealed record NewMinimalRestApi(string DbEntityModel,

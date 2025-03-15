@@ -17,7 +17,6 @@ namespace RunJit.Cli.Generate.Client
                                                   using System.Reflection;
                                                   using System.Text.Json.Serialization;
                                                   using System.Text.Json;
-                                                  using Microsoft.Extensions.Configuration;
                                                   using Microsoft.Extensions.DependencyInjection;
                                                   using Microsoft.Extensions.Logging;
 
@@ -71,7 +70,7 @@ namespace RunJit.Cli.Generate.Client
                                                           /// <returns>A <see cref="string"/> representation of the value.</returns>
                                                           /// <param name="source">The source to convert.</param>
                                                           /// <exception cref="NotSupportedException">
-                                                          /// There is no compatible <see cref="System.Text.Json.Serialization.JsonConverter"/>
+                                                          /// There is no compatible <see cref="JsonConverter"/>
                                                           /// for <typeparamref name="T"/> or its serializable members.
                                                           /// </exception>
                                                           string Serialize<T>(T source);
@@ -84,7 +83,7 @@ namespace RunJit.Cli.Generate.Client
                                                           /// <param name="source">The source to convert.</param>
                                                           /// <param name="defaultValue">A optional default value if result will be <see langword="null"/> you can define alternative return value..</param>
                                                           /// <exception cref="NotSupportedException">
-                                                          /// There is no compatible <see cref="System.Text.Json.Serialization.JsonConverter"/>
+                                                          /// There is no compatible <see cref="JsonConverter"/>
                                                           /// for <typeparamref name="T"/> or its serializable members.
                                                           /// </exception>
                                                           string? SerializeOrDefault<T>(T source,
@@ -110,7 +109,7 @@ namespace RunJit.Cli.Generate.Client
                                                           ///
                                                           /// There is remaining data in the string beyond a single JSON value.</exception>
                                                           /// <exception cref="NotSupportedException">
-                                                          /// There is no compatible <see cref="System.Text.Json.Serialization.JsonConverter"/>
+                                                          /// There is no compatible <see cref="JsonConverter"/>
                                                           /// for <typeparamref name="T"/> or its serializable members.
                                                           /// </exception>
                                                           T Deserialize<T>(string json);
@@ -136,7 +135,7 @@ namespace RunJit.Cli.Generate.Client
                                                           ///
                                                           /// There is remaining data in the string beyond a single JSON value.</exception>
                                                           /// <exception cref="NotSupportedException">
-                                                          /// There is no compatible <see cref="System.Text.Json.Serialization.JsonConverter"/>
+                                                          /// There is no compatible <see cref="JsonConverter"/>
                                                           /// for <typeparamref name="T"/> or its serializable members.
                                                           /// </exception>
                                                           T? DeserializeOrDefault<T>(string json,
@@ -162,7 +161,7 @@ namespace RunJit.Cli.Generate.Client
                                                           ///
                                                           /// There is remaining data in the string beyond a single JSON value.</exception>
                                                           /// <exception cref="NotSupportedException">
-                                                          /// There is no compatible <see cref="System.Text.Json.Serialization.JsonConverter"/>
+                                                          /// There is no compatible <see cref="JsonConverter"/>
                                                           /// for <paramref name="returnType"/> or its serializable members.
                                                           /// </exception>
                                                           object Deserialize<T>(string json,
@@ -189,7 +188,7 @@ namespace RunJit.Cli.Generate.Client
                                                           ///
                                                           /// There is remaining data in the string beyond a single JSON value.</exception>
                                                           /// <exception cref="NotSupportedException">
-                                                          /// There is no compatible <see cref="System.Text.Json.Serialization.JsonConverter"/>
+                                                          /// There is no compatible <see cref="JsonConverter"/>
                                                           /// for <paramref name="returnType"/> or its serializable members.
                                                           /// </exception>
                                                           object? DeserializeOrDefault(string json,
@@ -197,26 +196,9 @@ namespace RunJit.Cli.Generate.Client
                                                                                        object? defaultValue = default);
                                                       }
                                                   
-                                                      internal sealed class JsonSerializer : IJsonSerializer
+                                                      internal sealed class JsonSerializer(ILogger<JsonSerializer> logger,
+                                                                                           JsonSerializerOptions jsonSerializerOptions) : IJsonSerializer
                                                       {
-                                                          private readonly ILogger<JsonSerializer> _logger;
-                                                  
-                                                          private readonly JsonSerializerOptions _serializeOptions;
-                                                  
-                                                          public JsonSerializer(ILogger<JsonSerializer> logger,
-                                                                                JsonSerializerOptions jsonSerializerOptions)
-                                                          {
-                                                              _logger = logger;
-                                                  
-                                                              _serializeOptions = new JsonSerializerOptions
-                                                                                  {
-                                                                                      PropertyNameCaseInsensitive = true,
-                                                                                      PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                                                                                      NumberHandling = JsonNumberHandling.AllowReadingFromString,
-                                                                                      Converters = { new JsonStringEnumConverter() }
-                                                                                  };
-                                                          }
-                                                  
                                                           public string Serialize<T>(T source)
                                                           {
                                                               return System.Text.Json.JsonSerializer.Serialize(source, _serializeOptions);
@@ -231,7 +213,7 @@ namespace RunJit.Cli.Generate.Client
                                                               }
                                                               catch (Exception e)
                                                               {
-                                                                  _logger.LogError(e, e.Message);
+                                                                  logger.LogError(e, e.Message);
                                                   
                                                                   return defaultValue;
                                                               }

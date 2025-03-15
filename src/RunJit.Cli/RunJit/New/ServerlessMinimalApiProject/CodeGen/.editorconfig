@@ -1,4 +1,4 @@
-﻿# To learn more about .editorconfig see https://aka.ms/editorconfigdocs
+# To learn more about .editorconfig see https://aka.ms/editorconfigdocs
 ###############################
 # Core EditorConfig Options   #
 ###############################
@@ -33,6 +33,7 @@ dotnet_diagnostic.IDE0072.severity = silent
 dotnet_diagnostic.IDE0130.severity = silent
 dotnet_diagnostic.IDE0005.severity = silent
 dotnet_diagnostic.IDE0057.severity = silent
+dotnet_diagnostic.IDE0066.severity = silent
 
 # All files
 [*]

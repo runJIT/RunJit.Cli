@@ -55,6 +55,11 @@ namespace $ProjectName$.Test
 
             // 4. We need once the http client to communicate with the started api
             Client = _apiTestBase.CreateClient();
+
+            // 5. Setup test helpers
+            var jsonSerializeOptions = _apiTestBase.Services.GetOrThrowMissingException<JsonSerializerOptions>();
+            AssertObjectExtensions.JsonSerializerOptions = jsonSerializeOptions;
+            HttpClientAssertExtensions.JsonSerializerOptions = jsonSerializeOptions;
         }
     
         protected static string GetUniqueRunnerName([CallerFilePath] string callerFilePath = "")

@@ -43,6 +43,7 @@ namespace RunJit.Cli.Generate.Client
                                                                                           {
                                                                                               PropertyNameCaseInsensitive = true,
                                                                                               PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                                                                                              DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
                                                                                               NumberHandling = JsonNumberHandling.AllowReadingFromString,
                                                                                               Converters = { new JsonStringEnumConverter() }
                                                                                           };

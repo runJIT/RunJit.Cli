@@ -1,17 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <!--Project specific settings-->
+    <!--Test project specific area-->
     <PropertyGroup>
         <IsPackable>false</IsPackable>
-        <TargetFramework>net9.0</TargetFramework>
+        <IsPublishable>false</IsPublishable>
+        <IsTestProject>true</IsTestProject>
     </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="ConsoleTables" Version="2.6.2" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
         <PackageReference Include="MSTest" Version="3.8.2" />
-        <PackageReference Include="coverlet.collector" Version="6.0.4">
-            <PrivateAssets>all</PrivateAssets>
+        <PackageReference Include="GitVersion.MsBuild" Version="6.1.0">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="Solution.Parser" Version="3.0.2" />
     </ItemGroup>

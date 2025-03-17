@@ -13,6 +13,7 @@ namespace $ProjectName$.JsonSerializing
             {
                 PropertyNameCaseInsensitive = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
                 NumberHandling = JsonNumberHandling.AllowReadingFromString,
                 Converters = { new JsonStringEnumConverter() }
             };
@@ -22,6 +23,7 @@ namespace $ProjectName$.JsonSerializing
                                                   // options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
                                                   options.SerializerOptions.PropertyNameCaseInsensitive = jsonSerializeOptions.PropertyNameCaseInsensitive;
                                                   options.SerializerOptions.PropertyNamingPolicy = jsonSerializeOptions.PropertyNamingPolicy;
+                                                  options.SerializerOptions.DictionaryKeyPolicy = jsonSerializeOptions.DictionaryKeyPolicy;
                                                   options.SerializerOptions.NumberHandling = jsonSerializeOptions.NumberHandling;
                                                   options.SerializerOptions.Converters.AddRange(jsonSerializeOptions.Converters);
                                               });

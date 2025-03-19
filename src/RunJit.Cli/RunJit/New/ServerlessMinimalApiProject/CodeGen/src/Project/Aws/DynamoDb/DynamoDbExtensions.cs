@@ -38,6 +38,11 @@ namespace $ProjectName$.Aws.DynamoDb
 
             foreach (var queryProperty in queryProperties)
             {
+                if (queryProperty.Value.AsString().IsNull())
+                {
+                    continue;   
+                }
+                
                 if (queryProperty.PropertyName.IsNotNullOrWhiteSpace())
                 {
                     scanConfig.Filter.AddCondition(queryProperty.PropertyName,

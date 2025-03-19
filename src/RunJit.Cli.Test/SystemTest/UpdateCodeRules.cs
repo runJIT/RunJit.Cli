@@ -32,6 +32,7 @@ namespace RunJit.Cli.Test.SystemTest
         [DataRow(@"D:\SoftwareOne\css-partners\SWO.CSS.OneSalesPartnerService.sln")]
         [DataRow(@"D:\AzureDevOps\SoftwareOne.Workshop.November.2023\RunJit\UserManagement\UserManagement.sln")]
         [DataRow(@"D:\AzureDevOps\AspNetCore.MinimalApi.Sdk\AspNetCore.MinimalApi.Sdk.sln")]
+        [DataRow(@"D:\Siemens\siemensgpt-backend\SiemensGPT.sln")]
         public async Task Should_Update_All_CodeRules_Into_Specific_Local_Solution(string targetSolution)
         {
             // 1. Create new Web Api

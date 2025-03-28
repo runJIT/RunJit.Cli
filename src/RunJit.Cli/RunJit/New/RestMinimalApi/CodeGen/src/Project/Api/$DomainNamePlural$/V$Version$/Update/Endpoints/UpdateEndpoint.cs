@@ -1,5 +1,6 @@
-﻿using $ProjectName$.Extensions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Siemens.AspNet.ErrorHandling.Contracts;
+using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
@@ -20,7 +21,8 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .WithName("update$DomainName$V$Version$")
                      .MapToApiVersion($Version$)
                      .WithDescriptionFromFile("Description.txt")
-                     .WithSummaryFromFile("Summary.txt");
+                     .WithSummaryFromFile("Summary.txt")
+                     .WithMetadata(new AllowedBodyMetaInfo(typeof(Create$DomainName$Request)));
             
             static async Task<Update$DomainName$Response> HandleAsync(Update$DomainName$Request update$DomainName$Request,
                                                                  Guid $IdUrlName$,

@@ -1,5 +1,6 @@
 ﻿using Extensions.Pack;
-using $ProjectName$.Validations;
+using Siemens.AspNet.ErrorHandling.Contracts;
+using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
@@ -13,18 +14,32 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 
     internal sealed class Create$DomainName$RequestValidator : RequestValidator<Create$DomainName$Request>
     {
-        protected override IEnumerable<(string PropertyName, string Error)> GetValidationErrors(Create$DomainName$Request request)
+        protected override IEnumerable<(string PropertyName, ValidationErrorDetails ErrorDetails)> GetValidationErrors(Create$DomainName$Request request)
         {
             // Sample: Remove the yield break and replace it with your validation logic
             //
-            // if (request.Name.IsNotNullOrWhiteSpace())
+            // if (request.FormsId.IsNull())
             // {
-            //     yield return (nameof(request.Name), "Name must not be null, empty or whitespace");
+            //     var errorDetails = new ValidationErrorDetails()
+            //                        {
+            //                            CurrentValue = request.FormsId,
+            //                            Errors = [$"{nameof(request.FormsId)} must not be null"],
+            //                            Samples = ["This is a cool project", "Hello World"],
+            //                        };
+               
+            //     yield return (nameof(request.FormsId), errorDetails);
             // }
-            //    
-            // if (request.Name.Length > 18)
+            // 
+            // if (request.FormsId.IsEmpty())
             // {
-            //     yield return (nameof(request.Name), "Name must not be longer than 18 characters");
+            //     var errorDetails = new ValidationErrorDetails()
+            //                        {
+            //                            CurrentValue = request.FormsId,
+            //                            Errors = [$"{nameof(request.FormsId)} must not be empty"],
+            //                            Samples = ["This is a cool project", "Hello World"],
+            //                        };
+               
+            //     yield return (nameof(request.FormsId), errorDetails);
             // }
             yield break;
         }

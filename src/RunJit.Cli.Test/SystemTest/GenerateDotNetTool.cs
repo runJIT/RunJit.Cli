@@ -28,6 +28,7 @@ namespace RunJit.Cli.Test.SystemTest
         [TestMethod]
         [DataRow(@"D:\AzureDevOps\AspNetCore.MinimalApi.Sdk\AspNetCore.MinimalApi.Sdk.sln", "MyApi")]
         [DataRow(@"D:\Siemens\siemens-data-cloud-core\Siemens.Data.Cloud.Core.sln", "Sdc")]
+        [DataRow(@"D:\Siemens\pulse-fieldingtool\Pulse.FieldingTool.sln", "FieldingTool")]
         public async Task Generate_Cli_For_Minimal_Web_Api(string solutionPath,
                                                            string toolName)
         {

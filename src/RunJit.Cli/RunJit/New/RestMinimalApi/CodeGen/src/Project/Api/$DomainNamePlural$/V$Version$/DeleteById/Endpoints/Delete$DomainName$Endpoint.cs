@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
-using $ProjectName$.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Siemens.AspNet.ErrorHandling.Contracts;
+using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
@@ -10,10 +11,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         {
             endpoints.MapDelete("$DomainNamePluralLower$/{$IdUrlName$:guid}", HandleAsync)
                      .Produces<NoContent>(StatusCodes.Status204NoContent)
+                     .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
                      .Produces<ProblemDetails>(StatusCodes.Status401Unauthorized)
                      .Produces<ProblemDetails>(StatusCodes.Status403Forbidden)
                      .Produces<ProblemDetails>(StatusCodes.Status404NotFound)
-                     .Produces<ValidationProblemDetails>(StatusCodes.Status422UnprocessableEntity)
+                     .Produces<ValidationProblemDetailsExtended>(StatusCodes.Status422UnprocessableEntity)
                      .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError)
                      .Produces<ProblemDetails>(StatusCodes.Status503ServiceUnavailable)
                      .Produces<string>(StatusCodes.Status504GatewayTimeout) // AWS handled error -> returns HTML
@@ -27,7 +29,12 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                                                    Delete$DomainName$Command delete$DomainName$Command,
                                                    CancellationToken cancellationToken = default)
             {
-                await delete$DomainName$Command.ExecuteAsync($IdUrlName$, cancellationToken).ConfigureAwait(false);
+                var request = new Delete$DomainName$ByIdRequest
+                {
+                    $IdPropertyName$ = $IdUrlName$
+                };
+                
+                await delete$DomainName$Command.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return Results.NoContent();
             }

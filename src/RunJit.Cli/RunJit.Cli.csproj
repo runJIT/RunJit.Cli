@@ -41,7 +41,7 @@
         <PackageReference Include="AspNetCore.Simple.Sdk" Version="6.0.2" />
         <PackageReference Include="AWSSDK.Translate" Version="3.7.400.113" />
         <PackageReference Include="DotNetTool.Service" Version="0.3.0" />
-        <PackageReference Include="Extensions.Pack" Version="6.0.5" />
+        <PackageReference Include="Extensions.Pack" Version="6.0.6" />
         <PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -164,6 +164,18 @@
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Update\Update$DomainName$Test.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Commands\Create$DomainName$Command.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteAll\Commands\DeleteAll$DomainNamePlural$Command.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteAll\Requests\DeleteAll$DomainNamePlural$Request.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Requests\Delete$DomainName$ByIdRequest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Validations\Delete$DomainName$ByIdRequestValidator.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Requests\GetAll$DomainNamePlural$Request.cs">
+          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Validations\GetAll$DomainNamePlural$RequestValidator.cs">
+          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Requests\Get%24DomainName%24ByIdRequest.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Validations\Get%24DomainName%24ByIdRequestValidator.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Validations\DeleteAll%24DomainNamePlural%24RequestValidator.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Commands\Delete$DomainName$Command.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Commands\Patch$DomainName$Command.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Commands\Update$DomainName$Command.cs" />
@@ -199,6 +211,7 @@
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Mappers\Create$DomainName$RequestMapper.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteAll\Endpoints\Delete$DomainName$Endpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteAll\Extensions\DeleteAllStartup.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteAll\Validations\DeleteAll$DomainNamePlural$RequestValidator.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Command\Delete$DomainName$Command.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Endpoints\Delete$DomainName$Endpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Extensions\DeleteStartup.cs" />
@@ -208,6 +221,8 @@
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Responses\GetAll$DomainNamePlural$Response.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Extensions\GetByIdStartup.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Queries\Get$DomainName$ByIdQuery.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Requests\Get$DomainName$ByIdRequest.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Validations\Get$DomainName$ByIdRequestValidator.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Extensions\PatchStartup.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Mappers\Patch$DomainName$RequestMapper.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Validators\Patch$DomainName$RequestValidator.cs" />
@@ -228,7 +243,12 @@
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\_Shared_\$DomainName$.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Create\Commands\Create%24DomainName%24Command.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Commands\DeleteAll%24DomainNamePlural%24Command.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Requests\DeleteAll%24DomainNamePlural%24Request.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Commands\Delete%24DomainName%24Command.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Requests\Delete%24DomainName%24ByIdRequest.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Validations\Delete$DomainName$ByIdRequestValidator.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Requests\GetAll%24DomainNamePlural%24Request.cs" />
+      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Validations\GetAll%24DomainNamePlural%24RequestValidator.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Endpoints\GetByIdEndpoint.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Responses\Get%24DomainName%24ByIdResponse.cs" />
       <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Commands\Patch%24DomainName%24Command.cs" />
@@ -246,41 +266,14 @@
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Utils\DynamoDbService.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Utils\MigrationScriptExecutor.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Api\Startup.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Aws\DynamoDb\AmazonDynamoDbFactory.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Aws\DynamoDb\DynamoDbExtensions.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Extensions\EndpointConventionBuilderExtensions.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Helpers\EmbeddedFileLocalizer.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AuthenticationBuilderExtensions.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AwsCognitoSettings.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\AppJsonSerializerContext.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonDiffer.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonSerializeOptions.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonSerializer.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\BearerSecuritySchemeTransformer.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\DocumentInfosTransformer.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiInfos.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiVersionInfo.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Program.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Regex\GlobalRegex.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Startup\ServerlessMinimalApplication.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Validations\PatchRequestValidator.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Validations\RequestValidator.cs" />
     </ItemGroup>
     <ItemGroup>
         <None Remove="RunJit\Generate\Client\Templates\client.zip" />
         <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\Dockerfile" />
+        <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\NuGet.Config" />
         <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\ApiTestBase.cs" />
-        <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Extensions\EndpointConventionBuilderExtensions.cs" />
-        <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AuthenticationBuilderExtensions.cs" />
-        <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AwsCognitoSettings.cs" />
-        <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\AppJsonSerializerContext.cs" />
-        <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonSerializeOptions.cs" />
-        <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\BearerSecuritySchemeTransformer.cs" />
-        <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\DocumentInfosTransformer.cs" />
-        <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiInfos.cs" />
-        <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiVersionInfo.cs" />
         <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Program.cs" />
-        <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Startup\ServerlessMinimalApplication.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -303,7 +296,9 @@
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Validations\Update%24DomainName%24RequestValidator.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Mappers\Patch%24DomainName%24RequestMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\Startup.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Responses\GetAll%24DomainNamePlural%24Response.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Responses\GetAll%24DomainNamePlural%24Response.cs">
+          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\_Shared_\%24DomainName%24EntityMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Create\Endpoints\Create%24DomainName%24Endpoint.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Create\Extensions\CreateStartup.cs" />
@@ -317,7 +312,9 @@
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Extensions\DeleteStartup.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Endpoints\GetAll%24DomainNamePlural%24Endpoint.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Extensions\GetAllStartup.cs" />
-        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Queries\GetAll%24DomainNamePlural%24Query.cs" />
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Queries\GetAll%24DomainNamePlural%24Query.cs">
+          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Endpoints\GetByIdEndpoint.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Extensions\GetByIdStartup.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Queries\Get%24DomainName%24ByIdQuery.cs" />
@@ -341,6 +338,7 @@
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\commitlint.config.js" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\Directory.Build.props" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\Dockerfile" />
+        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\NuGet.Config" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\ApiTestBase.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Api\Health\GetHealthStateTest.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\OpenApi\OpenApiTest.cs" />
@@ -348,25 +346,7 @@
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Utils\DynamoDbService.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Utils\MigrationScriptExecutor.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Api\Startup.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Aws\DynamoDb\AmazonDynamoDbFactory.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Aws\DynamoDb\DynamoDbExtensions.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Extensions\EndpointConventionBuilderExtensions.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Helpers\EmbeddedFileLocalizer.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AuthenticationBuilderExtensions.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\IdentityProvider\AwsCognitoSettings.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\AppJsonSerializerContext.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonDiffer.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonSerializeOptions.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\JsonSerializing\JsonSerializer.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\BearerSecuritySchemeTransformer.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\DocumentInfosTransformer.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiInfos.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\OpenApi\OpenApiVersionInfo.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Program.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Regex\GlobalRegex.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Startup\ServerlessMinimalApplication.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Validations\PatchRequestValidator.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Validations\RequestValidator.cs" />
         <EmbeddedResource Include="RunJit\Update\BuildConfig\Templates\Directory.Build.props" />
         <EmbeddedResource Include="RunJit\Update\CodeRules\Templates\RunJITCodeRules.zip" />
         <EmbeddedResource Include="RunJit\Update\ResharperSettings\Template\.editorconfig" />

@@ -1,10 +1,10 @@
 ﻿using System.Text.Json.Nodes;
 using Extensions.Pack;
 using Newtonsoft.Json;
-using $ProjectName$.Aws.DynamoDb;
 using $ProjectName$.Database.$DomainNamePlural$;
-using $ProjectName$.JsonSerializing;
 using Siemens.AspNet.ErrorHandling.Contracts;
+using Siemens.AspNet.MinimalApi.Sdk;
+using Siemens.AspNet.MinimalApi.Sdk.Aws.DynamoDb;
 
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
@@ -12,7 +12,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
     internal static class AddPatch$DomainName$CommandExtension
     {
         internal static void AddPatch$DomainName$Command(this IServiceCollection services,
-                                                    IConfiguration configuration)
+                                                               IConfiguration configuration)
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
             services.AddPatch$DomainName$RequestValidator();
@@ -20,23 +20,21 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             services.Add$DomainName$EntityToPatch$DomainName$RequestMapper();
             services.Add$DomainName$EntityMapper();
             services.AddJsonDiffer();
-            
-            
+
             services.AddSingletonIfNotExists<Patch$DomainName$Command>();
         }
     }
 
     internal sealed class Patch$DomainName$Command(IAmazonDynamoDbClientFactory dynamoDbClientFactory,
-                                              Patch$DomainName$RequestValidator patch$DomainName$RequestValidator,
-                                              $DomainName$EntityToPatch$DomainName$RequestMapper $DomainNameLower$RequestMapper,
-                                              $DomainName$EntityMapper $DomainNameLower$Mapper,
-                                              Patch$DomainName$RequestMapper patch$DomainName$RequestMapper)
+                                                         Patch$DomainName$RequestValidator patch$DomainName$RequestValidator,
+                                                         $DomainName$EntityToPatch$DomainName$RequestMapper $DomainNameLower$RequestMapper,
+                                                         $DomainName$EntityMapper $DomainNameLower$Mapper,
+                                                         Patch$DomainName$RequestMapper patch$DomainName$RequestMapper)
     {
         internal async Task<$DomainName$> ExecuteAsync(JsonObject patchRequest,
-                                                  Guid $DomainNameLower$Id,
-                                                  CancellationToken cancellationToken)
+                                                             Guid $DomainNameLower$Id,
+                                                             CancellationToken cancellationToken)
         {
-
             // 1. Create instance of dynamo db context
             using var dbContext = dynamoDbClientFactory.Create();
 
@@ -65,7 +63,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 
             // 6. Map the request to the DB entity
             var patched$DomainName$ = patch$DomainName$RequestMapper.MapFrom(patch$DomainName$Request, $DomainNameLower$Id);
-            
+
             // 7. Save updated/patched $DomainNameLower$
             await dbContext.SaveAsync(patched$DomainName$, cancellationToken).ConfigureAwait(false);
 

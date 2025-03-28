@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using $ProjectName$.Extensions;
+using Siemens.AspNet.ErrorHandling.Contracts;
+using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
@@ -20,13 +21,19 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                             .WithName("getAll$DomainNamePlural$V$Version$")
                             .MapToApiVersion($Version$)
                             .WithDescriptionFromFile("Description.txt")
-                            .WithSummaryFromFile("Summary.txt");
+                            .WithSummaryFromFile("Summary.txt")
+                            .WithMetadata(new AllowedQueryParameterMetaInfo("$QueryPropertyNameLower$"));
                 
             static async Task<GetAll$DomainNamePlural$Response> HandleAsync(GetAll$DomainNamePlural$Query getAll$DomainNamePlural$Query,
                                                                             [FromQuery] string $QueryPropertyNameLower$ = "",
                                                                             CancellationToken cancellationToken = default)
             {
-                var $DomainNamePluralLower$ = await getAll$DomainNamePlural$Query.ExecuteAsync($QueryPropertyNameLower$, cancellationToken).ConfigureAwait(false);
+                var request = new GetAll$DomainNamePlural$Request
+                {
+                    $QueryPropertyName$ = $QueryPropertyNameLower$
+                };
+                
+                var $DomainNamePluralLower$ = await getAll$DomainNamePlural$Query.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return new GetAll$DomainNamePlural$Response($DomainNamePluralLower$);
             }

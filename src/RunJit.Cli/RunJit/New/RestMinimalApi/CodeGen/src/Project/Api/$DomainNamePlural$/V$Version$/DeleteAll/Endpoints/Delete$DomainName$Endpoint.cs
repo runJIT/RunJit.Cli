@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using $ProjectName$.Extensions;
+using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
@@ -10,10 +10,10 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         {
             endpoints.MapDelete("$DomainNamePluralLower$", HandleAsync)
                      .Produces<NoContent>(StatusCodes.Status204NoContent)
+                     .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
                      .Produces<ProblemDetails>(StatusCodes.Status401Unauthorized)
                      .Produces<ProblemDetails>(StatusCodes.Status403Forbidden)
                      .Produces<ProblemDetails>(StatusCodes.Status404NotFound)
-                     .Produces<ValidationProblemDetails>(StatusCodes.Status422UnprocessableEntity)
                      .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError)
                      .Produces<ProblemDetails>(StatusCodes.Status503ServiceUnavailable)
                      .Produces<string>(StatusCodes.Status504GatewayTimeout) // AWS handled error -> returns HTML
@@ -21,13 +21,19 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .WithName("deleteAll$DomainNamePlural$V$Version$")
                      .MapToApiVersion($Version$)
                      .WithDescriptionFromFile("Description.txt")
-                     .WithSummaryFromFile("Summary.txt");
+                     .WithSummaryFromFile("Summary.txt")
+                     .WithMetadata(new AllowedQueryParameterMetaInfo("$QueryPropertyNameLower$"));
 
-            static async Task<IResult> HandleAsync(DeleteAll$DomainNamePlural$Command delete$DomainName$Command,
+            static async Task<IResult> HandleAsync(DeleteAll$DomainNamePlural$Command deleteAll$DomainNamePlural$Command,
                                                    [FromQuery] string $QueryPropertyNameLower$ = "",
                                                    CancellationToken cancellationToken = default)
             {
-                await delete$DomainName$Command.ExecuteAsync($QueryPropertyNameLower$, cancellationToken).ConfigureAwait(false);
+                var request = new DeleteAll$DomainNamePlural$Request
+                {
+                    $QueryPropertyName$ = $QueryPropertyNameLower$
+                };
+                
+                await deleteAll$DomainNamePlural$Command.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return Results.NoContent();
             }

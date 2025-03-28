@@ -1,7 +1,8 @@
 ﻿using System.Net.Mime;
 using System.Text.Json.Nodes;
-using $ProjectName$.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Siemens.AspNet.ErrorHandling.Contracts;
+using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
@@ -23,7 +24,8 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .WithName("patch$DomainName$V$Version$")
                      .MapToApiVersion($Version$)
                      .WithDescriptionFromFile("Description.txt")
-                     .WithSummaryFromFile("Summary.txt");
+                     .WithSummaryFromFile("Summary.txt")
+                     .WithMetadata(new AllowedBodyMetaInfo(typeof(Create$DomainName$Request)));
                 
             static async Task<Patch$DomainName$Response> HandleAsync(JsonObject patchRequest,
                                                                      Patch$DomainName$Command patch$DomainName$Command,

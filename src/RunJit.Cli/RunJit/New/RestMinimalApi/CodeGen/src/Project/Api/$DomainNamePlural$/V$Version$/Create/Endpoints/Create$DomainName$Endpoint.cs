@@ -1,5 +1,6 @@
-﻿using $ProjectName$.Extensions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Siemens.AspNet.ErrorHandling.Contracts;
+using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
@@ -9,10 +10,12 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         {
             endpoints.MapPost("$DomainNamePluralLower$", HandleAsync)
                      .Produces<Create$DomainName$Response>()
+                     .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
                      .Produces<ProblemDetails>(StatusCodes.Status401Unauthorized)
                      .Produces<ProblemDetails>(StatusCodes.Status403Forbidden)
                      .Produces<ProblemDetails>(StatusCodes.Status404NotFound)
-                     .Produces<ValidationProblemDetails>(StatusCodes.Status422UnprocessableEntity)
+                     .Produces<ProblemDetails>(StatusCodes.Status409Conflict)
+                     .Produces<ValidationProblemDetailsExtended>(StatusCodes.Status422UnprocessableEntity)
                      .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError)
                      .Produces<ProblemDetails>(StatusCodes.Status503ServiceUnavailable)
                      .Produces<string>(StatusCodes.Status504GatewayTimeout) // AWS handled error -> returns HTML
@@ -20,7 +23,8 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .WithName("create$DomainName$V$Version$")
                      .MapToApiVersion($Version$)
                      .WithDescriptionFromFile("Description.txt")
-                     .WithSummaryFromFile("Summary.txt");
+                     .WithSummaryFromFile("Summary.txt")
+                     .WithMetadata(new AllowedBodyMetaInfo(typeof(Create$DomainName$Request)));
                 
             static async Task<Create$DomainName$Response> HandleAsync(Create$DomainName$Request create$DomainName$Request,
                                                                  Create$DomainName$Command create$DomainName$Command,

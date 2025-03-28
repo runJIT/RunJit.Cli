@@ -1,20 +1,34 @@
-﻿using Extensions.Pack;
+﻿using System.Net;
+using Extensions.Pack;
 using Siemens.AspNet.ErrorHandling.Contracts;
 using Siemens.AspNet.MinimalApi.Sdk;
 
-namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
+namespace $ProjectName$.Api.$DomainNamePlural$.V1
 {
-    internal static class AddUpdate$DomainName$RequestValidatorExtension
+    public static class AddGet$DomainName$ByIdRequestValidatorExtension
     {
-        internal static void AddUpdate$DomainName$RequestValidator(this IServiceCollection services)
+        internal static void AddGet$DomainName$ByIdRequestValidator(this IServiceCollection services)
         {
-            services.AddSingletonIfNotExists<Update$DomainName$RequestValidator>();
+            services.AddSingletonIfNotExists<Get$DomainName$ByIdRequestValidator>();
         }
     }
 
-    internal sealed class Update$DomainName$RequestValidator : RequestValidator<Update$DomainName$Request>
+
+    /// <summary>
+    /// Validates url parameters for the GET by id request to fetch the forms configuration by its id
+    /// Returns a 400 Bad Request for invalid parameters per 
+    /// <see href="https://www.rfc-editor.org/rfc/rfc9110#status.400">RFC 9110</see>.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// For request bodies that are syntactically correct yet semantically invalid (e.g., in POST, PUT, PATCH), 
+    /// a 422 Unprocessable Content status is recommended 
+    /// (<see href="https://www.rfc-editor.org/rfc/rfc9110#status.422">RFC 9110</see>).
+    /// </para>
+    /// </remarks>
+    internal sealed class Get$DomainName$ByIdRequestValidator() : RequestValidator<Get$DomainName$ByIdRequest>(HttpStatusCode.BadRequest)
     {
-        protected override IEnumerable<(string PropertyName, ValidationErrorDetails ErrorDetails)> GetValidationErrors(Update$DomainName$Request request)
+        protected override IEnumerable<(string PropertyName, ValidationErrorDetails ErrorDetails)> GetValidationErrors(Get$DomainName$ByIdRequest request)
         {
             // Sample: Remove the yield break and replace it with your validation logic
             //
@@ -26,7 +40,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             //                            Errors = [$"{nameof(request.FormsId)} must not be null"],
             //                            Samples = ["This is a cool project", "Hello World"],
             //                        };
-                   
+               
             //     yield return (nameof(request.FormsId), errorDetails);
             // }
             // 
@@ -38,7 +52,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             //                            Errors = [$"{nameof(request.FormsId)} must not be empty"],
             //                            Samples = ["This is a cool project", "Hello World"],
             //                        };
-                   
+               
             //     yield return (nameof(request.FormsId), errorDetails);
             // }
             yield break;

@@ -1,5 +1,5 @@
 ﻿using Extensions.Pack;
-using $ProjectName$.Aws.DynamoDb;
+using Siemens.AspNet.MinimalApi.Sdk.Aws.DynamoDb;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {

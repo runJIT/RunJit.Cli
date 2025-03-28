@@ -1,17 +1,18 @@
 ﻿using System.Collections.Immutable;
-using Amazon.DynamoDBv2.DocumentModel;
 using Extensions.Pack;
-using $ProjectName$.Aws.DynamoDb;
 using $ProjectName$.Database.$DomainNamePlural$;
+using Siemens.AspNet.MinimalApi.Sdk.Aws.DynamoDb;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
+
     internal static class AddGetAll$DomainNamePlural$QueryExtension
     {
         internal static void AddGetAll$DomainNamePlural$Query(this IServiceCollection services,
-                                            IConfiguration configuration)
+                                                               IConfiguration configuration)
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
+            services.AddGetAll$DomainNamePlural$RequestValidator();
             services.Add$DomainName$EntityMapper();
 
             services.AddSingletonIfNotExists<GetAll$DomainNamePlural$Query>();
@@ -19,21 +20,25 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
     }
 
     internal sealed class GetAll$DomainNamePlural$Query(IAmazonDynamoDbClientFactory amazonDynamoDbClientFactory,
-                                      $DomainName$EntityMapper mapper)
+                                                         GetAll$DomainNamePlural$RequestValidator requestValidator,
+                                                         $DomainName$EntityMapper mapper)
     {
-        internal async Task<IImmutableList<$DomainName$>> ExecuteAsync(string $QueryPropertyNameLower$,
-                                                                       CancellationToken cancellationToken)
+        internal async Task<IImmutableList<$DomainName$>> ExecuteAsync(GetAll$DomainNamePlural$Request request,
+                                                                             CancellationToken cancellationToken)
         {
-            // 1. Create dynamo db context
+            // 1. Validate the request
+            await requestValidator.ValidateAsync(request).ConfigureAwait(false);
+
+            // 2. Create dynamo db context
             using var dbContext = amazonDynamoDbClientFactory.Create();
 
-            // 2. Get all $DomainNameLower$ entities by filter criteria or all
-            var $DomainNameLower$Entities = await dbContext.GetAllAsync<$DomainName$Entity>([(nameof($DomainName$Entity.$QueryPropertyName$), $QueryPropertyNameLower$)], cancellationToken).ConfigureAwait(false);
+            // 3. Get all $DomainNameLower$ entities by filter criteria or all
+            var $DomainNameLower$Entities = await dbContext.GetAllAsync<$DomainName$Entity>([(nameof($DomainName$Entity.$QueryPropertyName$), request.$QueryPropertyName$)], cancellationToken).ConfigureAwait(false);
 
-            // 3. Map to api models (AntiCorruptionLayer - ACL)
+            // 4. Map to api models (AntiCorruptionLayer - ACL)
             var $DomainNamePluralLower$ = mapper.MapFrom($DomainNameLower$Entities);
 
-            // 4. Return the mapped objects
+            // 5. Return the mapped objects
             return $DomainNamePluralLower$;
         }
     }

@@ -1,5 +1,6 @@
-﻿using $ProjectName$.Extensions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Siemens.AspNet.ErrorHandling.Contracts;
+using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
@@ -22,11 +23,16 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                             .WithDescriptionFromFile("Description.txt")
                             .WithSummaryFromFile("Summary.txt");
 
-            static async Task<Get$DomainName$ByIdResponse> HandleAsync(Guid $DomainNameLower$Id,
+            static async Task<Get$DomainName$ByIdResponse> HandleAsync(Guid $IdUrlName$,
                                                                        Get$DomainName$ByIdQuery get$DomainName$ByIdQuery,
                                                                        CancellationToken cancellationToken = default)
             {
-                var $DomainNameLower$ = await get$DomainName$ByIdQuery.ExecuteAsync($DomainNameLower$Id, cancellationToken).ConfigureAwait(false);
+                var request = new Get$DomainName$ByIdRequest
+                {
+                    $IdPropertyName$ = $IdUrlName$
+                };
+                
+                var $DomainNameLower$ = await get$DomainName$ByIdQuery.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return new Get$DomainName$ByIdResponse($DomainNameLower$);
             }

@@ -7,7 +7,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="AspNetCore.Simple.MsTest.Sdk" Version="6.0.14" />
-        <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.406.1" />
+        <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.406.11" />
         <PackageReference Include="Irony" Version="1.5.3" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.13.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.13.0" />

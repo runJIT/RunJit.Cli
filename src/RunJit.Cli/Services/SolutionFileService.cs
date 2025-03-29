@@ -383,17 +383,23 @@ namespace RunJit.Cli.Services
      Dictionary<string, string> nestedProjectsMap)
         {
             if (nestedProjectsMap.Count == 0)
+            {
                 return;
+            }
 
             // 1) Locate top-level Global ... EndGlobal
             int globalIndex = lines.FindIndex(l => l.TrimStart().Equals("Global", StringComparison.OrdinalIgnoreCase));
             if (globalIndex < 0)
+            {
                 throw new InvalidOperationException("Malformed .sln: missing top-level 'Global'.");
+            }
 
             int endGlobalIndex = lines.FindIndex(globalIndex + 1, l =>
-                l.TrimStart().Equals("EndGlobal", StringComparison.OrdinalIgnoreCase));
+                                                                      l.TrimStart().Equals("EndGlobal", StringComparison.OrdinalIgnoreCase));
             if (endGlobalIndex < 0)
+            {
                 throw new InvalidOperationException("Malformed .sln: missing top-level 'EndGlobal'.");
+            }
 
             // 2) We now search for an existing top-level "GlobalSection(NestedProjects)" block
             //    within the lines between globalIndex+1 and endGlobalIndex-1.
@@ -439,7 +445,9 @@ namespace RunJit.Cli.Services
                             }
                         }
                         if (sectionClose == -1)
+                        {
                             throw new InvalidOperationException("Malformed .sln: 'GlobalSection(...)' without matching 'EndGlobalSection'.");
+                        }
 
                         // jump i just past this section
                         i = sectionClose + 1;

@@ -1,0 +1,6 @@
+<RunSettings>
+  <RunConfiguration>
+    <!-- Setting MaxCpuCount to 1 forces MSTest to use only one thread. -->
+    <MaxCpuCount>1</MaxCpuCount>
+  </RunConfiguration>
+</RunSettings>

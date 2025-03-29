@@ -1,0 +1,47 @@
+assembly-versioning-scheme: MajorMinorPatch
+assembly-file-versioning-scheme: MajorMinorPatch
+mode: ContinuousDeployment
+increment: Inherit
+tag-prefix: '[vV]'
+major-version-bump-message: '\+semver:\s?(breaking|major)'
+minor-version-bump-message: '\+semver:\s?(feature|minor)'
+patch-version-bump-message: '\+semver:\s?(fix|patch)'
+no-bump-message: '\+semver:\s?(none|skip)'
+
+# Padding für Build-Metadata wird auf 0 gesetzt, damit keine unnötigen Werte wie '-8' generiert werden
+build-metadata-padding: 0
+
+commit-message-incrementing: Enabled
+prevent-increment-of-merged-branch-version: true
+commit-date-format: 'yyyy-MM-dd'
+continuous-deployment-fallback-tag: ''
+
+# Sicherstellen, dass keine Build-Metadata generiert wird
+build-metadata:
+  include: false
+
+# Branch-spezifische Regeln hinzufügen
+branches:
+  main:
+    tag: ''
+    increment: Patch
+    prevent-increment-of-merged-branch-version: true
+    is-release-branch: true
+  develop:
+    tag: 'beta'
+    increment: Minor
+  feature:
+    tag: 'feature'
+    increment: Minor
+  hotfix:
+    tag: 'hotfix'
+    increment: Patch
+  release:
+    tag: ''
+    prevent-increment-of-merged-branch-version: true
+    is-release-branch: true
+    increment: Patch
+
+# Releases verwenden keine Pre-Release-Tags oder Build-Metadata
+release-branch:
+  prevent-increment-of-merged-branch-version: true

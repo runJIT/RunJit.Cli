@@ -121,9 +121,15 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.Service
         private string MapType(string typeName)
         {
             if (typeName == "string" || typeName == nameof(Guid))
+            {
                 return "S";
+            }
+
             if (typeName == "int" || typeName == "long" || typeName == "decimal" || typeName == "double")
+            {
                 return "N";
+            }
+
             // Default to string
             return "S";
         }

@@ -1,0 +1,191 @@
+# This workflow will build a .NET project and deploy it with a manual approval step before deployment.
+name: Deployment Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch the entire history, not just a shallow clone
+
+      # Set up Node.js for running commitlint
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # Install commitlint and commitlint-config-conventional
+      - name: Install commitlint
+        run: |
+          npm install --save-dev @commitlint/config-conventional @commitlint/cli
+
+      # Create commitlint config file
+      - name: Create commitlint config
+        run: |
+          echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js
+
+      # Run commitlint
+      - name: Lint commits
+        run: |
+          npx commitlint --from=$(git merge-base origin/main HEAD~10) --to=HEAD
+      
+      #  setup:
+      #    runs-on: ubuntu-latest
+      #    needs: commitlint
+      #    outputs:
+      #      workspace: ${{ steps.checkout.outputs.workspace }}
+      #    steps:
+      #      - name: Checkout code
+      #        id: checkout
+      #        uses: actions/checkout@v4
+      #        with:
+      #          fetch-depth: 0 # Fetch the entire history, not just a shallow clone
+      #
+      #      - name: Upload Source
+      #        uses: actions/upload-artifact@v3
+      #        with:
+      #          name: source
+      #          path: ./
+      #
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+      #
+      #  build:
+      #    runs-on: ubuntu-latest
+      #    needs: setup
+      #    steps:
+      #      - name: Setup .NET SDK
+      #        uses: actions/setup-dotnet@v4
+      #        with:
+      #          dotnet-version: '9.0.100'
+      #
+      #      - name: Download Source
+      #        uses: actions/download-artifact@v3
+      #        with:
+      #          name: source
+
+      - name: Dotnet Restore
+        run: dotnet restore #dotnet list package --include-transitive --vulnerable
+
+      # Build the project
+      - name: Build the project
+        run: dotnet build --configuration Release --no-restore --verbosity minimal
+      
+      #      - name: Upload Source
+      #        uses: actions/upload-artifact@v3
+      #        with:
+      #          name: source
+      #          path: ./
+      
+      #  tests:
+      #    runs-on: ubuntu-latest
+      #    needs: build
+      #    steps:
+      #      - name: Setup .NET SDK
+      #        uses: actions/setup-dotnet@v4
+      #        with:
+      #          dotnet-version: '9.0.100'
+      #
+      #      - name: Download Source
+      #        uses: actions/download-artifact@v3
+      #        with:
+      #          name: source
+
+      # Run tests filtered by 'Code-Rules'
+      - name: Run Code-Rules tests
+        run: dotnet test --configuration Release --filter "FullyQualifiedName~CodeRules" --no-restore --no-build --verbosity minimal --logger "trx;LogFileName=TestResultsCodeRules.trx"
+        
+      - name: Publish CodeRules Tests
+        uses: actions/dorny_test-reporter@v1
+        if: success() || failure() # run this step even if previous step failed
+        with:
+          name: CodeRules Test
+          path: "**/TestResultsCodeRules.trx"
+          reporter: dotnet-trx
+          fail-on-error: false
+
+      # Run all other tests
+      - name: Run all other tests
+        run: dotnet test --configuration Release --filter "FullyQualifiedName!~CodeRules" --no-restore --no-build --verbosity minimal --logger "trx;LogFileName=TestResultsGeneralTests.trx"
+
+      - name: Publish General Tests
+        uses: actions/dorny_test-reporter@v1
+        if: success() || failure() # run this step even if previous step failed
+        with:
+          name: GeneralTests
+          path: "**/TestResultsGeneralTests.trx"
+          reporter: dotnet-trx
+          fail-on-error: false
+      #  pack:
+      #    runs-on: ubuntu-latest
+      #    needs: tests
+      #    steps:
+      #      - name: Setup .NET SDK
+      #        uses: actions/setup-dotnet@v4
+      #        with:
+      #          dotnet-version: '9.0.100'
+      #
+      #      - name: Download Source
+      #        uses: actions/download-artifact@v3
+      #        with:
+      #          name: source
+
+      # Pack the project
+      - name: Pack the project
+        run: dotnet pack --no-restore --configuration Release -o ./output
+
+      - name: Upload NuGet Package
+        uses: actions/upload-artifact@v3
+        with:
+          name: nuget-package
+          path: ./output/*.nupkg
+  
+  approval:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: prod
+    if: github.event_name == 'push' # Ensure approval only happens on push events 
+    steps:
+      - name: Show approval comment
+        run: echo "Please approve the deployment on the 'Environments' page."
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: approval
+    if: github.event_name == 'push' # Ensure deployment only happens on push events
+    steps:
+      # 1. Checkout the repo with full history  
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+
+      - name: Download Source
+        uses: actions/download-artifact@v3
+        with:
+          name: nuget-package
+          path: ./output
+      
+      # Deploy package to NuGet
+      - name: Deploy package to NuGet
+        run: dotnet nuget push "./output/*.nupkg" --api-key ${{ secrets.NUGET_S_ASPNET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: Add Git Tags
+        run: |
+          export PATH="$PATH:/opt/agent/.dotnet/tools"
+          dotnet tool install GitVersion.Tool --version 5.12.0 --global
+          dotnet gitversion /output buildserver
+          git tag $GitVersion_NuGetVersion
+          git push origin $GitVersion_NuGetVersion         
+        

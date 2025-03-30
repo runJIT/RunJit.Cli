@@ -66,11 +66,11 @@ namespace RunJit.Cli.Test.SystemTest
         [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
         [DataRow("Sdc.UserManagement", "api/core", "um", "Users", "Name", UserEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_New_Solution(string projectName,
-                                                                string basePath,
-                                                                string toolName,
-                                                                string domainName,
-                                                                string queryPropertyName,
-                                                                string entityModel)
+                                                                    string basePath,
+                                                                    string toolName,
+                                                                    string domainName,
+                                                                    string queryPropertyName,
+                                                                    string entityModel)
         {
             var targetDirectory = Path.Combine(Environment.CurrentDirectory, projectName);
 
@@ -78,8 +78,7 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add rest api
-            await Mediator.SendAsync(new NewMinimalRestApi(entityModel, queryPropertyName, domainName,
-                                                           solutionFileInfo.FullName));
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, entityModel, queryPropertyName, domainName, basePath));
 
             // 3. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
@@ -89,8 +88,10 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
-        [DataRow("Sdc.UserManagement", "api/core", "um", "Users", "Name", UserEntityModel)]
+        [DataRow("Sdc.Core", "api/core", "Core",
+                    "Projects", "Name", ProjectEntityModel)]
+        [DataRow("Sdc.UserManagement", "api/core", "um",
+                    "Users", "Name", UserEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_Solution_From_File(string projectName,
                                                                           string basePath,
                                                                           string toolName,
@@ -105,14 +106,16 @@ namespace RunJit.Cli.Test.SystemTest
 
             // 2. Simulate file path
             var fileInfo = new FileInfo(Path.Combine(Environment.CurrentDirectory, "TestFile", "Entity.cs"));
+
             if (fileInfo.Directory!.NotExists())
             {
                 fileInfo.Directory!.Create();
             }
+
             await File.WriteAllTextAsync(fileInfo.FullName, entityModel);
 
             // 3. Add rest api
-            await Mediator.SendAsync(new NewMinimalRestApi(fileInfo.FullName, queryPropertyName, domainName, solutionFileInfo.FullName));
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, fileInfo.FullName, queryPropertyName, domainName, basePath));
 
             // 4. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
@@ -122,8 +125,10 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
+        [DataRow("Sdc.Core", "api/core", "Core",
+                    "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um",
+                    "Name")]
         public async Task Should_Be_Able_To_Create_Multiple_Domains(string projectName,
                                                                     string basePath,
                                                                     string toolName,
@@ -135,12 +140,10 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add project api
-            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, queryPropertyName, "Projects",
-                                                           solutionFileInfo.FullName));
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, ProjectEntityModel, queryPropertyName, "Projects", basePath));
 
             // 3. Add user api
-            await Mediator.SendAsync(new NewMinimalRestApi(UserEntityModel, queryPropertyName, "Users",
-                                                           solutionFileInfo.FullName));
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, UserEntityModel, queryPropertyName, "Users", basePath));
 
             // 4. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
@@ -150,8 +153,10 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
+        [DataRow("Sdc.Core", "api/core", "Core",
+                    "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um",
+                    "Name")]
         public async Task Should_Be_Able_To_Create_Same_Domain_In_Different_Versions(string projectName,
                                                                                      string basePath,
                                                                                      string toolName,
@@ -163,12 +168,10 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add project api
-            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, queryPropertyName, "Projects",
-                                                           solutionFileInfo.FullName, Version: 1));
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, ProjectEntityModel, queryPropertyName, "Projects", basePath, Version: 1));
 
             // 3. Add user api
-            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, queryPropertyName, "Projects",
-                                                           solutionFileInfo.FullName, Version: 2));
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, ProjectEntityModel, queryPropertyName, "Projects", basePath, Version: 2));
 
             // 4. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
@@ -178,53 +181,58 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         private const string FormsConfigurationEntity = """
-                                      [DynamoDBTable("FormsConfiguration")]
-                                      public sealed record FormsConfigurationEntity
-                                      {
-                                          [DynamoDBHashKey]
-                                          public required string FormsId { get; init; } // SDC --> FormsId GUID // Pulse --> SurveyInstanceId long
-                                      
-                                          public required string ProjectId { get; init; } // SDC --> GUID // Pulse --> ProjectId long
-                                      
-                                          public required string Title { get; init; } // unique runner id
-                                      
-                                          public required FormsType FormsType { get; init; } // property??
-                                          
-                                          public DateTime StartDate { get; init; } = DateTime.UtcNow;
-                                      
-                                          public DateTime? EndDate { get; init; }
-                                      
-                                          public long SessionTimeoutInSeconds { get; init; }
-                                      
-                                          public bool HasUpdate { get; init; }
-                                      
-                                          public List<Language> Languages { get; init; }
-                                      
-                                          // public Contact? Contact { get; init; }
-                                          
-                                          public Dictionary<string, object> Properties { get; init; } // HasInterviewExport = 1 // ContactInformation // SkipLandingPage // 
-                                      }
-                                      """;
-        
+                                                        [DynamoDBTable("FormsConfiguration")]
+                                                        public sealed record FormsConfigurationEntity
+                                                        {
+                                                            [DynamoDBHashKey]
+                                                            public required string FormsId { get; init; } // SDC --> FormsId GUID // Pulse --> SurveyInstanceId long
+                                                        
+                                                            public required string ProjectId { get; init; } // SDC --> GUID // Pulse --> ProjectId long
+                                                        
+                                                            public required string Title { get; init; } // unique runner id
+                                                        
+                                                            public required FormsType FormsType { get; init; } // property??
+                                                            
+                                                            public DateTime StartDate { get; init; } = DateTime.UtcNow;
+                                                        
+                                                            public DateTime? EndDate { get; init; }
+                                                        
+                                                            public long SessionTimeoutInSeconds { get; init; }
+                                                        
+                                                            public bool HasUpdate { get; init; }
+                                                        
+                                                            public List<Language> Languages { get; init; }
+                                                        
+                                                            // public Contact? Contact { get; init; }
+                                                            
+                                                            public Dictionary<string, object> Properties { get; init; } // HasInterviewExport = 1 // ContactInformation // SkipLandingPage // 
+                                                        }
+                                                        """;
+
         [DataTestMethod]
-        [DataRow(@"D:\Siemens\pulse-fieldingtool\Pulse.FieldingTool.sln", "FormsConfigurations", "Title", FormsConfigurationEntity)]
+        [DataRow(@"D:\Siemens\pulse-fieldingtool\Pulse.FieldingTool.sln", "api/fieldingtool", "FormsConfigurations", "Title",
+                    FormsConfigurationEntity)]
         public async Task Should_Add_New_Rest_Api_Into_Existing_Solution(string solutionFilePath,
+                                                                         string basePath,
                                                                          string domainName,
                                                                          string queryPropertyName,
                                                                          string entityModel)
         {
             // 2. Add rest api
-            await Mediator.SendAsync(new NewMinimalRestApi(entityModel, queryPropertyName, domainName, solutionFilePath));
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFilePath, entityModel, queryPropertyName, domainName, basePath));
         }
 
-        internal sealed record NewMinimalRestApi(string DbEntityModel,
+        internal sealed record NewMinimalRestApi(string SolutionFileOrGitRepos,
+                                                 string DbEntityModel,
                                                  string QueryProperty,
                                                  string DomainName,
-                                                 string SolutionFile = "",
+                                                 string BasePath,
                                                  string GitRepos = "",
                                                  string WorkingDirectory = "",
                                                  int Version = 1,
-                                                 string ExpectedErrorMessage = "") : ICommand<FileInfo>;
+                                                 string ExpectedErrorMessage = "") : ICommand<FileInfo>
+        {
+        }
 
         internal sealed class NewMinimalRestApiHandler : ICommandHandler<NewMinimalRestApi, FileInfo>
         {
@@ -264,23 +272,16 @@ namespace RunJit.Cli.Test.SystemTest
                 yield return "new";
                 yield return "minimal-rest-api";
 
-                if (request.SolutionFile.IsNotNullOrWhiteSpace())
-                {
-                    yield return "--solution";
-                    yield return request.SolutionFile;
-                }
-
-                if (request.GitRepos.IsNotNullOrWhiteSpace())
-                {
-                    yield return "--git-repos";
-                    yield return request.GitRepos;
-                }
+                yield return request.SolutionFileOrGitRepos;
 
                 if (request.WorkingDirectory.IsNotNullOrWhiteSpace())
                 {
                     yield return "--working-directory";
                     yield return request.WorkingDirectory;
                 }
+
+                yield return "--base-path";
+                yield return request.BasePath;
 
                 yield return "--query-property";
                 yield return request.QueryProperty;

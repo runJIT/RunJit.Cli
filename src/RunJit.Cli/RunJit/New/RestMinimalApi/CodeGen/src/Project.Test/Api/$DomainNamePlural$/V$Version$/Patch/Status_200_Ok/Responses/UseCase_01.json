@@ -1,0 +1,33 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [ "application/json; charset=utf-8" ]
+      }
+    ],
+    "value": {
+      "formsConfiguration": {
+        "formsId": "6f9e1c3e-8fbc-4d2a-9a3d-3c2e8f0b7d2f",
+        "projectId": "c219b8da-7d3f-4d3b-a20f-57e18a3d2c6b",
+        "title": "$UniqueFormsConfigurationName$",
+        "formsType": "OpenAccess",
+        "startDate": "2025-03-15T18:32:18+00:00",
+        "endDate": null,
+        "sessionEndsIn": "00:30:00",
+        "hasUpdate": false,
+        "languages": [],
+        "properties": {}
+      }
+    }
+  },
+  "statusCode": "OK",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [ "1" ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": true
+}

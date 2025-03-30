@@ -1,0 +1,51 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ValidationProblemDetailsExtended",
+      "title": "Your request contains invalid data",
+      "status": 400,
+      "detail": "Your DeleteAllFormsConfigurationRequest contains invalid data please check the error details for more infos.",
+      "errors": {
+        "title": [
+          "Title must not be empty. To filter results, provide a valid title (e.g., DELETE /formsConfigurations?title=MyTitle). If no filter is desired, omit the parameter (e.g., DELETE /formsConfigurations)."
+        ]
+      },
+      "errorDetails": {
+        "title": {
+          "currentValue": "",
+          "errors": [
+            "Title must not be empty. To filter results, provide a valid title (e.g., DELETE /formsConfigurations?title=MyTitle). If no filter is desired, omit the parameter (e.g., DELETE /formsConfigurations)."
+          ],
+          "samples": [
+            "This is a cool project",
+            "Hello World"
+          ],
+          "location": null
+        }
+      },
+      "RequestType": "DeleteAllFormsConfigurationRequest",
+      "RequestContent": {
+        "title": ""
+      }
+    }
+  },
+  "statusCode": "BadRequest",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

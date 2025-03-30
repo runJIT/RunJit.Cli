@@ -1,0 +1,51 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ValidationProblemDetailsExtended",
+      "title": "Your request contains invalid data",
+      "status": 400,
+      "detail": "Your GetAllFormsConfigurationRequest contains invalid data please check the error details for more infos.",
+      "errors": {
+        "title": [
+          "Title must not be empty. To filter results, provide a valid title (e.g., GET /formsConfigurations?title=MyTitle). If no filter is desired, omit the parameter (e.g., GET /formsConfigurations)."
+        ]
+      },
+      "errorDetails": {
+        "title": {
+          "currentValue": "",
+          "errors": [
+            "Title must not be empty. To filter results, provide a valid title (e.g., GET /formsConfigurations?title=MyTitle). If no filter is desired, omit the parameter (e.g., GET /formsConfigurations)."
+          ],
+          "samples": [
+            "This is a cool project",
+            "Hello world"
+          ],
+          "location": null
+        }
+      },
+      "RequestType": "GetAllFormsConfigurationRequest",
+      "RequestContent": {
+        "title": ""
+      }
+    }
+  },
+  "statusCode": "BadRequest",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

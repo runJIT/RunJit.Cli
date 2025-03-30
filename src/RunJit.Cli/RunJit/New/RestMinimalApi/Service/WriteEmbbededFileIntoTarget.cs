@@ -44,7 +44,15 @@ namespace RunJit.Cli.New.RestMinimalApi
                                                 .Replace("$QueryPropertyNameLower$", createRestApiInfos.QueryPropertyName.FirstCharToLower())
                                                 .Replace("$MigrationScript$", createRestApiInfos.MigrationScript)
                                                 .Replace("$TestRequestJson$", createRestApiInfos.TestRequestJson)
-                                                .Replace("$TestResponseJson$", createRestApiInfos.TestResponseJson);
+                                                .Replace("$TestResponseJson$", createRestApiInfos.TestResponseJson)
+                                                .Replace("$CreateRequestValidations$", createRestApiInfos.CreateRequestValidations)
+                                                .Replace("$DeleteAllRequestValidations$", createRestApiInfos.DeleteAllRequestValidations)
+                                                .Replace("$DeleteByIdRequestValidations$", createRestApiInfos.DeleteByIdRequestValidations)
+                                                .Replace("$GetAllRequestValidations$", createRestApiInfos.GetAllRequestValidations)
+                                                .Replace("$GetByIdRequestValidations$", createRestApiInfos.GetByIdRequestValidations)
+                                                .Replace("$PatchRequestValidations$", createRestApiInfos.PatchRequestValidations)
+                                                .Replace("$UpdateRequestValidations$", createRestApiInfos.UpdateRequestValidations)
+                                                .Replace("$BasePath$", createRestApiInfos.BasePath);
 
 
                 // Splitting at the double dot ".."
@@ -66,7 +74,7 @@ namespace RunJit.Cli.New.RestMinimalApi
                                .Replace("_DomainNamePlural_", createRestApiInfos.DomainNamePlural)
                                .Replace("_DomainNamePluralLower_", createRestApiInfos.DomainNamePluralLower)
                                .Replace("_PropertyMappings_", createRestApiInfos.PropertyMappings)
-                               .Replace("_PropertiesWithoutId_", createRestApiInfos.PropertiesWithoutId)
+                               .Replace("_PropertiesWithout$IdPropertyName$_", createRestApiInfos.PropertiesWithoutId)
                                .Replace("_IdPropertyName_", createRestApiInfos.IdPropertyName)
                                .Replace("_IdUrlName_", createRestApiInfos.IdPropertyName.FirstCharToLower())
                                .Replace("_QueryPropertyName_", createRestApiInfos.QueryPropertyName)

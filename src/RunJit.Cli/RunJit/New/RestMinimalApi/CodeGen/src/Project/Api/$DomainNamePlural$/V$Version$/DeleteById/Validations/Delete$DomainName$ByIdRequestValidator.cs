@@ -33,32 +33,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V1
     {
         protected override IEnumerable<(string PropertyName, ValidationErrorDetails ErrorDetails)> GetValidationErrors(Delete$DomainName$ByIdRequest request)
         {
-            // Sample: Remove the yield break and replace it with your validation logic
-            //
-            // if (request.FormsId.IsNull())
-            // {
-            //     var errorDetails = new ValidationErrorDetails()
-            //                        {
-            //                            CurrentValue = request.FormsId,
-            //                            Errors = [$"{nameof(request.FormsId)} must not be null"],
-            //                            Samples = ["This is a cool project", "Hello World"],
-            //                        };
-               
-            //     yield return (nameof(request.FormsId), errorDetails);
-            // }
-            // 
-            // if (request.FormsId.IsEmpty())
-            // {
-            //     var errorDetails = new ValidationErrorDetails()
-            //                        {
-            //                            CurrentValue = request.FormsId,
-            //                            Errors = [$"{nameof(request.FormsId)} must not be empty"],
-            //                            Samples = ["This is a cool project", "Hello World"],
-            //                        };
-               
-            //     yield return (nameof(request.FormsId), errorDetails);
-            // }
-            yield break;
+            $DeleteByIdRequestValidations$
         }
     }
 }

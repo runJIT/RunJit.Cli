@@ -1,0 +1,22 @@
+{
+  "FormsId": "6f9e1c3e-8fbc-4d2a-9a3d-3c2e8f0b7d2f",
+  "ProjectId": "2a4c7e8b-1d3e-4a5f-9b6c-7d8e9f0a1b2c",
+  "title": "$UniqueFormsConfigurationName$",
+  "FormsType": "Employee",
+  "StartDate": "2025-03-15T18:32:18Z",
+  "EndDate": "2025-04-14T18:23:44Z",
+  "SessionEndsIn": "00:30:00",
+  "HasUpdate": false,
+  "Languages": [
+    {
+      "EnglishName": "English (United States)",
+      "NativeName": "English (United States)",
+      "Tag": "en-US",
+      "TagThreeLetter": "eng",
+      "ParentTag": "en"
+    }
+  ],
+  "Properties": {
+    "ExampleKey": "ExampleValue"
+  }
+}

@@ -67,7 +67,7 @@ namespace RunJit.Cli.Test.SystemTest
                                                       public string Description { get; init; } = string.Empty;
                                                   }
                                                   """;
-        
+
         [DataTestMethod]
         [DataRow("Siemens.Sdc", "api/core", "Sdc")]
         [DataRow("Siemens.Reporting", "api/reporting", "Reporting")]
@@ -85,11 +85,11 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add rest api
-            await Mediator.SendAsync(new NewMinimalRestApi(ProjectEntityModel, "Name", "Projects", solutionFileInfo.FullName));
-            
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, ProjectEntityModel, "Name", "Projects", basePath));
+
             // 3. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
-            
+
             // 4. Create Client
             await Mediator.SendAsync(new GenerateClient(solutionFileInfo, false));
 

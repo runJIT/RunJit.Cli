@@ -7,6 +7,7 @@ using RunJit.Cli.Services;
 using RunJit.Cli.Services.AwsCodeCommit;
 using RunJit.Cli.Services.Git;
 using RunJit.Cli.Services.Net;
+using RunJit.Cli.Services.Slack;
 using SlackNet;
 using SlackNet.WebApi;
 
@@ -144,32 +145,5 @@ namespace RunJit.Cli.Update.TargetPlatform
                 consoleService.WriteSuccess($"Solution: {solutionFile.FullName} was upgraded to deployment platform: {matchingPlatform}");
             }
         }
-    }
-
-    public static class AddSlackSettingsExtension
-    {
-        public static void AddSlackSettings(this IServiceCollection services,
-                                            IConfiguration configuration)
-        {
-            services.AddSingletonOption<SlackSettings>(configuration);
-        }
-    }
-
-    public record SlackSettings
-    {
-        public string Token { get; init; } = string.Empty;
-
-        public SlackChannel PullRequestChannel { get; init; } = new()
-        {
-            Id = "C04JMJ7UCHX",
-            Name = "#backend-pullrequests"
-        };
-    }
-
-    public record SlackChannel
-    {
-        public string Name { get; init; } = string.Empty;
-
-        public string Id { get; init; } = string.Empty;
     }
 }

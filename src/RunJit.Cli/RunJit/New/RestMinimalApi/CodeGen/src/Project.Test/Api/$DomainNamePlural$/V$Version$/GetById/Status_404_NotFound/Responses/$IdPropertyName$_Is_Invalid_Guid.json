@@ -1,0 +1,51 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ValidationProblemDetailsExtended",
+      "title": "Your request contains invalid data",
+      "status": 400,
+      "detail": "Your GetFormsConfigurationByIdRequest contains invalid data please check the error details for more infos.",
+      "errorDetails": {
+        "formsId": {
+          "currentValue": "f77647b9-b40b-42e5",
+          "errors": [
+            "FormsId must be either GUID or long."
+          ],
+          "samples": [
+            "This is a cool project",
+            "Hello World"
+          ],
+          "location": null
+        }
+      },
+      "errors": {
+        "formsId": [
+          "FormsId must be either GUID or long."
+        ]
+      },
+      "RequestType": "GetFormsConfigurationByIdRequest",
+      "RequestContent": {
+        "formsId": "f77647b9-b40b-42e5"
+      }
+    }
+  },
+  "statusCode": "BadRequest",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

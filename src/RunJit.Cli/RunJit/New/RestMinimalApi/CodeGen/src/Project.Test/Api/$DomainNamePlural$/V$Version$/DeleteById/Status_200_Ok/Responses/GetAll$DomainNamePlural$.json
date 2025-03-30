@@ -1,0 +1,35 @@
+{
+  "Content": {
+    "Headers": [
+      {
+        "Key": "Content-Type",
+        "Value": [ "application/json; charset=utf-8" ]
+      }
+    ],
+    "Value": {
+      "FormsConfigurations": [
+        {
+          "FormsId": "5d80f46c-de8c-4bf7-8027-d3eabc635651",
+          "ProjectId": "ProjectId",
+          "title": "$UniqueFormsConfigurationName$",
+          "FormsType": "FormsType",
+          "StartDate": "StartDate",
+          "EndDate": "EndDate",
+          "SessionTimeoutInSeconds": "SessionTimeoutInSeconds",
+          "HasUpdate": "HasUpdate",
+          "Languages": "Languages",
+          "Properties": "Properties"
+        }
+      ]
+    }
+  },
+  "StatusCode": "OK",
+  "Headers": [
+    {
+      "Key": "api-supported-versions",
+      "Value": [ "1" ]
+    }
+  ],
+  "TrailingHeaders": [],
+  "IsSuccessStatusCode": true
+}

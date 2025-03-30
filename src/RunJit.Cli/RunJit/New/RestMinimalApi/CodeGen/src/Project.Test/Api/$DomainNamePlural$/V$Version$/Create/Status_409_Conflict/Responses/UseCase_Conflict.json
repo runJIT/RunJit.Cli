@@ -1,0 +1,30 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ProblemDetails",
+      "title": "FormsConfiguration already exists.",
+      "status": 409,
+      "detail": "The FormsConfiguration with the FormsId already exists.",
+      "FormsId": "58f585e7-2197-488e-9e9c-d2909f7269f7"
+    }
+  },
+  "statusCode": "Conflict",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

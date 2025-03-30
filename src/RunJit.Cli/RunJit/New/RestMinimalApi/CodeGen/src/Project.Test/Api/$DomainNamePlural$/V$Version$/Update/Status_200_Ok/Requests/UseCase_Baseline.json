@@ -1,0 +1,12 @@
+{
+  "FormsId": "1",
+  "ProjectId": "2",
+  "title": "$UniqueFormsConfigurationName$",
+  "FormsType": "Employee",
+  "StartDate": "2025-01-01T18:00:00Z",
+  "EndDate": null,
+  "SessionEndsIn": "00:30:00",
+  "HasUpdate": false,
+  "Languages": [],
+  "Properties": {}
+}

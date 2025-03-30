@@ -6,6 +6,7 @@ using RunJit.Cli.Services;
 using RunJit.Cli.Services.AwsCodeCommit;
 using RunJit.Cli.Services.Git;
 using RunJit.Cli.Services.Net;
+using RunJit.Cli.Services.Slack;
 using RunJit.Cli.Update.TargetPlatform;
 using SlackNet;
 using SlackNet.WebApi;

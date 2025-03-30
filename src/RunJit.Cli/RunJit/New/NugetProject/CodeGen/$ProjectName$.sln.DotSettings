@@ -164,7 +164,7 @@ internal sealed class $validator$ : IRequestValidator&lt;$request$&gt;&#xD;
     <s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=114CAE40334756458DF914559FA65BBF/Field/=name/Order/@EntryValue">0</s:Int64>
     <s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8CD67D12BAA48A4D859329BE238D2425/@KeyIndexDefined">True</s:Boolean>
     <s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8CD67D12BAA48A4D859329BE238D2425/Text/@EntryValue">[NUnit.Framework.Test]&#xD;
-public Task Should_Not_Be_Able_To_Get_$entity$_By_Id_Without_Authentication()&#xD;
+public Task Should_Not_Be_Able_To_Get_$entity$_By_$IdPropertyName$_Without_Authentication()&#xD;
 {&#xD;
 	return Client.AssertGetAsUnauthorizedAsync("$url$");&#xD;
 }</s:String>
@@ -479,7 +479,7 @@ public Task Should_Not_Return_All_$domain$_Without_Authentication()&#xD;
     <s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7E7F5A3E1A31854C86F099DBF4FBB650/@KeyIndexDefined">True</s:Boolean>
     <s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7E7F5A3E1A31854C86F099DBF4FBB650/Shortcut/@EntryValue">assertdeletebyidnoauth</s:String>
     <s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7E7F5A3E1A31854C86F099DBF4FBB650/Text/@EntryValue">[NUnit.Framework.Test]&#xD;
-public Task Should_Not_Be_Able_To_Delete_$entity$_By_Id_Without_Authentication()&#xD;
+public Task Should_Not_Be_Able_To_Delete_$entity$_By_$IdPropertyName$_Without_Authentication()&#xD;
 {&#xD;
     return Client.AssertDeleteAsUnauthorizedAsync("$url$");&#xD;
 }</s:String>

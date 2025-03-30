@@ -1,0 +1,51 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ProblemDetails",
+      "title": "FormsConfiguration with the requested id to patch does not exists",
+      "status": 404,
+      "detail": "FormsConfiguration with the requested id: 1 to patch does not exists",
+      "errors": {},
+      "FormsConfigurationId": "1",
+      "PatchValues": {
+        "FormsId": "ef033633-9592-49f5-871b-47b0634c960e",
+        "ProjectId": "5fab3314-006c-434a-af3b-48217c0cf0f6",
+        "title": "$UniqueFormsConfigurationName$",
+        "FormsType": "InvitationOnly",
+        "StartDate": "2025-03-15T18:32:18Z",
+        "EndDate": "",
+        "SessionEndsIn": "00:30:00",
+        "HasUpdate": false,
+        "Languages": [
+          {
+            "EnglishName": "English (United States)",
+            "NativeName": "English (United States)",
+            "Tag": "en-US",
+            "TagThreeLetter": "eng",
+            "ParentTag": "en"
+          }
+        ],
+        "Properties": {}
+      }
+    }
+  },
+  "statusCode": "NotFound",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

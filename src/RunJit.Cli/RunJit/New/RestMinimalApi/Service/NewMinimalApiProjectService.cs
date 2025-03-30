@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Immutable;
 using Extensions.Pack;
 using Microsoft.Extensions.DependencyInjection;
 using PluralizeService.Core;
 using RunJit.Cli.ErrorHandling;
 using RunJit.Cli.New.MinimalApiProject;
+using RunJit.Cli.RunJit.New.RestMinimalApi.CodeBuilders;
 using RunJit.Cli.RunJit.New.RestMinimalApi.Service;
 using RunJit.Cli.Services;
 using RunJit.Cli.Services.Resharper;
@@ -15,7 +14,7 @@ using CSharpSyntaxTree = Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree;
 
 namespace RunJit.Cli.New.RestMinimalApi
 {
-    internal sealed record CreateRestApiInfos()
+    internal sealed record CreateRestApiInfos
     {
         internal required string ProjectName { get; init; }
         internal required string DomainModelCode { get; init; }
@@ -33,6 +32,16 @@ namespace RunJit.Cli.New.RestMinimalApi
         internal required string TestRequestJson { get; init; }
         internal required string TestResponseJson { get; init; }
         internal required int Version { get; init; }
+        internal required string BasePath { get; init; }
+
+        // NEW WIP validation checks
+        internal string CreateRequestValidations { get; init; } = string.Empty;
+        internal string DeleteAllRequestValidations { get; init; } = string.Empty;
+        internal string DeleteByIdRequestValidations { get; init; } = string.Empty;
+        internal string GetAllRequestValidations { get; init; } = string.Empty;
+        internal string GetByIdRequestValidations { get; init; } = string.Empty;
+        internal string PatchRequestValidations { get; init; } = string.Empty;
+        internal string UpdateRequestValidations { get; init; } = string.Empty;
     }
 
     internal interface IRestMinimalApiSpecificCodeGen
@@ -62,6 +71,7 @@ namespace RunJit.Cli.New.RestMinimalApi
             services.AddGenerateMigrationScript();
             services.AddApiNamespaceProviderCleanup();
             services.AddDatabaseNamespaceProviderCleanup();
+            services.AddSimpleValidationCodeBuilder(); ;
 
             services.AddSingletonIfNotExists<NewRestMinimalApiService>();
         }
@@ -71,19 +81,29 @@ namespace RunJit.Cli.New.RestMinimalApi
                                                    GenerateMigrationScript generateMigrationScript,
                                                    IEnumerable<IRestMinimalApiSpecificCodeGen> codeGenerators,
                                                    IEnumerable<IRestMinimalApiTestSpecificCodeGen> testCodeGenerators,
-                                                   SolutionCodeCleanup solutionCodeCleanup)
+                                                   SolutionCodeCleanup solutionCodeCleanup,
+                                                   SimpleValidationCodeBuilder simpleValidationCodeBuilder)
     {
         public async Task<int> HandleAsync(NewRestMinimalApiParameters parameters)
         {
-            if (parameters.SolutionFile.IsNotNull() &&
-                parameters.SolutionFile.NotExists())
+            if (parameters.SolutionFilesOrGitRepos.IsNullOrWhiteSpace())
             {
-                throw new RunJitException($"Passed solution file: {parameters.SolutionFile.FullName} does not exists");
+                throw new RunJitException($@"Your passed {nameof(NewRestMinimalApiParameters.SolutionFilesOrGitRepos)} is null, empty or whitespace. Please pass your absolute path to your solution file (sample: D:\\Siemens\\siemens-aspnet-errorhandler\\Siemens.AspNet.ErrorHandler.sln\\) or git repository urls (sample: 'https://github.siemens.cloud/sdc/siemens-aspnet-errorhandler.git' or multiple 'codecommit::eu-central-1://pulse-datamanagement;https://github.siemens.cloud/sdc/siemens-aspnet-errorhandler.git' separated by ';'");
             }
 
 
-            if (parameters.SolutionFile.IsNull() &&
-                parameters.GitRepos.IsNullOrWhiteSpace())
+            // Check if it is a solution file
+            var splittedValues = parameters.SolutionFilesOrGitRepos.Split(";", StringSplitOptions.RemoveEmptyEntries);
+            var solutionFiles = splittedValues.Where(value => value.EndsWith(".sln")).Select(f => new FileInfo(f)).ToList();
+            var notExistingFiles = solutionFiles.Where(f => f.NotExists()).ToList();
+
+            if (notExistingFiles.Any())
+            {
+                throw new RunJitException($@"Your passed solution files does not exist:{Environment.NewLine}{notExistingFiles.Select(f => f.FullName).Flatten(Environment.NewLine)}");
+            }
+
+            if (parameters.SolutionFilesOrGitRepos.IsNull() &&
+                parameters.SolutionFilesOrGitRepos.IsNullOrWhiteSpace())
             {
                 throw new RunJitException($"You have to pass at least the solution file ''--solution D:\\My.sln'' or a git repo url '--git-repos codecommit::eu-central-1://runjit-dbi' that this command can work");
             }
@@ -97,8 +117,6 @@ namespace RunJit.Cli.New.RestMinimalApi
             {
                 throw new RunJitException($"Query property name must not be null, empty or whitespace");
             }
-
-
 
 
             var syntaxTree = parameters.DbEntityModel.EndsWith(".cs") ? CSharpSyntaxTree.ParseText(await File.ReadAllTextAsync(parameters.DbEntityModel)) : CSharpSyntaxTree.ParseText(parameters.DbEntityModel);
@@ -151,7 +169,6 @@ namespace RunJit.Cli.New.RestMinimalApi
             {
                 throw new RunJitException($"Your passed query property name: {parameters.QueryProperty} does not exists on your passed entity model:{Environment.NewLine}{syntaxTree}");
             }
-
 
             if (record.Attributes.Any(a => a.Name.Contains("DynamoDBTable").IsFalse()))
             {
@@ -211,9 +228,13 @@ namespace RunJit.Cli.New.RestMinimalApi
                 throw new RunJitException($"Your provided record type does not have the correct post fix 'Entity'. Sample: {Environment.NewLine}{sample}");
             }
 
-
+            var queryProperties = new Property("string", parameters.QueryProperty, true,
+                                              ImmutableList.Create<Modifier>(Modifier.Public),
+                                              $"public string {parameters.QueryProperty} {{ get; init; }}",
+                                              string.Empty, string.Empty).ToIList();
             var properties = record.Properties;
-            var propertiesWithoutId = properties.Where(p => p.Name.NotEqualsTo(hashKeyPropertyId.Name)).Select(p => p.SyntaxTree.Split(Environment.NewLine).Last()).Flatten($"{Environment.NewLine}");
+            var propertiesWithoutId = properties.Where(p => p.Name.NotEqualsTo(hashKeyPropertyId.Name)).ToList();
+            var propertiesWithoutIdAsString = propertiesWithoutId.Select(p => p.SyntaxTree.Split(Environment.NewLine).Last()).Flatten($"{Environment.NewLine}");
             var allPropertiesNeutral = properties.Select(p => p.SyntaxTree.Split(Environment.NewLine).Last()).Flatten($"{Environment.NewLine}");
             var domainModel = $@"public record {record.Name.Replace("Entity", string.Empty)}                                 
                                 {{
@@ -225,112 +246,146 @@ namespace RunJit.Cli.New.RestMinimalApi
             var domainNamePlural = PluralizationProvider.Pluralize(parameters.DomainName);
             var domainName = PluralizationProvider.Singularize(parameters.DomainName);
 
-            var propertyMapping = properties.Where(p => p.Name.NotEqualsTo(hashKeyPropertyId.Name)).Select(property => $"{property.Name} = source.{property.Name},").Flatten(Environment.NewLine);
+            var propertyMapping = propertiesWithoutId.Select(property => $"{property.Name} = source.{property.Name},").Flatten(Environment.NewLine);
 
 
+            // For each solution file and git repo
+            // we integrate the new apis
+            foreach (var splittedValue in splittedValues)
+            {
+                if (splittedValue.EndsWith(".sln").IsFalse())
+                {
+                    consoleService.WriteError($@"We are currently support only solution files to add new web apis. Your passed value: {splittedValue} is not a valid solution file path. Sample: D:\Siemens\siemens-aspnet-errorhandler\Siemens.AspNet.ErrorHandler.sln");
+                    continue;
+                }
 
-            var parsedClientSolution = new SolutionFileInfo(parameters.SolutionFile.FullName).Parse();
+                var solutionFileInfo = new FileInfo(splittedValue);
+                if (solutionFileInfo.NotExists())
+                {
+                    consoleService.WriteError($@"Your passed solution file does not exist: {solutionFileInfo.FullName}");
+                    continue;
+                }
 
-            var programFile = parsedClientSolution.ProductiveProjects.FirstOrDefault(p =>
-                                                                                     {
-                                                                                         var program = p.CSharpFileInfos.FirstOrDefault(f => f.Value.NameWithoutExtension() == "Program");
+                var parsedClientSolution = new SolutionFileInfo(solutionFileInfo.FullName).Parse();
 
-                                                                                         if (program.IsNotNull())
+                var programFile = parsedClientSolution.ProductiveProjects.FirstOrDefault(p =>
                                                                                          {
-                                                                                             var text = File.ReadAllText(program.Value.FullName);
+                                                                                             var program = p.CSharpFileInfos.FirstOrDefault(f => f.Value.NameWithoutExtension() == "Program");
 
-                                                                                             if (text.Contains("new ServerlessMinimalWebApi();"))
+                                                                                             if (program.IsNotNull())
                                                                                              {
-                                                                                                 return true;
+                                                                                                 var text = File.ReadAllText(program.Value.FullName);
+
+                                                                                                 if (text.Contains("new ServerlessMinimalWebApi();"))
+                                                                                                 {
+                                                                                                     return true;
+                                                                                                 }
                                                                                              }
-                                                                                         }
 
-                                                                                         return false;
-                                                                                     });
-
-
-            if (programFile.IsNull())
-            {
-                throw new RunJitException("Cant find a project files which is using ServerlessMinimalWebApi(). This new REST-API gen is only made for this new type of web api projects");
-            }
-
-            var testProject = parsedClientSolution.UnitTestProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.StartsWith($"{programFile.ProjectFileInfo.FileNameWithoutExtenion}.Test"));
-
-            if (testProject.IsNull())
-            {
-                throw new RunJitException($"Cant find the test project for the web api. Please check the naming. Expected: {programFile}.Test.csproj");
-            }
-
-            var migrationScript = generateMigrationScript.Generate(record);
+                                                                                             return false;
+                                                                                         });
 
 
-            var testPayloadJson = properties.Where(p => p.Name.NotEqualsTo(hashKeyPropertyId.Name))
-                                            .ToDictionary(item => item.Name, item =>
-                                                                             {
-                                                                                 if (item.Name == queryPropertyName.Name)
+                if (programFile.IsNull())
+                {
+                    throw new RunJitException("Cant find a project files which is using ServerlessMinimalWebApi(). This new REST-API gen is only made for this new type of web api projects");
+                }
+
+                var testProject = parsedClientSolution.UnitTestProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.StartsWith($"{programFile.ProjectFileInfo.FileNameWithoutExtenion}.Test"));
+
+                if (testProject.IsNull())
+                {
+                    throw new RunJitException($"Cant find the test project for the web api. Please check the naming. Expected: {programFile}.Test.csproj");
+                }
+
+                var migrationScript = generateMigrationScript.Generate(record);
+
+
+                var testPayloadJson = propertiesWithoutId
+                                                .ToDictionary(item => item.Name, item =>
                                                                                  {
-                                                                                     return $"$Unique{domainName}Name$";
-                                                                                 }
-                                                                                 return item.Name;
-                                                                             })
-                                            .ToJsonIntended();
+                                                                                     if (item.Name == queryPropertyName.Name)
+                                                                                     {
+                                                                                         return $"$Unique{domainName}Name$";
+                                                                                     }
+                                                                                     return item.Name;
+                                                                                 })
+                                                .ToJsonIntended();
 
-            var testResponseJson = properties.ToDictionary(item => item.Name, item =>
-                                                                                {
-                                                                                    if (item.Name == hashKeyPropertyId.Name)
+                var testResponseJson = properties.ToDictionary(item => item.Name, item =>
                                                                                     {
-                                                                                        return Guid.NewGuid().ToString();
-                                                                                    }
+                                                                                        if (item.Name == hashKeyPropertyId.Name)
+                                                                                        {
+                                                                                            return Guid.NewGuid().ToString();
+                                                                                        }
 
-                                                                                    if (item.Name == queryPropertyName.Name)
-                                                                                    {
-                                                                                        return $"$Unique{domainName}Name$";
-                                                                                    }
-                                                                                    return item.Name;
-                                                                                })
-                                             .ToJsonIntended();
+                                                                                        if (item.Name == queryPropertyName.Name)
+                                                                                        {
+                                                                                            return $"$Unique{domainName}Name$";
+                                                                                        }
+                                                                                        return item.Name;
+                                                                                    })
+                                                 .ToJsonIntended();
+
+                var createRestApiInfos = new CreateRestApiInfos
+                {
+                    Version = parameters.Version,
+                    DomainModelCode = domainModel,
+                    EntityModelCode = record.SyntaxTree,
+                    DomainName = domainName,
+                    DomainNameLower = domainName.FirstCharToLower(),
+                    DomainNamePlural = domainNamePlural,
+                    DomainNamePluralLower = domainNamePlural.FirstCharToLower(),
+                    PropertyMappings = propertyMapping,
+                    ProjectName = programFile.ProjectFileInfo.FileNameWithoutExtenion,
+                    PropertiesWithoutId = propertiesWithoutIdAsString,
+                    IdPropertyName = hashKeyPropertyId.Name,
+                    QueryPropertyName = parameters.QueryProperty,
+                    QueryPropertyNameLower = parameters.QueryProperty.FirstCharToLower(),
+                    MigrationScript = migrationScript,
+                    TestRequestJson = testPayloadJson,
+                    TestResponseJson = testResponseJson,
+                    BasePath = parameters.BasePath
+                };
+
+                var createRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(propertiesWithoutId, "Create", createRestApiInfos);
+                var deleteAllRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(queryProperties, "Delete", createRestApiInfos);
+                var deleteByIdRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(queryProperties, "Delete", createRestApiInfos);
+                var getAllRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(queryProperties, "Get", createRestApiInfos);
+                var getByIdRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(queryProperties, "Get", createRestApiInfos);
+                var patchRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(propertiesWithoutId, "Patch", createRestApiInfos);
+                var udpateRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(propertiesWithoutId, "Update", createRestApiInfos);
+
+                createRestApiInfos = createRestApiInfos with
+                {
+                    CreateRequestValidations = createRequestValidation,
+                    DeleteAllRequestValidations = deleteAllRequestValidation,
+                    DeleteByIdRequestValidations = deleteByIdRequestValidation,
+                    GetAllRequestValidations = getAllRequestValidation,
+                    GetByIdRequestValidations = getByIdRequestValidation,
+                    PatchRequestValidations = patchRequestValidation,
+                    UpdateRequestValidations = udpateRequestValidation
+                };
+
+                foreach (var restMinimalApiSpecificCodeGen in codeGenerators)
+                {
+                    await restMinimalApiSpecificCodeGen.GenerateAsync(solutionFileInfo, programFile.ProjectFileInfo.Value, createRestApiInfos);
+                }
+
+                foreach (var restMinimalApiTestSpecificCodeGen in testCodeGenerators)
+                {
+                    await restMinimalApiTestSpecificCodeGen.GenerateAsync(solutionFileInfo, testProject.ProjectFileInfo.Value, createRestApiInfos);
+                }
 
 
-            var createRestApiInfos = new CreateRestApiInfos
-            {
-                Version = parameters.Version,
-                DomainModelCode = domainModel,
-                EntityModelCode = record.SyntaxTree,
-                DomainName = domainName,
-                DomainNameLower = domainName.FirstCharToLower(),
-                DomainNamePlural = domainNamePlural,
-                DomainNamePluralLower = domainNamePlural.FirstCharToLower(),
-                PropertyMappings = propertyMapping,
-                ProjectName = programFile.ProjectFileInfo.FileNameWithoutExtenion,
-                PropertiesWithoutId = propertiesWithoutId,
-                IdPropertyName = hashKeyPropertyId.Name,
-                QueryPropertyName = parameters.QueryProperty,
-                QueryPropertyNameLower = parameters.QueryProperty.FirstCharToLower(),
-                MigrationScript = migrationScript,
-                TestRequestJson = testPayloadJson,
-                TestResponseJson = testResponseJson
-            };
+                await solutionCodeCleanup.CleanupSolutionAsync(solutionFileInfo).ConfigureAwait(false);
 
-
-            foreach (var restMinimalApiSpecificCodeGen in codeGenerators)
-            {
-                await restMinimalApiSpecificCodeGen.GenerateAsync(parameters.SolutionFile, programFile.ProjectFileInfo.Value, createRestApiInfos);
+                // 3. Write success message
+                consoleService.WriteSuccess($"Enjoy your new rest api endpoint :)");
             }
 
-            foreach (var restMinimalApiTestSpecificCodeGen in testCodeGenerators)
-            {
-                await restMinimalApiTestSpecificCodeGen.GenerateAsync(parameters.SolutionFile, testProject.ProjectFileInfo.Value, createRestApiInfos);
-            }
-
-            
-            await solutionCodeCleanup.CleanupSolutionAsync(parameters.SolutionFile).ConfigureAwait(false);
-            
-            // 3. Write success message
-            consoleService.WriteSuccess($"Enjoy your new rest api endpoint :)");
 
             return 0;
         }
     }
-
-
 }

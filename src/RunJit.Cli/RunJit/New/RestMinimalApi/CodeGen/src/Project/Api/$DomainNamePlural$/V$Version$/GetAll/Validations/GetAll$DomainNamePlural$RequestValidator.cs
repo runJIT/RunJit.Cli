@@ -43,29 +43,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V1
             //    yield return (nameof(request.$QueryPropertyName$), $"{nameof(request.$QueryPropertyName$)} must not be null. To filter results, provide a valid $QueryPropertyNameLower$ (e.g., GET /$DomainNamePluralLower$?$QueryPropertyNameLower$=My$QueryPropertyName$). If no filter is desired, omit the parameter (e.g., GET /$DomainNamePluralLower$).");
             //}
 
-            if (request.$QueryPropertyName$ == " ")
-            {
-                var errorDetails = new ValidationErrorDetails()
-                {
-                    CurrentValue = request.$QueryPropertyName$,
-                    Errors = [$"{nameof(request.$QueryPropertyName$)} must not be one or only whitespaces. To filter results, provide a valid $QueryPropertyNameLower$ (e.g., GET /$DomainNamePluralLower$?$QueryPropertyNameLower$=My$QueryPropertyName$). If no filter is desired, omit the parameter (e.g., GET /$DomainNamePluralLower$)."],
-                    Samples = ["This is a cool project", "Hello world"]
-                };
-
-                yield return (nameof(request.$QueryPropertyName$), errorDetails);
-            }
-
-            if (request.$QueryPropertyName$ == string.Empty)
-            {
-                var errorDetails = new ValidationErrorDetails()
-                {
-                    CurrentValue = request.$QueryPropertyName$,
-                    Errors = [$"{nameof(request.$QueryPropertyName$)} must not be empty. To filter results, provide a valid $QueryPropertyNameLower$ (e.g., GET /$DomainNamePluralLower$?$QueryPropertyNameLower$=My$QueryPropertyName$). If no filter is desired, omit the parameter (e.g., GET /$DomainNamePluralLower$)."],
-                    Samples = ["This is a cool project", "Hello world"]
-                };
-
-                yield return (nameof(request.$QueryPropertyName$), errorDetails);
-            }
+            $GetAllRequestValidations$
         }
     }
 }

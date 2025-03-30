@@ -1,0 +1,72 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ValidationProblemDetailsExtended",
+      "title": "Your request contains invalid data",
+      "status": 422,
+      "detail": "Your UpdateFormsConfigurationRequest contains invalid data please check the error details for more infos.",
+      "errors": {
+        "formsId": [
+          "FormsId must be either GUID or long.",
+          "FormsId must not be null. Only GUID or a long is valid for the FormsId"
+        ]
+      },
+      "errorDetails": {
+        "formsId": {
+          "currentValue": null,
+          "errors": [
+            "FormsId must be either GUID or long.",
+            "FormsId must not be null. Only GUID or a long is valid for the FormsId"
+          ],
+          "samples": [
+            "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+            "1"
+          ],
+          "location": null
+        }
+      },
+      "RequestType": "UpdateFormsConfigurationRequest",
+      "RequestContent": {
+        "formsId": null,
+        "projectId": "c36b49ba-bf79-4c86-9d41-8c356634316e",
+        "title": "$UniqueFormsConfigurationName$",
+        "formsType": "InvitationOnly",
+        "startDate": "2025-03-15T18:32:18Z",
+        "endDate": "2025-04-14T18:23:44Z",
+        "sessionEndsIn": "00:30:00",
+        "hasUpdate": false,
+        "languages": [
+          {
+            "englishName": "English (United States)",
+            "nativeName": "English (United States)",
+            "tag": "en-US",
+            "tagThreeLetter": "eng",
+            "parentTag": "en"
+          }
+        ],
+        "properties": {
+          "exampleKey": "ExampleValue"
+        }
+      }
+    }
+  },
+  "statusCode": "UnprocessableEntity",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

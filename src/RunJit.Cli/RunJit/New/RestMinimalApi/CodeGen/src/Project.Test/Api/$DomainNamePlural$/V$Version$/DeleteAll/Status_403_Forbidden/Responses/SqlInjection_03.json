@@ -1,0 +1,36 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ProblemDetails",
+      "title": "Potential security threat detected",
+      "status": 403,
+      "detail": "The request contains query parameters that are not allowed for the target endpoint. This may indicate a potential attack. To resolve this, ensure the endpoint defines allowed query parameters using '.WithMetadata(new AllowedQueryParameterMetaInfo(\"param1\", \"param2\"))'. Additionally, review the request details and logs for suspicious activity.",
+      "UnknownQueryParameterNames": [
+        "devil"
+      ],
+      "UnknownQueryParameters": [
+        {
+          "name": "devil",
+          "values": [
+            "TRUNCATE YourTable"
+          ]
+        }
+      ],
+      "AllowedQueryParameters": [
+        "title"
+      ]
+    }
+  },
+  "statusCode": "Forbidden",
+  "headers": [],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

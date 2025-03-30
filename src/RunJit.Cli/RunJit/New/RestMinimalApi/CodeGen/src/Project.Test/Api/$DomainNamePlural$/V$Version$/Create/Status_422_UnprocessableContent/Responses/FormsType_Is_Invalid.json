@@ -1,0 +1,52 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ValidationProblemDetailsExtended",
+      "title": "JsonException was thrown.",
+      "status": 422,
+      "detail": "The JSON value could not be converted to Pulse.FieldingTool.Api.FormsConfigurations.V1.FormsType.",
+      "errorDetails": {
+        "formsType": {
+          "currentValue": "invalid-form-type",
+          "errors": [
+            "The JSON value could not be converted to Pulse.FieldingTool.Api.FormsConfigurations.V1.FormsType."
+          ],
+          "samples": [
+            "OpenAccess",
+            "InvitationOnly",
+            "AnonymousEmployee",
+            "Employee"
+          ],
+          "location": {
+            "row": "5",
+            "column": "5"
+          }
+        }
+      },
+      "errors": {
+        "formsType": [
+          "The JSON value could not be converted to Pulse.FieldingTool.Api.FormsConfigurations.V1.FormsType. Location line number: 5 column: 34"
+        ]
+      }
+    }
+  },
+  "statusCode": "UnprocessableEntity",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

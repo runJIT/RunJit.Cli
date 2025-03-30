@@ -1,0 +1,49 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ValidationProblemDetailsExtended",
+      "title": "JsonSerializationException was thrown.",
+      "status": 422,
+      "detail": "Null object cannot be converted to a value type.",
+      "errors": {
+        "startDate": [
+          "Null object cannot be converted to a value type. Location line number: '5' line position: '19'"
+        ]
+      },
+      "errorDetails": {
+        "startDate": {
+          "currentValue": "null",
+          "errors": [
+            "Null object cannot be converted to a value type."
+          ],
+          "samples": [
+            "2025-03-20T14:00:00Z"
+          ],
+          "location": {
+            "row": "5",
+            "column": "19"
+          }
+        }
+      }
+    }
+  },
+  "statusCode": "UnprocessableEntity",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

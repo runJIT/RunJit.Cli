@@ -1,0 +1,51 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json; charset=utf-8"
+        ]
+      }
+    ],
+    "value": {
+      "formsConfigurations": [
+        {
+          "formsId": "f77647b9-b40b-42e5-a095-7e7f9366e0da",
+          "projectId": "5b0800e0-7067-4de5-804e-653e7309d045",
+          "title": "$UniqueFormsConfigurationName$",
+          "formsType": "OpenAccess",
+          "startDate": "2025-03-15T19:32:18+01:00",
+          "endDate": "2025-04-14T20:23:44+02:00",
+          "sessionEndsIn": "00:30:00",
+          "hasUpdate": false,
+          "languages": [],
+          "properties": {}
+        },
+        {
+          "formsId": "58f585e7-2197-488e-9e9c-d2909f7269f7",
+          "projectId": "1897671f-367e-4e53-b331-ac04fce671c9",
+          "title": "$UniqueFormsConfigurationName$",
+          "formsType": "OpenAccess",
+          "startDate": "2025-03-15T19:32:18+01:00",
+          "endDate": null,
+          "sessionEndsIn": "00:30:00",
+          "hasUpdate": false,
+          "languages": [],
+          "properties": {}
+        }
+      ]
+    }
+  },
+  "statusCode": "OK",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": true
+}

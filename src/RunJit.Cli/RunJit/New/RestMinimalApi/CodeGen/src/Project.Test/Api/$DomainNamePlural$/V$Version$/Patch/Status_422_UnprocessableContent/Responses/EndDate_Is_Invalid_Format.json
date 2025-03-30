@@ -1,0 +1,50 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ValidationProblemDetailsExtended",
+      "title": "JsonReaderException was thrown.",
+      "status": 422,
+      "detail": "Could not convert string to DateTime: 33-2025-15T18:32:18Z",
+      "errors": {
+        "endDate": [
+          "Could not convert string to DateTime: 33-2025-15T18:32:18Z Location line number: '6' line position: '35'"
+        ]
+      },
+      "errorDetails": {
+        "endDate": {
+          "currentValue": "33-2025-15T18:32:18Z",
+          "errors": [
+            "Could not convert string to DateTime: 33-2025-15T18:32:18Z"
+          ],
+          "samples": [
+            null,
+            "2025-03-20T14:00:00Z"
+          ],
+          "location": {
+            "row": "6",
+            "column": "35"
+          }
+        }
+      }
+    }
+  },
+  "statusCode": "UnprocessableEntity",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

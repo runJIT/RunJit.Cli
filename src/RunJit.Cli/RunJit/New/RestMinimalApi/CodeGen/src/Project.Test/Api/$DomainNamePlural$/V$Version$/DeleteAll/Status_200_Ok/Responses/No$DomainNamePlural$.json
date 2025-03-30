@@ -1,0 +1,26 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json; charset=utf-8"
+        ]
+      }
+    ],
+    "value": {
+      "formsConfigurations": []
+    }
+  },
+  "statusCode": "OK",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": true
+}

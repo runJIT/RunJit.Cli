@@ -3,6 +3,8 @@ using Siemens.AspNet.MinimalApi.Sdk;
 
 var webApi = new ServerlessMinimalWebApi();
 
+webApi.BasePath = "$BasePath$";
+
 webApi.RegisterServices = (service, config) =>
 {
     // Domain service registrations

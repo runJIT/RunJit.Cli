@@ -1,0 +1,50 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ValidationProblemDetailsExtended",
+      "title": "JsonReaderException was thrown.",
+      "status": 422,
+      "detail": "Could not convert string to boolean: invalid",
+      "errors": {
+        "hasUpdate": [
+          "Could not convert string to boolean: invalid Location line number: '8' line position: '24'"
+        ]
+      },
+      "errorDetails": {
+        "hasUpdate": {
+          "currentValue": "invalid",
+          "errors": [
+            "Could not convert string to boolean: invalid"
+          ],
+          "samples": [
+            true,
+            false
+          ],
+          "location": {
+            "row": "8",
+            "column": "24"
+          }
+        }
+      }
+    }
+  },
+  "statusCode": "UnprocessableEntity",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

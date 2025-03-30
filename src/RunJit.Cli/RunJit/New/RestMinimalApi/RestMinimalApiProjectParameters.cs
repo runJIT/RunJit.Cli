@@ -11,8 +11,8 @@ namespace RunJit.Cli.New.RestMinimalApi
         }
     }
 
-    internal sealed record NewRestMinimalApiParameters(FileInfo SolutionFile,
-                                                       string GitRepos,
+    internal sealed record NewRestMinimalApiParameters(string SolutionFilesOrGitRepos,
+                                                       string BasePath,
                                                        string WorkingDirectory,
                                                        string DbEntityModel,
                                                        int Version,

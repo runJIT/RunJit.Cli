@@ -1,0 +1,30 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ProblemDetails",
+      "title": "FormsConfiguration not found",
+      "status": 404,
+      "detail": "The requested FormsConfiguration with the FormsId: 58f585e7-2197-488e-9e9c-d2909f7269f7 was not found or does not exist any more.",
+      "FormsId": "58f585e7-2197-488e-9e9c-d2909f7269f7"
+    }
+  },
+  "statusCode": "NotFound",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

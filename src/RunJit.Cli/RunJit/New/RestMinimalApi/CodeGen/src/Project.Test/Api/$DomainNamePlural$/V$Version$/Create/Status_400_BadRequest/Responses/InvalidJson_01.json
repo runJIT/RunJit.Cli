@@ -1,0 +1,47 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ValidationProblemDetailsExtended",
+      "title": "JsonException was thrown.",
+      "status": 422,
+      "detail": "The JSON value could not be converted to Pulse.FieldingTool.Api.FormsConfigurations.V1.CreateFormsConfigurationRequest.",
+      "errorDetails": {
+        "$": {
+          "currentValue": "[]",
+          "errors": [
+            "The JSON value could not be converted to Pulse.FieldingTool.Api.FormsConfigurations.V1.CreateFormsConfigurationRequest."
+          ],
+          "samples": [],
+          "location": {
+            "row": "1",
+            "column": "1"
+          }
+        }
+      },
+      "errors": {
+        "$": [
+          "The JSON value could not be converted to Pulse.FieldingTool.Api.FormsConfigurations.V1.CreateFormsConfigurationRequest. Location line number: 1 column: 1"
+        ]
+      }
+    }
+  },
+  "statusCode": "InternalServerError",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

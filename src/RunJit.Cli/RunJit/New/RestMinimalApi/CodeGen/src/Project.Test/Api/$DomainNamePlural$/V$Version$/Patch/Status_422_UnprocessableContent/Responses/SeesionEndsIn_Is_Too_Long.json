@@ -1,0 +1,69 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ValidationProblemDetailsExtended",
+      "title": "Your patch request contains invalid data",
+      "status": 422,
+      "detail": "Your PatchFormsConfigurationRequest for the object id: 6f9e1c3e-8fbc-4d2a-9a3d-3c2e8f0b7d2f was invalid. Please check the error details. You might pass invalid data, or try to patch properties which not exists or not allow to patch",
+      "errors": {
+        "sessionEndsIn": [
+          "SessionEndsIn is longer as allowed. Maximum session time is: 2 hours (TimeSpan format:02:00:00). Current value 10 hours. SessionEndsIn should be in a range of 0 minutes and 2 hours"
+        ]
+      },
+      "errorDetails": {
+        "sessionEndsIn": {
+          "currentValue": "10:00:00",
+          "errors": [
+            "SessionEndsIn is longer as allowed. Maximum session time is: 2 hours (TimeSpan format:02:00:00). Current value 10 hours. SessionEndsIn should be in a range of 0 minutes and 2 hours"
+          ],
+          "samples": [
+            "02:00:00",
+            "01:00:00"
+          ],
+          "location": null
+        }
+      },
+      "Id": "6f9e1c3e-8fbc-4d2a-9a3d-3c2e8f0b7d2f",
+      "RequestType": "PatchFormsConfigurationRequest",
+      "RequestContent": {
+        "formsId": "6f9e1c3e-8fbc-4d2a-9a3d-3c2e8f0b7d2f",
+        "projectId": "5fab3314-006c-434a-af3b-48217c0cf0f6",
+        "title": "$UniqueFormsConfigurationName$",
+        "formsType": "InvitationOnly",
+        "startDate": "2025-03-15T18:32:18Z",
+        "endDate": null,
+        "sessionEndsIn": "10:00:00",
+        "hasUpdate": false,
+        "languages": [
+          {
+            "englishName": "English (United States)",
+            "nativeName": "English (United States)",
+            "tag": "en-US",
+            "tagThreeLetter": "eng",
+            "parentTag": "en"
+          }
+        ],
+        "properties": {}
+      }
+    }
+  },
+  "statusCode": "UnprocessableEntity",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

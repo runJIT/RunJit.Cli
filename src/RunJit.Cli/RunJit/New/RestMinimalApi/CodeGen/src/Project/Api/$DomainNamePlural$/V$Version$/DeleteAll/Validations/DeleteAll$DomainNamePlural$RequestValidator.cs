@@ -33,32 +33,17 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V1
     {
         protected override IEnumerable<(string PropertyName, ValidationErrorDetails ErrorDetails)> GetValidationErrors(DeleteAll$DomainNamePlural$Request request)
         {
-            // Sample: Remove the yield break and replace it with your validation logic
-            //
-            // if (request.FormsId.IsNull())
-            // {
-            //     var errorDetails = new ValidationErrorDetails()
-            //                        {
-            //                            CurrentValue = request.FormsId,
-            //                            Errors = [$"{nameof(request.FormsId)} must not be null"],
-            //                            Samples = ["This is a cool project", "Hello World"],
-            //                        };
-               
-            //     yield return (nameof(request.FormsId), errorDetails);
-            // }
+            // Request:
             // 
-            // if (request.FormsId.IsEmpty())
-            // {
-            //     var errorDetails = new ValidationErrorDetails()
-            //                        {
-            //                            CurrentValue = request.FormsId,
-            //                            Errors = [$"{nameof(request.FormsId)} must not be empty"],
-            //                            Samples = ["This is a cool project", "Hello World"],
-            //                        };
-               
-            //     yield return (nameof(request.FormsId), errorDetails);
-            // }
-            yield break;
+            // An unset query parameter will be NULL in this case. Which is for us the sign the query parameter
+            // was not declared and should not be used !
+            // 
+            //if (request.$QueryPropertyName$ is null)
+            //{
+            //    yield return (nameof(request.$QueryPropertyName$), $"{nameof(request.$QueryPropertyName$)} must not be null. To filter results, provide a valid $QueryPropertyNameLower$ (e.g., GET /$DomainNamePluralLower$?$QueryPropertyNameLower$=My$QueryPropertyName$). If no filter is desired, omit the parameter (e.g., GET /$DomainNamePluralLower$).");
+            //}
+            
+            $DeleteAllRequestValidations$
         }
     }
 }

@@ -1,0 +1,149 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ValidationProblemDetailsExtended",
+      "title": "Your patch request contains invalid data",
+      "status": 422,
+      "detail": "Your PatchFormsConfigurationRequest for the object id: 6f9e1c3e-8fbc-4d2a-9a3d-3c2e8f0b7d2f was invalid. Please check the error details. You might pass invalid data, or try to patch properties which not exists or not allow to patch",
+      "errors": {
+        "projectId": [
+          "ProjectId must be either GUID or long."
+        ],
+        "endDate": [
+          "EndDate can not be before your start date"
+        ],
+        "sessionEndsIn": [
+          "SessionEndsIn is longer as allowed. Maximum session time is: 2 hours (TimeSpan format:02:00:00). Current value 10 hours. SessionEndsIn should be in a range of 0 minutes and 2 hours"
+        ],
+        "languages[0].NativeName": [
+          "NativeName is not valid."
+        ],
+        "languages[0].EnglishName": [
+          "EnglishName is not valid."
+        ],
+        "languages[0].ParentTag": [
+          "ParentTag is not valid."
+        ],
+        "languages[0].TagThreeLetter": [
+          "TagThreeLetter is not valid."
+        ]
+      },
+      "errorDetails": {
+        "projectId": {
+          "currentValue": "invalid-project-id",
+          "errors": [
+            "ProjectId must be either GUID or long."
+          ],
+          "samples": [
+            "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+            "1"
+          ],
+          "location": null
+        },
+        "endDate": {
+          "currentValue": "2025-01-15T18:32:18Z",
+          "errors": [
+            "EndDate can not be before your start date"
+          ],
+          "samples": [
+            "03/22/2025 18:32:18",
+            "04/15/2025 18:32:18"
+          ],
+          "location": null
+        },
+        "sessionEndsIn": {
+          "currentValue": "10:00:00",
+          "errors": [
+            "SessionEndsIn is longer as allowed. Maximum session time is: 2 hours (TimeSpan format:02:00:00). Current value 10 hours. SessionEndsIn should be in a range of 0 minutes and 2 hours"
+          ],
+          "samples": [
+            "02:00:00",
+            "01:00:00"
+          ],
+          "location": null
+        },
+        "languages[0].NativeName": {
+          "currentValue": "invalid-native-name",
+          "errors": [
+            "NativeName is not valid."
+          ],
+          "samples": [
+            "English (United States)"
+          ],
+          "location": null
+        },
+        "languages[0].EnglishName": {
+          "currentValue": "invalid-english-name",
+          "errors": [
+            "EnglishName is not valid."
+          ],
+          "samples": [
+            "English (United States)"
+          ],
+          "location": null
+        },
+        "languages[0].ParentTag": {
+          "currentValue": "invalid-parent-tag",
+          "errors": [
+            "ParentTag is not valid."
+          ],
+          "samples": [
+            "en"
+          ],
+          "location": null
+        },
+        "languages[0].TagThreeLetter": {
+          "currentValue": "invalid-tag-three-letter",
+          "errors": [
+            "TagThreeLetter is not valid."
+          ],
+          "samples": [
+            "eng"
+          ],
+          "location": null
+        }
+      },
+      "Id": "6f9e1c3e-8fbc-4d2a-9a3d-3c2e8f0b7d2f",
+      "RequestType": "PatchFormsConfigurationRequest",
+      "RequestContent": {
+        "formsId": "6f9e1c3e-8fbc-4d2a-9a3d-3c2e8f0b7d2f",
+        "projectId": "invalid-project-id",
+        "title": "$UniqueFormsConfigurationName$",
+        "formsType": "InvitationOnly",
+        "startDate": "2025-03-15T18:32:18Z",
+        "endDate": "2025-01-15T18:32:18Z",
+        "sessionEndsIn": "10:00:00",
+        "hasUpdate": false,
+        "languages": [
+          {
+            "englishName": "invalid-english-name",
+            "nativeName": "invalid-native-name",
+            "tag": "en-US",
+            "tagThreeLetter": "invalid-tag-three-letter",
+            "parentTag": "invalid-parent-tag"
+          }
+        ],
+        "properties": {}
+      }
+    }
+  },
+  "statusCode": "UnprocessableEntity",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

@@ -1,0 +1,30 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ProblemDetails",
+      "title": "ArgumentNullException was thrown.",
+      "status": 400,
+      "detail": "Value cannot be null. (Parameter 'key')",
+      "errors": {}
+    }
+  },
+  "statusCode": "BadRequest",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

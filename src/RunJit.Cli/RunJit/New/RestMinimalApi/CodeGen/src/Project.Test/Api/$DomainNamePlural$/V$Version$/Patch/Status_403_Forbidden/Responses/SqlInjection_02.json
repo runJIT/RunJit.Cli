@@ -1,0 +1,42 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json"
+        ]
+      }
+    ],
+    "value": {
+      "type": "ProblemDetails",
+      "title": "FormsConfiguration with the requested id to patch does not exists",
+      "status": 404,
+      "detail": "FormsConfiguration with the requested id: 1devil=TRUNCATE YourTable&god=RESTORE YourTable to patch does not exists",
+      "FormsConfigurationId": "1devil=TRUNCATE YourTable&god=RESTORE YourTable",
+      "PatchValues": {
+        "FormsId": "58f585e7-2197-488e-9e9c-d2909f7269f7",
+        "ProjectId": "1897671f-367e-4e53-b331-ac04fce671c9",
+        "title": "$UniqueFormsConfigurationName$",
+        "FormsType": "OpenAccess",
+        "StartDate": "2025-03-15T18:32:18Z",
+        "EndDate": null,
+        "SessionEndsIn": "00:30:00",
+        "HasUpdate": false,
+        "Languages": [],
+        "Properties": {}
+      }
+    }
+  },
+  "statusCode": "NotFound",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": false
+}

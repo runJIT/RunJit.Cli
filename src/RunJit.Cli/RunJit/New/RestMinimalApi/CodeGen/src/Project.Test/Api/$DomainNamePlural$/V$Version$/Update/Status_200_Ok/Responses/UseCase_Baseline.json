@@ -1,0 +1,37 @@
+{
+  "content": {
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": [
+          "application/json; charset=utf-8"
+        ]
+      }
+    ],
+    "value": {
+      "formsConfiguration": {
+        "formsId": "1",
+        "projectId": "2",
+         "title": "$UniqueFormsConfigurationName$",
+        "formsType": "Employee",
+        "startDate": "2025-01-01T19:00:00+01:00",
+        "endDate": null,
+        "sessionEndsIn": "00:30:00",
+        "hasUpdate": false,
+        "languages": [],
+        "properties": {}
+      }
+    }
+  },
+  "statusCode": "OK",
+  "headers": [
+    {
+      "key": "api-supported-versions",
+      "value": [
+        "1"
+      ]
+    }
+  ],
+  "trailingHeaders": [],
+  "isSuccessStatusCode": true
+}

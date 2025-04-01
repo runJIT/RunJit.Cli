@@ -37,16 +37,16 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.CodeBuilders
 
             {
                 yield return """
-                             if (request$PropertyName$.IsNull())
+                             if (request.$PropertyName$.IsNull())
                              {
                                  var errorDetails = new ValidationErrorDetails()
                                  {
-                                     CurrentValue = request$PropertyName$,
-                                     Errors = [$"{nameof(request$PropertyName$)} must not be NULL. It is not allowed to delete all data with one call without filter. Provide a valid $PropertyNameLower$ (e.g., DELETE /$DomainNamePluralLower$?$PropertyNameLower$=Hello)."],
+                                     CurrentValue = request.$PropertyName$,
+                                     Errors = [$"{nameof(request.$PropertyName$)} must not be NULL. It is not allowed to delete all data with one call without filter. Provide a valid $PropertyNameLower$ (e.g., DELETE /$DomainNamePluralLower$?$PropertyNameLower$=Hello)."],
                                      Samples = ["Hello world"],
                                  };
                              
-                                 yield return (nameof(request$PropertyName$), errorDetails);
+                                 yield return (nameof(request.$PropertyName$), errorDetails);
                                  yield break;
                              }
                              """.Replace("$PropertyName$", propertyName)

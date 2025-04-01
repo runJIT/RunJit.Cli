@@ -40,7 +40,7 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.CodeBuilders
                                      Samples = [Guid.NewGuid(), Guid.NewGuid()],
                                  };
                              
-                                 yield return (nameof(request.ProjectId), errorDetails);
+                                 yield return (nameof(request.$PropertyName$), errorDetails);
                              }
                              """.Replace("$PropertyName$", propertyName)
                                 .Replace("$PropertyNameLower$", propertyNameLower)
@@ -82,7 +82,7 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.CodeBuilders
                                  Samples = [Guid.NewGuid(), Guid.NewGuid()],
                              };
                          
-                             yield return (nameof(request.ProjectId), errorDetails);
+                             yield return (nameof(request.$PropertyName$), errorDetails);
                          }
                          """.Replace("$PropertyName$", propertyName)
                              .Replace("$PropertyNameLower$", propertyNameLower)

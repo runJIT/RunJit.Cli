@@ -64,7 +64,7 @@ namespace RunJit.Cli.Test.SystemTest
 
         [DataTestMethod]
         [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
-        [DataRow("Sdc.UserManagement", "api/core", "um", "Users", "Name", UserEntityModel)]
+        [DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Users", "Name", UserEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_New_Solution(string projectName,
                                                                     string basePath,
                                                                     string toolName,

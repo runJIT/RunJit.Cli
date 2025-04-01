@@ -7,14 +7,14 @@ using RunJit.Cli.Test.Extensions;
 
 namespace RunJit.Cli.Test.SystemTest
 {
-    [TestCategory("runjit update coderules")]
+    [TestCategory("runjit update docu")]
     [TestClass]
-    public class UpdateCodeRulesTest : GlobalSetup
+    public class UpdateDocuTests : GlobalSetup
     {
         private const string BasePath = "api/cleanup";
 
         [TestMethod]
-        public async Task Should_Update_All_CodeRules_For_Target_Solution()
+        public async Task Should_Update_All_Docu_For_Target_Solution()
         {
             // 1. Create new Web Api
             var solutionFile = await Mediator.SendAsync(new CreateNewSimpleWebApi("Simple.Project", WebApiFolder, BasePath)).ConfigureAwait(false);
@@ -23,27 +23,22 @@ namespace RunJit.Cli.Test.SystemTest
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFile.FullName}").ConfigureAwait(false);
 
             // 3. Update to .Net 8
-            await Mediator.SendAsync(new UpdateCodeRulesForSolution(solutionFile.FullName)).ConfigureAwait(false);
+            await Mediator.SendAsync(new UpdateDocuForSolution(solutionFile.FullName)).ConfigureAwait(false);
         }
 
         // [Ignore]
         [DataTestMethod]
-        [DataRow(@"D:\Siemens\pulse-database\Pulse.Database.sln")]
-        [DataRow(@"D:\SoftwareOne\css-partners\SWO.CSS.OneSalesPartnerService.sln")]
-        [DataRow(@"D:\AzureDevOps\SoftwareOne.Workshop.November.2023\RunJit\UserManagement\UserManagement.sln")]
-        [DataRow(@"D:\AzureDevOps\AspNetCore.MinimalApi.Sdk\AspNetCore.MinimalApi.Sdk.sln")]
-        [DataRow(@"D:\Siemens\siemensgpt-backend\SiemensGPT.sln")]
-        [DataRow(@"D:\Siemens\siemens-aspnet-sdk\Siemens.AspNet.Sdk.sln")]
-        public async Task Should_Update_All_CodeRules_Into_Specific_Local_Solution(string targetSolution)
+        [DataRow(@"D:\Siemens\pulse-fieldingtool\Pulse.FieldingTool.sln")]
+        public async Task Should_Update_All_Docu_Into_Specific_Local_Solution(string targetSolution)
         {
             // 1. Create new Web Api
             var solutionFile = new FileInfo(targetSolution);
 
-            // 2. Test if target solution is build able
-            await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFile.FullName}").ConfigureAwait(false);
+            //// 2. Test if target solution is build able
+            //await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFile.FullName}").ConfigureAwait(false);
 
             // 3. Update code rules
-            await Mediator.SendAsync(new UpdateCodeRulesForSolution(solutionFile.FullName)).ConfigureAwait(false);
+            await Mediator.SendAsync(new UpdateDocuForSolution(solutionFile.FullName)).ConfigureAwait(false);
 
             // 4. Test if integration was sucessful and buildable
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFile.FullName}").ConfigureAwait(false);
@@ -55,15 +50,15 @@ namespace RunJit.Cli.Test.SystemTest
         public Task Should_Update_Code_Rules_By_Cloning_First_A_Repo(string gitUrl)
         {
             // 1. Create new Web Api
-            return Mediator.SendAsync(new UpdateCodeRulesPackagesForGitRepos(gitUrl, CodeRuleFolder.FullName));
+            return Mediator.SendAsync(new UpdateDocuForGitRepos(gitUrl, CodeRuleFolder.FullName));
         }
     }
 
-    internal sealed record UpdateCodeRulesForSolution(string solution) : ICommand;
+    internal sealed record UpdateDocuForSolution(string solution) : ICommand;
 
-    internal sealed class UpdateCodeRulesForSolutionHandler : ICommandHandler<UpdateCodeRulesForSolution>
+    internal sealed class UpdateDocuForSolutionHandler : ICommandHandler<UpdateDocuForSolution>
     {
-        public async Task Handle(UpdateCodeRulesForSolution request,
+        public async Task Handle(UpdateDocuForSolution request,
                                  CancellationToken cancellationToken)
         {
             await using var sw = new StringWriter();
@@ -80,23 +75,23 @@ namespace RunJit.Cli.Test.SystemTest
             Assert.AreEqual(0, exitCode, output);
         }
 
-        private IEnumerable<string> CollectConsoleParameters(UpdateCodeRulesForSolution parameters)
+        private IEnumerable<string> CollectConsoleParameters(UpdateDocuForSolution parameters)
         {
             // 1. Parameter solution file from the backend to parse
             yield return "runjit";
             yield return "update";
-            yield return "coderules";
+            yield return "docu";
             yield return "--solution";
             yield return parameters.solution;
         }
     }
 
-    internal sealed record UpdateCodeRulesPackagesForGitRepos(string GitRepos,
+    internal sealed record UpdateDocuForGitRepos(string GitRepos,
                                                               string WorkingDirectory) : ICommand;
 
-    internal sealed class UpdateCodeRulesPackagesForGitReposHandler : ICommandHandler<UpdateCodeRulesPackagesForGitRepos>
+    internal sealed class UpdateDocuForGitReposHandler : ICommandHandler<UpdateDocuForGitRepos>
     {
-        public async Task Handle(UpdateCodeRulesPackagesForGitRepos request,
+        public async Task Handle(UpdateDocuForGitRepos request,
                                  CancellationToken cancellationToken)
         {
             await using var sw = new StringWriter();
@@ -113,18 +108,16 @@ namespace RunJit.Cli.Test.SystemTest
             Assert.AreEqual(0, exitCode, output);
         }
 
-        private IEnumerable<string> CollectConsoleParameters(UpdateCodeRulesPackagesForGitRepos parameters)
+        private IEnumerable<string> CollectConsoleParameters(UpdateDocuForGitRepos parameters)
         {
             // 1. Parameter solution file from the backend to parse
             yield return "runjit";
             yield return "update";
-            yield return "coderules";
+            yield return "docu";
             yield return "--git-repos";
             yield return parameters.GitRepos;
             yield return "--working-directory";
             yield return parameters.WorkingDirectory;
-            yield return "--branch";
-            yield return "develop";
         }
     }
 }

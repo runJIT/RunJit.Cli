@@ -13,7 +13,8 @@ namespace RunJit.Cli.Test.SystemTest
         [DataTestMethod]
         [DataRow("Siemens.AspNet.ErrorHandler")]
         [DataRow("Siemens.AspNet.MinimalApi.Sdk")]
-        public async Task Should_Generate_New_Minimal_Web_Api_Solution(string projectName)
+        [DataRow("Siemens.AspNet.Sdk")]
+        public async Task Should_Generate_New_Nuget_Solution(string projectName)
         {
             var targetDirectory = Path.Combine(Environment.CurrentDirectory, projectName);
 
@@ -69,7 +70,7 @@ namespace RunJit.Cli.Test.SystemTest
                 yield return request.ProjectName;
                 yield return "--target-directory";
                 yield return request.TargetDirectory;
-                yield return "--start-ide";
+                // yield return "--start-ide";
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System.CommandLine;
 using System.CommandLine.Invocation;
 using Extensions.Pack;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RunJit.Cli.RunJit.Update;
 
@@ -8,11 +9,11 @@ namespace RunJit.Cli.Update.Docu
 {
     internal static class AddUpdateDocuCommandBuilderExtension
     {
-        internal static void AddUpdateDocuCommandBuilder(this IServiceCollection services)
+        internal static void AddUpdateDocuCommandBuilder(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddUpdateDocuArgumentsBuilder();
             services.AddUpdateDocuBuildsOptionsBuilder();
-            services.AddUpdateDocuService();
+            services.AddUpdateDocuService(configuration);
 
             services.AddSingletonIfNotExists<IUpdateSubCommandBuilder, UpdateDocuCommandBuilder>();
         }
@@ -23,7 +24,7 @@ namespace RunJit.Cli.Update.Docu
     {
         public Command Build()
         {
-            var checkCommand = new Command("globaljson", "The command to check that all backends are buildable. Why we need it. Cause if new .Net updates comes out it could be new analyzer finds issues which do not before.");
+            var checkCommand = new Command("docu", "The command to update the code docu in your solution");
 
             //checkBackendBuildsArgumentsBuilder.Build().ForEach(arg => checkCommand.AddArgument(arg));
             checkBackendBuildsOptionsBuilder.Build().ForEach(opt => checkCommand.AddOption(opt));

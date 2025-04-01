@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using Extensions.Pack;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RunJit.Cli.ErrorHandling;
 using RunJit.Cli.Services;
@@ -8,12 +9,13 @@ namespace RunJit.Cli.Update.Docu
 {
     internal static class AddUpdateDocuServiceExtension
     {
-        internal static void AddUpdateDocuService(this IServiceCollection services)
+        internal static void AddUpdateDocuService(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddConsoleService();
 
             // services.AddUpdateLocalSolutionFile();
             services.AddCloneReposAndUpdateAll();
+            services.AddLocalSolution(configuration);
 
             services.AddSingletonIfNotExists<UpdateDocuService>();
         }

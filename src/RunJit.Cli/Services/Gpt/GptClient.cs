@@ -22,6 +22,19 @@ namespace RunJit.Cli.Services.Gpt
         public string ApiKey { get; init; } = string.Empty;
     }
 
+
+    public static class AddGptClientExtension
+    {
+        public static void AddGptClient(this IServiceCollection services,
+                                        IConfiguration configuration)
+        {
+            services.AddGptSettings(configuration);
+            
+            services.AddSingletonIfNotExists<GptClient>();
+        }
+    }
+    
+
     internal class GptClient(IHttpClientFactory httpClientFactory,
                              GptSettings settings)
     {
@@ -36,7 +49,7 @@ namespace RunJit.Cli.Services.Gpt
             // Build the request payload.
             var requestBody = new
             {
-                model = "gpt-4-turbo",
+                model = "gpt-3.5-turbo",
                 messages = new[]
                                              {
                                                  new
@@ -45,20 +58,23 @@ namespace RunJit.Cli.Services.Gpt
                                                      content = prompt
                                                  }
                                              },
-                max_tokens = 200
+                max_tokens = 1000
             };
 
             var jsonContent = requestBody.ToJsonIntended();
-            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            var payload = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             // Send the POST request.
-            var response = await client.PostAsync(Endpoint, content);
-            response.EnsureSuccessStatusCode();
+            var response = await client.PostAsync(Endpoint, payload);
+            var content = await response.Content.ReadAsStringAsync();
 
-            var responseString = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode.IsFalse())
+            {
+                return string.Empty;
+            }
 
             // Deserialize the response to extract the generated content.
-            var result = JsonConvert.DeserializeObject<GptResponse>(responseString);
+            var result = content.FromJsonStringAs<GptResponse>();
 
             if (result.IsNotNull() &&
                 result.Choices.IsNotNull() &&

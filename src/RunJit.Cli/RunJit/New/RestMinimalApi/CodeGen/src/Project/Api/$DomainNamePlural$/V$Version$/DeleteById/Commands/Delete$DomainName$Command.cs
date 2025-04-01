@@ -29,7 +29,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();
             
             // 3. Delete project by its id
-            await dbContext.DeleteAsync<$DomainName$Entity>(request.$IdPropertyName$, cancellationToken).ConfigureAwait(false);
+            await dbContext.DeleteByIdAsync<$DomainName$Entity>(request.$IdPropertyName$, cancellationToken).ConfigureAwait(false);
         }
     }
 }

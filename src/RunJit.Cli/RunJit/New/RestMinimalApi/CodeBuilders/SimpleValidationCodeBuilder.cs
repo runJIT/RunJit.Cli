@@ -10,7 +10,8 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.CodeBuilders
         internal static void AddSimpleValidationCodeBuilder(this IServiceCollection services)
         {
             services.AddStringValidationBuilder();
-
+            services.AddGuidValidationBuilder();
+            
             services.AddSingletonIfNotExists<SimpleValidationCodeBuilder>();
         }
     }
@@ -22,7 +23,7 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.CodeBuilders
                                                CreateRestApiInfos createRestApiInfos)
         {
             // Yes currently we only create for flatten types
-            var allValidations = properties.SelectMany(p => validationBuilders.SelectMany(v => v.BuildValidationFor(p, requestName, createRestApiInfos))).ToList();
+            var allValidations = properties.SelectMany(p => validationBuilders.SelectMany(v => v.BuildValidationFor(p, requestName, createRestApiInfos))).Distinct().ToList();
 
             // all validations
             var flatten = allValidations.Flatten($"{Environment.NewLine}");

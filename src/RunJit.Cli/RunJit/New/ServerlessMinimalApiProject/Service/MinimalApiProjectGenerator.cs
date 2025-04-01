@@ -160,13 +160,13 @@ namespace RunJit.Cli.New.MinimalApiProject
 
             // 6. Add required nuget packages into project
             // <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.405.29" />
-            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "AWSSDK.DynamoDBv2", "3.7.406.8").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "AWSSDK.DynamoDBv2", "3.7.406.12").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Asp.Versioning.Http", "8.1.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Asp.Versioning.Mvc.ApiExplorer", "8.1.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Amazon.Lambda.AspNetCoreServer.Hosting", "1.7.4").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Extensions.Pack", "6.0.6").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Microsoft.AspNetCore.Authentication.JwtBearer", "9.0.3").ConfigureAwait(false);
-            //await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Siemens.AspNet.MinimalApi.Sdk", "4.1.0-alpha.40").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Siemens.AspNet.MinimalApi.Sdk", "0.1.0-alpha.16").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "AspNetCore.HealthChecks.UI", "9.0.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "AspNetCore.HealthChecks.UI.Client", "9.0.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Microsoft.Extensions.Diagnostics.HealthChecks", "9.0.3").ConfigureAwait(false);

@@ -232,6 +232,9 @@ namespace RunJit.Cli.New.RestMinimalApi
                                               ImmutableList.Create<Modifier>(Modifier.Public),
                                               $"public string {parameters.QueryProperty} {{ get; init; }}",
                                               string.Empty, string.Empty).ToIList();
+            
+            
+            
             var properties = record.Properties;
             var propertiesWithoutId = properties.Where(p => p.Name.NotEqualsTo(hashKeyPropertyId.Name)).ToList();
             var propertiesWithoutIdAsString = propertiesWithoutId.Select(p => p.SyntaxTree.Split(Environment.NewLine).Last()).Flatten($"{Environment.NewLine}");
@@ -350,9 +353,9 @@ namespace RunJit.Cli.New.RestMinimalApi
 
                 var createRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(propertiesWithoutId, "Create", createRestApiInfos);
                 var deleteAllRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(queryProperties, "Delete", createRestApiInfos);
-                var deleteByIdRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(queryProperties, "Delete", createRestApiInfos);
+                var deleteByIdRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations([hashKeyPropertyId], "DeleteById", createRestApiInfos);
                 var getAllRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(queryProperties, "Get", createRestApiInfos);
-                var getByIdRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(queryProperties, "Get", createRestApiInfos);
+                var getByIdRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations([hashKeyPropertyId], "GetById", createRestApiInfos);
                 var patchRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(propertiesWithoutId, "Patch", createRestApiInfos);
                 var udpateRequestValidation = simpleValidationCodeBuilder.BuildSimpleValidations(propertiesWithoutId, "Update", createRestApiInfos);
 

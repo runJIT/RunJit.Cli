@@ -1,5 +1,5 @@
 ﻿using Extensions.Pack;
-using $ProjectName$.Database.Users;
+using $ProjectName$.Database.$DomainNamePlural$;
 using Siemens.AspNet.ErrorHandling.Contracts;
 using Siemens.AspNet.MinimalApi.Sdk.Aws.DynamoDb;
 
@@ -29,7 +29,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                 
             using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();
 
-            var $DomainNameLower$Entity = await dbContext.LoadAsync<$DomainName$Entity>(request.$IdPropertyName$, cancellationToken).ConfigureAwait(false);
+            var $DomainNameLower$Entity = await dbContext.GetByIdAsync<$DomainName$Entity>(request.$IdPropertyName$, cancellationToken).ConfigureAwait(false);
 
             if ($DomainNameLower$Entity.IsNull())
             {

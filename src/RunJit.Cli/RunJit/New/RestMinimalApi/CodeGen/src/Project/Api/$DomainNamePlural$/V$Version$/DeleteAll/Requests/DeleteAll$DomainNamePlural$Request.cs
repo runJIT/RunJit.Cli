@@ -2,6 +2,6 @@
 {
     public sealed record DeleteAll$DomainNamePlural$Request
     {
-        public required string $QueryPropertyName$ { get; init; } // unique runner id
+        public required string? $QueryPropertyName$ { get; init; } // unique runner id
     }
 }

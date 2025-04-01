@@ -36,7 +36,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                                                              CancellationToken cancellationToken)
         {
             // 1. Create instance of dynamo db context
-            using var dbContext = dynamoDbClientFactory.Create();
+            using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();
 
             // 2. Try to get $DomainNameLower$ by id
             var $DomainNameLower$Entity = await dbContext.LoadAsync<$DomainName$Entity>($DomainNameLower$Id, cancellationToken).ConfigureAwait(false);

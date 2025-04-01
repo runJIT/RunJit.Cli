@@ -33,7 +33,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             var $DomainNameLower$Entity = requestMapper.MapFrom(update$DomainName$Request, id);
 
             // 3. Add data into database
-            using var dbContext = dynamoDbClientFactory.Create();
+            using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();
             await dbContext.SaveAsync($DomainNameLower$Entity, cancellationToken).ConfigureAwait(false);
 
             // 4. Return created $DomainNameLower$

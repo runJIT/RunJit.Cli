@@ -27,7 +27,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         {
             await requestValidator.ValidateAsync(request).ConfigureAwait(false);
                 
-            using var dbContext = dynamoDbClientFactory.Create();
+            using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();
 
             var $DomainNameLower$Entity = await dbContext.LoadAsync<$DomainName$Entity>(request.$IdPropertyName$, cancellationToken).ConfigureAwait(false);
 

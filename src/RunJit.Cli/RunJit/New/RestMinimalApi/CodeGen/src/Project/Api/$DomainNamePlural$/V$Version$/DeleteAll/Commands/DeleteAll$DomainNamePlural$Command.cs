@@ -26,7 +26,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             await validator.ValidateAsync(request).ConfigureAwait(false);
                 
             // 2. Create dynamo db context
-            using var dbContext = dynamoDbClientFactory.Create();
+            using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();
 
             // 3. Delete all projects or those which are matching the filter criteria
             await dbContext.DeleteAllAsync<$DomainName$Entity>([(nameof($DomainName$Entity.$QueryPropertyName$), request.$QueryPropertyName$)], cancellationToken).ConfigureAwait(false);

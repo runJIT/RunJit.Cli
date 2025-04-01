@@ -19,7 +19,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         }
     }
 
-    internal sealed class GetAll$DomainNamePlural$Query(IAmazonDynamoDbClientFactory amazonDynamoDbClientFactory,
+    internal sealed class GetAll$DomainNamePlural$Query(IAmazonDynamoDbClientFactory dynamoDbClientFactory,
                                                          GetAll$DomainNamePlural$RequestValidator requestValidator,
                                                          $DomainName$EntityMapper mapper)
     {
@@ -30,7 +30,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             await requestValidator.ValidateAsync(request).ConfigureAwait(false);
 
             // 2. Create dynamo db context
-            using var dbContext = amazonDynamoDbClientFactory.Create();
+            using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();
 
             // 3. Get all $DomainNameLower$ entities by filter criteria or all
             var $DomainNameLower$Entities = await dbContext.GetAllAsync<$DomainName$Entity>([(nameof($DomainName$Entity.$QueryPropertyName$), request.$QueryPropertyName$)], cancellationToken).ConfigureAwait(false);

@@ -34,7 +34,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V1
             var $DomainNameLower$Entity = requestMapper.MapFrom(create$DomainName$Request);
 
             // 3. Add data into database
-            using var dbContext = dynamoDbClientFactory.Create();
+            using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();
 
             // 4. Check if data already exists, to avoid an update with a POST
             var existing$DomainName$ = await dbContext.LoadAsync<$DomainName$Entity>($DomainNameLower$Entity.$IdPropertyName$, cancellationToken).ConfigureAwait(false);

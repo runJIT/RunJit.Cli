@@ -62,6 +62,163 @@ namespace RunJit.Cli.Test.SystemTest
                                                }
                                                """;
 
+
+        private const string Cap = """
+                                   [DynamoDBTable("Capability")]
+                                   public record CapabilityEntity
+                                   {
+                                       [DynamoDBHashKey]
+                                       public required Guid Id { get; init; }
+                                   
+                                       [DynamoDBRangeKey]
+                                       public required string VersionTag { get; init; } = "latest";
+                                   
+                                       public string Name { get; init; } = string.Empty;
+                                   
+                                       public required string Type { get; init; }
+                                   
+                                       public required string Environment { get; init; }
+                                   
+                                       public required string LastUpdatedByUser { get; init; }
+                                   
+                                       public required DateTime LastUpdatedDate { get; init; }
+                                   
+                                       public string HostService { get; init; } = string.Empty;
+                                   }
+                                   """;
+
+        private const string Capability = """
+                                           [DynamoDBTable("Capability")]
+                                           public record CapabilityEntity
+                                           {
+                                               [DynamoDBHashKey]
+                                               public required Guid Id { get; init; }
+                                           
+                                               [DynamoDBRangeKey]
+                                               public required string VersionTag { get; init; } = "latest";
+                                           
+                                               public string Name { get; init; } = string.Empty;
+                                           
+                                               public required string Type { get; init; }
+                                           
+                                               public required string Environment { get; init; }
+                                           
+                                               public required string LastUpdatedByUser { get; init; }
+                                           
+                                               public required DateTime LastUpdatedDate { get; init; }
+                                           
+                                               public string HostService { get; init; } = string.Empty;
+                                           }
+                                           """;
+
+        private const string S3BucketEntity = """
+                                              [DynamoDBTable("Capability")]
+                                              public record S3BucketEntity 
+                                              {
+                                                  [DynamoDBHashKey]
+                                                  public required Guid Id { get; init; }
+                                              
+                                                  [DynamoDBRangeKey]
+                                                  public required string VersionTag { get; init; } = "latest";
+                                              
+                                                  public string Name { get; init; } = string.Empty;
+                                              
+                                                  public required string Type { get; init; }
+                                              
+                                                  public required string Environment { get; init; }
+                                              
+                                                  public required string LastUpdatedByUser { get; init; }
+                                              
+                                                  public required DateTime LastUpdatedDate { get; init; }
+                                              
+                                                  public string HostService { get; init; } = string.Empty;
+                                              }
+                                              """;
+
+        private const string S3TableBuckets = """
+                                               [DynamoDBTable("Capability")]
+                                               public record S3TableBucketEntity 
+                                               {
+                                                   [DynamoDBHashKey]
+                                                   public required Guid Id { get; init; }
+                                               
+                                                   [DynamoDBRangeKey]
+                                                   public required string VersionTag { get; init; } = "latest";
+                                               
+                                                   public string Name { get; init; } = string.Empty;
+                                               
+                                                   public required string Type { get; init; }
+                                               
+                                                   public required string Environment { get; init; }
+                                               
+                                                   public required string LastUpdatedByUser { get; init; }
+                                               
+                                                   public required DateTime LastUpdatedDate { get; init; }
+                                               
+                                                   public string HostService { get; init; } = string.Empty;
+                                               }
+                                               """;
+
+        private const string SageMakerUnifiedStudios = """
+                                                        [DynamoDBTable("Capability")]
+                                                        public record SageMakerUnifiedStudioEntity 
+                                                        {
+                                                            [DynamoDBHashKey]
+                                                            public required Guid Id { get; init; }
+                                                        
+                                                            [DynamoDBRangeKey]
+                                                            public required string VersionTag { get; init; } = "latest";
+                                                        
+                                                            public string Name { get; init; } = string.Empty;
+                                                        
+                                                            public required string Type { get; init; }
+                                                        
+                                                            public required string Environment { get; init; }
+                                                        
+                                                            public required string LastUpdatedByUser { get; init; }
+                                                        
+                                                            public required DateTime LastUpdatedDate { get; init; }
+                                                        
+                                                            public string HostService { get; init; } = string.Empty;
+                                                        }
+                                                        """;
+
+
+        private const string AnimalEntity = """
+                                      [DynamoDBTable("Animal")]
+                                      public record AnimalEntity 
+                                      {
+                                          [DynamoDBHashKey]
+                                          public required Guid Id { get; init; }
+                                      
+                                          public string Name { get; init; } = string.Empty;
+                                      }
+                                      """;
+        
+        private const string CatEntity = """
+                                      [DynamoDBTable("Animal")]
+                                      public record CatEntity 
+                                      {
+                                          [DynamoDBHashKey]
+                                          public required Guid Id { get; init; }
+                                      
+                                          public string Name { get; init; } = string.Empty;
+                                      }
+                                      """;
+        
+        private const string DogEntity = """
+                                   [DynamoDBTable("Animal")]
+                                   public record DogEntity 
+                                   {
+                                       [DynamoDBHashKey]
+                                       public required Guid Id { get; init; }
+                                   
+                                       public string Name { get; init; } = string.Empty;
+                                   }
+                                   """;
+
+
+
         [DataTestMethod]
         [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
         [DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Users", "Name", UserEntityModel)]
@@ -88,8 +245,7 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core",
-                    "Projects", "Name", ProjectEntityModel)]
+        [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
         [DataRow("Sdc.UserManagement", "api/core", "um",
                     "Users", "Name", UserEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_Solution_From_File(string projectName,
@@ -124,11 +280,11 @@ namespace RunJit.Cli.Test.SystemTest
             // await DotNetTool.AssertRunAsync("dotnet", $"test {solutionFileInfo.FullName}").ConfigureAwait(false);
         }
 
+        // S3TableBuckets und SageMakerUnifiedStudio
+
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core",
-                    "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um",
-                    "Name")]
+        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
         public async Task Should_Be_Able_To_Create_Multiple_Domains(string projectName,
                                                                     string basePath,
                                                                     string toolName,
@@ -140,10 +296,13 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add project api
-            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, ProjectEntityModel, queryPropertyName, "Projects", basePath));
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, AnimalEntity, queryPropertyName, "Animals", basePath));
 
-            // 3. Add user api
-            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, UserEntityModel, queryPropertyName, "Users", basePath));
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, CatEntity, queryPropertyName, "Cats", basePath));
+
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, DogEntity, queryPropertyName, "Dogs", basePath));
+
+            // await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, SageMakerUnifiedStudios, queryPropertyName, "SageMakerUnifiedStudios", basePath));
 
             // 4. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
@@ -153,10 +312,8 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core",
-                    "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um",
-                    "Name")]
+        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
         public async Task Should_Be_Able_To_Create_Same_Domain_In_Different_Versions(string projectName,
                                                                                      string basePath,
                                                                                      string toolName,

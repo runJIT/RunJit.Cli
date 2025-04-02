@@ -25,7 +25,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .WithMetadata(new AllowedQueryParameterMetaInfo("$QueryPropertyNameLower$"));
 
             static async Task<IResult> HandleAsync(DeleteAll$DomainNamePlural$Command deleteAll$DomainNamePlural$Command,
-                                                   [FromQuery] string? $QueryPropertyNameLower$ = "",
+                                                   [FromQuery] string? $QueryPropertyNameLower$ = null,
                                                    CancellationToken cancellationToken = default)
             {
                 var request = new DeleteAll$DomainNamePlural$Request

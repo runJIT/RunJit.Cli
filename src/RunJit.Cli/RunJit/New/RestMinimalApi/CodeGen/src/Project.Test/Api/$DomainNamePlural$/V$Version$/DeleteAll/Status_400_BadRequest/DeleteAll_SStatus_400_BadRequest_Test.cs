@@ -24,14 +24,14 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
                                                                                                   string response)
         {
             // 3. Delete all $DomainNamePluralLower$ which matching the name
-            await Client.AssertDeleteAsErrorAsync<ValidationProblemDetailsExtended>($"$BasePath$/v1/$DomainNamePluralLower$?title={title}",
+            await Client.AssertDeleteAsErrorAsync<ValidationProblemDetailsExtended>($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={title}",
                                                                                     response).ConfigureAwait(false);
         }
 
         [TestCleanup]
         public Task CleanupAsync()
         {
-            return Client.AssertDeleteAsync($"$BasePath$/v1/$DomainNamePluralLower$?title={Unique$DomainName$Name}");
+            return Client.AssertDeleteAsync($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}");
         }
     }
 }

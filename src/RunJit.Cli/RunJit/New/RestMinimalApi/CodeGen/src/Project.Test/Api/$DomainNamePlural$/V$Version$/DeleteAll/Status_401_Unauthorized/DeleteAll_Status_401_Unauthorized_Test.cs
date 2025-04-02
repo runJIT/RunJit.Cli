@@ -13,7 +13,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         public Task Should_Not_Be_Able_To_Call_If_Caller_Is_Not_Authorized()
         {
             // Filter criteria is used to not delete any data cause of missing Auth
-            return Client.AssertDeleteAsUnauthorizedAsync($"$BasePath$/v1/$DomainNamePluralLower$?title={Unique$DomainName$Name}");
+            return Client.AssertDeleteAsUnauthorizedAsync($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}");
         }
     }
 }

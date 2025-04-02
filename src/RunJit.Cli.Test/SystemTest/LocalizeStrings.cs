@@ -27,7 +27,6 @@ namespace RunJit.Cli.Test.SystemTest
         [DataRow("codecommit::eu-central-1://pulse-core")]
         public async Task Localize_All_Strings(string gitUrl)
         {
-            // 3. Update to .Net 8
             await Mediator.SendAsync(new LocalizeAllStrings(gitUrl, @"D:\LocalizeStrings")).ConfigureAwait(false);
         }
     }

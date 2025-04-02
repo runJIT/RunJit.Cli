@@ -15,14 +15,14 @@
       "detail": "Your DeleteAllFormsConfigurationRequest contains invalid data please check the error details for more infos.",
       "errors": {
         "title": [
-          "Title must not be empty. To filter results, provide a valid title (e.g., DELETE /formsConfigurations?title=MyTitle). If no filter is desired, omit the parameter (e.g., DELETE /formsConfigurations)."
+          "Title must not be empty. To filter results, provide a valid title (e.g., DELETE /formsConfigurations?$QueryPropertyNameLower$=MyTitle). If no filter is desired, omit the parameter (e.g., DELETE /formsConfigurations)."
         ]
       },
       "errorDetails": {
         "title": {
           "currentValue": "",
           "errors": [
-            "Title must not be empty. To filter results, provide a valid title (e.g., DELETE /formsConfigurations?title=MyTitle). If no filter is desired, omit the parameter (e.g., DELETE /formsConfigurations)."
+            "Title must not be empty. To filter results, provide a valid title (e.g., DELETE /formsConfigurations?$QueryPropertyNameLower$=MyTitle). If no filter is desired, omit the parameter (e.g., DELETE /formsConfigurations)."
           ],
           "samples": [
             "This is a cool project",

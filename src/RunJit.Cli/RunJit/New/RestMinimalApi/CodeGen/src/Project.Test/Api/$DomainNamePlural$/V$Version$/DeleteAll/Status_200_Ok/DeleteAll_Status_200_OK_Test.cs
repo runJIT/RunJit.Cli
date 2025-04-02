@@ -21,7 +21,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         public async Task Should_Be_Able_Delete_All_$DomainNamePlural$_Matching_The_Query_Filter()
         {
             // 0. Get all first by $DomainNameLower$ name to go sure already existing data not exists
-            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"$BasePath$/v1/$DomainNamePluralLower$?title={Unique$DomainName$Name}",
+            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}",
                                                                            "No$DomainNamePlural$.json",
                                                                            differenceFunc: IgnoreAutoValues,
                                                                            [("$Unique$DomainName$Name$", Unique$DomainName$Name)]).ConfigureAwait(false);
@@ -34,16 +34,16 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
                                                                            [("$Unique$DomainName$Name$", Unique$DomainName$Name)]).ConfigureAwait(false);
 
             // 2. Check that the created $DomainNamePluralLower$ exists
-            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"$BasePath$/v1/$DomainNamePluralLower$?title={Unique$DomainName$Name}",
+            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}",
                                                                            "GetAll$DomainNamePlural$.json",
                                                                            differenceFunc: IgnoreAutoValues,
                                                                            [("$Unique$DomainName$Name$", Unique$DomainName$Name)]).ConfigureAwait(false);
 
             // 3. Delete all $DomainNamePluralLower$ which matching the name
-            await Client.AssertDeleteAsync($"$BasePath$/v1/$DomainNamePluralLower$?title={Unique$DomainName$Name}").ConfigureAwait(false);
+            await Client.AssertDeleteAsync($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}").ConfigureAwait(false);
 
             // 4. Eval that all $DomainNamePluralLower$ with the specific name was deleted
-            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"$BasePath$/v1/$DomainNamePluralLower$?title={Unique$DomainName$Name}",
+            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}",
                                                                            "No$DomainNamePlural$.json",
                                                                            differenceFunc: IgnoreAutoValues,
                                                                            [("$Unique$DomainName$Name$", Unique$DomainName$Name)]).ConfigureAwait(false);
@@ -52,7 +52,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         [TestCleanup]
         public Task CleanupAsync()
         {
-            return Client.AssertDeleteAsync($"$BasePath$/v1/$DomainNamePluralLower$?title={Unique$DomainName$Name}");
+            return Client.AssertDeleteAsync($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}");
         }
 
         private IEnumerable<Difference> IgnoreAutoValues(IImmutableList<Difference> differences)

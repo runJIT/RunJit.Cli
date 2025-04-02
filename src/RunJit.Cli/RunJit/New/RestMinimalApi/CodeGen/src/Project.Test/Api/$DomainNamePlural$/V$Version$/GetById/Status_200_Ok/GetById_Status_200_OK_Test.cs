@@ -21,7 +21,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         public async Task Should_Be_Able_Get_$DomainNamePlural$_By_Id()
         {
             // 1. Get all first by $DomainNameLower$ name to go sure already existing data not exists
-            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"$BasePath$/v1/$DomainNamePluralLower$?title={Unique$DomainName$Name}",
+            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}",
                                                                            "No$DomainNamePlural$.json",
                                                                            differenceFunc: IgnoreAutoValues,
                                                                            [("$Unique$DomainName$Name$", Unique$DomainName$Name)]).ConfigureAwait(false);
@@ -44,7 +44,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         [TestCleanup]
         public Task CleanupAsync()
         {
-            return Client.AssertGetAsync($"$BasePath$/v1/$DomainNamePluralLower$?title={Unique$DomainName$Name}");
+            return Client.AssertGetAsync($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}");
         }
 
         private IEnumerable<Difference> IgnoreAutoValues(IImmutableList<Difference> differences)

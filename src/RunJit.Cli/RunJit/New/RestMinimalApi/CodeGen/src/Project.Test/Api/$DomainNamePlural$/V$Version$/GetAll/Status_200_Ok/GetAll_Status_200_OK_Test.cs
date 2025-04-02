@@ -19,8 +19,8 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
 
         [DataTestMethod]
         [DataRow("")] // Query filters which are not declared in the route are NULL
-        [DataRow("?title=1")] // Query filters which are not declared in the route are NULL
-        [DataRow("?title=Hello")] // Query filters which are not declared in the route are NULL
+        [DataRow("?$QueryPropertyNameLower$=1")] // Query filters which are not declared in the route are NULL
+        [DataRow("?$QueryPropertyNameLower$=Hello")] // Query filters which are not declared in the route are NULL
         public Task Should_Be_Able_To_Get_All_$DomainNamePlural$_Without_Any_Filters(string validQueryFilters)
         {
             // 4. Eval that all $DomainNamePluralLower$ with the specific name was added
@@ -32,7 +32,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         public async Task Should_Be_Able_To_Get_All_$DomainNamePlural$_Matching_The_Query_Filter()
         {
             // 0. Get all first by $DomainNameLower$ name to go sure already existing data not exists
-            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"$BasePath$/v1/$DomainNamePluralLower$?title={Unique$DomainName$Name}",
+            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}",
                                                                            "No$DomainNamePlural$.json",
                                                                            differenceFunc: IgnoreAutoValues,
                                                                            [("$Unique$DomainName$Name$", Unique$DomainName$Name)]).ConfigureAwait(false);
@@ -52,7 +52,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
                                                                            [("$Unique$DomainName$Name$", Unique$DomainName$Name)]).ConfigureAwait(false);
 
             // 4. Eval that all $DomainNamePluralLower$ with the specific name was added
-            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"$BasePath$/v1/$DomainNamePluralLower$?title={Unique$DomainName$Name}",
+            await Client.AssertGetAsync<GetAll$DomainNamePlural$Response>($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}",
                                                                            "GetAll$DomainNamePlural$.json",
                                                                            differenceFunc: IgnoreAutoValues,
                                                                            [("$Unique$DomainName$Name$", Unique$DomainName$Name)]).ConfigureAwait(false);
@@ -61,7 +61,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         [TestCleanup]
         public Task CleanupAsync()
         {
-            return Client.AssertDeleteAsync($"$BasePath$/v1/$DomainNamePluralLower$?title={Unique$DomainName$Name}");
+            return Client.AssertDeleteAsync($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}");
         }
 
         private IEnumerable<Difference> IgnoreAutoValues(IImmutableList<Difference> differences)

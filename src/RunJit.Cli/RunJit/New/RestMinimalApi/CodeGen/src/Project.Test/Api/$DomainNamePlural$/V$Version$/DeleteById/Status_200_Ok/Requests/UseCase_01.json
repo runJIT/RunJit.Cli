@@ -1,12 +1,1 @@
-{
-  "FormsId": "ef3a6d12-9b4c-4b81-8720-cda4509f8d2a",
-  "ProjectId": "1897671f-367e-4e53-b331-ac04fce671c9",
-  "title": "$UniqueFormsConfigurationName$",
-  "FormsType": "OpenAccess",
-  "StartDate": "2025-03-15T18:32:18Z",
-  "EndDate": null,
-  "SessionEndsIn": "00:30:00",
-  "HasUpdate": false,
-  "Languages": [],
-  "Properties": {}
-}
+$TestRequestJson$

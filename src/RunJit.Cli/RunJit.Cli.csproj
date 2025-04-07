@@ -448,7 +448,6 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="RunJit\New\NugetProject\CodeGen\src\Project.Test\" />
-      <Folder Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Responses\" />
       <Folder Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_400_BadRequest\" />
       <Folder Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Update\Status_400_BadRequest\" />
     </ItemGroup>

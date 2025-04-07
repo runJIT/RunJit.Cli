@@ -194,7 +194,7 @@ namespace RunJit.Cli.Test.SystemTest
                                           public string Name { get; init; } = string.Empty;
                                       }
                                       """;
-        
+
         private const string CatEntity = """
                                       [DynamoDBTable("Animal")]
                                       public record CatEntity 
@@ -205,7 +205,7 @@ namespace RunJit.Cli.Test.SystemTest
                                           public string Name { get; init; } = string.Empty;
                                       }
                                       """;
-        
+
         private const string DogEntity = """
                                    [DynamoDBTable("Animal")]
                                    public record DogEntity 
@@ -216,6 +216,20 @@ namespace RunJit.Cli.Test.SystemTest
                                        public string Name { get; init; } = string.Empty;
                                    }
                                    """;
+
+        private const string CapabilityEntity = """
+                                                // TableName attribute
+                                                [DynamoDBTable("Capability")]
+                                                public record CapabilityEntity
+                                                {
+                                                    [DynamoDBHashKey]
+                                                    public required Guid Id { get; init; }
+                                                
+                                                    public string Name { get; init; } = string.Empty;
+                                                
+                                                    public string Type { get; init; } = string.Empty;
+                                                }
+                                                """;
 
 
 
@@ -246,8 +260,7 @@ namespace RunJit.Cli.Test.SystemTest
 
         [DataTestMethod]
         [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
-        [DataRow("Sdc.UserManagement", "api/core", "um",
-                    "Users", "Name", UserEntityModel)]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Users", "Name", UserEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_Solution_From_File(string projectName,
                                                                           string basePath,
                                                                           string toolName,

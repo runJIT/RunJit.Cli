@@ -8,20 +8,8 @@
         ]
       }
     ],
-    "value": {
-      "formsConfiguration": {
-        "formsId": "5ea96e92-2ab4-4f28-9290-2f11c4a3dbce",
-        "projectId": "1897671f-367e-4e53-b331-ac04fce671c9",
-        "title": "$UniqueFormsConfigurationName$",
-        "formsType": "OpenAccess",
-        "startDate": "2025-03-15T19:32:18+01:00",
-        "endDate": null,
-        "sessionEndsIn": "00:30:00",
-        "hasUpdate": false,
-        "languages": [],
-        "properties": {}
-      }
-    }
+    "value": "$TestResponseJson$"
+  }
   },
   "statusCode": "OK",
   "headers": [

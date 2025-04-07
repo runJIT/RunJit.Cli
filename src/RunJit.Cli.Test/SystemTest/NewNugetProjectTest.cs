@@ -14,6 +14,8 @@ namespace RunJit.Cli.Test.SystemTest
         [DataRow("Siemens.AspNet.ErrorHandler")]
         [DataRow("Siemens.AspNet.MinimalApi.Sdk")]
         [DataRow("Siemens.AspNet.Sdk")]
+        [DataRow("Siemens.AspNet.MsTest.Sdk")]
+        [DataRow("Siemens.AspNet.XUnit.Sdk")]
         public async Task Should_Generate_New_Nuget_Solution(string projectName)
         {
             var targetDirectory = Path.Combine(Environment.CurrentDirectory, projectName);

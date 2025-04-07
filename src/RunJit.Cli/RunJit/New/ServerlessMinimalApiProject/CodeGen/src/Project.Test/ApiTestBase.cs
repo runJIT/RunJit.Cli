@@ -1,9 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text.Json;
 using AspNetCore.Simple.MsTest.Sdk;
-using DotNetTool.Service;
 using Extensions.Pack;
-using $ProjectName$.Test.Utils;
+using Siemens.AspNet.MsTest.Sdk.Aws.Dynamo;
 
 namespace $ProjectName$.Test
 {
@@ -14,32 +13,22 @@ namespace $ProjectName$.Test
     public abstract class ApiTestBase
     {
         /// <summary>
-        ///     The name of the Docker container used for DynamoDB during tests.
-        /// </summary>
-        private const string DynamoDbContainerName = "dynamodb-local";
-
-        /// <summary>
         ///     The base class for API testing, providing utilities for setting up and interacting with the API.
         /// </summary>
         private static ApiTestBase<Program> _apiTestBase = null!;
 
-        /// <summary>
-        ///     The tool used for executing .NET commands, such as managing Docker containers.
-        /// </summary>
-        private static readonly IDotNetTool DotNetTool = DotNetToolFactory.Create();
-
         protected static HttpClient Client { get; private set; } = null!;
 
-        private static readonly DynamoDbService DynamoDbService = new DynamoDbService(new DockerService(DotNetTool), new MigrationScriptExecutor(DotNetTool));
+        private static readonly IDynamoDbService DynamoDbService = DynamoDbServiceFactory.Create();
 
         [AssemblyInitialize]
         public static async Task AssemblyInitializeAsync(TestContext _)
         {
             // 0. Go sure test was not stopped or interrupt
             await AssemblyCleanupAsync().ConfigureAwait(false);
-            
+
             // 1. Setup dynamo database
-            await DynamoDbService.SetupAsync(DynamoDbContainerName).ConfigureAwait(false);
+            await DynamoDbService.SetupAsync<Program>().ConfigureAwait(false);
 
             // 2. Setup and load environment variables
             var environmentVariables = EmbeddedFile.GetFileContentFrom("Properties.EnvironmentVariables.json")
@@ -62,10 +51,11 @@ namespace $ProjectName$.Test
             AssertObjectExtensions.JsonSerializerOptions = jsonSerializeOptions;
             HttpClientAssertExtensions.JsonSerializerOptions = jsonSerializeOptions;
         }
-    
+
         protected static string GetUniqueRunnerName([CallerFilePath] string callerFilePath = "")
         {
             var fileNameWithExtensions = Path.GetFileNameWithoutExtension(callerFilePath);
+
             return $"{fileNameWithExtensions}_{Environment.MachineName}";
         }
 
@@ -85,7 +75,7 @@ namespace $ProjectName$.Test
             }
 
             // 3. Tear down dynamo database
-            await DynamoDbService.TearDownAsync(DynamoDbContainerName).ConfigureAwait(false);
+            await DynamoDbService.TearDownAsync().ConfigureAwait(false);
         }
     }
 }

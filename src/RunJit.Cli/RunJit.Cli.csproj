@@ -315,9 +315,6 @@
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\ApiTestBase.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Api\Health\GetHealthStateTest.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\OpenApi\OpenApiTest.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Utils\DockerService.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Utils\DynamoDbService.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Utils\MigrationScriptExecutor.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Api\Startup.cs" />
       <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Program.cs" />
     </ItemGroup>
@@ -380,9 +377,6 @@
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\ApiTestBase.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Api\Health\GetHealthStateTest.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\OpenApi\OpenApiTest.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Utils\DockerService.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Utils\DynamoDbService.cs" />
-        <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Utils\MigrationScriptExecutor.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Api\Startup.cs" />
         <EmbeddedResource Include="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Program.cs" />
         <EmbeddedResource Include="RunJit\Update\BuildConfig\Templates\Directory.Build.props" />

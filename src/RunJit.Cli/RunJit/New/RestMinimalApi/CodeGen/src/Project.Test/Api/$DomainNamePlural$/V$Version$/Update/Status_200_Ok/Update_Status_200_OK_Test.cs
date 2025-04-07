@@ -24,8 +24,8 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         {
             // 1. Create an initial $DomainNameLower$ which we can Put (baseline)
             var create$DomainName$Response = await Client.AssertPostAsync<Create$DomainName$Response>("$BasePath$/v1/$DomainNamePluralLower$/",
-                                                                                                                  "UseCase_Baseline",
-                                                                                                                  "UseCase_Baseline",
+                                                                                                                  "UseCase_Baseline.json",
+                                                                                                                  "UseCase_Baseline.json",
                                                                                                                   differenceFunc: IgnoreAutoValues,
                                                                                                                   [("$Unique$DomainName$Name$", Unique$DomainName$Name)]).ConfigureAwait(false);
 

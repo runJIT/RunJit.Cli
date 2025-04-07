@@ -1,4 +1,5 @@
 ﻿using Extensions.Pack;
+using Amazon.DynamoDBv2.DocumentModel;
 using $ProjectName$.Database.$DomainNamePlural$;
 using Siemens.AspNet.MinimalApi.Sdk.Aws.DynamoDb;
 
@@ -25,11 +26,18 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             // 1. Validate the delete request
             await validator.ValidateAsync(request).ConfigureAwait(false);
                 
+            // 2. Setup scan configuration to delete all matching items
+            var scanConfiguration = new ScanOperationConfig();
+            if (request.Name.IsNotNullOrWhiteSpace())
+            {
+                scanConfiguration.Filter.AddCondition(nameof(request.$QueryPropertyName$), ScanOperator.Equal, request.$QueryPropertyName$);    
+            }
+            
             // 2. Create dynamo db context
             using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();
 
             // 3. Delete all projects or those which are matching the filter criteria
-            await dbContext.DeleteAllAsync<$DomainName$Entity>([(nameof($DomainName$Entity.$QueryPropertyName$), request.$QueryPropertyName$)], cancellationToken).ConfigureAwait(false);
+            await dbContext.DeleteByScanAsync<$DomainName$Entity>(scanConfiguration, cancellationToken).ConfigureAwait(false);
         }
     }
 }

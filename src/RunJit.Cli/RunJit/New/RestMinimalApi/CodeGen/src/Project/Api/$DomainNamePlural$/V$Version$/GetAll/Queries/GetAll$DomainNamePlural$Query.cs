@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using Amazon.DynamoDBv2.DocumentModel;
+using System.Collections.Immutable;
 using Extensions.Pack;
 using $ProjectName$.Database.$DomainNamePlural$;
 using Siemens.AspNet.MinimalApi.Sdk.Aws.DynamoDb;
@@ -29,16 +30,23 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             // 1. Validate the request
             await requestValidator.ValidateAsync(request).ConfigureAwait(false);
 
-            // 2. Create dynamo db context
+            // 2. Setup scan configuration to delete all matching items
+            var scanConfiguration = new ScanOperationConfig();
+            if (request.Name.IsNotNullOrWhiteSpace())
+            {
+                scanConfiguration.Filter.AddCondition(nameof(request.$QueryPropertyName$), ScanOperator.Equal, request.$QueryPropertyName$);    
+            }
+            
+            // 3. Create dynamo db context
             using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();
 
-            // 3. Get all $DomainNameLower$ entities by filter criteria or all
-            var $DomainNameLower$Entities = await dbContext.GetAllAsync<$DomainName$Entity>([(nameof($DomainName$Entity.$QueryPropertyName$), request.$QueryPropertyName$)], cancellationToken).ConfigureAwait(false);
+            // 4. Get all $DomainNameLower$ entities by filter criteria or all
+            var $DomainNameLower$Entities = await dbContext.ScanAsync<$DomainName$Entity>(scanConfiguration, cancellationToken).ConfigureAwait(false);
 
-            // 4. Map to api models (AntiCorruptionLayer - ACL)
+            // 5. Map to api models (AntiCorruptionLayer - ACL)
             var $DomainNamePluralLower$ = mapper.MapFrom($DomainNameLower$Entities);
 
-            // 5. Return the mapped objects
+            // 6. Return the mapped objects
             return $DomainNamePluralLower$;
         }
     }

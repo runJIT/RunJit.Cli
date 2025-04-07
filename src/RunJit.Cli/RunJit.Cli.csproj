@@ -38,6 +38,7 @@
         </None>
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="AspNetCore.Simple.MsTest.Sdk" Version="6.0.14" />
         <PackageReference Include="AspNetCore.Simple.Sdk" Version="6.0.2" />
         <PackageReference Include="AWSSDK.Translate" Version="3.7.400.123" />
         <PackageReference Include="DotNetTool.Service" Version="0.3.0" />

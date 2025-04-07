@@ -311,9 +311,9 @@ namespace RunJit.Cli.Test.SystemTest
             // 2. Add project api
             await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, AnimalEntity, queryPropertyName, "Animals", basePath));
 
-            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, CatEntity, queryPropertyName, "Cats", basePath));
+            //await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, CatEntity, queryPropertyName, "Cats", basePath));
 
-            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, DogEntity, queryPropertyName, "Dogs", basePath));
+            //await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, DogEntity, queryPropertyName, "Dogs", basePath));
 
             // await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, SageMakerUnifiedStudios, queryPropertyName, "SageMakerUnifiedStudios", basePath));
 

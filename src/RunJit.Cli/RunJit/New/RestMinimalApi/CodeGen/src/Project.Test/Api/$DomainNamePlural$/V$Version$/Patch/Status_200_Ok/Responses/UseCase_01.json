@@ -3,17 +3,20 @@
     "headers": [
       {
         "key": "Content-Type",
-        "value": [ "application/json; charset=utf-8" ]
+        "value": [
+          "application/json; charset=utf-8"
+        ]
       }
     ],
     "value": "$TestResponseJson$"
-  }
   },
   "statusCode": "OK",
   "headers": [
     {
       "key": "api-supported-versions",
-      "value": [ "1" ]
+      "value": [
+        "1"
+      ]
     }
   ],
   "trailingHeaders": [],

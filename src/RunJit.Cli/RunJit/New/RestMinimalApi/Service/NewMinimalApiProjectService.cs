@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using AspNetCore.Simple.MsTest.Sdk;
 using Extensions.Pack;
 using Microsoft.Extensions.DependencyInjection;
 using PluralizeService.Core;
@@ -232,9 +233,9 @@ namespace RunJit.Cli.New.RestMinimalApi
                                               ImmutableList.Create<Modifier>(Modifier.Public),
                                               $"public string {parameters.QueryProperty} {{ get; init; }}",
                                               string.Empty, string.Empty).ToIList();
-            
-            
-            
+
+
+
             var properties = record.Properties;
             var propertiesWithoutId = properties.Where(p => p.Name.NotEqualsTo(hashKeyPropertyId.Name)).ToList();
             var propertiesWithoutIdAsString = propertiesWithoutId.Select(p => p.SyntaxTree.Split(Environment.NewLine).Last()).Flatten($"{Environment.NewLine}");
@@ -315,20 +316,20 @@ namespace RunJit.Cli.New.RestMinimalApi
                                                                                  })
                                                 .ToJsonIntended();
 
-                var testResponseJson = properties.ToDictionary(item => item.Name, item =>
-                                                                                    {
-                                                                                        if (item.Name == hashKeyPropertyId.Name)
-                                                                                        {
-                                                                                            return Guid.NewGuid().ToString();
-                                                                                        }
+                var testResponseAsJson = properties.ToDictionary(item => item.Name, item =>
+                                                                                  {
+                                                                                      if (item.Name == hashKeyPropertyId.Name)
+                                                                                      {
+                                                                                          return Guid.NewGuid().ToString();
+                                                                                      }
 
-                                                                                        if (item.Name == queryPropertyName.Name)
-                                                                                        {
-                                                                                            return $"$Unique{domainName}Name$";
-                                                                                        }
-                                                                                        return item.Name;
-                                                                                    })
-                                                 .ToJsonIntended();
+                                                                                      if (item.Name == queryPropertyName.Name)
+                                                                                      {
+                                                                                          return $"$Unique{domainName}Name$";
+                                                                                      }
+
+                                                                                      return item.Name;
+                                                                                  }).ToJsonIntended();
 
                 var createRestApiInfos = new CreateRestApiInfos
                 {
@@ -347,7 +348,7 @@ namespace RunJit.Cli.New.RestMinimalApi
                     QueryPropertyNameLower = parameters.QueryProperty.FirstCharToLower(),
                     MigrationScript = migrationScript,
                     TestRequestJson = testPayloadJson,
-                    TestResponseJson = testResponseJson,
+                    TestResponseJson = testResponseAsJson,
                     BasePath = parameters.BasePath
                 };
 

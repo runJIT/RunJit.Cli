@@ -8,6 +8,9 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
     {
         internal static void AddPatch$DomainName$RequestValidator(this IServiceCollection services)
         {
+            services.AddJsonDiffer();
+            services.AddJsonSerializer();
+            
             services.AddSingletonIfNotExists<Patch$DomainName$RequestValidator>();
         }
     }

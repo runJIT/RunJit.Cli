@@ -8,8 +8,7 @@
         ]
       }
     ],
-    "value": "$TestResponseJson$"
-  }
+    "value": $TestResponseJson$
   },
   "statusCode": "OK",
   "headers": [

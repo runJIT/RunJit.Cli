@@ -62,15 +62,21 @@ namespace RunJit.Cli.Test.SystemTest
                                                    public string FavoriteColor { get; init; } = string.Empty;
                                                }
                                                """;
-        
+
         private const string CapabilityType = """
                                                [DynamoDBTable("CapabilityType")]
-                                               public record CapabilityType
+                                               public record CapabilityTypeEntity
                                                {
                                                    [DynamoDBHashKey]
-                                                   public string Type { get; init; } = Guid.Empty;
+                                                   public required string Type { get; init; }
 
                                                    public bool Available { get; init; }
+                                                   
+                                                   [DateTimeOffsetIsUtc]
+                                                   public required DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.UtcNow;
+                                                   
+                                                   [DateTimeOffsetIsUtc]
+                                                   public required DateTimeOffset LastModifiedAt { get; init; } = DateTimeOffset.UtcNow;
                                                }
                                                """;
 
@@ -244,7 +250,7 @@ namespace RunJit.Cli.Test.SystemTest
         [DataTestMethod]
         //[DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
         //[DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Users", "Name", UserEntityModel)]
-        [DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Deployments", "StatusInfo", DeploymentEntityModel)]
+        [DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Deployments", "StatusInfo", CapabilityType)]
         public async Task Should_Add_New_Rest_Api_Into_New_Solution(string projectName,
                                                                     string basePath,
                                                                     string toolName,

@@ -18,8 +18,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         }
 
         [DataTestMethod]
-        // Full object Put like update
-        [DataRow("UseCase_01.json")]
+        [DynamicRequestLocator]
         public async Task Should_Be_Able_To_Update_A_$DomainName$(string useCase)
         {
             // 1. Create an initial $DomainNameLower$ which we can Put (baseline)

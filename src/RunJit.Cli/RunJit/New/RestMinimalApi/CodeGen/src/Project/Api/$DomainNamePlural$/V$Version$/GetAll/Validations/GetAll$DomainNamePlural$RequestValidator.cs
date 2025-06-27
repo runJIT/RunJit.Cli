@@ -29,21 +29,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V1
     /// to filtering. If a parameter is provided, it must adhere to the expected format (e.g., non-empty, not just whitespace).
     /// </para>
     /// </remarks>
-    internal sealed class GetAll$DomainNamePlural$RequestValidator() : RequestValidator<GetAll$DomainNamePlural$Request>(HttpStatusCode.BadRequest)
+    internal sealed class GetAll$DomainNamePlural$RequestValidator(IAttributeValidator attributeValidator) : RequestValidator<GetAll$DomainNamePlural$Request>(attributeValidator, HttpStatusCode.BadRequest)
     {
-        protected override IEnumerable<(string PropertyName, ValidationErrorDetails ErrorDetails)> GetValidationErrors(GetAll$DomainNamePlural$Request request)
+        protected override IEnumerable<PropertyValidationResult> GetValidationErrors(GetAll$DomainNamePlural$Request request)
         {
-            // Request:
-            // 
-            // An unset query parameter will be NULL in this case. Which is for us the sign the query parameter
-            // was not declared and should not be used !
-            // 
-            //if (request.$QueryPropertyName$ is null)
-            //{
-            //    yield return (nameof(request.$QueryPropertyName$), $"{nameof(request.$QueryPropertyName$)} must not be null. To filter results, provide a valid $QueryPropertyNameLower$ (e.g., GET /$DomainNamePluralLower$?$QueryPropertyNameLower$=My$QueryPropertyName$). If no filter is desired, omit the parameter (e.g., GET /$DomainNamePluralLower$).");
-            //}
-
-            $GetAllRequestValidations$
+            yield break;
         }
     }
 }

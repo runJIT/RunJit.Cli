@@ -17,7 +17,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         }
 
         [DataTestMethod]
-        [DataRow("InvalidJson_01.json")]
+        [DynamicRequestLocator]
         public Task Should_Return_Bad_Request_When_Trying_To_Create_The_$DomainName$_With(string useCase)
         {
             return Client.AssertPostAsErrorAsync<ProblemDetails>($"$BasePath$/v1/$DomainNamePluralLower$",

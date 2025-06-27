@@ -16,11 +16,12 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
     }
 
     internal sealed class Patch$DomainName$RequestValidator(IJsonDiffer jsonDiffer, 
-                                                            IJsonSerializer jsonSerializer) : PatchRequestValidator<Patch$DomainName$Request>(jsonDiffer, jsonSerializer)
+                                                            IJsonSerializer jsonSerializer,
+                                                            IAttributeValidator attributeValidator) : PatchRequestValidator<Patch$DomainName$Request>(jsonDiffer, jsonSerializer, attributeValidator)
     {
-        protected override IEnumerable<(string PropertyName, ValidationErrorDetails ErrorDetails)> GetValidationErrors(Patch$DomainName$Request request)
+        protected override IEnumerable<PropertyValidationResult> GetValidationErrors(Patch$DomainName$Request request)
         {
-            $PatchRequestValidations$
+            yield break;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.CodeBuilders
                                      Samples = ["Hello world"],
                                  };
                              
-                                 yield return (nameof(request.$PropertyName$), errorDetails);
+                                 yield return new PropertyValidationResult(nameof(request.$PropertyName$), errorDetails);
                                  yield break;
                              }
                              """.Replace("$PropertyName$", propertyName)
@@ -77,7 +77,7 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.CodeBuilders
                 //                .Replace("$DomainNamePluralLower$", createRestApiInfos.DomainNamePluralLower);
 
                 yield return """
-                             if (request.Name.IsNull())
+                             if (request.$PropertyName$.IsNull())
                              {
                                  yield break;
                              }

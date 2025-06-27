@@ -29,11 +29,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V1
     /// to filtering. If a parameter is provided, it must adhere to the expected format (e.g., non-empty, not just whitespace).
     /// </para>
     /// </remarks>
-    internal sealed class Delete$DomainName$ByIdRequestValidator() : RequestValidator<Delete$DomainName$ByIdRequest>(HttpStatusCode.BadRequest)
+    internal sealed class Delete$DomainName$ByIdRequestValidator(IAttributeValidator attributeValidator) : RequestValidator<Delete$DomainName$ByIdRequest>(attributeValidator, HttpStatusCode.BadRequest)
     {
-        protected override IEnumerable<(string PropertyName, ValidationErrorDetails ErrorDetails)> GetValidationErrors(Delete$DomainName$ByIdRequest request)
+        protected override IEnumerable<PropertyValidationResult> GetValidationErrors(Delete$DomainName$ByIdRequest request)
         {
-            $DeleteByIdRequestValidations$
+            yield break;
         }
     }
 }

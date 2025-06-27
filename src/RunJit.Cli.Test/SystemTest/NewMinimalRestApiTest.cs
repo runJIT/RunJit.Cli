@@ -63,6 +63,16 @@ namespace RunJit.Cli.Test.SystemTest
                                                }
                                                """;
 
+
+
+        // +----------------------+--------+---------------------------+------------------+----------------+-------------------+
+        // | CapabilityType       | Active | LastModifiedAt            | User             | Status         | Information       |
+        // +----------------------+--------+---------------------------+------------------+----------------+-------------------+
+        // | AwsS3Bucket          | true   | 2025-06-04T14:22:11Z      | admin@system     | Available      | -                 |
+        // | Ec2                  | false  | 2025-06-03T10:08:45Z      | ops.engineer     | NotAvailable   | NotImplemented    |
+        // | SnowflakeWarehouse   | true   | 2025-06-01T16:55:30Z      | infra.manager    | Available      | -                 |
+        // +----------------------+--------+---------------------------+------------------+----------------+-------------------+
+
         private const string CapabilityType = """
                                                [DynamoDBTable("CapabilityType")]
                                                public record CapabilityTypeEntity
@@ -71,6 +81,10 @@ namespace RunJit.Cli.Test.SystemTest
                                                    public required string Type { get; init; }
 
                                                    public bool Available { get; init; }
+                                                   
+                                                   public string User { get; init; }
+                                                   
+                                                   public string Information { get; init; }
                                                    
                                                    [DateTimeOffsetIsUtc]
                                                    public required DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.UtcNow;
@@ -247,10 +261,35 @@ namespace RunJit.Cli.Test.SystemTest
                                                 }
                                                 """;
 
+        private const string UserEntity = """
+                                          [DynamoDBTable("User")]
+                                          public sealed record UserEntity
+                                          {
+                                              [DynamoDBHashKey]
+                                              public Guid UniqueUserId  { get; init; }
+                                              public string ExternalId  { get; init; }
+                                              public string LastName  { get; init; }
+                                              public string FirstName  { get; init; }
+                                              public string Title  { get; init; }
+                                              public string Email  { get; init; }
+                                              public string OrgCode  { get; init; }
+                                              public string OrgName  { get; init; }
+                                              public string OrgId  { get; init; }
+                                              public string CostCenter  { get; init; }
+                                              public string Are  { get; init; }
+                                              public string Country  { get; init; }
+                                              public string Statu  { get; init; }
+                                              public string ProjectRole { get; init; }
+                                              public string MarketPlaceRole { get; init; }
+                                              public string Scope { get; init; }
+                                          }
+                                          """;
+
+
         [DataTestMethod]
         //[DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
         //[DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Users", "Name", UserEntityModel)]
-        [DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Deployments", "StatusInfo", CapabilityType)]
+        [DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Deployments", "Information", UserEntity)]
         public async Task Should_Add_New_Rest_Api_Into_New_Solution(string projectName,
                                                                     string basePath,
                                                                     string toolName,
@@ -264,8 +303,7 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add rest api
-            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, entityModel, queryPropertyName,
-                                                           domainName, basePath));
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, entityModel, queryPropertyName, domainName, basePath));
 
             // 3. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
@@ -275,10 +313,8 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core",
-                    "Projects", "Name", ProjectEntityModel)]
-        [DataRow("Sdc.UserManagement", "api/core", "um",
-                    "Users", "Name", UserEntityModel)]
+        [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Users", "Name", UserEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_Solution_From_File(string projectName,
                                                                           string basePath,
                                                                           string toolName,
@@ -315,10 +351,8 @@ namespace RunJit.Cli.Test.SystemTest
         // S3TableBuckets und SageMakerUnifiedStudio
 
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core",
-                    "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um",
-                    "Name")]
+        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
         public async Task Should_Be_Able_To_Create_Multiple_Domains(string projectName,
                                                                     string basePath,
                                                                     string toolName,
@@ -347,10 +381,8 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core",
-                    "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um",
-                    "Name")]
+        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
         public async Task Should_Be_Able_To_Create_Same_Domain_In_Different_Versions(string projectName,
                                                                                      string basePath,
                                                                                      string toolName,
@@ -406,9 +438,7 @@ namespace RunJit.Cli.Test.SystemTest
                                                         """;
 
         [DataTestMethod]
-        [DataRow(@"D:\Siemens\pulse-fieldingtool\Pulse.FieldingTool.sln", "api/fieldingtool", "FormsConfigurations",
-                    "Title",
-                    FormsConfigurationEntity)]
+        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln", "api/console", "CapabilityTypes", "User", CapabilityType)]
         public async Task Should_Add_New_Rest_Api_Into_Existing_Solution(string solutionFilePath,
                                                                          string basePath,
                                                                          string domainName,

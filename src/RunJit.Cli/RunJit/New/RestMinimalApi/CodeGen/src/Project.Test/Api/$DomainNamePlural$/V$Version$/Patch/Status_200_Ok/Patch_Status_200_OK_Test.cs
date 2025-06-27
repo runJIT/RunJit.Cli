@@ -16,21 +16,9 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         {
             return CleanupAsync();
         }
-
-        // SDC Mode:
-        // - FormsId is GUID
-        // - ProjectId is GUID
-        // Pulse Mode:
-        // - FormsId is long (SurveyInstanceId)
-        // - ProjectId is long
-        // FormsType:
-        // - OpenAccess
-        // - InvitationOnly
-        // - AnonymousEmployee
-        // - Employee
+    
         [DataTestMethod]
-        // Full object patch like update
-        [DataRow("UseCase_01.json")]
+        [DynamicRequestLocator]
         public async Task Should_Be_Able_To_Patch_A_$DomainName$(string useCase)
         {
             // 1. Create an initial $DomainNameLower$ which we can patch (baseline)

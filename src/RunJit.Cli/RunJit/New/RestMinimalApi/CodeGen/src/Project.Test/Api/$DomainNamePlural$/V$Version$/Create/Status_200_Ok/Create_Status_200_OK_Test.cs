@@ -18,7 +18,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         }
     
         [DataTestMethod]
-        [DataRow("UseCase_01.json")]
+        [DynamicRequestLocator]
         public async Task Should_Be_Able_To_Create_A_$DomainName$(string useCase)
         {
             // 1. Create a new $DomainNameLower$

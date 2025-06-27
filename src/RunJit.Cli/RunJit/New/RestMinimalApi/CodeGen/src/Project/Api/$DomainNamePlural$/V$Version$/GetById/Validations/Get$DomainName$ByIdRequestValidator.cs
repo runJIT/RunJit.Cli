@@ -26,11 +26,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V1
     /// (<see href="https://www.rfc-editor.org/rfc/rfc9110#status.422">RFC 9110</see>).
     /// </para>
     /// </remarks>
-    internal sealed class Get$DomainName$ByIdRequestValidator() : RequestValidator<Get$DomainName$ByIdRequest>(HttpStatusCode.BadRequest)
+    internal sealed class Get$DomainName$ByIdRequestValidator(IAttributeValidator attributeValidator) : RequestValidator<Get$DomainName$ByIdRequest>(attributeValidator, HttpStatusCode.BadRequest)
     {
-        protected override IEnumerable<(string PropertyName, ValidationErrorDetails ErrorDetails)> GetValidationErrors(Get$DomainName$ByIdRequest request)
+        protected override IEnumerable<PropertyValidationResult> GetValidationErrors(Get$DomainName$ByIdRequest request)
         {
-            $GetByIdRequestValidations$
+            yield break;
         }
     }
 }

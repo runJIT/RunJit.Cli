@@ -1,4 +1,4 @@
-﻿using Extensions.Pack;
+﻿using Extensions.Pack;using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Siemens.AspNet.ErrorHandling.Contracts;
 using Siemens.AspNet.MinimalApi.Sdk;
 
@@ -12,11 +12,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         }
     }
 
-    internal sealed class Create$DomainName$RequestValidator : RequestValidator<Create$DomainName$Request>
+    internal sealed class Create$DomainName$RequestValidator(IAttributeValidator attributeValidator) : RequestValidator<Create$DomainName$Request>(attributeValidator)
     {
-        protected override IEnumerable<(string PropertyName, ValidationErrorDetails ErrorDetails)> GetValidationErrors(Create$DomainName$Request request)
+        protected override IEnumerable<PropertyValidationResult> GetValidationErrors(Create$DomainName$Request request)
         {
-            $CreateRequestValidations$
+            yield break;
         }
     }
 }

@@ -12,11 +12,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         }
     }
 
-    internal sealed class Update$DomainName$RequestValidator : RequestValidator<Update$DomainName$Request>
+    internal sealed class Update$DomainName$RequestValidator(IAttributeValidator attributeValidator) : RequestValidator<Update$DomainName$Request>(attributeValidator)
     {
-        protected override IEnumerable<(string PropertyName, ValidationErrorDetails ErrorDetails)> GetValidationErrors(Update$DomainName$Request request)
+        protected override IEnumerable<PropertyValidationResult> GetValidationErrors(Update$DomainName$Request request)
         {
-            $UpdateRequestValidations$
+            yield break;
         }
     }
 }

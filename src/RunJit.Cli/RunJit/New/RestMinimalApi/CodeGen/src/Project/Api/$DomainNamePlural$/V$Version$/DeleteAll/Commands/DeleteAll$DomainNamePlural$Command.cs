@@ -28,7 +28,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                 
             // 2. Setup scan configuration to delete all matching items
             var scanConfiguration = new ScanOperationConfig();
-            if (request.Name.IsNotNullOrWhiteSpace())
+            if (request.$QueryPropertyName$.IsNotNullOrWhiteSpace())
             {
                 scanConfiguration.Filter.AddCondition(nameof(request.$QueryPropertyName$), ScanOperator.Equal, request.$QueryPropertyName$);    
             }

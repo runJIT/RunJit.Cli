@@ -10,7 +10,7 @@ namespace RunJit.Cli.New.RestMinimalApi
         internal static void AddApiNamespaceProviderCleanup(this IServiceCollection services)
         {
             services.AddSingletonIfNotExists<IRestMinimalApiSpecificCodeGen, ApiNamespaceProviderCleanup>();
-            services.AddSingletonIfNotExists<IRestMinimalApiTestSpecificCodeGen, ApiNamespaceProviderCleanup>();
+            // services.AddSingletonIfNotExists<IRestMinimalApiTestSpecificCodeGen, ApiNamespaceProviderCleanup>();
         }
     }
 

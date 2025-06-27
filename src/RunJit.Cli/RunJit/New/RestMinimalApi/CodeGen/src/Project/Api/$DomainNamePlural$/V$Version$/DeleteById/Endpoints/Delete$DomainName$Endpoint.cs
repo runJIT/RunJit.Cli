@@ -10,7 +10,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         internal static void MapDelete$DomainName$(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapDelete("$DomainNamePluralLower$/{$IdUrlName$:guid}", HandleAsync)
-                     .Produces<NoContent>(StatusCodes.Status204NoContent)
+                     .Produces(StatusCodes.Status204NoContent)
                      .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
                      .Produces<ProblemDetails>(StatusCodes.Status401Unauthorized)
                      .Produces<ProblemDetails>(StatusCodes.Status403Forbidden)

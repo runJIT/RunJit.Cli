@@ -64,7 +64,23 @@ namespace RunJit.Cli.Test.SystemTest
                                                """;
 
 
+        private const string ProviderRole = """
+                                            [DynamoDBTable("ProviderRole")]
+                                            public sealed record ProviderRoleEntity
+                                            {
+                                                [DynamoDBHashKey]
+                                                public required Guid Id { get; init; }
 
+                                                public required string Name { get; init; }
+                                                
+                                                public required string Description { get; init; }
+                                                
+                                                public required Dictionary<string, object> Permission { get; init; }
+                                            }
+                                            """;
+        
+        
+        
         // +----------------------+--------+---------------------------+------------------+----------------+-------------------+
         // | CapabilityType       | Active | LastModifiedAt            | User             | Status         | Information       |
         // +----------------------+--------+---------------------------+------------------+----------------+-------------------+
@@ -438,7 +454,7 @@ namespace RunJit.Cli.Test.SystemTest
                                                         """;
 
         [DataTestMethod]
-        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln", "api/console", "CapabilityTypes", "User", CapabilityType)]
+        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln", "api/console", "ProviderRoles", "Name", ProviderRole)]
         public async Task Should_Add_New_Rest_Api_Into_Existing_Solution(string solutionFilePath,
                                                                          string basePath,
                                                                          string domainName,

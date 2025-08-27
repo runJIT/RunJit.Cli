@@ -133,6 +133,18 @@ namespace RunJit.Cli.Test.SystemTest
                                        public string HostService { get; init; } = string.Empty;
                                    }
                                    """;
+        
+        
+        private const string ApiKey = """
+                                   [DynamoDBTable("ApiKey")]
+                                   public record CapabilityApiKeyEntity
+                                   {
+                                       [DynamoDBHashKey]
+                                       public required string CapabilityId { get; init; }
+
+                                       public string Name { get; init; } = string.Empty;
+                                   }
+                                   """;
 
         private const string Capability = """
                                           [DynamoDBTable("Capability")]
@@ -454,7 +466,7 @@ namespace RunJit.Cli.Test.SystemTest
                                                         """;
 
         [DataTestMethod]
-        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln", "api/console", "ProviderRoles", "Name", ProviderRole)]
+        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln", "api/console", "CapabilityApiKeys", "Name", ApiKey)]
         public async Task Should_Add_New_Rest_Api_Into_Existing_Solution(string solutionFilePath,
                                                                          string basePath,
                                                                          string domainName,

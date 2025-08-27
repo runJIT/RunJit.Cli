@@ -47,6 +47,7 @@ namespace RunJit.Cli.Test.SystemTest
         [DataRow("/Users/z003m9sc/Documents/RiderProjects/PulseCloud/pulse-nexus/Pulse.Nexus.sln")]
         [DataRow(@"D:\Siemens\pulse-fieldingtool\Pulse.FieldingTool.sln")]
         [DataRow(@"D:\Siemens\siemens-data-cloud-backend-core\Sdc.Core.sln")]
+        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln")]
         public Task Generate_Client_Of_Existing_Solution_For(string solutionPath)
         {
             return Mediator.SendAsync(new GenerateClient(new FileInfo(solutionPath), false));

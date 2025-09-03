@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using AspNetCore.Simple.Sdk.Mediator;
 using Extensions.Pack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -326,10 +326,10 @@ namespace RunJit.Cli.Test.SystemTest
                                                                     string entityModel)
         {
             var targetDirectory = Path.Combine(Environment.CurrentDirectory, projectName);
-
+            targetDirectory = "/Users/z003m9sc/Documents/RiderProjects/siemens-data-cloud-backend-console";
             // 1. Create new solution and projects
-            var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
-
+            // var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
+            var solutionFileInfo = new FileInfo(Path.Combine(targetDirectory, "Sdc.Console.sln"));
             // 2. Add rest api
             await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, entityModel, queryPropertyName, domainName, basePath));
 

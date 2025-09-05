@@ -6,10 +6,5 @@
         {
             services.AddPatch$DomainName$Command(configuration);
         }
-
-        internal static void MapPatch(this IEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapPatch$DomainName$();
-        }
     }
 }

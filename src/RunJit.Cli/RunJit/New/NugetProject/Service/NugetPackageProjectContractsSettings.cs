@@ -47,7 +47,7 @@
 //            //        <Title>Siemens.AspNet.ErrorHandler</Title>
 //            //    </PropertyGroup>
 //            //    <ItemGroup>
-//            //        <PackageReference Include="Extensions.Pack" Version="6.0.6" />
+//            //        <PackageReference Include="Extensions.Pack" Version="6.0.7" />
 //            //        <PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
 //            //            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 //            //            <PrivateAssets>all</PrivateAssets>

@@ -4,9 +4,17 @@ using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class UpdateEndpoint
+    internal static class AddUpdateEndpointExtension
     {
-        internal static void MapUpdate$DomainName$(this IEndpointRouteBuilder endpoints)
+        internal static void AddUpdateEndpoint(this IServiceCollection services)
+        {
+            services.AddSingletonIfNotExists<IEndpoint, Update$DomainName$Endpoint>();
+        }
+    }
+
+    internal sealed class Update$DomainName$Endpoint : IEndpoint
+    {
+        public void Map(IEndpointRouteBuilder endpoints)
         {
             endpoints.MapPut("$DomainNamePluralLower$/{$IdUrlName$:guid}", HandleAsync)
                      .Produces<Update$DomainName$Response>()
@@ -23,7 +31,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .WithDescriptionFromFile("Description.txt")
                      .WithSummaryFromFile("Summary.txt")
                      .WithMetadata(new AllowedBodyMetaInfo(typeof(Create$DomainName$Request)));
-            
+
             static async Task<Update$DomainName$Response> HandleAsync(Update$DomainName$Request update$DomainName$Request,
                                                                  Guid $IdUrlName$,
                                                                  Update$DomainName$Command update$DomainName$Command,

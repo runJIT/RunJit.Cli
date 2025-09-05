@@ -160,16 +160,16 @@ namespace RunJit.Cli.New.MinimalApiProject
 
             // 6. Add required nuget packages into project
             // <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.405.29" />
-            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "AWSSDK.DynamoDBv2", "3.7.406.12").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "AWSSDK.DynamoDBv2", "4.0.6.1").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Asp.Versioning.Http", "8.1.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Asp.Versioning.Mvc.ApiExplorer", "8.1.0").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Amazon.Lambda.AspNetCoreServer.Hosting", "1.7.4").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Extensions.Pack", "6.0.6").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Microsoft.AspNetCore.Authentication.JwtBearer", "9.0.3").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Siemens.AspNet.MinimalApi.Sdk", "0.1.0-alpha.39").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Amazon.Lambda.AspNetCoreServer.Hosting", "1.9.0").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Extensions.Pack", "6.0.7").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Microsoft.AspNetCore.Authentication.JwtBearer", "9.0.8").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Siemens.AspNet.MinimalApi.Sdk", "0.1.0-alpha.275").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "AspNetCore.HealthChecks.UI", "9.0.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "AspNetCore.HealthChecks.UI.Client", "9.0.0").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Microsoft.Extensions.Diagnostics.HealthChecks", "9.0.3").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Microsoft.Extensions.Diagnostics.HealthChecks", "9.0.8").ConfigureAwait(false);
 
             // 7. Load csproj content to avoid multiple IO write actions to disk which cause io exceptions
             var xdocument = XDocument.Load(dotnetToolProject.FullName);

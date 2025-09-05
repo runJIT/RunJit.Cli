@@ -8,10 +8,5 @@ namespace $ProjectName$.Api.$DomainNamePlural$
         {
             services.Add$DomainNamePlural$V$Version$(configuration);
         }
-
-        internal static void Map$DomainNamePlural$(this IEndpointRouteBuilder endpoints)
-        {
-            endpoints.Map$DomainNamePlural$V$Version$();
-        }
     }
 }

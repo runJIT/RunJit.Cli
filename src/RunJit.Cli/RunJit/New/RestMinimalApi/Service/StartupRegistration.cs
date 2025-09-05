@@ -60,9 +60,9 @@ namespace RunJit.Cli.New.RestMinimalApi
                     var orgLines = addApiMethod.LineStatements.ToFlattenString(Environment.NewLine);
                     var flattenString = newLineStatements.ToFlattenString(Environment.NewLine);
 
-                    newSyntaxTree = newSyntaxTree.Replace(orgLines, flattenString);    
+                    newSyntaxTree = newSyntaxTree.Replace(orgLines, flattenString);
                 }
-                
+
             }
 
             var mapMethod = methods.FirstOrDefault(m => m.Name == "MapApi");
@@ -80,13 +80,13 @@ namespace RunJit.Cli.New.RestMinimalApi
                 }
             }
 
-            
+
             var newUsing = $"using {createRestApiInfos.ProjectName}.Api.{createRestApiInfos.DomainNamePlural};";
 
             if (newSyntaxTree.DoesNotContain(newUsing))
             {
                 var originalUsings = syntaxTree.Usings.Select(u => $"using {u.Value};").ToList();
-            
+
                 var newUsings = originalUsings.Concat(newUsing).Distinct().ToFlattenString(Environment.NewLine);
 
                 if (originalUsings.IsEmpty())
@@ -95,11 +95,11 @@ namespace RunJit.Cli.New.RestMinimalApi
                 }
                 else
                 {
-                    newSyntaxTree = newSyntaxTree.Replace(originalUsings.ToFlattenString(Environment.NewLine), newUsings);    
+                    newSyntaxTree = newSyntaxTree.Replace(originalUsings.ToFlattenString(Environment.NewLine), newUsings);
                 }
             }
-            
-            
+
+
             //internal static class Startup
             //{
             //    internal static void AddApi(this IServiceCollection __,
@@ -119,7 +119,7 @@ namespace RunJit.Cli.New.RestMinimalApi
             newSyntaxTree = newSyntaxTree.Replace("IServiceCollection __", "IServiceCollection services")
                                          .Replace("IConfiguration _", "IConfiguration configuration")
                                          .Replace("IEndpointRouteBuilder _", "IEndpointRouteBuilder endpoints");
-                                            
+
             await File.WriteAllTextAsync(startupFileInfo.FullName, newSyntaxTree).ConfigureAwait(false);
         }
     }

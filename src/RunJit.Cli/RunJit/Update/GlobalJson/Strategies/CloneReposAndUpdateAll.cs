@@ -38,7 +38,7 @@ namespace RunJit.Cli.Update.GlobalJson
         private const string GlobalJson = """
                                           {
                                             "sdk": {
-                                              "version": "9.0.203",
+                                              "version": "9.0.304",
                                               "rollForward": "disable"
                                             }
                                           }

@@ -2,6 +2,7 @@
 using Extensions.Pack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RunJit.Cli.Migrate;
 using RunJit.Cli.RunJit.Check;
 using RunJit.Cli.RunJit.Cleanup;
 using RunJit.Cli.RunJit.Decrypt;
@@ -32,6 +33,7 @@ namespace RunJit.Cli.RunJit
             services.AddNewCommandBuilder(configuration);
             services.AddCleanupCommandBuilder();
             services.AddLocalizeCommandBuilder();
+            services.AddMigrationCommandBuilder();
 
             services.AddSingletonIfNotExists<RunJitCommandBuilder>();
         }

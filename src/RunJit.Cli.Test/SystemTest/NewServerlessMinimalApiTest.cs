@@ -61,9 +61,9 @@ namespace RunJit.Cli.Test.SystemTest
                                                   {
                                                       [DynamoDBHashKey]
                                                       public Guid ProjectId { get; init; } = Guid.Empty;
-                                                  
+
                                                       public string Name { get; init; } = string.Empty;
-                                                  
+
                                                       public string Description { get; init; } = string.Empty;
                                                   }
                                                   """;
@@ -111,53 +111,57 @@ namespace RunJit.Cli.Test.SystemTest
             // 9. Publish
             // await DotNetTool.AssertRunAsync("dotnet", $@"pack {solutionFileInfo.FullName} -o D:\Nuget").ConfigureAwait(false);
         }
+    }
 
-        internal sealed record NewMinimalApiProject(string ProjectName,
-                                                    string basePath,
-                                                    string TargetDirectory = "",
-                                                    string ExpectedErrorMessage = "") : ICommand<FileInfo>;
+    internal sealed record NewMinimalApiProject(string ProjectName,
+                                            string basePath,
+                                            string TargetDirectory = "",
+                                            string ExpectedErrorMessage = "") : ICommand<FileInfo>;
 
-        internal sealed class NewMinimalApiProjectHandler : ICommandHandler<NewMinimalApiProject, FileInfo>
+    internal sealed class NewMinimalApiProjectHandler : ICommandHandler<NewMinimalApiProject, FileInfo>
+    {
+        public async Task<FileInfo> Handle(NewMinimalApiProject request,
+                                           CancellationToken cancellationToken)
         {
-            public async Task<FileInfo> Handle(NewMinimalApiProject request,
-                                               CancellationToken cancellationToken)
+            await using var sw = new StringWriter();
+            Console.SetOut(sw);
+
+            var strings = CollectConsoleParameters(request).ToArray();
+            var consoleCall = strings.Flatten(" ");
+            Console.WriteLine();
+            Console.WriteLine(consoleCall);
+            Debug.WriteLine(consoleCall);
+            var exitCode = await Program.Main(strings).ConfigureAwait(false);
+            var output = sw.ToString();
+
+            if (request.ExpectedErrorMessage.IsNotNullOrEmpty())
             {
-                await using var sw = new StringWriter();
-                Console.SetOut(sw);
-
-                var strings = CollectConsoleParameters(request).ToArray();
-                var consoleCall = strings.Flatten(" ");
-                Console.WriteLine();
-                Console.WriteLine(consoleCall);
-                Debug.WriteLine(consoleCall);
-                var exitCode = await Program.Main(strings).ConfigureAwait(false);
-                var output = sw.ToString();
-
-                if (request.ExpectedErrorMessage.IsNotNullOrEmpty())
-                {
-                    Assert.AreEqual(1, exitCode);
-                    Assert.IsTrue(output.Contains(request.ExpectedErrorMessage));
-                }
-                else
-                {
-                    Assert.AreEqual(0, exitCode, output);
-                }
-
-                // Last output must be the solution file
-                var solutionFile = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Last();
-
-                return new FileInfo(solutionFile);
+                Assert.AreEqual(1, exitCode);
+                Assert.IsTrue(output.Contains(request.ExpectedErrorMessage));
+            }
+            else
+            {
+                Assert.AreEqual(0, exitCode, output);
             }
 
-            private IEnumerable<string> CollectConsoleParameters(NewMinimalApiProject request)
+            // Last output must be the solution file
+            var solutionFile = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Last();
+
+            return new FileInfo(solutionFile);
+        }
+
+        private IEnumerable<string> CollectConsoleParameters(NewMinimalApiProject request)
+        {
+            yield return "runjit";
+            yield return "new";
+            yield return "minimal-api-serverless";
+            yield return "--project-name";
+            yield return request.ProjectName;
+            yield return "--base-path";
+            yield return request.basePath;
+
+            if (request.TargetDirectory.IsNotNullOrWhiteSpace())
             {
-                yield return "runjit";
-                yield return "new";
-                yield return "minimal-api-serverless";
-                yield return "--project-name";
-                yield return request.ProjectName;
-                yield return "--base-path";
-                yield return request.basePath;
                 yield return "--target-directory";
                 yield return request.TargetDirectory;
             }

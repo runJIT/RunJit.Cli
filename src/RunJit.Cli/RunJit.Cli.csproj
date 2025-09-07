@@ -38,34 +38,34 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="AspNetCore.Simple.MsTest.Sdk" Version="6.0.14" />
+        <PackageReference Include="AspNetCore.Simple.MsTest.Sdk" Version="6.1.9" />
         <PackageReference Include="AspNetCore.Simple.Sdk" Version="6.0.2" />
-        <PackageReference Include="AWSSDK.Translate" Version="3.7.400.123" />
+        <PackageReference Include="AWSSDK.Translate" Version="4.0.0.21" />
         <PackageReference Include="DotNetTool.Service" Version="0.3.0" />
-        <PackageReference Include="Extensions.Pack" Version="6.0.6" />
+        <PackageReference Include="Extensions.Pack" Version="6.0.7" />
         <PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0">
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="4.14.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MsBuild" Version="4.13.0" />
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.13.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.3" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
-        <PackageReference Include="NuGet.Versioning" Version="6.13.2" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MsBuild" Version="4.14.0" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.14.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.8" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.8" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.8" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.8" />
+        <PackageReference Include="NuGet.Versioning" Version="6.14.0" />
         <PackageReference Include="PluralizeService.Core" Version="1.2.21147.2" />
         <PackageReference Include="RunJit.Api.Client" Version="0.1.0-alpha.40" />
-        <PackageReference Include="SlackNet" Version="0.16.0" />
-        <PackageReference Include="Solution.Parser" Version="3.0.2" />
+        <PackageReference Include="SlackNet" Version="0.17.4" />
+        <PackageReference Include="Solution.Parser" Version="3.0.3" />
         <PackageReference Include="System.CommandLine" Version="0.3.0-alpha.20054.1" />
-        <PackageReference Include="System.Formats.Asn1" Version="9.0.3" />
-        <PackageReference Include="System.Text.Json" Version="9.0.3" />
+        <PackageReference Include="System.Formats.Asn1" Version="9.0.8" />
+        <PackageReference Include="System.Text.Json" Version="9.0.8" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="RunJit\Generate\DotNetTool\CodeGen\.DotNetTool.Test\RemoveDefaultTestClasses.cs" />

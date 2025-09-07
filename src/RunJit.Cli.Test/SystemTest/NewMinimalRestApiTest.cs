@@ -481,85 +481,85 @@ namespace RunJit.Cli.Test.SystemTest
             await Mediator.SendAsync(new NewMinimalRestApi(solutionFilePath, entityModel, queryPropertyName,
                                                            domainName, basePath));
         }
+    }
 
-        internal sealed record NewMinimalRestApi(string SolutionFileOrGitRepos,
-                                                 string DbEntityModel,
-                                                 string QueryProperty,
-                                                 string DomainName,
-                                                 string BasePath,
-                                                 string GitRepos = "",
-                                                 string WorkingDirectory = "",
-                                                 int Version = 1,
-                                                 string ExpectedErrorMessage = "") : ICommand<FileInfo>
+    internal sealed record NewMinimalRestApi(string SolutionFileOrGitRepos,
+                                              string DbEntityModel,
+                                              string QueryProperty,
+                                              string DomainName,
+                                              string BasePath,
+                                              string GitRepos = "",
+                                              string WorkingDirectory = "",
+                                              int Version = 1,
+                                              string ExpectedErrorMessage = "") : ICommand<FileInfo>
+    {
+    }
+
+    internal sealed class NewMinimalRestApiHandler : ICommandHandler<NewMinimalRestApi, FileInfo>
+    {
+        public async Task<FileInfo> Handle(NewMinimalRestApi request,
+                                           CancellationToken cancellationToken)
         {
+            await using var sw = new StringWriter();
+            Console.SetOut(sw);
+
+            var strings = CollectConsoleParameters(request).ToArray();
+            var consoleCall = strings.Flatten(" ");
+            Console.WriteLine();
+            Console.WriteLine(consoleCall);
+            Debug.WriteLine(consoleCall);
+            var exitCode = await Program.Main(strings).ConfigureAwait(false);
+            var output = sw.ToString();
+
+            if (request.ExpectedErrorMessage.IsNotNullOrEmpty())
+            {
+                Assert.AreEqual(1, exitCode);
+                Assert.IsTrue(output.Contains(request.ExpectedErrorMessage));
+            }
+            else
+            {
+                Assert.AreEqual(0, exitCode, output);
+            }
+
+            // Last output must be the solution file
+            var solutionFile = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Last();
+
+            return new FileInfo(solutionFile);
         }
 
-        internal sealed class NewMinimalRestApiHandler : ICommandHandler<NewMinimalRestApi, FileInfo>
+        private IEnumerable<string> CollectConsoleParameters(NewMinimalRestApi request)
         {
-            public async Task<FileInfo> Handle(NewMinimalRestApi request,
-                                               CancellationToken cancellationToken)
+            yield return "runjit";
+            yield return "new";
+            yield return "minimal-rest-api";
+
+            yield return request.SolutionFileOrGitRepos;
+
+            if (request.WorkingDirectory.IsNotNullOrWhiteSpace())
             {
-                await using var sw = new StringWriter();
-                Console.SetOut(sw);
-
-                var strings = CollectConsoleParameters(request).ToArray();
-                var consoleCall = strings.Flatten(" ");
-                Console.WriteLine();
-                Console.WriteLine(consoleCall);
-                Debug.WriteLine(consoleCall);
-                var exitCode = await Program.Main(strings).ConfigureAwait(false);
-                var output = sw.ToString();
-
-                if (request.ExpectedErrorMessage.IsNotNullOrEmpty())
-                {
-                    Assert.AreEqual(1, exitCode);
-                    Assert.IsTrue(output.Contains(request.ExpectedErrorMessage));
-                }
-                else
-                {
-                    Assert.AreEqual(0, exitCode, output);
-                }
-
-                // Last output must be the solution file
-                var solutionFile = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Last();
-
-                return new FileInfo(solutionFile);
+                yield return "--working-directory";
+                yield return request.WorkingDirectory;
             }
 
-            private IEnumerable<string> CollectConsoleParameters(NewMinimalRestApi request)
-            {
-                yield return "runjit";
-                yield return "new";
-                yield return "minimal-rest-api";
+            yield return "--base-path";
+            yield return request.BasePath;
 
-                yield return request.SolutionFileOrGitRepos;
+            yield return "--query-property";
+            yield return request.QueryProperty;
 
-                if (request.WorkingDirectory.IsNotNullOrWhiteSpace())
-                {
-                    yield return "--working-directory";
-                    yield return request.WorkingDirectory;
-                }
+            yield return "--version";
+            yield return request.Version.ToInvariantString();
 
-                yield return "--base-path";
-                yield return request.BasePath;
+            yield return "--domain-name";
+            yield return request.DomainName;
 
-                yield return "--query-property";
-                yield return request.QueryProperty;
+            yield return "--entity";
+            yield return request.DbEntityModel;
 
-                yield return "--version";
-                yield return request.Version.ToInvariantString();
-
-                yield return "--domain-name";
-                yield return request.DomainName;
-
-                yield return "--entity";
-                yield return request.DbEntityModel;
-
-                //yield return $""" "{request.DbEntityModel.Replace("\"", "\"\"")          // Escape double quotes
-                //                           .Replace(Environment.NewLine, " ") // Replace Windows newlines with space
-                //                           .Replace("\n", " ")                // Replace Unix newlines with space
-                //                           .Replace("\r", " ")}" """;          // Just in case
-            }
+            //yield return $""" "{request.DbEntityModel.Replace("\"", "\"\"")          // Escape double quotes
+            //                           .Replace(Environment.NewLine, " ") // Replace Windows newlines with space
+            //                           .Replace("\n", " ")                // Replace Unix newlines with space
+            //                           .Replace("\r", " ")}" """;          // Just in case
         }
     }
 }

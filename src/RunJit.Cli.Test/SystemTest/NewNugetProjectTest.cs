@@ -10,7 +10,7 @@ namespace RunJit.Cli.Test.SystemTest
     [TestClass]
     public class NewNugetProjectTest : GlobalSetup
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Siemens.AspNet.ErrorHandler")]
         [DataRow("Siemens.AspNet.MinimalApi.Sdk")]
         [DataRow("Siemens.AspNet.Sdk")]

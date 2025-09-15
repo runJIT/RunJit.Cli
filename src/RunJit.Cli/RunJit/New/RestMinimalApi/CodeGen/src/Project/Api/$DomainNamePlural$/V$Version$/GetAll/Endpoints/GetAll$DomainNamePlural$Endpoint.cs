@@ -12,7 +12,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         }
     }
 
-    internal sealed class MapGetAll$DomainNamePluralLower$Endpoint
+    internal sealed class MapGetAll$DomainNamePluralLower$Endpoint : IEndpoint
     {
         public void Map(IEndpointRouteBuilder endpoints)
         {

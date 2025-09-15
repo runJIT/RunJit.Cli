@@ -26,7 +26,7 @@ namespace RunJit.Cli.Test.SystemTest
             await Mediator.SendAsync(new CleanupCodeInSolution(solutionFile.FullName)).ConfigureAwait(false);
         }
 
-        [DataTestMethod]
+        [TestMethod]
 
         //[DataRow("codecommit::eu-central-1://pulse-datamanagement")]
         //[DataRow("codecommit::eu-central-1://pulse-survey")]
@@ -47,7 +47,7 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [Ignore]
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(@"D:\SoftwareOne\css-partners\SWO.CSS.OneSalesPartnerService.sln")]
         [DataRow(@"D:\AzureDevOps\SoftwareOne.Workshop.November.2023\RunJit\UserManagement\UserManagement.sln")]
         [DataRow(@"D:\AzureDevOps\AspNetCore.MinimalApi.Sdk\AspNetCore.MinimalApi.Sdk.sln")]
@@ -67,7 +67,7 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [Ignore]
-        [DataTestMethod]
+        [TestMethod]
         public Task Should_Update_Code_Rules_By_Cloning_First_A_Repo(string gitUrl)
         {
             // 1. Create new Web Api

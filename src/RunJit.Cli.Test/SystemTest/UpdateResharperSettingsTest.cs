@@ -25,7 +25,7 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [Ignore("Dev purpose only")]
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(@"D:\ResharperSettingsUpdate\pulse-core-service\pulse.core.service.sln")]
         public async Task Should_Update_A_Specific_Solution_With_New_Resharper_Settings_Tests(string solution)
         {

@@ -8,7 +8,7 @@ namespace RunJit.Cli.Test.Help
     [TestClass]
     public class HelpTest
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("runjit --help", "Help.Outputs.runjit-help.txt")]
         [DataRow("runjit generate --help", "Help.Outputs.runjit-generate-help.txt")]
         [DataRow("runjit generate rest-endpoint --help", "Help.Outputs.runjit-generate-rest-endpoint-help.txt")]

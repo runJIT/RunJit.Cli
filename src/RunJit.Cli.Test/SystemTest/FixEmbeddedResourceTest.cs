@@ -32,7 +32,7 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [Ignore("Dev only")]
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("codecommit::eu-central-1://pulse-datamanagement")] // Merged
         [DataRow("codecommit::eu-central-1://pulse-survey")] // Merged
         [DataRow("codecommit::eu-central-1://pulse-core-service")] // Merged
@@ -54,7 +54,7 @@ namespace RunJit.Cli.Test.SystemTest
             await Mediator.SendAsync(new FixEmbeddedResource(gitUrl, @"D:\EmbeddedResource")).ConfigureAwait(false);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(@"D:\GitHub\RunJit.Api\RunJit.Api.sln")]
         [DataRow(@"D:\Siemens\pulse-common\Pulse.Common.sln")]
         [DataRow(@"D:\Siemens\pulse-survey\PulseSurvey.sln")]

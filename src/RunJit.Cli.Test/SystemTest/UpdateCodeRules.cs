@@ -27,7 +27,7 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         // [Ignore]
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(@"D:\Siemens\pulse-database\Pulse.Database.sln")]
         [DataRow(@"D:\SoftwareOne\css-partners\SWO.CSS.OneSalesPartnerService.sln")]
         [DataRow(@"D:\AzureDevOps\SoftwareOne.Workshop.November.2023\RunJit\UserManagement\UserManagement.sln")]
@@ -50,7 +50,7 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [Ignore]
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(@"https://softwareone-ca@dev.azure.com/softwareone-ca/Sales%20and%20Marketing/_git/css-partners")]
         public Task Should_Update_Code_Rules_By_Cloning_First_A_Repo(string gitUrl)
         {

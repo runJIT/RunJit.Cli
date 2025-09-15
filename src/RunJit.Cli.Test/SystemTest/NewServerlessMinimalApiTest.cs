@@ -11,7 +11,7 @@ namespace RunJit.Cli.Test.SystemTest
     [TestClass]
     public class NewServerlessMinimalApiTest : GlobalSetup
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Siemens.Sdc", "api/core", "Sdc")]
         [DataRow("Siemens.Reporting", "api/reporting", "Reporting")]
         [DataRow("Pulse.FieldingTool", "api/fieldingtool", "FieldingTool")]
@@ -68,7 +68,7 @@ namespace RunJit.Cli.Test.SystemTest
                                                   }
                                                   """;
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Siemens.Sdc", "api/core", "Sdc")]
         [DataRow("Siemens.Reporting", "api/reporting", "Reporting")]
         [DataRow("Pulse.FieldingTool", "api/fieldingtool", "FieldingTool")]

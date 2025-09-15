@@ -1,9 +1,7 @@
 ﻿using System.Diagnostics;
 using AspNetCore.Simple.Sdk.Mediator;
 using Extensions.Pack;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RunJit.Cli.Test.Extensions;
-using static RunJit.Cli.Test.SystemTest.NewServerlessMinimalApiTest;
 
 namespace RunJit.Cli.Test.SystemTest
 {
@@ -42,6 +40,21 @@ namespace RunJit.Cli.Test.SystemTest
                                                       public string Description { get; init; } = string.Empty;
                                                   }
                                                   """;
+
+        private const string ParameterEntityModel = """
+                                               [DynamoDBTable("Parameter")]
+                                               public record ParameterEntity
+                                               {
+                                                   [DynamoDBHashKey]
+                                                   public Guid ParameterId { get; init; } = Guid.Empty;
+
+                                                   public required string Name { get; init; }
+
+                                                   public required bool IsSecret { get; init; }
+
+                                                   public ImmutableSortedDictionary<Stage, string> Values { get; init; } = ImmutableSortedDictionary<Stage, string>.Empty;
+                                               }
+                                               """;
 
         private const string UserEntityModel = """
                                                [DynamoDBTable("User")]
@@ -308,8 +321,7 @@ namespace RunJit.Cli.Test.SystemTest
                                           }
                                           """;
 
-        [DataTestMethod]
-
+        [TestMethod]
         //[DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
         //[DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Users", "Name", UserEntityModel)]
         [DataRow("Sdc.UserManagement", "api/usermanagement", "um",
@@ -337,7 +349,7 @@ namespace RunJit.Cli.Test.SystemTest
             // await DotNetTool.AssertRunAsync("dotnet", $"test {solutionFileInfo.FullName}").ConfigureAwait(false);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Sdc.Core", "api/core", "Core",
                     "Projects", "Name", ProjectEntityModel)]
         [DataRow("Sdc.UserManagement", "api/core", "um",
@@ -377,11 +389,9 @@ namespace RunJit.Cli.Test.SystemTest
 
         // S3TableBuckets und SageMakerUnifiedStudio
 
-        [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core",
-                    "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um",
-                    "Name")]
+        [TestMethod]
+        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
         public async Task Should_Be_Able_To_Create_Multiple_Domains(string projectName,
                                                                     string basePath,
                                                                     string toolName,
@@ -409,11 +419,9 @@ namespace RunJit.Cli.Test.SystemTest
             // await DotNetTool.AssertRunAsync("dotnet", $"test {solutionFileInfo.FullName}").ConfigureAwait(false);
         }
 
-        [DataTestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core",
-                    "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um",
-                    "Name")]
+        [TestMethod]
+        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
         public async Task Should_Be_Able_To_Create_Same_Domain_In_Different_Versions(string projectName,
                                                                                      string basePath,
                                                                                      string toolName,
@@ -468,9 +476,8 @@ namespace RunJit.Cli.Test.SystemTest
                                                         }
                                                         """;
 
-        [DataTestMethod]
-        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln", "api/console", "CapabilityApiKeys",
-                    "Name", ApiKey)]
+        [TestMethod]
+        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln", "api/console", "Parameters", "Name", ParameterEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_Existing_Solution(string solutionFilePath,
                                                                          string basePath,
                                                                          string domainName,

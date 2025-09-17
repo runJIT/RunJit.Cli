@@ -6,9 +6,17 @@ using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class PatchEndpoint
+    internal static class AddMapPatch$DomainName$Extension
     {
-        internal static void MapPatch$DomainName$(this IEndpointRouteBuilder endpoints)
+        internal static void AddMapPatch$DomainName$(this IServiceCollection services)
+        {
+            services.AddSingletonIfNotExists<IEndpoint, Patch$DomainName$Endpoint>();
+        }
+    }
+
+    internal sealed class Patch$DomainName$Endpoint : IEndpoint
+    {
+        public void Map(IEndpointRouteBuilder endpoints)
         {
             endpoints.MapPatch("$DomainNamePluralLower$/{$IdUrlName$:guid}", HandleAsync)
                      .Accepts<Patch$DomainName$Request>(MediaTypeNames.Application.Json, "Patch request schema for $DomainNameLower$")
@@ -26,7 +34,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .WithDescriptionFromFile("Description.txt")
                      .WithSummaryFromFile("Summary.txt")
                      .WithMetadata(new AllowedBodyMetaInfo(typeof(Create$DomainName$Request)));
-                
+
             static async Task<Patch$DomainName$Response> HandleAsync(JsonObject patchRequest,
                                                                      Patch$DomainName$Command patch$DomainName$Command,
                                                                      Guid $IdUrlName$,

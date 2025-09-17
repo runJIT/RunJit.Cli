@@ -35,12 +35,11 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         //[Ignore("Dev only")]
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(@"D:\AzureDevOps\AspNetCore.MinimalApi.Sdk\AspNetCore.MinimalApi.Sdk.sln")]
         [DataRow(@"D:\GitHub\RunJit.Api\RunJit.Api.sln")]
         [DataRow(@"D:\Siemens\pulse-core\PulseCore.sln")]
         [DataRow(@"D:\Siemens\pulse-flow\Pulse.Flow.sln")]
-        [DataRow(@"D:\AzureDevOps\AspNetCore.MinimalApi.Sdk\AspNetCore.MinimalApi.Sdk.sln")]
         [DataRow(@"D:\AzureDevOps\SoftwareOne.Workshop.November.2023\RunJit\UserManagement\UserManagement.sln")]
         [DataRow(@"D:\Siemens\pulse-sustainability\Pulse.Sustainability.sln")]
         [DataRow("/Users/z003m9sc/Documents/RiderProjects/SiemensGPT/siemensgpt-backend/SiemensGPT.sln")]

@@ -12,16 +12,5 @@
             serviceCollection.AddPatch(configuration);
             serviceCollection.AddUpdate(configuration);
         }
-
-        internal static void Map$DomainNamePlural$V$Version$(this IEndpointRouteBuilder endpointRouteBuilder)
-        {
-            endpointRouteBuilder.MapCreate();
-            endpointRouteBuilder.MapDeleteAll();
-            endpointRouteBuilder.MapDeleteById();
-            endpointRouteBuilder.MapGetAll();
-            endpointRouteBuilder.MapGetById();
-            endpointRouteBuilder.MapPatch();
-            endpointRouteBuilder.MapUpdate();
-        }
     }
 }

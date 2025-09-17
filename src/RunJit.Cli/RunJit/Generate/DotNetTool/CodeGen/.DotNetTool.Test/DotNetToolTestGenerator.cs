@@ -85,12 +85,12 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
             }
 
             // 6. Add required nuget packages into project
-            await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "AspNetCore.Simple.MsTest.Sdk", "6.0.14").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "AspNetCore.Simple.MsTest.Sdk", "6.1.9").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "DotNetTool.Service", "0.3.0").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "Microsoft.NET.Test.Sdk", "17.13.0").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "MSTest", "3.8.3").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "MSTest.TestAdapter", "3.8.3").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "MSTest.TestFramework", "3.8.3").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "Microsoft.NET.Test.Sdk", "17.14.1").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "MSTest", "3.10.4").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "MSTest.TestAdapter", "3.10.4").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "MSTest.TestFramework", "3.10.4").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "NSubstitute", "5.3.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotNetToolTestProjectFileInfo.FullName, "coverlet.collector", "6.0.4").ConfigureAwait(false);
 

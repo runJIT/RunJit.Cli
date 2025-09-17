@@ -121,7 +121,7 @@ namespace RunJit.Cli.Generate.DotNetTool
 
             // 6. Add required nuget packages into project
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "System.CommandLine", "0.3.0-alpha.20054.1").ConfigureAwait(false);
-            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Extensions.Pack", "6.0.6").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Extensions.Pack", "6.0.7").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "GitVersion.MsBuild", "5.12.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Microsoft.AspNetCore.Mvc.Core", "2.3.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "Microsoft.Extensions.Http", "9.0.3").ConfigureAwait(false);

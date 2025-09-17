@@ -38,7 +38,7 @@ namespace RunJit.Cli.New.RestMinimalApi
                                                                                                           entity,
                                                                                                           version,
                                                                                                           queryProperty,
-                                                                                                          domainName) => minimalApiProjectService.HandleAsync(new NewRestMinimalApiParameters(solutionFileOrGitRepos, 
+                                                                                                          domainName) => minimalApiProjectService.HandleAsync(new NewRestMinimalApiParameters(solutionFileOrGitRepos,
                                                                                                                                                                                               basePath,
                                                                                                                                                                                               workingDirectory,
                                                                                                                                                                                               entity, version, queryProperty,

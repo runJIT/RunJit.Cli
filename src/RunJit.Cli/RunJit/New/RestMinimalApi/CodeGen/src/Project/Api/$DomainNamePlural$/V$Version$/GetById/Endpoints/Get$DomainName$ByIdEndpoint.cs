@@ -4,11 +4,19 @@ using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class MapGet$DomainName$ByIdEndpoint
+    internal static class AddMapGet$DomainName$ByIdEndpointExtension
     {
-        internal static RouteHandlerBuilder MapGet$DomainName$ById(this IEndpointRouteBuilder endpoints)
+        internal static void AddMapGet$DomainName$ByIdEndpoint(this IServiceCollection services)
         {
-            return endpoints.MapGet("$DomainNamePluralLower$/{$IdUrlName$:guid}", HandleAsync)
+            services.AddSingletonIfNotExists<IEndpoint, MapGet$DomainName$ByIdEndpoint>();
+        }
+    }
+
+    internal sealed class MapGet$DomainName$ByIdEndpoint : IEndpoint
+    {
+        public void Map(IEndpointRouteBuilder endpoints)
+        {
+            endpoints.MapGet("$DomainNamePluralLower$/{$IdUrlName$:guid}", HandleAsync)
                             .Produces<Get$DomainName$ByIdResponse>()
                             .Produces<ProblemDetails>(StatusCodes.Status401Unauthorized)
                             .Produces<ProblemDetails>(StatusCodes.Status403Forbidden)
@@ -31,7 +39,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                 {
                     $IdPropertyName$ = $IdUrlName$
                 };
-                
+
                 var $DomainNameLower$ = await get$DomainName$ByIdQuery.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return new Get$DomainName$ByIdResponse($DomainNameLower$);

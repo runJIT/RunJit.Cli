@@ -4,9 +4,17 @@ using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
+    internal static class AddDelete$DomainNamePlural$EndpointExtension
+    {
+        internal static void AddDelete$DomainNamePlural$Endpoint(this IServiceCollection services)
+        {
+            services.AddSingletonIfNotExists<IEndpoint, Delete$DomainNamePlural$Endpoint>();
+        }
+    }
+
     internal static class Delete$DomainNamePlural$Endpoint
     {
-        internal static void MapDelete$DomainNamePlural$(this IEndpointRouteBuilder endpoints)
+        public void Map(IEndpointRouteBuilder endpoints)
         {
             endpoints.MapDelete("$DomainNamePluralLower$", HandleAsync)
                      .Produces(StatusCodes.Status204NoContent)
@@ -32,7 +40,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                 {
                     $QueryPropertyName$ = $QueryPropertyNameLower$
                 };
-                
+
                 await deleteAll$DomainNamePlural$Command.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return Results.NoContent();

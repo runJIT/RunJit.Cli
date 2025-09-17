@@ -24,7 +24,7 @@ namespace RunJit.Cli.Test.SystemTest
             await Mediator.SendAsync(new UpdateGlobalJson(solutionFile.FullName, 9)).ConfigureAwait(false);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("codecommit::eu-central-1://pulse-datamanagement")]
         [DataRow("codecommit::eu-central-1://pulse-survey")]
         [DataRow("codecommit::eu-central-1://pulse-core-service")]

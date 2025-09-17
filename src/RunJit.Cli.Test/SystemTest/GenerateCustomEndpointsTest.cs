@@ -16,7 +16,7 @@ namespace RunJit.Cli.Test.SystemTest
     {
         private const string BasePath = "api/users";
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(@"D:\AzureDevOps\SoftwareOne.Workshop.November.2023\RunJit\Templates\AddUser.json")]
         public async Task Generate_Custom_Endpoints(string template)
         {

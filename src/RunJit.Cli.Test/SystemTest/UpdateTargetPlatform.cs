@@ -9,7 +9,7 @@ namespace RunJit.Cli.Test.SystemTest
     [TestClass]
     public class UpdateTargetPlatformTest : GlobalSetup
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("codecommit::eu-central-1://pulse-datamanagement")]
         [DataRow("codecommit::eu-central-1://pulse-survey")]
         [DataRow("codecommit::eu-central-1://pulse-core-service")]

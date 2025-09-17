@@ -7,10 +7,5 @@
         {
             // Register your api domains here
         }
-
-        internal static void MapApi(this IEndpointRouteBuilder _)
-        {
-            // Map your endpoints here
-        }
     }
 }

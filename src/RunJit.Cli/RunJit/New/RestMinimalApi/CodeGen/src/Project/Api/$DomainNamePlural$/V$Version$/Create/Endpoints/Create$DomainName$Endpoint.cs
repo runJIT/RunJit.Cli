@@ -4,9 +4,18 @@ using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class Create$DomainName$Endpoint
+
+    internal static class AddCreate$DomainName$EndpointExtension
     {
-        internal static void MapCreate$DomainName$(this IEndpointRouteBuilder endpoints)
+        internal static void AddCreate$DomainName$Endpoint(this IServiceCollection services)
+        {
+            services.AddSingletonIfNotExists<IEndpoint, Create$DomainName$Endpoint>();
+        }
+    }
+
+    internal sealed class Create$DomainName$Endpoint : IEndpoint
+    {
+        public void Map(IEndpointRouteBuilder endpoints)
         {
             endpoints.MapPost("$DomainNamePluralLower$", HandleAsync)
                      .Produces<Create$DomainName$Response>()
@@ -25,7 +34,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                      .WithDescriptionFromFile("Description.txt")
                      .WithSummaryFromFile("Summary.txt")
                      .WithMetadata(new AllowedBodyMetaInfo(typeof(Create$DomainName$Request)));
-                
+
             static async Task<Create$DomainName$Response> HandleAsync(Create$DomainName$Request create$DomainName$Request,
                                                                  Create$DomainName$Command create$DomainName$Command,
                                                                  CancellationToken cancellationToken = default)

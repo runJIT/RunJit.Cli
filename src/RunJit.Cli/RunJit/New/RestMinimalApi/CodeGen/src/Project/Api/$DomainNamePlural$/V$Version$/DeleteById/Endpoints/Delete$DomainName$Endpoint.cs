@@ -5,9 +5,17 @@ using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class Delete$DomainName$Endpoint
+    internal static class AddDelete$DomainName$EndpointExtension
     {
-        internal static void MapDelete$DomainName$(this IEndpointRouteBuilder endpoints)
+        internal static void AddDelete$DomainName$Endpoint(this IServiceCollection services)
+        {
+            services.AddSingletonIfNotExists<IEndpoint, Delete$DomainName$Endpoint>();
+        }
+    }
+
+    internal sealed class Delete$DomainName$Endpoint : IEndpoint
+    {
+        public void Map(IEndpointRouteBuilder endpoints)
         {
             endpoints.MapDelete("$DomainNamePluralLower$/{$IdUrlName$:guid}", HandleAsync)
                      .Produces(StatusCodes.Status204NoContent)
@@ -33,7 +41,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                 {
                     $IdPropertyName$ = $IdUrlName$
                 };
-                
+
                 await delete$DomainName$Command.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return Results.NoContent();

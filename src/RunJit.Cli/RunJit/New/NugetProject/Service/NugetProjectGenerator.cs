@@ -73,7 +73,7 @@ namespace RunJit.Cli.New.NugetProject
             }
 
             // 6. Add required nuget packages into project
-            await dotNet.AddNugetPackageAsync(libraryProjectFileInfo.FullName, "Extensions.Pack", "6.0.6").ConfigureAwait(false);
+            await dotNet.AddNugetPackageAsync(libraryProjectFileInfo.FullName, "Extensions.Pack", "6.0.7").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(libraryProjectFileInfo.FullName, "GitVersion.MsBuild", "5.12.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(libraryProjectFileInfo.FullName, "Microsoft.Extensions.DependencyInjection", "9.0.3").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(libraryProjectFileInfo.FullName, "Microsoft.Extensions.Configuration", "9.0.3").ConfigureAwait(false);

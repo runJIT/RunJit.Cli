@@ -6,10 +6,5 @@
         {
             services.AddDelete$DomainName$Command(configuration);
         }
-
-        internal static void MapDeleteById(this IEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapDelete$DomainName$();
-        }
     }
 }

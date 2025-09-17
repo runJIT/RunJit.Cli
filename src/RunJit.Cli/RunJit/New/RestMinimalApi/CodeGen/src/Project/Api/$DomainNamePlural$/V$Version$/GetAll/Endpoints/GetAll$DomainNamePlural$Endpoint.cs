@@ -4,9 +4,17 @@ using Siemens.AspNet.MinimalApi.Sdk;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class MapGetAll$DomainNamePluralLower$Endpoint
+    internal static class AddMapGetAll$DomainNamePluralLower$EndpointExtension
     {
-        internal static RouteHandlerBuilder MapGetAll$DomainNamePlural$(this IEndpointRouteBuilder endpoints)
+        internal static void AddMapGetAll$DomainNamePluralLower$Endpoint(this IServiceCollection services)
+        {
+            services.AddSingletonIfNotExists<IEndpoint, MapGetAll$DomainNamePluralLower$Endpoint>();
+        }
+    }
+
+    internal sealed class MapGetAll$DomainNamePluralLower$Endpoint : IEndpoint
+    {
+        public void Map(IEndpointRouteBuilder endpoints)
         {
             return endpoints.MapGet("$DomainNamePluralLower$", HandleAsync)
                             .Produces<GetAll$DomainNamePlural$Response>()
@@ -23,7 +31,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                             .WithDescriptionFromFile("Description.txt")
                             .WithSummaryFromFile("Summary.txt")
                             .WithMetadata(new AllowedQueryParameterMetaInfo("$QueryPropertyNameLower$"));
-                
+
             static async Task<GetAll$DomainNamePlural$Response> HandleAsync(GetAll$DomainNamePlural$Query getAll$DomainNamePlural$Query,
                                                                             [FromQuery] string? $QueryPropertyNameLower$ = null,
                                                                             CancellationToken cancellationToken = default)
@@ -32,7 +40,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                 {
                     $QueryPropertyName$ = $QueryPropertyNameLower$
                 };
-                
+
                 var $DomainNamePluralLower$ = await getAll$DomainNamePlural$Query.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return new GetAll$DomainNamePlural$Response($DomainNamePluralLower$);

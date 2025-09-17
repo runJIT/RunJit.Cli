@@ -11,12 +11,6 @@ webApi.RegisterServices = (service, config) =>
     service.AddApi(config);
 };
 
-webApi.MapEndpoints = endpoints =>
-{
-    // Map api domain endpoints
-    endpoints.MapApi();
-};
-
 webApi.Run(args);
 
 // This is important that you are able to use

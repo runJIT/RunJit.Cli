@@ -1,11 +1,8 @@
 ﻿using System.Collections.Immutable;
-using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using Extensions.Pack;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.DependencyInjection;
-using RunJit.Cli.Generate.Client;
 using RunJit.Cli.RunJit.Generate.Client;
 using RunJit.Cli.Services.Endpoints;
 using Solution.Parser.CSharp;
@@ -68,7 +65,7 @@ namespace RunJit.Cli.Services
 
     //    public required RequestType? RequestType { get; init; } --> parameter body which is not a native .Net type :)
 
-    //    public required ResponseType ResponseType { get; init; } --> return Results.Ok(getAllToDosQuery.Execute()); 
+    //    public required ResponseType ResponseType { get; init; } --> return Results.Ok(getAllToDosQuery.Execute());
 
     //    public required IImmutableList<ProduceResponseTypes> ProduceResponseTypes { get; init; }  --> .Produces(400, typeof(ProblemDetails))
 
@@ -110,7 +107,7 @@ namespace RunJit.Cli.Services
                     Models = ImmutableList.Create(new DeclarationBase("HealthStatusResponse",
                                                                                            "HealthStatusResponse",
                                                                                            """
-                                                                                           public sealed record HealthStatusResponse(string Status, 
+                                                                                           public sealed record HealthStatusResponse(string Status,
                                                                                                                                      string TotalDuration,
                                                                                                                                      Dictionary<string, object> Entries);
                                                                                            """,
@@ -449,7 +446,7 @@ namespace RunJit.Cli.Services
                     {
                         continue;
                     }
-                    
+
                     var paramName = param.Identifier.Text;
 
                     // Check for explicit [FromUrl] attribute.
@@ -457,7 +454,7 @@ namespace RunJit.Cli.Services
                                           .SelectMany(attrList => attrList.Attributes)
                                           .Any(attr => attr.Name.ToString().Contains("FromUrl"));
 
-                    
+
                     // If parameter name matches one extracted from the URL or is marked with [FromUrl], classify it as URL.
                     if (hasFromUrl || urlParameters.Contains(paramName).IsFalse())
                     {

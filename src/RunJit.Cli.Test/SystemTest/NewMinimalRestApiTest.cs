@@ -40,6 +40,14 @@ namespace RunJit.Cli.Test.SystemTest
                                                       public string Description { get; init; } = string.Empty;
                                                   }
                                                   """;
+        
+        
+        private const string PaymentInformationEntityModel = """
+                                                  [DynamoDBTable("PaymentInformation")]
+                                                  public record PaymentInformationEntity
+                                                  {
+                                                      [DynamoDBHashKey]
+                                                      public Guid ProjectId { get; init; } = Guid.Empty;
 
         private const string ParameterEntityModel = """
                                                [DynamoDBTable("Parameter")]
@@ -361,8 +369,9 @@ namespace RunJit.Cli.Test.SystemTest
                                                                           string queryPropertyName,
                                                                           string entityModel)
         {
-            var targetDirectory = Path.Combine(Environment.CurrentDirectory, projectName);
-
+            var targetDirectory = "/Users/z003m9sc/Documents/RiderProjects/siemens-data-cloud-backend-core/Sdc.Core.sln";
+            var x = Path.Combine(Environment.CurrentDirectory, projectName);
+            Console.WriteLine(x);
             // 1. Create new solution and projects
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 

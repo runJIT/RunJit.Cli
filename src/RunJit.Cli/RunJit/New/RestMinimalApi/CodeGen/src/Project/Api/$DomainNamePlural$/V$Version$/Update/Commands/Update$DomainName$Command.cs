@@ -27,7 +27,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                                                   CancellationToken cancellationToken)
         {
             // 1. Validate request
-            await requestValidator.ValidateAsync(update$DomainName$Request).ConfigureAwait(false);
+            requestValidator.Validate(update$DomainName$Request);
 
             // 2. Map the request data to the internal db data (AntiCorruptionLayer ACL)
             var $DomainNameLower$Entity = requestMapper.MapFrom(update$DomainName$Request, id);

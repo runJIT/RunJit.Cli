@@ -23,7 +23,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                                          CancellationToken cancellationToken)
         {
             // 1. Validate the delete request
-            await requestValidator.ValidateAsync(request).ConfigureAwait(false);
+            requestValidator.Validate(request);
                 
             // 2. Create dynamo db context
             using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();

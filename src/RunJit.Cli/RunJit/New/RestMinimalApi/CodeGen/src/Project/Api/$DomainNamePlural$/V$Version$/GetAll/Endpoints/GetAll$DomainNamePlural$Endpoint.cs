@@ -16,7 +16,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
     {
         public void Map(IEndpointRouteBuilder endpoints)
         {
-            return endpoints.MapGet("$DomainNamePluralLower$", HandleAsync)
+            endpoints.MapGet("$DomainNamePluralLower$", HandleAsync)
                             .Produces<GetAll$DomainNamePlural$Response>()
                             .Produces<ProblemDetails>(StatusCodes.Status401Unauthorized)
                             .Produces<ProblemDetails>(StatusCodes.Status403Forbidden)

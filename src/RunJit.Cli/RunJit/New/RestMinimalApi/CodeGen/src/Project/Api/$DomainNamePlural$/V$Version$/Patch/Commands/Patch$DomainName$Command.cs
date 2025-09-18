@@ -59,7 +59,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             JsonConvert.PopulateObject(patchRequest.ToString(), patch$DomainName$Request);
 
             // 5. We have to validate the applied changes
-            await patch$DomainName$RequestValidator.ValidateAsync(patchRequest, patch$DomainName$Request, $DomainNameLower$Id).ConfigureAwait(false);
+            patch$DomainName$RequestValidator.Validate(patchRequest, patch$DomainName$Request, $DomainNameLower$Id);
 
             // 6. Map the request to the DB entity
             var patched$DomainName$ = patch$DomainName$RequestMapper.MapFrom(patch$DomainName$Request, $DomainNameLower$Id);

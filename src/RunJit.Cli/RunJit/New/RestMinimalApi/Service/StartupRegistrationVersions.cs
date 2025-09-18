@@ -27,11 +27,6 @@ namespace RunJit.Cli.New.RestMinimalApi
                                                 {
                                                     $ServiceRegistrations$
                                                 }
-                                        
-                                                internal static void Map$DomainNamePlural$(this IEndpointRouteBuilder endpoints)
-                                                {
-                                                    $EndpointMappings$
-                                                }
                                             }
                                         }
                                         """;

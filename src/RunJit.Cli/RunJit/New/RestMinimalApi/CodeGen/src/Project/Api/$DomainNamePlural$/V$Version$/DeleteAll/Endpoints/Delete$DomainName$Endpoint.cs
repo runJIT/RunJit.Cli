@@ -12,7 +12,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         }
     }
 
-    internal static class Delete$DomainNamePlural$Endpoint
+    internal class Delete$DomainNamePlural$Endpoint : IEndpoint
     {
         public void Map(IEndpointRouteBuilder endpoints)
         {

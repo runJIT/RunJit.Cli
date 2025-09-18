@@ -25,7 +25,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         internal async Task<$DomainName$> ExecuteAsync(Get$DomainName$ByIdRequest request,
                                                              CancellationToken cancellationToken)
         {
-            await requestValidator.ValidateAsync(request).ConfigureAwait(false);
+            requestValidator.Validate(request);
                 
             using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();
 

@@ -40,29 +40,6 @@ namespace RunJit.Cli.Test.SystemTest
                                                       public string Description { get; init; } = string.Empty;
                                                   }
                                                   """;
-        
-        
-        private const string PaymentInformationEntityModel = """
-                                                  [DynamoDBTable("PaymentInformation")]
-                                                  public record PaymentInformationEntity
-                                                  {
-                                                      [DynamoDBHashKey]
-                                                      public Guid ProjectId { get; init; } = Guid.Empty;
-
-        private const string ParameterEntityModel = """
-                                               [DynamoDBTable("Parameter")]
-                                               public record ParameterEntity
-                                               {
-                                                   [DynamoDBHashKey]
-                                                   public Guid ParameterId { get; init; } = Guid.Empty;
-
-                                                   public required string Name { get; init; }
-
-                                                   public required bool IsSecret { get; init; }
-
-                                                   public ImmutableSortedDictionary<Stage, string> Values { get; init; } = ImmutableSortedDictionary<Stage, string>.Empty;
-                                               }
-                                               """;
 
         private const string UserEntityModel = """
                                                [DynamoDBTable("User")]
@@ -485,8 +462,24 @@ namespace RunJit.Cli.Test.SystemTest
                                                         }
                                                         """;
 
+        // 1. Define the entity model you want to use for your rest api
+        private const string ParameterEntityModel = """
+                                                    [DynamoDBTable("Parameter")]
+                                                    public record ParameterEntity
+                                                    {
+                                                        [DynamoDBHashKey]
+                                                        public Guid ParameterId { get; init; } = Guid.Empty;
+
+                                                        public required string Name { get; init; }
+
+                                                        public required bool IsSecret { get; init; }
+
+                                                        public ImmutableSortedDictionary<Stage, string> Values { get; init; } = ImmutableSortedDictionary<Stage, string>.Empty;
+                                                    }
+                                                    """;
+        // 2. the test executes the cli commands to add a new rest api into an existing solution
         [TestMethod]
-        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln", "api/console", "Parameters", "Name", ParameterEntityModel)]
+        [DataRow(@"/Users/z003m9sc/Documents/RiderProjects/siemens-data-cloud-backend-console/Sdc.Console.sln", "api/console", "Parameters", "Name", ParameterEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_Existing_Solution(string solutionFilePath,
                                                                          string basePath,
                                                                          string domainName,

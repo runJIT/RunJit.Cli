@@ -198,7 +198,7 @@ Sample:    {statement.Replace($"{nameof(Task)}.{nameof(Task.WaitAll)}", $"await 
                           @$"Never use blocking Task.WaitAll operations, use Task.WhenAll instead.. Findings: '{blockingOperation.Count()}': {Environment.NewLine}{blockingOperation.Select(error => error.Error).Flatten(Environment.NewLine)}{Environment.NewLine}");
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(".Result;")]
         [DataRow(".Result.")]
         [DataRow(".Wait()")]

@@ -24,20 +24,21 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                                          CancellationToken cancellationToken)
         {
             // 1. Validate the delete request
-            await validator.ValidateAsync(request).ConfigureAwait(false);
+            validator.Validate(request);
                 
             // 2. Setup scan configuration to delete all matching items
-            var scanConfiguration = new ScanOperationConfig();
+            var filters = new List<ScanCondition>();
+
             if (request.$QueryPropertyName$.IsNotNullOrWhiteSpace())
             {
-                scanConfiguration.Filter.AddCondition(nameof(request.$QueryPropertyName$), ScanOperator.Equal, request.$QueryPropertyName$);    
+                filters.Add(new ScanCondition(nameof(request.$QueryPropertyName$), ScanOperator.Equal, request.$QueryPropertyName$));
             }
             
             // 2. Create dynamo db context
             using var dbContext = dynamoDbClientFactory.CreateTenantSpecific();
 
             // 3. Delete all projects or those which are matching the filter criteria
-            await dbContext.DeleteByScanAsync<$DomainName$Entity>(scanConfiguration, cancellationToken).ConfigureAwait(false);
+            await dbContext.DeleteByScanAsync<$DomainName$Entity>(filters.ToImmutableList(), cancellationToken).ConfigureAwait(false);
         }
     }
 }

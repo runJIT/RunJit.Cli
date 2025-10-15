@@ -1,4 +1,4 @@
-﻿using Extensions.Pack;
+using Extensions.Pack;
 using Amazon.DynamoDBv2.DocumentModel;
 using $ProjectName$.Database.$DomainNamePlural$;
 using Siemens.AspNet.MinimalApi.Sdk.Aws.DynamoDb;

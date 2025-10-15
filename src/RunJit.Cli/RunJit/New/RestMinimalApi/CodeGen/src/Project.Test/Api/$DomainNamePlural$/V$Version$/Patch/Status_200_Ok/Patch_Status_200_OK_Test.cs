@@ -17,7 +17,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
             return CleanupAsync();
         }
     
-        [DataTestMethod]
+        [TestMethod]
         [DynamicRequestLocator]
         public async Task Should_Be_Able_To_Patch_A_$DomainName$(string useCase)
         {

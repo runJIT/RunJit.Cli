@@ -1,4 +1,4 @@
-﻿using Extensions.Pack;
+using Extensions.Pack;
 using Siemens.AspNet.MinimalApi.Sdk.Aws.DynamoDb;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$

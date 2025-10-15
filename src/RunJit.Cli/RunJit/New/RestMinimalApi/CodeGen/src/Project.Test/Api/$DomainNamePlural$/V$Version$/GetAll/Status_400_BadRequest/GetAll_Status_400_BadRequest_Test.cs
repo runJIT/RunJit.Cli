@@ -27,7 +27,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
             return CleanupAsync();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("", "Title_Is_Empty.json")]
         [DataRow(" ", "Title_Is_Whitespace.json")]
         public async Task Should_Not_Be_Able_Get_All_$DomainNamePlural$_If_Request_Is_Invalid(string? title,

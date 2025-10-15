@@ -8,8 +8,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddMapPatch$DomainName$Extension
     {
-        internal static void AddMapPatch$DomainName$(this IServiceCollection services)
+        internal static void AddMapPatch$DomainName$(this IServiceCollection services, 
+                                                    IConfiguration configuration)
         {
+            services.Addpatch$DomainName$Command(configuation);
+
             services.AddSingletonIfNotExists<IEndpoint, Patch$DomainName$Endpoint>();
         }
     }

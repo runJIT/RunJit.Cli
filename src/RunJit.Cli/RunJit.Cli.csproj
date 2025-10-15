@@ -384,6 +384,7 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\..\RunJit.Api\src\RunJit.Api.Client\RunJit.Api.Client.csproj" />
+        <ProjectReference Include="..\RunJit.Cli.CodeRules\RunJit.Cli.CodeRules.csproj" />
     </ItemGroup>
     <ItemGroup>
         <EditorConfigFiles Remove="D:\GitHub\RunJit.Cli\src\RunJit.Cli\RunJit\New\MinimalApiProject\CodeGen\.editorconfig" />

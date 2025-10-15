@@ -10,7 +10,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
     {
         private static readonly string Unique$DomainName$Name = GetUniqueRunnerName();
         
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("devil=TRUNCATE YourTable", "SqlInjection_01.json")] // only one query param invalid
         [DataRow("devil=TRUNCATE YourTable&god=RESTORE YourTable", "SqlInjection_02.json")] // two query param invalid
         [DataRow("title=$Unique$DomainName$Name$&devil=TRUNCATE YourTable", "SqlInjection_03.json")] // one valid query param invalid

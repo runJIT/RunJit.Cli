@@ -7,8 +7,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 
     internal static class AddCreate$DomainName$EndpointExtension
     {
-        internal static void AddCreate$DomainName$Endpoint(this IServiceCollection services)
+        internal static void AddCreate$DomainName$Endpoint(this IServiceCollection services,
+                                                           IConfiguration configuration)
         {
+            services.AddCreate$DomainName$Command(configuration);
+
             services.AddSingletonIfNotExists<IEndpoint, Create$DomainName$Endpoint>();
         }
     }

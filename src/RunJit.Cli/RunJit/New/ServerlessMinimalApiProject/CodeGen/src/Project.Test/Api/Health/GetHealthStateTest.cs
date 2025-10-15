@@ -7,14 +7,14 @@ namespace $ProjectName$.Test.Api.Health
     [TestCategory("Health")]
     public class GetHealthStateTest : ApiTestBase
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("$BasePath$/health")]
         public Task Should_Return_Healthy_State_Simple_Ok_Check(string route)
         {
             return Client.AssertGetAsync(route);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("$BasePath$/health")]
         public Task Should_Return_Healthy_State(string route)
         {

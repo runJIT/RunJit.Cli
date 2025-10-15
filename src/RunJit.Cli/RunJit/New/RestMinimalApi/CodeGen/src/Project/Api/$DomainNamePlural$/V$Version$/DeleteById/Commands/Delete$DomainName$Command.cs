@@ -7,7 +7,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
     internal static class AddDelete$DomainName$CommandExtension
     {
         internal static void AddDelete$DomainName$Command(this IServiceCollection services,
-                                                                IConfiguration configuration)
+                                                          IConfiguration configuration)
         {
             services.AddAmazonDynamoDbClientFactory(configuration);
             services.AddDelete$DomainName$ByIdRequestValidator();

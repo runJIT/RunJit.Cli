@@ -6,8 +6,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddUpdateEndpointExtension
     {
-        internal static void AddUpdateEndpoint(this IServiceCollection services)
+        internal static void AddUpdateEndpoint(this IServiceCollection services,
+                                               IConfiguration configuration)
         {
+            services.AddUpdate$DomainName$Command(configuation);
+
             services.AddSingletonIfNotExists<IEndpoint, Update$DomainName$Endpoint>();
         }
     }

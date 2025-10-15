@@ -10,7 +10,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
     {
         private static readonly string Unique$DomainName$Name = GetUniqueRunnerName();
         
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("devil=TRUNCATE YourTable", "SqlInjection_01.json")] // only one query param invalid
         [DataRow("devil=TRUNCATE YourTable&god=RESTORE YourTable", "SqlInjection_02.json")] // two query param invalid
         public Task Should_Not_Be_Able_Delete_All_With_Non_Existing_Query_Parameters(string queryParams,

@@ -18,7 +18,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
             return CleanupAsync();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         public async Task Should_Be_Able_Delete_$DomainNamePlural$_By_Id()
         {
             // 1. Get all first by $DomainNameLower$ name to go sure already existing data not exists

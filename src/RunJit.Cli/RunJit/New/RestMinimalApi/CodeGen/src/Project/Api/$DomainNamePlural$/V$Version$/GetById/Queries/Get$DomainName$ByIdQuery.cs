@@ -1,4 +1,4 @@
-﻿using Extensions.Pack;
+using Extensions.Pack;
 using $ProjectName$.Database.$DomainNamePlural$;
 using Siemens.AspNet.ErrorHandling.Contracts;
 using Siemens.AspNet.MinimalApi.Sdk.Aws.DynamoDb;

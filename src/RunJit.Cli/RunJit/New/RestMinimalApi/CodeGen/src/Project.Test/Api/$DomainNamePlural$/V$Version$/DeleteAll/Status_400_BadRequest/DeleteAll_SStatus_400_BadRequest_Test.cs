@@ -16,7 +16,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
             return CleanupAsync();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("", "Title_Is_Empty.json")]
         [DataRow(null, "Title_Is_Null.json")]
         [DataRow(" ", "Title_Is_Whitespace.json")]

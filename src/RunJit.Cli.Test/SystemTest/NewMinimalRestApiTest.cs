@@ -41,6 +41,38 @@ namespace RunJit.Cli.Test.SystemTest
                                                   }
                                                   """;
 
+        private const string ComplianceEntityModel = """
+                                                     [DynamoDBTable("Compliance")]
+                                                     internal sealed record ComplianceEntity
+                                                     {
+                                                         [DynamoDBHashKey]
+                                                         public required string ProjectId { get; init; }
+                                                         public string? MyItApplicationId  { get; set; }
+                                                         public string? AcpId  { get; set; }
+                                                         public string? AcpLevel { get; set; }
+                                                         public bool? AcpProtectionConceptSignoffConfirmation { get; set; }
+                                                         public string? ItComplianceSelfRelevanceCheckAssessmentId { get; set; }
+                                                         public string? ItComplianceSelfRelevanceCheckAsecoId { get; set; }
+                                                         public bool? PersonalDataProcessingConfirmation { get; set; }
+                                                         public bool? PersonalDataCdpNotificationId { get; set; }
+                                                     }
+                                                     """;
+
+        private const string ParameterEntityModel = """
+                                                    [DynamoDBTable("Parameter")]
+                                                    public record ParameterEntity
+                                                    {
+                                                        [DynamoDBHashKey]
+                                                        public Guid ParameterId { get; init; } = Guid.Empty;
+
+                                                        public required string Name { get; init; }
+
+                                                        public required bool IsSecret { get; init; }
+
+                                                        public ImmutableSortedDictionary<Stage, string> Values { get; init; } = ImmutableSortedDictionary<Stage, string>.Empty;
+                                                    }
+                                                    """;
+
         private const string UserEntityModel = """
                                                [DynamoDBTable("User")]
                                                public record UserEntity
@@ -307,10 +339,11 @@ namespace RunJit.Cli.Test.SystemTest
                                           """;
 
         [TestMethod]
+
         //[DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
         //[DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Users", "Name", UserEntityModel)]
-        [DataRow("Sdc.UserManagement", "api/usermanagement", "um",
-                    "Users", "Email", UserEntity)]
+        [DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Users", "Email", UserEntity)]
+        [DataRow("Sdc.Console", "api/console", "sdc-console", "Compliances", "MyItApplicationId", ComplianceEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_New_Solution(string projectName,
                                                                     string basePath,
                                                                     string toolName,
@@ -335,10 +368,8 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [TestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core",
-                    "Projects", "Name", ProjectEntityModel)]
-        [DataRow("Sdc.UserManagement", "api/core", "um",
-                    "Users", "Name", UserEntityModel)]
+        [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
+        [DataRow("Sdc.UserManagement", "api/core", "um", "Users", "Name", UserEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_Solution_From_File(string projectName,
                                                                           string basePath,
                                                                           string toolName,
@@ -376,8 +407,10 @@ namespace RunJit.Cli.Test.SystemTest
         // S3TableBuckets und SageMakerUnifiedStudio
 
         [TestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
+        [DataRow("Sdc.Core", "api/core", "Core",
+                    "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um",
+                    "Name")]
         public async Task Should_Be_Able_To_Create_Multiple_Domains(string projectName,
                                                                     string basePath,
                                                                     string toolName,
@@ -406,8 +439,10 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [TestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core", "Name")]
-        [DataRow("Sdc.UserManagement", "api/core", "um", "Name")]
+        [DataRow("Sdc.Core", "api/core", "Core",
+                    "Name")]
+        [DataRow("Sdc.UserManagement", "api/core", "um",
+                    "Name")]
         public async Task Should_Be_Able_To_Create_Same_Domain_In_Different_Versions(string projectName,
                                                                                      string basePath,
                                                                                      string toolName,
@@ -479,7 +514,7 @@ namespace RunJit.Cli.Test.SystemTest
                                                     """;
         // 2. the test executes the cli commands to add a new rest api into an existing solution
         [TestMethod]
-        [DataRow(@"/Users/z003m9sc/Documents/RiderProjects/siemens-data-cloud-backend-console/Sdc.Console.sln", "api/console", "Parameters", "Name", ParameterEntityModel)]
+        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln", "api/console", "Compliances", "MyItApplicationId", ComplianceEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_Existing_Solution(string solutionFilePath,
                                                                          string basePath,
                                                                          string domainName,
@@ -493,14 +528,14 @@ namespace RunJit.Cli.Test.SystemTest
     }
 
     internal sealed record NewMinimalRestApi(string SolutionFileOrGitRepos,
-                                              string DbEntityModel,
-                                              string QueryProperty,
-                                              string DomainName,
-                                              string BasePath,
-                                              string GitRepos = "",
-                                              string WorkingDirectory = "",
-                                              int Version = 1,
-                                              string ExpectedErrorMessage = "") : ICommand<FileInfo>
+                                             string DbEntityModel,
+                                             string QueryProperty,
+                                             string DomainName,
+                                             string BasePath,
+                                             string GitRepos = "",
+                                             string WorkingDirectory = "",
+                                             int Version = 1,
+                                             string ExpectedErrorMessage = "") : ICommand<FileInfo>
     {
     }
 

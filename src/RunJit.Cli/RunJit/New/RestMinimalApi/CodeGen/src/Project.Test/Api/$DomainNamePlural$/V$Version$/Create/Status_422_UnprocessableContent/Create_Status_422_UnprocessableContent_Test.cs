@@ -23,7 +23,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
             return CleanupAsync();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicRequestLocator]
         public Task Should_Return_Unprocessable_Entity_If_Create_Request_Data_Contains_Invalid(string useCase)
         {

@@ -6,8 +6,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddMapGet$DomainName$ByIdEndpointExtension
     {
-        internal static void AddMapGet$DomainName$ByIdEndpoint(this IServiceCollection services)
+        internal static void AddMapGet$DomainName$ByIdEndpoint(this IServiceCollection services,
+                                                               IConfiguration configuration)
         {
+            services.AddGet$DomainName$ByIdQuery(configuration);
+
             services.AddSingletonIfNotExists<IEndpoint, MapGet$DomainName$ByIdEndpoint>();
         }
     }

@@ -7,8 +7,11 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddDelete$DomainName$EndpointExtension
     {
-        internal static void AddDelete$DomainName$Endpoint(this IServiceCollection services)
+        internal static void AddDelete$DomainName$Endpoint(this IServiceCollection services,
+                                                           IConfiguration configuration)
         {
+            services.AddDelete$DomainName$Command(configuration);
+
             services.AddSingletonIfNotExists<IEndpoint, Delete$DomainName$Endpoint>();
         }
     }

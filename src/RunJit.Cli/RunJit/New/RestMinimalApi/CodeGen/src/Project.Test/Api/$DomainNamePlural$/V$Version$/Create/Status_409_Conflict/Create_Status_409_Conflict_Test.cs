@@ -29,7 +29,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
         // - InvitationOnly
         // - AnonymousEmployee
         // - Employee
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("UseCase_01.json", "UseCase_Conflict.json")]
         [DataRow("Pulse_UseCase_01.json", "Pulse_UseCase_Conflict.json")]
         public async Task Should_Not_Be_Able_To_Create_The_Same_Data_More_Than_Once(string useCase,

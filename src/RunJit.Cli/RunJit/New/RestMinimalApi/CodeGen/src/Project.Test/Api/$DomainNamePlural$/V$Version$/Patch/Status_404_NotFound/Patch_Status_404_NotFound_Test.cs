@@ -17,7 +17,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
             return CleanupAsync();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("-1", "$IdPropertyName$_Is_Negative_Number.json")]
         [DataRow("invalid-id", "$IdPropertyName$_Is_Invalid.json")]
         [DataRow("f77647b9-b40b-42e5", "$IdPropertyName$_Is_Invalid_Guid.json")]

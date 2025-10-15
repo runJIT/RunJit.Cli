@@ -16,7 +16,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
             return CleanupAsync();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("devil=TRUNCATE YourTable", "SqlInjection_01.json")]
         [DataRow("devil=TRUNCATE YourTable&god=RESTORE YourTable", "SqlInjection_02.json")]
         public Task Should_Be_Able_To_Patch_A_$DomainName$_If_Query_Parameters_Are_Used_Which_Are_Not_Declared(string queryParams,

@@ -17,7 +17,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
             return CleanupAsync();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("")] // Query filters which are not declared in the route are NULL
         [DataRow("?$QueryPropertyNameLower$=1")] // Query filters which are not declared in the route are NULL
         [DataRow("?$QueryPropertyNameLower$=Hello")] // Query filters which are not declared in the route are NULL

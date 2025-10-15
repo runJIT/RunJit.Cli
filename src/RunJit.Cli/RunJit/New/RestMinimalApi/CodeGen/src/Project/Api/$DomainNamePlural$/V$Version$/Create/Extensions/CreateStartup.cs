@@ -4,7 +4,7 @@
     {
         internal static void AddCreate(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddCreate$DomainName$Endpoint();
+            services.AddCreate$DomainName$Endpoint(configuration);
         }
     }
 }

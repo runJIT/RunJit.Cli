@@ -1,8 +1,8 @@
-﻿using System.Net.Mime;
-using System.Text.Json.Nodes;
+﻿using Extensions.Pack;
 using Microsoft.AspNetCore.Mvc;
 using Siemens.AspNet.ErrorHandling.Contracts;
 using Siemens.AspNet.MinimalApi.Sdk;
+using Siemens.AspNet.MinimalApi.Sdk.Contracts.Endpoints;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
@@ -11,7 +11,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         internal static void AddMapPatch$DomainName$(this IServiceCollection services, 
                                                     IConfiguration configuration)
         {
-            services.Addpatch$DomainName$Command(configuation);
+            services.AddPatch$DomainName$Command(configuration);
 
             services.AddSingletonIfNotExists<IEndpoint, Patch$DomainName$Endpoint>();
         }

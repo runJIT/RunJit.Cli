@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using AspNetCore.Simple.Sdk.Mediator;
 using Extensions.Pack;
 using RunJit.Cli.Test.Extensions;
@@ -46,7 +46,7 @@ namespace RunJit.Cli.Test.SystemTest
                                                      internal sealed record ComplianceEntity
                                                      {
                                                          [DynamoDBHashKey]
-                                                         public required string ProjectId { get; init; }
+                                                         public required Guid ProjectId { get; init; }
                                                          public string? MyItApplicationId  { get; set; }
                                                          public string? AcpId  { get; set; }
                                                          public string? AcpLevel { get; set; }
@@ -497,21 +497,23 @@ namespace RunJit.Cli.Test.SystemTest
                                                         }
                                                         """;
 
-        // 1. Define the entity model you want to use for your rest api
-        private const string ParameterEntityModel = """
-                                                    [DynamoDBTable("Parameter")]
-                                                    public record ParameterEntity
-                                                    {
-                                                        [DynamoDBHashKey]
-                                                        public Guid ParameterId { get; init; } = Guid.Empty;
+        //// 1. Define the entity model you want to use for your rest api
+        //private const string ParameterEntityModel = """
+        //                                            [DynamoDBTable("Parameter")]
+        //                                            public record ParameterEntity
+        //                                            {
+        //                                                [DynamoDBHashKey]
+        //                                                public Guid ParameterId { get; init; } = Guid.Empty;
 
-                                                        public required string Name { get; init; }
+        //                                                public required string Name { get; init; }
 
-                                                        public required bool IsSecret { get; init; }
+        //                                                public required bool IsSecret { get; init; }
 
-                                                        public ImmutableSortedDictionary<Stage, string> Values { get; init; } = ImmutableSortedDictionary<Stage, string>.Empty;
-                                                    }
-                                                    """;
+        //                                                public ImmutableSortedDictionary<Stage, string> Values { get; init; } = ImmutableSortedDictionary<Stage, string>.Empty;
+        //                                            }
+        //                                            """;
+
+
         // 2. the test executes the cli commands to add a new rest api into an existing solution
         [TestMethod]
         [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln", "api/console", "Compliances", "MyItApplicationId", ComplianceEntityModel)]

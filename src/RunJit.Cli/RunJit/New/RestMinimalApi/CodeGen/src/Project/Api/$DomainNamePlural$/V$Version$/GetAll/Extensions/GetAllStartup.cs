@@ -2,9 +2,10 @@
 {
     internal static class GetAllStartup
     {
-        internal static void AddGetAll(this IServiceCollection services, IConfiguration configuration)
+        internal static void AddGetAll(this IServiceCollection services, 
+                                       IConfiguration configuration)
         {
-            services.AddMapGetAll$DomainNamePluralLower$Endpoint();
+            services.AddMapGetAll$DomainNamePluralLower$Endpoint(configuration);
         }
     }
 }

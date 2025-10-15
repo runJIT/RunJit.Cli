@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Extensions.Pack;
 using Microsoft.AspNetCore.Mvc;
+using Siemens.AspNet.ErrorHandling.Contracts;
 using Siemens.AspNet.MinimalApi.Sdk;
+using Siemens.AspNet.MinimalApi.Sdk.Contracts.Endpoints;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {

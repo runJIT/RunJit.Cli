@@ -1,5 +1,7 @@
+﻿using Amazon.DynamoDBv2.DocumentModel;
+using Amazon.DynamoDBv2.DataModel;
+using System.Collections.Immutable;
 using Extensions.Pack;
-using Amazon.DynamoDBv2.DocumentModel;
 using $ProjectName$.Database.$DomainNamePlural$;
 using Siemens.AspNet.MinimalApi.Sdk.Aws.DynamoDb;
 

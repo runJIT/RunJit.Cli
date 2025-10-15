@@ -1,6 +1,8 @@
-﻿using Extensions.Pack;
+﻿using System.Net;
+using Extensions.Pack;
 using Siemens.AspNet.ErrorHandling.Contracts;
 using Siemens.AspNet.MinimalApi.Sdk;
+using Siemens.AspNet.MinimalApi.Sdk.Contracts;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {

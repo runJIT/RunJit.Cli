@@ -1,4 +1,5 @@
-using Amazon.DynamoDBv2.DocumentModel;
+﻿using Amazon.DynamoDBv2.DocumentModel;
+using Amazon.DynamoDBv2.DataModel;
 using System.Collections.Immutable;
 using Extensions.Pack;
 using $ProjectName$.Database.$DomainNamePlural$;

@@ -2,9 +2,10 @@
 {
     internal static class GetByIdStartup
     {
-        internal static void AddGetById(this IServiceCollection services, IConfiguration configuration)
+        internal static void AddGetById(this IServiceCollection services, 
+                                        IConfiguration configuration)
         {
-            services.AddMapGet$DomainName$ByIdEndpoint();
+            services.AddMapGet$DomainName$ByIdEndpoint(configuration);
         }
     }
 }

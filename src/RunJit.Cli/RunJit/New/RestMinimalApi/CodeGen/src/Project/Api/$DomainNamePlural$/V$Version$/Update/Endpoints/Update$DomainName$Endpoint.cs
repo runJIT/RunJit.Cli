@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Extensions.Pack;
+using Microsoft.AspNetCore.Mvc;
 using Siemens.AspNet.ErrorHandling.Contracts;
 using Siemens.AspNet.MinimalApi.Sdk;
-
+using Siemens.AspNet.MinimalApi.Sdk.Contracts.Endpoints;
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddUpdateEndpointExtension
@@ -9,7 +10,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
         internal static void AddUpdateEndpoint(this IServiceCollection services,
                                                IConfiguration configuration)
         {
-            services.AddUpdate$DomainName$Command(configuation);
+            services.AddUpdate$DomainName$Command(configuration);
 
             services.AddSingletonIfNotExists<IEndpoint, Update$DomainName$Endpoint>();
         }

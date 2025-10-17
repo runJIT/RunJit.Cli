@@ -8,10 +8,10 @@ using Siemens.AspNet.MinimalApi.Sdk.Contracts.Endpoints;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class AddMapPatch$DomainName$Extension
+    internal static class AddPatch$DomainName$EndpointExtension
     {
-        internal static void AddMapPatch$DomainName$(this IServiceCollection services, 
-                                                    IConfiguration configuration)
+        internal static void AddPatch$DomainName$Endpoint(this IServiceCollection services, 
+                                                          IConfiguration configuration)
         {
             services.AddPatch$DomainName$Command(configuration);
 

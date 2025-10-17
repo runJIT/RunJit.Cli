@@ -6,22 +6,22 @@ using Siemens.AspNet.MinimalApi.Sdk.Contracts.Endpoints;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class AddMapGetAll$DomainNamePluralLower$EndpointExtension
+    internal static class AddGetAll$DomainNamePluralLower$EndpointExtension
     {
-        internal static void AddMapGetAll$DomainNamePluralLower$Endpoint(this IServiceCollection services,
+        internal static void AddGetAll$DomainNamePluralLower$Endpoint(this IServiceCollection services,
                                                                          IConfiguration configuration)
         {
             services.AddGetAll$DomainNamePlural$Query(configuration);
 
-            services.AddSingletonIfNotExists<IEndpoint, MapGetAll$DomainNamePluralLower$Endpoint>();
+            services.AddSingletonIfNotExists<IEndpoint, GetAll$DomainNamePluralLower$Endpoint>();
         }
     }
 
-    internal sealed class MapGetAll$DomainNamePluralLower$Endpoint : IEndpoint
+    internal sealed class GetAll$DomainNamePluralLower$Endpoint : IEndpoint
     {
-        public void Map(IEndpointRouteBuilder endpoints)
+        public void (IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapGet("$DomainNamePluralLower$", HandleAsync)
+            endpoints.Get("$DomainNamePluralLower$", HandleAsync)
                             .Produces<GetAll$DomainNamePlural$Response>()
                             .Produces<ProblemDetails>(StatusCodes.Status401Unauthorized)
                             .Produces<ProblemDetails>(StatusCodes.Status403Forbidden)
@@ -32,7 +32,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                             .Produces<string>(StatusCodes.Status504GatewayTimeout) // AWS handled error -> returns HTML
                             .WithTags("$DomainNamePlural$")
                             .WithName("getAll$DomainNamePlural$V$Version$")
-                            .MapToApiVersion($Version$)
+                            .ToApiVersion($Version$)
                             .WithDescriptionFromFile("Description.txt")
                             .WithSummaryFromFile("Summary.txt")
                             .WithMetadata(new AllowedQueryParameterMetaInfo("$QueryPropertyNameLower$"));

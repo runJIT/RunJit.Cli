@@ -5,7 +5,7 @@
         internal static void AddGetAll(this IServiceCollection services, 
                                        IConfiguration configuration)
         {
-            services.AddMapGetAll$DomainNamePluralLower$Endpoint(configuration);
+            services.AddGetAll$DomainNamePluralLower$Endpoint(configuration);
         }
     }
 }

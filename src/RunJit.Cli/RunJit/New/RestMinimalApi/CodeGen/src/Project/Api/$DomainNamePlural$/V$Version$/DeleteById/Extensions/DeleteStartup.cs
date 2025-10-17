@@ -5,7 +5,7 @@
         internal static void AddDeleteById(this IServiceCollection services, 
                                            IConfiguration configuration)
         {
-            services.AddDelete$DomainName$Command(configuration);
+            services.AddDelete$DomainName$Endpoint(configuration);
         }
     }
 }

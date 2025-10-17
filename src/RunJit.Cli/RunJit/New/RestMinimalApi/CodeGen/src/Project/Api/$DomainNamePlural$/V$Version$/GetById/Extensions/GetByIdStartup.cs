@@ -5,7 +5,7 @@
         internal static void AddGetById(this IServiceCollection services, 
                                         IConfiguration configuration)
         {
-            services.AddMapGet$DomainName$ByIdEndpoint(configuration);
+            services.AddGet$DomainName$ByIdEndpoint(configuration);
         }
     }
 }

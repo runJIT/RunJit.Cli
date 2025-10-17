@@ -5,7 +5,7 @@
         internal static void AddUpdate(this IServiceCollection services, 
                                        IConfiguration configuration)
         {
-            services.AddUpdate$DomainName$Command(configuration);
+            services.AddUpdate$DomainName$Endpoint(configuration);
         }
     }
 }

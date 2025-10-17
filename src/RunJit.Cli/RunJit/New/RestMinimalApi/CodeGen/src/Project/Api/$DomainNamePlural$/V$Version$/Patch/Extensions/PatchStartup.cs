@@ -5,7 +5,7 @@
         internal static void AddPatch(this IServiceCollection services, 
                                       IConfiguration configuration)
         {
-            services.AddPatch$DomainName$Command(configuration);
+            services.AddPatch$DomainName$Endpoint(configuration);
         }
     }
 }

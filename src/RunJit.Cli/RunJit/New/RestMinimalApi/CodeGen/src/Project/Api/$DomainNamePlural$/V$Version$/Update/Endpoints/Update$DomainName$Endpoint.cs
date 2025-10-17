@@ -7,8 +7,8 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
     internal static class AddUpdateEndpointExtension
     {
-        internal static void AddUpdateEndpoint(this IServiceCollection services,
-                                               IConfiguration configuration)
+        internal static void AddUpdate$DomainName$Endpoint(this IServiceCollection services,
+                                                           IConfiguration configuration)
         {
             services.AddUpdate$DomainName$Command(configuration);
 

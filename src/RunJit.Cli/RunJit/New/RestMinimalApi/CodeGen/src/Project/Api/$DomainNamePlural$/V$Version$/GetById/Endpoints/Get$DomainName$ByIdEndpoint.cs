@@ -6,9 +6,9 @@ using Siemens.AspNet.MinimalApi.Sdk.Contracts.Endpoints;
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    internal static class AddMapGet$DomainName$ByIdEndpointExtension
+    internal static class AddGet$DomainName$ByIdEndpointExtension
     {
-        internal static void AddMapGet$DomainName$ByIdEndpoint(this IServiceCollection services,
+        internal static void AddGet$DomainName$ByIdEndpoint(this IServiceCollection services,
                                                                IConfiguration configuration)
         {
             services.AddGet$DomainName$ByIdQuery(configuration);

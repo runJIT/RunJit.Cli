@@ -41,7 +41,7 @@ Sample: {method.MethodValue.Replace("return await", "return").Replace(".Configur
             var returnAwaitOnly = from syntaxTree in AllSyntaxTrees
                                   from @class in syntaxTree.Classes
                                   from method in @class.Methods
-                                  where method.Statements.Count == 1 &&
+                                  where method.Statements.Count.EqualsTo(1) &&
                                         (method.Statements[0].StartWith("await") || method.Statements[0].StartWith("return await"))
                                   select new
                                          {

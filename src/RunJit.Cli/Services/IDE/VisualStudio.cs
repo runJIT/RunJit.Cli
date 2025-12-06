@@ -27,9 +27,7 @@ namespace RunJit.Cli.Services
             // Look for preferred editions.
             readonly string[] _preferredEditions =
             {
-                "Enterprise",
-                "Professional",
-                "Community",
+                "Enterprise", "Professional", "Community",
                 "Preview"
             };
 
@@ -63,7 +61,7 @@ namespace RunJit.Cli.Services
                     var newestYearDirectory = yearDirectories.OrderByDescending(dir => int.Parse(Path.GetFileName(dir)))
                                                              .FirstOrDefault();
 
-                    if (newestYearDirectory == null)
+                    if (newestYearDirectory.IsNull())
                     {
                         return null;
                     }
@@ -84,12 +82,13 @@ namespace RunJit.Cli.Services
                         break;
                     }
 
-                    if (editionPath == null)
+                    if (editionPath.IsNull())
                     {
                         return null;
                     }
 
-                    string finalPath = Path.Combine(editionPath, "Common7", "IDE", "devenv.exe");
+                    string finalPath = Path.Combine(editionPath, "Common7", "IDE",
+                                                    "devenv.exe");
 
                     var fileInfo = new FileInfo(finalPath);
 
@@ -113,7 +112,7 @@ namespace RunJit.Cli.Services
             {
                 var vsFile = _cachedVsFile.Value;
 
-                if (vsFile == null)
+                if (vsFile.IsNull())
                 {
                     return Task.CompletedTask;
                 }

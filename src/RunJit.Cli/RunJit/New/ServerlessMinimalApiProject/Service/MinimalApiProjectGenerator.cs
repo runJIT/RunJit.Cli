@@ -55,7 +55,7 @@ namespace RunJit.Cli.New.MinimalApiProject
                 // Splitting at the double dot ".."
                 var parts = webApiProjectResource.Split(["New.ServerlessMinimalApiProject.CodeGen."], StringSplitOptions.None);
 
-                if (parts.Length == 2)
+                if (parts.Length.EqualsTo(2))
                 {
                     // Replacing dots with backslashes in the file path part
                     var part = parts[1];
@@ -113,7 +113,7 @@ namespace RunJit.Cli.New.MinimalApiProject
     }
 
     internal sealed class MinimalApiProjectGenerator(IDotNet dotNet,
-                                              IEnumerable<IMinimalApiProjectSpecificCodeGen> codeGenerators)
+                                                     IEnumerable<IMinimalApiProjectSpecificCodeGen> codeGenerators)
 
     {
         public async Task<FileInfo> GenerateAsync(SolutionFile solutionFile,
@@ -125,7 +125,7 @@ namespace RunJit.Cli.New.MinimalApiProject
             // 1. Check if cli project already exists
             //    Depending on new restriction of microsoft we can not just check the .Net.Web.Sdk
             //    so we need to check the implementation
-            var dotNetToolProject = solutionFile.ProductiveProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant() == minimalApiProjectInfos.ProjectName.ToLowerInvariant());
+            var dotNetToolProject = solutionFile.ProductiveProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant().EqualsTo(minimalApiProjectInfos.ProjectName.ToLowerInvariant()));
 
             if (dotNetToolProject.IsNotNull())
             {
@@ -177,7 +177,8 @@ namespace RunJit.Cli.New.MinimalApiProject
             // 8. Generate the whole command structure with arguments, options
             foreach (var codeGenerator in codeGenerators)
             {
-                await codeGenerator.GenerateAsync(dotnetToolProject, solutionFileInfo, xdocument, minimalApiProjectInfos).ConfigureAwait(false);
+                await codeGenerator.GenerateAsync(dotnetToolProject, solutionFileInfo, xdocument,
+                                                  minimalApiProjectInfos).ConfigureAwait(false);
             }
 
             // 9. Save the modified csproj file just once to avoid multiple IO write actions to disk which cause io exceptions

@@ -48,9 +48,9 @@ namespace RunJit.Cli.Generate.Client
     {
         private readonly string _versionClass = EmbeddedFile.GetFileContentFrom("RunJit.Generate.Client.Templates.version.class.rps");
 
-        internal IImmutableList<GeneratedClientCodeForController> Create(IImmutableList<EndpointGroup> endpointGroups,
-                                                                         string projectName,
-                                                                         string clientName)
+        internal ImmutableList<GeneratedClientCodeForController> Create(ImmutableList<EndpointGroup> endpointGroups,
+                                                                        string projectName,
+                                                                        string clientName)
         {
             return endpointGroups.Select(controller => Create(controller, projectName, clientName)).ToImmutableList();
         }
@@ -60,16 +60,11 @@ namespace RunJit.Cli.Generate.Client
                                                          string clientName)
         {
             var domainName = endpointGroup.GroupName;
-            var domainNameWithVersion = endpointGroup.Version.IsNull() ?
-                                            domainName :
-                                            $"{domainName}{endpointGroup.Version.Normalized}";
-
+            var domainNameWithVersion = endpointGroup.Version.IsNull() ? domainName : $"{domainName}{endpointGroup.Version.Normalized}";
 
             var methods = methodBuilder.BuildFor(endpointGroup);
 
-            var @namespace = endpointGroup.Version.IsNotNull() ? 
-                                 $"{projectName}.{ClientGenConstants.Api}.{domainName}.{endpointGroup.Version.Normalized}" :
-                                 $"{projectName}.{ClientGenConstants.Api}.{domainName}";
+            var @namespace = endpointGroup.Version.IsNotNull() ? $"{projectName}.{ClientGenConstants.Api}.{domainName}.{endpointGroup.Version.Normalized}" : $"{projectName}.{ClientGenConstants.Api}.{domainName}";
 
             //var controllerObsoleteAttribute = endpointGroup.Attributes.FirstOrDefault(a => a.Name == "Obsolete");
             //var attributes = controllerObsoleteAttribute.IsNotNull() ? controllerObsoleteAttribute.SyntaxTree : string.Empty;

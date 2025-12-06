@@ -23,7 +23,7 @@ namespace $ProjectName$.Test.Api.Health
                                                                IgnoreDifferences);
         }
 
-        private IEnumerable<Difference> IgnoreDifferences(IImmutableList<Difference> differences)
+        private IEnumerable<Difference> IgnoreDifferences(ImmutableList<Difference> differences)
         {
             foreach (var difference in differences)
             {

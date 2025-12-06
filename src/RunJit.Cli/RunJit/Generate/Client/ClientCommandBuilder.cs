@@ -26,9 +26,11 @@ namespace RunJit.Cli.RunJit.Generate.Client
             var command = new Command("client", "The command to generate a new .net client into a .net web api project");
             optionsBuilder.Build().ToList().ForEach(option => command.AddOption(option));
 
-            command.Handler = CommandHandler.Create<bool, bool, FileInfo>((usevisualstudio,
-                                                                           build,
-                                                                           solution) => clientGen.HandleAsync(new ClientParameters(usevisualstudio, build, solution)));
+            command.Handler = CommandHandler.Create<bool, bool, FileInfo, bool>((usevisualstudio,
+                                                                                 build,
+                                                                                 solution,
+                                                                                 useOpenApiJson) => clientGen.HandleAsync(new ClientParameters(usevisualstudio, build, solution,
+                                                                                                                                               useOpenApiJson)));
 
             return command;
         }

@@ -49,7 +49,7 @@ namespace RunJit.Cli.Services.Net
     }
 
     internal sealed record TryResult(bool WasSuccessful,
-                              string Message);
+                                     string Message);
 
     internal sealed class DotNet(ConsoleService consoleService) : IDotNet
     {
@@ -73,7 +73,7 @@ namespace RunJit.Cli.Services.Net
             }
 
             var splittedOutput = output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            var jsonStart = splittedOutput.FirstOrDefault(item => item[0] == '{');
+            var jsonStart = splittedOutput.FirstOrDefault(item => item[0].EqualsTo('{'));
             var index = splittedOutput.IndexOf(jsonStart);
             var jsonOnly = string.Join(Environment.NewLine, splittedOutput.Skip(index));
 

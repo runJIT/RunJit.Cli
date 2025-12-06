@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -39,10 +40,9 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AspNetCore.Simple.MsTest.Sdk" Version="6.1.9" />
-        <PackageReference Include="AspNetCore.Simple.Sdk" Version="6.0.2" />
+        <PackageReference Include="AspNetCore.Simple.Sdk" Version="6.0.5" />
         <PackageReference Include="AWSSDK.Translate" Version="4.0.0.21" />
         <PackageReference Include="DotNetTool.Service" Version="0.3.0" />
-        <PackageReference Include="Extensions.Pack" Version="6.0.7" />
         <PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -53,19 +53,11 @@
         </PackageReference>
         <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MsBuild" Version="4.14.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.14.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.8" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.8" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.8" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.8" />
-        <PackageReference Include="NuGet.Versioning" Version="6.14.0" />
+        <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.6.28" />
         <PackageReference Include="PluralizeService.Core" Version="1.2.21147.2" />
         <PackageReference Include="RunJit.Api.Client" Version="0.1.0-alpha.40" />
         <PackageReference Include="SlackNet" Version="0.17.4" />
-        <PackageReference Include="Solution.Parser" Version="3.0.3" />
         <PackageReference Include="System.CommandLine" Version="0.3.0-alpha.20054.1" />
-        <PackageReference Include="System.Formats.Asn1" Version="9.0.8" />
-        <PackageReference Include="System.Text.Json" Version="9.0.8" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="RunJit\Generate\DotNetTool\CodeGen\.DotNetTool.Test\RemoveDefaultTestClasses.cs" />
@@ -183,10 +175,10 @@
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Requests\Delete$DomainName$ByIdRequest.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Validations\Delete$DomainName$ByIdRequestValidator.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Requests\GetAll$DomainNamePlural$Request.cs">
-          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
         </EmbeddedResource>
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Validations\GetAll$DomainNamePlural$RequestValidator.cs">
-          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
         </EmbeddedResource>
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Requests\Get%24DomainName%24ByIdRequest.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Validations\Get%24DomainName%24ByIdRequestValidator.cs" />
@@ -210,113 +202,113 @@
         <EmbeddedResource Include="**\*.zip" Exclude="bin\**\*;obj\**\*" />
     </ItemGroup>
     <ItemGroup>
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\DeleteAll\DeleteAll$DomainNamePlural$Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\DeleteById\Delete$DomainName$ByIdTest.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\GetAll\GetAll$DomainNamePlural$Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\Patch\Patch$DomainName$Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\Update\Update$DomainName$Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Status_200_Ok\Create_Status_200_OK_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Status_400_BadRequest\Create_Status_400_BadRequest_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Status_401_Unauthorized\Create_Status_401_Unauthorized_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Status_403_Forbidden\Create_Status_403_Forbidden_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Status_409_Conflict\Create_Status_409_Conflict_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Status_422_UnprocessableContent\Create_Status_422_UnprocessableContent_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Status_200_Ok\DeleteAll_Status_200_OK_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Status_400_BadRequest\DeleteAll_SStatus_400_BadRequest_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Status_401_Unauthorized\DeleteAll_Status_401_Unauthorized_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Status_403_Forbidden\DeleteAll_Status_403_Forbidden_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_200_Ok\DeleteBy$IdPropertyName$_Status_200_OK_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_200_Ok\DeleteBy$IdPropertyName$_Status_200_OK_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_200_Ok\DeleteById_Status_200_OK_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_401_Unauthorized\DeleteBy$IdPropertyName$_Status_401_Unauthorized_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_401_Unauthorized\DeleteBy$IdPropertyName$_Status_401_Unauthorized_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_401_Unauthorized\DeleteById_Status_401_Unauthorized_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_403_Forbidden\DeleteBy$IdPropertyName$_Status_403_Forbidden_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_403_Forbidden\DeleteBy$IdPropertyName$_Status_403_Forbidden_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_403_Forbidden\DeleteById_Status_403_Forbidden_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_404_NotFound\DeleteBy$IdPropertyName$_400_BadRequest_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_404_NotFound\DeleteBy$IdPropertyName$_400_BadRequest_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_404_NotFound\DeleteById_400_BadRequest_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Status_200_Ok\GetAll_Status_200_OK_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Status_400_BadRequest\GetAll_Status_400_BadRequest_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Status_401_Unauthorized\GetAll_Status_401_Unauthorized_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Status_403_Forbidden\GetAll_Status_403_Forbidden_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_200_Ok\GetBy$IdPropertyName$_Status_200_OK_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_200_Ok\GetById_Status_200_OK_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_401_Unauthorized\GetBy$IdPropertyName$_Status_401_Unauthorized_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_401_Unauthorized\GetById_Status_401_Unauthorized_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_403_Forbidden\GetBy$IdPropertyName$_Status_403_Forbidden_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_403_Forbidden\GetById_Status_403_Forbidden_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_404_NotFound\GetBy$IdPropertyName$_404_NotFound_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_404_NotFound\GetById_404_NotFound_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_200_Ok\Patch_Status_200_OK_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_401_Unauthorized\Patch_Status_401_Unauthorized_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_403_Forbidden\Patch_Status_403_Forbidden_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_404_NotFound\Patch_Status_404_NotFound_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_422_UnprocessableContent\Patch_Status_422_UnprocessableContent_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Update\Status_200_Ok\Update_Status_200_OK_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Update\Status_401_Unauthorized\Update_Status_401_Unauthorized_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Update\Status_403_Forbidden\Update_Status_403_Forbidden_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Update\Status_422_UnprocessableContent\Update_Status_422_UnprocessableContent_Test.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Command\Create$DomainName$Command.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Endpoints\Create$DomainName$Endpoint.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Extensions\CreateStartup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Mappers\Create$DomainName$RequestMapper.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteAll\Endpoints\Delete$DomainName$Endpoint.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteAll\Extensions\DeleteAllStartup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteAll\Validations\DeleteAll$DomainNamePlural$RequestValidator.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Command\Delete$DomainName$Command.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Endpoints\Delete$DomainName$Endpoint.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Extensions\DeleteStartup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Endpoints\GetAll$DomainNamePlural$Endpoint.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Extensions\GetAllStartup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Queries\GetAll$DomainNamePlural$Query.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Responses\GetAll$DomainNamePlural$Response.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Endpoints\Get$DomainName$ByIdEndpoint.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Extensions\GetByIdStartup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Queries\Get$DomainName$ByIdQuery.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Requests\Get$DomainName$ByIdRequest.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Validations\Get$DomainName$ByIdRequestValidator.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Endpoints\Patch$DomainName$Endpoint.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Extensions\PatchStartup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Mappers\Patch$DomainName$RequestMapper.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Validators\Patch$DomainName$RequestValidator.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Endpoints\Update$DomainName$Endpoint.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Extensions\UpdateStartup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Validations\Update$DomainName$RequestValidator.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\_Shared_\$DomainName$EntityMapper.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\Startup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Create\Requests\Create$DomainName$Request.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Create\Responses\Create$DomainName$Response.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Create\Validations\Create$DomainName$RequestValidator.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\DeleteAll\Command\DeleteAll$DomainNamePlural$Command.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Patch\Command\Patch$DomainName$Command.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Patch\Requests\Patch$DomainName$Request.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Patch\Responses\Patch$DomainName$Response.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Update\Command\Update$DomainName$Command.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Update\Requests\Update$DomainName$Request.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Update\Responses\Update$DomainName$Response.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\_Shared_\$DomainName$.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Create\Commands\Create%24DomainName%24Command.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Commands\DeleteAll%24DomainNamePlural%24Command.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Requests\DeleteAll%24DomainNamePlural%24Request.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Commands\Delete%24DomainName%24Command.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Requests\Delete%24DomainName%24ByIdRequest.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Validations\Delete$DomainName$ByIdRequestValidator.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Requests\GetAll%24DomainNamePlural%24Request.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Validations\GetAll%24DomainNamePlural%24RequestValidator.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Responses\Get%24DomainName%24ByIdResponse.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Commands\Patch%24DomainName%24Command.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Mappers\%24DomainName%24EntityToPatch%24DomainName%24RequestMapper.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Startup.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Commands\Update%24DomainName%24Command.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Mappers\Update%24DomainName%24RequestMapper.cs" />
-      <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Database\$DomainNamePlural$\Entities\$DomainName$Entity.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\ApiTestBase.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Api\Health\GetHealthStateTest.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\OpenApi\OpenApiTest.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Api\Startup.cs" />
-      <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Program.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\DeleteAll\DeleteAll$DomainNamePlural$Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\DeleteById\Delete$DomainName$ByIdTest.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\GetAll\GetAll$DomainNamePlural$Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\Patch\Patch$DomainName$Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V1\Update\Update$DomainName$Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Status_200_Ok\Create_Status_200_OK_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Status_400_BadRequest\Create_Status_400_BadRequest_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Status_401_Unauthorized\Create_Status_401_Unauthorized_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Status_403_Forbidden\Create_Status_403_Forbidden_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Status_409_Conflict\Create_Status_409_Conflict_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Create\Status_422_UnprocessableContent\Create_Status_422_UnprocessableContent_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Status_200_Ok\DeleteAll_Status_200_OK_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Status_400_BadRequest\DeleteAll_SStatus_400_BadRequest_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Status_401_Unauthorized\DeleteAll_Status_401_Unauthorized_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Status_403_Forbidden\DeleteAll_Status_403_Forbidden_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_200_Ok\DeleteBy$IdPropertyName$_Status_200_OK_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_200_Ok\DeleteBy$IdPropertyName$_Status_200_OK_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_200_Ok\DeleteById_Status_200_OK_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_401_Unauthorized\DeleteBy$IdPropertyName$_Status_401_Unauthorized_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_401_Unauthorized\DeleteBy$IdPropertyName$_Status_401_Unauthorized_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_401_Unauthorized\DeleteById_Status_401_Unauthorized_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_403_Forbidden\DeleteBy$IdPropertyName$_Status_403_Forbidden_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_403_Forbidden\DeleteBy$IdPropertyName$_Status_403_Forbidden_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_403_Forbidden\DeleteById_Status_403_Forbidden_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_404_NotFound\DeleteBy$IdPropertyName$_400_BadRequest_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_404_NotFound\DeleteBy$IdPropertyName$_400_BadRequest_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Status_404_NotFound\DeleteById_400_BadRequest_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Status_200_Ok\GetAll_Status_200_OK_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Status_400_BadRequest\GetAll_Status_400_BadRequest_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Status_401_Unauthorized\GetAll_Status_401_Unauthorized_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Status_403_Forbidden\GetAll_Status_403_Forbidden_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_200_Ok\GetBy$IdPropertyName$_Status_200_OK_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_200_Ok\GetById_Status_200_OK_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_401_Unauthorized\GetBy$IdPropertyName$_Status_401_Unauthorized_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_401_Unauthorized\GetById_Status_401_Unauthorized_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_403_Forbidden\GetBy$IdPropertyName$_Status_403_Forbidden_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_403_Forbidden\GetById_Status_403_Forbidden_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_404_NotFound\GetBy$IdPropertyName$_404_NotFound_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Status_404_NotFound\GetById_404_NotFound_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_200_Ok\Patch_Status_200_OK_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_401_Unauthorized\Patch_Status_401_Unauthorized_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_403_Forbidden\Patch_Status_403_Forbidden_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_404_NotFound\Patch_Status_404_NotFound_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_422_UnprocessableContent\Patch_Status_422_UnprocessableContent_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Update\Status_200_Ok\Update_Status_200_OK_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Update\Status_401_Unauthorized\Update_Status_401_Unauthorized_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Update\Status_403_Forbidden\Update_Status_403_Forbidden_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Update\Status_422_UnprocessableContent\Update_Status_422_UnprocessableContent_Test.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Command\Create$DomainName$Command.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Endpoints\Create$DomainName$Endpoint.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Extensions\CreateStartup.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Create\Mappers\Create$DomainName$RequestMapper.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteAll\Endpoints\Delete$DomainName$Endpoint.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteAll\Extensions\DeleteAllStartup.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteAll\Validations\DeleteAll$DomainNamePlural$RequestValidator.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Command\Delete$DomainName$Command.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Endpoints\Delete$DomainName$Endpoint.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\DeleteById\Extensions\DeleteStartup.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Endpoints\GetAll$DomainNamePlural$Endpoint.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Extensions\GetAllStartup.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Queries\GetAll$DomainNamePlural$Query.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetAll\Responses\GetAll$DomainNamePlural$Response.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Endpoints\Get$DomainName$ByIdEndpoint.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Extensions\GetByIdStartup.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Queries\Get$DomainName$ByIdQuery.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Requests\Get$DomainName$ByIdRequest.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\GetById\Validations\Get$DomainName$ByIdRequestValidator.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Endpoints\Patch$DomainName$Endpoint.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Extensions\PatchStartup.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Mappers\Patch$DomainName$RequestMapper.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Patch\Validators\Patch$DomainName$RequestValidator.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Endpoints\Update$DomainName$Endpoint.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Extensions\UpdateStartup.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\Update\Validations\Update$DomainName$RequestValidator.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\$DomainNamePlural$\V$Version$\_Shared_\$DomainName$EntityMapper.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\Startup.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Create\Requests\Create$DomainName$Request.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Create\Responses\Create$DomainName$Response.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Create\Validations\Create$DomainName$RequestValidator.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\DeleteAll\Command\DeleteAll$DomainNamePlural$Command.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Patch\Command\Patch$DomainName$Command.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Patch\Requests\Patch$DomainName$Request.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Patch\Responses\Patch$DomainName$Response.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Update\Command\Update$DomainName$Command.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Update\Requests\Update$DomainName$Request.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\Update\Responses\Update$DomainName$Response.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V$Version$\_Shared_\$DomainName$.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Create\Commands\Create%24DomainName%24Command.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Commands\DeleteAll%24DomainNamePlural%24Command.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteAll\Requests\DeleteAll%24DomainNamePlural%24Request.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Commands\Delete%24DomainName%24Command.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Requests\Delete%24DomainName%24ByIdRequest.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\DeleteById\Validations\Delete$DomainName$ByIdRequestValidator.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Requests\GetAll%24DomainNamePlural%24Request.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Validations\GetAll%24DomainNamePlural%24RequestValidator.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Responses\Get%24DomainName%24ByIdResponse.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Commands\Patch%24DomainName%24Command.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Mappers\%24DomainName%24EntityToPatch%24DomainName%24RequestMapper.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Startup.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Commands\Update%24DomainName%24Command.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Update\Mappers\Update%24DomainName%24RequestMapper.cs" />
+        <Compile Remove="RunJit\New\RestMinimalApi\CodeGen\src\Project\Database\$DomainNamePlural$\Entities\$DomainName$Entity.cs" />
+        <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\ApiTestBase.cs" />
+        <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\Api\Health\GetHealthStateTest.cs" />
+        <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project.Test\OpenApi\OpenApiTest.cs" />
+        <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Api\Startup.cs" />
+        <Compile Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\src\Project\Program.cs" />
     </ItemGroup>
     <ItemGroup>
         <None Remove="RunJit\New\ServerlessMinimalApiProject\CodeGen\Dockerfile" />
@@ -333,7 +325,7 @@
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Mappers\Patch%24DomainName%24RequestMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\Startup.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Responses\GetAll%24DomainNamePlural%24Response.cs">
-          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
         </EmbeddedResource>
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\_Shared_\%24DomainName%24EntityMapper.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\Create\Endpoints\Create%24DomainName%24Endpoint.cs" />
@@ -349,7 +341,7 @@
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Endpoints\GetAll%24DomainNamePlural%24Endpoint.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Extensions\GetAllStartup.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetAll\Queries\GetAll%24DomainNamePlural%24Query.cs">
-          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
         </EmbeddedResource>
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Endpoints\Get%24DomainName%24ByIdEndpoint.cs" />
         <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project\Api\%24DomainNamePlural%24\V%24Version%24\GetById\Extensions\GetByIdStartup.cs" />
@@ -390,61 +382,61 @@
         <EditorConfigFiles Remove="D:\GitHub\RunJit.Cli\src\RunJit.Cli\RunJit\New\MinimalApiProject\CodeGen\.editorconfig" />
     </ItemGroup>
     <ItemGroup>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\DeleteAll\Status_200_Ok\DeleteAll_Status_200_OK_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\DeleteAll\Status_400_BadRequest\DeleteAll_SStatus_400_BadRequest_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\DeleteAll\Status_401_Unauthorized\DeleteAll_Status_401_Unauthorized_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\DeleteAll\Status_403_Forbidden\DeleteAll_Status_403_Forbidden_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\GetAll\Status_200_Ok\GetAll_Status_200_OK_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\GetAll\Status_400_BadRequest\GetAll_Status_400_BadRequest_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\GetAll\Status_401_Unauthorized\GetAll_Status_401_Unauthorized_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\GetAll\Status_403_Forbidden\GetAll_Status_403_Forbidden_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Patch\Status_200_Ok\Patch_Status_200_OK_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Patch\Status_401_Unauthorized\Patch_Status_401_Unauthorized_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Patch\Status_403_Forbidden\Patch_Status_403_Forbidden_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Patch\Status_404_NotFound\Patch_Status_404_NotFound_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Patch\Status_422_UnprocessableContent\Patch_Status_422_UnprocessableContent_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Update\Status_200_Ok\Update_Status_200_OK_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Update\Status_401_Unauthorized\Update_Status_401_Unauthorized_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Update\Status_403_Forbidden\Update_Status_403_Forbidden_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Update\Status_422_UnprocessableContent\Update_Status_422_UnprocessableContent_Test.cs">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\DeleteAll\Status_200_Ok\DeleteAll_Status_200_OK_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\DeleteAll\Status_400_BadRequest\DeleteAll_SStatus_400_BadRequest_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\DeleteAll\Status_401_Unauthorized\DeleteAll_Status_401_Unauthorized_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\DeleteAll\Status_403_Forbidden\DeleteAll_Status_403_Forbidden_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\GetAll\Status_200_Ok\GetAll_Status_200_OK_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\GetAll\Status_400_BadRequest\GetAll_Status_400_BadRequest_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\GetAll\Status_401_Unauthorized\GetAll_Status_401_Unauthorized_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\GetAll\Status_403_Forbidden\GetAll_Status_403_Forbidden_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Patch\Status_200_Ok\Patch_Status_200_OK_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Patch\Status_401_Unauthorized\Patch_Status_401_Unauthorized_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Patch\Status_403_Forbidden\Patch_Status_403_Forbidden_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Patch\Status_404_NotFound\Patch_Status_404_NotFound_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Patch\Status_422_UnprocessableContent\Patch_Status_422_UnprocessableContent_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Update\Status_200_Ok\Update_Status_200_OK_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Update\Status_401_Unauthorized\Update_Status_401_Unauthorized_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Update\Status_403_Forbidden\Update_Status_403_Forbidden_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\$DomainNamePlural$\V$Version$\Update\Status_422_UnprocessableContent\Update_Status_422_UnprocessableContent_Test.cs">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="RunJit\New\NugetProject\CodeGen\src\Project.Test\" />
-      <Folder Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_400_BadRequest\" />
-      <Folder Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Update\Status_400_BadRequest\" />
+        <Folder Include="RunJit\New\NugetProject\CodeGen\src\Project.Test\" />
+        <Folder Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Patch\Status_400_BadRequest\" />
+        <Folder Include="RunJit\New\RestMinimalApi\CodeGen\src\Project.Test\Api\%24DomainNamePlural%24\V%24Version%24\Update\Status_400_BadRequest\" />
     </ItemGroup>
 </Project>

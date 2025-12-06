@@ -27,6 +27,7 @@ namespace RunJit.Cli.Migrate.Endpoints.RegisterEndpoints.Service
         public Task HandleAsync(RegisterEndpointsParameters parameters)
         {
             var strategy = strategies.FirstOrDefault(s => s.CanHandle(parameters));
+
             if (strategy is null)
             {
                 throw new RunJitException($"No strategy found for parameters: {parameters}");
@@ -39,6 +40,7 @@ namespace RunJit.Cli.Migrate.Endpoints.RegisterEndpoints.Service
     internal interface IRegisterEndpointsStrategy
     {
         bool CanHandle(RegisterEndpointsParameters parameters);
+
         Task HandleAsync(RegisterEndpointsParameters parameters);
     }
 
@@ -46,9 +48,9 @@ namespace RunJit.Cli.Migrate.Endpoints.RegisterEndpoints.Service
     {
         public bool CanHandle(RegisterEndpointsParameters parameters)
         {
-            return !string.IsNullOrWhiteSpace(parameters.SolutionFile)
-                   && !string.IsNullOrWhiteSpace(parameters.WebApiProject)
-                   && !string.IsNullOrWhiteSpace(parameters.DomainNamePlural);
+            return !parameters.SolutionFile.IsNullOrWhiteSpace()
+                   && !parameters.WebApiProject.IsNullOrWhiteSpace()
+                   && !parameters.DomainNamePlural.IsNullOrWhiteSpace();
         }
 
         public Task HandleAsync(RegisterEndpointsParameters parameters)
@@ -58,6 +60,7 @@ namespace RunJit.Cli.Migrate.Endpoints.RegisterEndpoints.Service
                                      $"Solution: {parameters.SolutionFile}\n" +
                                      $"WebApi:   {parameters.WebApiProject}\n" +
                                      $"Domain:   {parameters.DomainNamePlural}");
+
             return Task.CompletedTask;
         }
     }

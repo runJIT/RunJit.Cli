@@ -11,7 +11,7 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.CodeBuilders
         {
             services.AddStringValidationBuilder();
             services.AddGuidValidationBuilder();
-            
+
             services.AddSingletonIfNotExists<SimpleValidationCodeBuilder>();
         }
     }
@@ -27,6 +27,7 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.CodeBuilders
 
             // all validations
             var flatten = allValidations.Flatten($"{Environment.NewLine}");
+
             return flatten;
         }
     }

@@ -45,14 +45,13 @@ namespace RunJit.Cli.New.MinimalApiProject
     }
 
     internal sealed class MinimalApiProjectsCodeGen(MinimalApiProjectGenerator minimalApiProjectGenerator,
-                                            MinimalApiProjectTestGenerator minimalApiProjectTestGenerator,
-                                            IEnumerable<IMinimalApiProjectRootLevelCodeGen> rootLevelCodeGens)
+                                                    MinimalApiProjectTestGenerator minimalApiProjectTestGenerator,
+                                                    IEnumerable<IMinimalApiProjectRootLevelCodeGen> rootLevelCodeGens)
     {
         internal async Task GenerateAsync(SolutionFile solutionFile,
                                           NewMinimalApiProjectParameters minimalApiProjectParameters,
                                           MinimalApiProjectInfos minimalApiProjectInfos)
         {
-
             // 1. Write all root level code
             foreach (var minimalApiProjectRootLevelCodeGen in rootLevelCodeGens)
             {

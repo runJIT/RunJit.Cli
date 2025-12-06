@@ -35,7 +35,7 @@ namespace RunJit.Cli.New.NugetProject
                 // Splitting at the double dot ".."
                 var parts = webApiProjectResource.Split(["New.NugetProject.CodeGen."], StringSplitOptions.None);
 
-                if (parts.Length == 2)
+                if (parts.Length.EqualsTo(2))
                 {
                     // Replacing dots with backslashes in the file path part
                     var part = parts[1];

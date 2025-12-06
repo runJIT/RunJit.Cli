@@ -46,7 +46,7 @@ namespace RunJit.Cli.Update
             }
 
             // 3. Update yml files if exists
-            
+
             var ymlFiles = solutionFile.Directory!.EnumerateFiles("*.yml", SearchOption.AllDirectories).Where(f => f.FullName.DoesNotContain(".git"));
 
             foreach (var ymlFile in ymlFiles)
@@ -58,7 +58,7 @@ namespace RunJit.Cli.Update
 
                 if (ymlFileContent.NotEqualsTo(newfileContent))
                 {
-                    await File.WriteAllTextAsync(ymlFile.FullName, newfileContent).ConfigureAwait(false);    
+                    await File.WriteAllTextAsync(ymlFile.FullName, newfileContent).ConfigureAwait(false);
                 }
             }
 

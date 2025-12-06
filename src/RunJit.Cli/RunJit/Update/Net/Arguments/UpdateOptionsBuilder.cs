@@ -22,6 +22,7 @@ namespace RunJit.Cli.Update
         public IEnumerable<System.CommandLine.Argument> Build()
         {
             yield break;
+
             // yield return BuildSourceOption();
         }
 

@@ -55,7 +55,7 @@ namespace RunJit.Cli.Generate.Client
     {
         private readonly string _clientTemplate = EmbeddedFile.GetFileContentFrom("RunJit.Generate.Client.Templates.client.rps");
 
-        public GeneratedClient BuildFor(IImmutableList<GeneratedFacade> facades,
+        public GeneratedClient BuildFor(ImmutableList<GeneratedFacade> facades,
                                         string projectName,
                                         string clientName)
         {

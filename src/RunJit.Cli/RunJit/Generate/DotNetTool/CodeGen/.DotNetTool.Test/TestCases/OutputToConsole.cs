@@ -48,9 +48,8 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
             var testMethodName = cliCallPath.Split(" ").Where(value => value.StartsWith("-").IsFalse()).Flatten("_");
             var parametersFile = cliCallPath.Split(" ").Where(value => value.StartsWith("-").IsFalse()).Flatten(".");
 
-
             //parametersFile = $"{parametersFile}.Parameters.{commandInfo.NormalizedName}.json";
-            
+
             // Brand new test sdk have now an embedded file locator, name only is enough :)
             parametersFile = $"{commandInfo.NormalizedName}As{{format}}.json";
 

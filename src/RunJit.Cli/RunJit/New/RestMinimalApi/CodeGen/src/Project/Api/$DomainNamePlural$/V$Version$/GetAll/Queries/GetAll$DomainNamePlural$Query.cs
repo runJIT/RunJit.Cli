@@ -25,7 +25,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
                                                          GetAll$DomainNamePlural$RequestValidator requestValidator,
                                                          $DomainName$EntityMapper mapper)
     {
-        internal async Task<IImmutableList<$DomainName$>> ExecuteAsync(GetAll$DomainNamePlural$Request request,
+        internal async Task<ImmutableList<$DomainName$>> ExecuteAsync(GetAll$DomainNamePlural$Request request,
                                                                              CancellationToken cancellationToken)
         {
             // 1. Validate the request

@@ -25,6 +25,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
             yield return BuildUseVisualStudioOption();
             yield return Solution();
             yield return BuildMsBuild();
+            yield return BuildUseOpenApiJson();
         }
 
         private Option BuildUseVisualStudioOption()
@@ -35,6 +36,11 @@ namespace RunJit.Cli.RunJit.Generate.Client
         private Option BuildMsBuild()
         {
             return new Option(new[] { "--build", "-b" }, "Builds the target solution before creating the client") { Required = false };
+        }
+
+        private Option BuildUseOpenApiJson()
+        {
+            return new Option(new[] { "--use-open-api-json", "-uoaj" }, "Generate client via open api json") { Required = false };
         }
 
         private Option Solution()

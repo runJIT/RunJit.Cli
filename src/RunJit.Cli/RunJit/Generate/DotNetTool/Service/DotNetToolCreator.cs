@@ -42,6 +42,7 @@ namespace RunJit.Cli.Generate.DotNetTool
             services.AddProjectSettingsCodeGen();
 
             services.AddProjectEmbeddedFilesCodeGen();
+
             // services.AddProjectTypeCodeGen();
 
             // HttpCallHandlers
@@ -162,25 +163,25 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                          {
                                                              services.AddOutputService();
                                                              services.Add$dotNetToolName$HttpClientFactory(configuration);
-                                                 
+
                                                              services.AddSingletonIfNotExists<$command-name$Handler>();
                                                          }
                                                      }
-                                                 
+
                                                      internal sealed class $command-name$Handler(OutputService outputService)
                                                      {
                                                          internal async Task HandleAsync($command-name$Parameters getParameters, CancellationToken cancellationToken = default)
                                                          {
                                                              // 1. If not provide the embedded version
                                                              var appsettings = EmbeddedFile.$command-name$FileContentFrom("appsettings.json");
-                                                 
+
                                                              // 2. Check if an appsettings.json exists on file
                                                              var appsettingsOnDisk = new FileInfo(Path.Combine(Environment.CurrentDirectory, "appsettings.json"));
                                                              if (appsettingsOnDisk.Exists)
                                                              {
                                                                  appsettings = await File.ReadAllTextAsync(appsettingsOnDisk.FullName, cancellationToken).ConfigureAwait(false);
                                                              }
-                                                 
+
                                                              // 3. Write the formatted string to the output
                                                              await outputService.WriteAsync(appsettings, getParameters.Output, getParameters.Format, cancellationToken).ConfigureAwait(false);
                                                          }
@@ -204,14 +205,14 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                              services.AddSingletonIfNotExists<$command-name$Handler>();
                                                          }
                                                      }
-                                                 
+
                                                      internal sealed class $command-name$Handler(OutputService outputService)
                                                      {
                                                          internal async Task HandleAsync($command-name$Parameters setParameters, CancellationToken cancellationToken = default)
                                                          {
                                                              // 1. Define target file
                                                              var appsettingsOnDisk = new FileInfo(Path.Combine(Environment.CurrentDirectory, "appsettings.json"));
-                                                 
+
                                                              // 2. Write output
                                                              await outputService.WriteAsync(setParameters.Json, appsettingsOnDisk, FormatType.JsonIndented, cancellationToken).ConfigureAwait(false);
                                                          }
@@ -240,16 +241,16 @@ namespace RunJit.Cli.Generate.DotNetTool
 
             // Common options
             var tokenOption = new OptionInfo
-                             {
-                                 Alias = "-t",
-                                 NormalizedName = "token",
-                                 Argument = new ArgumentInfo("token", "Bearer token for authentication", "<token>[string]",
-                                                             "string", "string", "Token"),
-                                 IsIsRequired = false,
-                                 Name = "token",
-                                 Value = "--token",
-                                 Description = "Bearer token for authentication"
-                             };
+                              {
+                                  Alias = "-t",
+                                  NormalizedName = "token",
+                                  Argument = new ArgumentInfo("token", "Bearer token for authentication", "<token>[string]",
+                                                              "string", "string", "Token"),
+                                  IsIsRequired = false,
+                                  Name = "token",
+                                  Value = "--token",
+                                  Description = "Bearer token for authentication"
+                              };
 
             // New options for output and formating !
             var options = ImmutableList.Create(new OptionInfo
@@ -353,14 +354,14 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                           ProduceResponseTypes = ImmutableList<ProduceResponseTypes>.Empty,
                                                           RelativeUrl = "health",
                                                           Name = "GetHealthStatusAsync",
-                                                          Models = ImmutableList.Create<DeclarationBase>(new DeclarationBase("HealthStatusResponse",
-                                                                                                                             "HealthStatusResponse",
-                                                                                                                             """
-                                                                                                                             internal sealed record HealthStatusResponse(string Status,
-                                                                                                                             string TotalDuration,
-                                                                                                                             Dictionary<string, object> Entries);
-                                                                                                                             """,
-                                                                                                                             string.Empty)),
+                                                          Models = new DeclarationBase("HealthStatusResponse",
+                                                                                       "HealthStatusResponse",
+                                                                                       """
+                                                                                       internal sealed record HealthStatusResponse(string Status,
+                                                                                       string TotalDuration,
+                                                                                       Dictionary<string, object> Entries);
+                                                                                       """,
+                                                                                       string.Empty).AsImmutableList(),
                                                           Version = null,
                                                           SwaggerOperationId = "getHealthStatus",
                                                           Parameters = ImmutableList<Parameter>.Empty,

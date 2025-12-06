@@ -30,7 +30,7 @@ Enter one of the option numbers like '1' or '2'";
             var optionResult = collectTillInputCorrect.CollectTillInputIsValid(formattedTitle, inputValidator);
 
             // Default is integrate into your source solution.
-            return int.Parse(optionResult) == 1;
+            return int.Parse(optionResult).EqualsTo(1);
         }
     }
 }

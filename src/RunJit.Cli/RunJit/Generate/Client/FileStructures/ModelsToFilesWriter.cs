@@ -18,7 +18,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
     {
         public async Task WriteAsync(DirectoryInfo modelsFolder,
                                      GeneratedClientCodeForController controller,
-                                     IImmutableList<DeclarationBase> dataTypes,
+                                     ImmutableList<DeclarationBase> dataTypes,
                                      string projectName,
                                      string clientName)
         {

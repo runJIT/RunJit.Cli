@@ -67,11 +67,11 @@ namespace $namespace$
 
             var commandHandler = _commandHandlerBuilder.Build(commandInfo);
 
-            var interfaceImplementation = parentCommandInfo.IsNull() || commandInfo == parentCommandInfo ? string.Empty : $" : I{parentCommandInfo.NormalizedName}SubCommandBuilder";
+            var interfaceImplementation = parentCommandInfo.IsNull() || commandInfo.EqualsTo(parentCommandInfo) ? string.Empty : $" : I{parentCommandInfo.NormalizedName}SubCommandBuilder";
 
             var subCommandRegistration = commandInfo.SubCommands.Select(command => $"services.Add{command.NormalizedName}CommandBuilder(configuration);").ToFlattenString(Environment.NewLine);
             var subCommandUsings = commandInfo.SubCommands.Select(command => $"using {nameSpace}.{command.NormalizedName};").ToFlattenString(Environment.NewLine);
-            var commandRegistration = parentCommandInfo.IsNull() || commandInfo == parentCommandInfo ? $"{commandInfo.NormalizedName}CommandBuilder" : $"I{parentCommandInfo.NormalizedName}SubCommandBuilder, {commandInfo.NormalizedName}CommandBuilder";
+            var commandRegistration = parentCommandInfo.IsNull() || commandInfo.EqualsTo(parentCommandInfo) ? $"{commandInfo.NormalizedName}CommandBuilder" : $"I{parentCommandInfo.NormalizedName}SubCommandBuilder, {commandInfo.NormalizedName}CommandBuilder";
 
             var newTemplate = Template.Replace("$command-name$", commandInfo.NormalizedName)
                                       .Replace("$command-argument-name$", commandInfo.NormalizedName.ToLowerInvariant())

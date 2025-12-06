@@ -10,12 +10,13 @@ namespace RunJit.Cli.New.RestMinimalApi
         internal static void AddApiNamespaceProviderCleanup(this IServiceCollection services)
         {
             services.AddSingletonIfNotExists<IRestMinimalApiSpecificCodeGen, ApiNamespaceProviderCleanup>();
+
             // services.AddSingletonIfNotExists<IRestMinimalApiTestSpecificCodeGen, ApiNamespaceProviderCleanup>();
         }
     }
 
     internal sealed class ApiNamespaceProviderCleanup(ConsoleService consoleService,
-                                                   NamespaceProvider namespaceProvider) : IRestMinimalApiSpecificCodeGen, IRestMinimalApiTestSpecificCodeGen
+                                                      NamespaceProvider namespaceProvider) : IRestMinimalApiSpecificCodeGen, IRestMinimalApiTestSpecificCodeGen
     {
         public Task GenerateAsync(FileInfo solutionFileInfo,
                                   FileInfo webApiProject,
@@ -46,7 +47,7 @@ namespace RunJit.Cli.New.RestMinimalApi
                 {
                     continue;
                 }
-                
+
                 if (relativePath.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}"))
                 {
                     continue;

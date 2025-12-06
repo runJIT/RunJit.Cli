@@ -76,7 +76,7 @@ namespace RunJit.Cli.RunJit.Update.ResharperSettings
             {
                 var existingFileContent = await File.ReadAllTextAsync(resharperSettingsFile.FullName).ConfigureAwait(false);
 
-                if (resharperSettings.Length == existingFileContent.Length)
+                if (resharperSettings.Length.EqualsTo(existingFileContent.Length))
                 {
                     consoleService.WriteSuccess($"Solution: {solutionFile.FullName} R# setting already up to date nothing to update !");
 

@@ -65,7 +65,7 @@ namespace RunJit.Cli.Update.GlobalJson
             var orginalStartFolder = parameters.WorkingDirectory.IsNotNullOrWhiteSpace() ? parameters.WorkingDirectory : Environment.CurrentDirectory;
 
             // Ensure the working directory exists.
-            if (Directory.Exists(orginalStartFolder) == false)
+            if (Directory.Exists(orginalStartFolder).EqualsTo(false))
             {
                 Directory.CreateDirectory(orginalStartFolder);
             }
@@ -121,7 +121,7 @@ namespace RunJit.Cli.Update.GlobalJson
                 {
                     var globalJsonFileContent = await File.ReadAllTextAsync(globalJsonFile.FullName).ConfigureAwait(false);
 
-                    if (globalJsonFileContent == GlobalJson)
+                    if (globalJsonFileContent.EqualsTo(GlobalJson))
                     {
                         consoleService.WriteSuccess("Global json already up to date, nothing to do");
 
@@ -147,9 +147,8 @@ namespace RunJit.Cli.Update.GlobalJson
                 // 14. Create pull request
                 // Open a pull request to notify others of the build failure and request a review.
                 var pullRequestInfo = await awsCodeCommit.CreatePullRequestAsync("Update of global json.",
-                                                           "Update of global json.", qualityCheckBackendBuildsPackages).ConfigureAwait(false);
+                                                                                 "Update of global json.", qualityCheckBackendBuildsPackages).ConfigureAwait(false);
 
-                
                 var slackApiClient = new SlackServiceBuilder().UseApiToken(slackSettings.Token)
                                                               .GetApiClient();
 
@@ -164,7 +163,7 @@ namespace RunJit.Cli.Update.GlobalJson
                                                           Text = $"{moduleName}: Update global.json{Environment.NewLine}<{pullRequestInfo.AbsoluteUrl}>",
                                                           Channel = slackSettings.PullRequestChannel.Name
                                                       });
-                
+
                 // Log success message for the processed solution.
                 consoleService.WriteSuccess($"Solution: {solutionFile.FullName} was successfully checked and was buildable");
             }

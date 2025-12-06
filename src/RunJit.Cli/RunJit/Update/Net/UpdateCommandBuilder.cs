@@ -31,7 +31,8 @@ namespace RunJit.Cli.Update
             command.Handler = CommandHandler.Create<string, string, string, int>((solutionFile,
                                                                                   gitRepos,
                                                                                   workingDirectory,
-                                                                                  version) => updateService.HandleAsync(new UpdateDotNetVersionParameters(solutionFile, gitRepos, workingDirectory, version)));
+                                                                                  version) => updateService.HandleAsync(new UpdateDotNetVersionParameters(solutionFile, gitRepos, workingDirectory,
+                                                                                                                                                          version)));
 
             return command;
         }

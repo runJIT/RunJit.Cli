@@ -54,11 +54,10 @@ namespace RunJit.Cli.New.RestMinimalApi
                                                 .Replace("$UpdateRequestValidations$", createRestApiInfos.UpdateRequestValidations)
                                                 .Replace("$BasePath$", createRestApiInfos.BasePath);
 
-
                 // Splitting at the double dot ".."
                 var parts = webApiProjectResource.Split(["New.RestMinimalApi.CodeGen."], StringSplitOptions.None);
 
-                if (parts.Length == 2)
+                if (parts.Length.EqualsTo(2))
                 {
                     // Replacing dots with backslashes in the file path part
                     // Important  from $ becomes _ in embedded resources
@@ -94,7 +93,6 @@ namespace RunJit.Cli.New.RestMinimalApi
                                .Replace("$IdUrlName$", createRestApiInfos.IdPropertyName.FirstCharToLower())
                                .Replace("$QueryPropertyName$", createRestApiInfos.QueryPropertyName)
                                .Replace("$QueryPropertyNameLower$", createRestApiInfos.QueryPropertyName.FirstCharToLower());
-
 
                     var isRelativePath = part.Contains(".github.") || part.Contains("src.");
 

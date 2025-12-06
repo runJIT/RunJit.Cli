@@ -30,7 +30,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     // 1. Infrastructure
                                                     services.Add$dotNetToolName$ArgumentFixer();
                                                     services.AddErrorHandler();
-                                        
+
                                                     // 2. Domains
                                                     services.Add$dotNetToolName$CommandBuilder(configuration);
                                                 }

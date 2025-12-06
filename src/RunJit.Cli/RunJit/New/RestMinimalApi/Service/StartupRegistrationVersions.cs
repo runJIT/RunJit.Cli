@@ -31,18 +31,20 @@ namespace RunJit.Cli.New.RestMinimalApi
                                         }
                                         """;
 
-
         public async Task GenerateAsync(FileInfo solutionFileInfo,
                                         FileInfo webApiProject,
                                         CreateRestApiInfos createRestApiInfos)
         {
             // 1. Startup registration for domain versions
-            var startupPath = Path.Combine(webApiProject.Directory!.FullName, "Api", createRestApiInfos.DomainNamePlural, "Startup.cs");
+            var startupPath = Path.Combine(webApiProject.Directory!.FullName, "Api", createRestApiInfos.DomainNamePlural,
+                                           "Startup.cs");
+
             var startupFileInfo = new FileInfo(startupPath);
 
             if (startupFileInfo.NotExists())
             {
                 consoleService.WriteError($"Expected startup: {startupPath} to register new api endpoint does not exist");
+
                 return;
             }
 
@@ -63,7 +65,6 @@ namespace RunJit.Cli.New.RestMinimalApi
             //    }
             //}
 
-
             //using $ProjectName$.Api.$DomainNamePlural$.V$Version$;
 
             //namespace $ProjectName$.Api.$DomainNamePlural$
@@ -82,7 +83,6 @@ namespace RunJit.Cli.New.RestMinimalApi
             //    }
             //}
 
-
             // 2. Version folders
             var versions = startupFileInfo.Directory!.EnumerateDirectories().Select(d => d.Name).ToList();
 
@@ -96,8 +96,7 @@ namespace RunJit.Cli.New.RestMinimalApi
                                   .Replace("$ServiceRegistrations$", serviceRegistrations)
                                   .Replace("$EndpointMappings$", endpointMappings)
                                   .FormatSyntaxTree();
-            
-            
+
             await File.WriteAllTextAsync(startupFileInfo.FullName, startup).ConfigureAwait(false);
         }
     }

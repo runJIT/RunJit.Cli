@@ -38,9 +38,10 @@ namespace RunJit.Cli.Generate.Client
                                                                  {
                                                                      return $"new {endpoint.Domain}(httpClientHandler)";
                                                                  }
-                                                                 return $"httpClientHandler";
 
+                                                                 return $"httpClientHandler";
                                                              }).Flatten(", ");
+
                 stringBuilder.Append(versionDomains);
 
                 // If we reach the last parameter we have to close the new statement correctly

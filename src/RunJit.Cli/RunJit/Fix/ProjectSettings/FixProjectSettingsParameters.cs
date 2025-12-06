@@ -12,7 +12,7 @@ namespace RunJit.Cli.Fix.ProjectSettings
     }
 
     internal sealed record FixProjectSettingsParameters(string SolutionFile,
-                                                   string GitRepos,
-                                                   string WorkingDirectory,
-                                                   string IgnorePackages);
+                                                        string GitRepos,
+                                                        string WorkingDirectory,
+                                                        string IgnorePackages);
 }

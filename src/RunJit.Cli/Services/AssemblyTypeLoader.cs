@@ -18,7 +18,7 @@ namespace RunJit.Cli.Services
 
     internal sealed class AssemblyTypeLoader
     {
-        internal IImmutableList<Type> GetAllTypesFrom(FileInfo assemblyFile)
+        internal ImmutableList<Type> GetAllTypesFrom(FileInfo assemblyFile)
         {
             var types = GetAllTypes(assemblyFile);
             var additionalTypes = GetDeepTypeInfos(types).DistinctBy(type => type.FullName);
@@ -30,7 +30,7 @@ namespace RunJit.Cli.Services
             return allDeclaredTypes;
         }
 
-        private IImmutableList<Type> GetAllTypes(FileInfo assemblyFile)
+        private ImmutableList<Type> GetAllTypes(FileInfo assemblyFile)
         {
             Directory.SetCurrentDirectory(assemblyFile.Directory!.FullName);
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
@@ -40,7 +40,7 @@ namespace RunJit.Cli.Services
             return types;
         }
 
-        private IEnumerable<Type> GetDeepTypeInfos(IImmutableList<Type> types)
+        private IEnumerable<Type> GetDeepTypeInfos(ImmutableList<Type> types)
         {
             foreach (var type in types)
             {
@@ -87,7 +87,7 @@ namespace RunJit.Cli.Services
             var searchPattern = $"{strings.First()}.dll";
 
             // 1. Check first if it is already loaded in current app domain
-            var alreadyLoaded = assemblies.FirstOrDefault(a => a.GetName().Name == strings.First());
+            var alreadyLoaded = assemblies.FirstOrDefault(a => a.GetName().Name.EqualsTo(strings.First()));
 
             if (alreadyLoaded.IsNotNull())
             {
@@ -118,9 +118,13 @@ namespace RunJit.Cli.Services
             var nugetGlobalPackagesFolder = SettingsUtility.GetGlobalPackagesFolder(settings);
             var nugetDirectory = new DirectoryInfo(nugetGlobalPackagesFolder);
             var missingPackage = nugetDirectory.EnumerateFiles(searchPattern, SearchOption.AllDirectories).Where(file => file.Directory!.FullName.Contains(strings.First(), StringComparison.OrdinalIgnoreCase)).ToList();
-            var containsNet7 = missingPackage.Last();
-            var fileToLoad = containsNet7.FullName;
+            var containsNet7 = missingPackage.LastOrDefault();
+            var fileToLoad = containsNet7?.FullName;
 
+            if (fileToLoad.IsNullOrWhiteSpace())
+            {
+                return null;
+            }
             try
             {
                 return Assembly.LoadFrom(fileToLoad);

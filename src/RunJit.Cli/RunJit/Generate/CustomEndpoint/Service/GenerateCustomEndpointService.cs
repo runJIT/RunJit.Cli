@@ -39,7 +39,7 @@ namespace RunJit.Cli.RunJit.Generate.CustomEndpoint
         }
 
         private async Task CreateFoldersAndFiles(DirectoryInfo directoryInfo,
-                                                 IImmutableList<Template> endpointDataTemplates)
+                                                 ImmutableList<Template> endpointDataTemplates)
         {
             foreach (var template in endpointDataTemplates)
             {

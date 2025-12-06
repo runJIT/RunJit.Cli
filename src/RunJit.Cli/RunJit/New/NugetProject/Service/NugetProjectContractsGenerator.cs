@@ -32,7 +32,7 @@ namespace RunJit.Cli.New.NugetProject
             // 1. Check if cli project already exists
             //    Depending on new restriction of microsoft we can not just check the .Net.Web.Sdk
             //    so we need to check the implementation
-            var contractProject = solutionFile.ProductiveProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant() == minimalApiProjectInfos.ContractProjectName.ToLowerInvariant());
+            var contractProject = solutionFile.ProductiveProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant().EqualsTo(minimalApiProjectInfos.ContractProjectName.ToLowerInvariant()));
 
             if (contractProject.IsNotNull())
             {
@@ -50,8 +50,6 @@ namespace RunJit.Cli.New.NugetProject
                 netToolFolder.Delete(true);
             }
 
-            
-            
             // 4. Create new console project
             // dotnet new console --output folder1/folder2/myapp
             var target = Path.Combine(solutionFileInfo.Directory!.FullName, "src", minimalApiProjectInfos.ContractProjectName);
@@ -77,7 +75,7 @@ namespace RunJit.Cli.New.NugetProject
             // 8. Generate the whole command structure with arguments, options
             foreach (var codeGenerator in codeGenerators)
             {
-                await codeGenerator.GenerateAsync(contractProjectFileInfo, 
+                await codeGenerator.GenerateAsync(contractProjectFileInfo,
                                                   solutionFileInfo,
                                                   xdocument,
                                                   minimalApiProjectInfos).ConfigureAwait(false);

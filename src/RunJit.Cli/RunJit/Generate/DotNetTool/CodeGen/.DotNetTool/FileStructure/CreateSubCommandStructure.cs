@@ -27,7 +27,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                            CommandInfo commandInfo,
                            DotNetToolInfos dotNetToolName)
         {
-            if (!commandInfo.SubCommands.IsNotNull() || !commandInfo.SubCommands.Any())
+            if (!commandInfo.SubCommands.IsNotNull() || commandInfo.SubCommands.IsEmpty())
             {
                 return;
             }

@@ -2,6 +2,6 @@
 
 namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
 {
-    public sealed record GetAll$DomainNamePlural$Response(IImmutableList<$DomainName$> $DomainNamePlural$);
+    public sealed record GetAll$DomainNamePlural$Response(ImmutableList<$DomainName$> $DomainNamePlural$);
 }
 

@@ -16,7 +16,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
 
     internal sealed class ModelNormalizer
     {
-        internal IEnumerable<DeclarationBase> Normalize(IImmutableList<DeclarationToType> declarationToTypes)
+        internal IEnumerable<DeclarationBase> Normalize(ImmutableList<DeclarationToType> declarationToTypes)
         {
             // Hint: This is important now, any external data types form external libs have to be used with full
             //       qualified name
@@ -45,7 +45,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
                         }
 
                         // If property type is matching data model use simplified version :) 
-                        if (declarationToTypes.Any(declaratonToType => declaratonToType.Declaration.FullQualifiedName == type.FullName))
+                        if (declarationToTypes.Any(declaratonToType => declaratonToType.Declaration.FullQualifiedName.EqualsTo(type.FullName)))
                         {
                             continue;
                         }

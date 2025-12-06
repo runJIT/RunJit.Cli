@@ -33,7 +33,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddSingletonIfNotExists<ISpecificResponseTypeHandler, ByteArrayResponseTypeHandler>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class ByteArrayResponseTypeHandler : ISpecificResponseTypeHandler
                                             {
                                                 public bool CanHandle<TResult>(HttpResponseMessage responseMessage)
@@ -41,7 +41,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     return responseMessage.IsSuccessStatusCode &&
                                                            typeof(TResult) == typeof(byte[]);
                                                 }
-                                        
+
                                                 public async Task<TResult> HandleAsync<TResult>(HttpResponseMessage responseMessage,
                                                                                                 HttpMethod httpMethod,
                                                                                                 HttpClient httpClient,

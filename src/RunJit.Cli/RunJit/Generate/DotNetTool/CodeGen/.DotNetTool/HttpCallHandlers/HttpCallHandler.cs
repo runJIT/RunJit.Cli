@@ -40,21 +40,21 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     var message = httpRequestMessageBuilder.BuildFrom(httpMethod, url, payload, payloadParameterName);
                                                     var response = await httpClient.SendAsync(message, cancellationToken).ConfigureAwait(false);
                                                     var content = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                        
+
                                                     if (response.IsSuccessStatusCode)
                                                     {
                                                         return content;
                                                     }
-                                        
+
                                                     var absoluteUrl = $"{httpClient.BaseAddress}{url}";
-                                        
+
                                                     throw new ProblemDetailsException("Client call to endpoint was not successful",
                                                                                       $"The http call: {httpMethod.Method} {url} was not successful",
                                                                                       ("HttpMethod", httpMethod.Method),
                                                                                       ("Url", absoluteUrl),
                                                                                       ("Error", content));
                                                 }
-                                        
+
                                                 internal async Task<TResult> CallAsync<TResult>(HttpMethod httpMethod,
                                                                                                 string url,
                                                                                                 object? payload,
@@ -66,8 +66,8 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     var result = await responseHandleStrategy.HandleAsync<TResult>(response, httpMethod, httpClient, url).ConfigureAwait(false);
                                                     return result;
                                                 }
-                                        
-                                        
+
+
                                                 internal async Task CallAsync(Func<HttpClient, string, string, Task<HttpResponseMessage>> httpFunction,
                                                                               HttpMethod httpMethod,
                                                                               string url,
@@ -78,7 +78,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     {
                                                         return;
                                                     }
-                                        
+
                                                     var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                                                     var absoluteUrl = $"{httpClient.BaseAddress}{url}";
                                                     throw new ProblemDetailsException("Client call to endpoint was not successfull",
@@ -87,7 +87,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                                                       ("Url", absoluteUrl),
                                                                                       ("Error", content));
                                                 }
-                                        
+
                                                 internal async Task<TResult> CallAsync<TResult>(Func<HttpClient, string, string, Task<HttpResponseMessage>> httpFunction,
                                                                                                 HttpMethod httpMethod,
                                                                                                 string url,

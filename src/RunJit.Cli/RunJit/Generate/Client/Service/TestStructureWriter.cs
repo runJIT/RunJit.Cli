@@ -37,13 +37,13 @@ namespace RunJit.Cli.RunJit.Generate.Client
                                                           public async Task Should_Return_Healthy_State()
                                                           {
                                                               var healthResponse = await $clientName$.Health.GetHealthStatusAsync().ConfigureAwait(false);
-                                                  
+
                                                               Assert.That.ObjectsAreEqual("Healthy.json",
                                                                                           healthResponse,
                                                                                           differenceFunc: IgnoreDifferences);
                                                           }
-                                                  
-                                                          private IEnumerable<Difference> IgnoreDifferences(IImmutableList<Difference> differences)
+
+                                                          private IEnumerable<Difference> IgnoreDifferences(ImmutableList<Difference> differences)
                                                           {
                                                               foreach (var difference in differences)
                                                               {
@@ -51,7 +51,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
                                                                   {
                                                                       continue;
                                                                   }
-                                                  
+
                                                                   yield return difference;
                                                               }
                                                           }
@@ -142,7 +142,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
 
             // Quickfix Startup vs Program.cs
             // If on any csproj root level is no startup so we have program.cs only
-            var programFile = solutionFile.ProductiveProjects.Where(p => p.ProjectFileInfo.FileNameWithoutExtenion == solutionFile.SolutionFileInfo.FileNameWithoutExtenion).SelectMany(p => p.CSharpFileInfos).Where(c => c.Value.Name.Contains("program.cs", StringComparison.OrdinalIgnoreCase)).ToList();
+            var programFile = solutionFile.ProductiveProjects.Where(p => p.ProjectFileInfo.FileNameWithoutExtenion.EqualsTo(solutionFile.SolutionFileInfo.FileNameWithoutExtenion)).SelectMany(p => p.CSharpFileInfos).Where(c => c.Value.Name.Contains("program.cs", StringComparison.OrdinalIgnoreCase)).ToList();
             var startup = programFile.SelectMany(p => p.Value.Directory!.EnumerateFiles("startup.cs", SearchOption.TopDirectoryOnly));
 
             if (startup.IsEmpty())
@@ -178,11 +178,14 @@ namespace RunJit.Cli.RunJit.Generate.Client
             await File.WriteAllTextAsync(jsonSerializerFile.FullName, jsonSerializer).ConfigureAwait(false);
 
             // NEW health endpoint test
-            var healthTest = new FileInfo(Path.Combine(clientTestProject.ProjectFileInfo.Value.Directory!.FullName, "Api", "Health", "GetHealthStateTest.cs"));
+            var healthTest = new FileInfo(Path.Combine(clientTestProject.ProjectFileInfo.Value.Directory!.FullName, "Api", "Health",
+                                                       "GetHealthStateTest.cs"));
+
             if (healthTest.Directory!.NotExists())
             {
                 healthTest.Directory!.Create();
             }
+
             var healthTestSyntaxTree = HealthTestTemplate.Replace("$name$", clientName)
                                                          .Replace("$clientName$", clientName)
                                                          .Replace("$namespace$", clientTestProject.ProjectFileInfo.FileNameWithoutExtenion);
@@ -190,7 +193,9 @@ namespace RunJit.Cli.RunJit.Generate.Client
             await File.WriteAllTextAsync(healthTest.FullName, healthTestSyntaxTree);
 
             // Healthy response
-            var healthyResponseFile = new FileInfo(Path.Combine(clientTestProject.ProjectFileInfo.Value.Directory!.FullName, "Api", "Health","Responses", "Healthy.json"));
+            var healthyResponseFile = new FileInfo(Path.Combine(clientTestProject.ProjectFileInfo.Value.Directory!.FullName, "Api", "Health",
+                                                                "Responses", "Healthy.json"));
+
             if (healthyResponseFile.Directory!.NotExists())
             {
                 healthyResponseFile.Directory!.Create();
@@ -200,6 +205,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
 
             // Environment variables
             var environmenVariables = new FileInfo(Path.Combine(clientTestProject.ProjectFileInfo.Value.Directory!.FullName, "Properties", "EnvironmentVariables.json"));
+
             if (environmenVariables.Directory!.NotExists())
             {
                 environmenVariables.Directory!.Create();
@@ -215,7 +221,6 @@ namespace RunJit.Cli.RunJit.Generate.Client
 
             // 4.2 API project reference is needed too because of startup.cs
             var webAppProject = solutionFile.ProductiveProjects.FirstOrDefault(p => p.Document.ToString().Contains("Sdk=\"Microsoft.NET.Sdk.Web\""));
-
 
             if (webAppProject.IsNotNull())
             {

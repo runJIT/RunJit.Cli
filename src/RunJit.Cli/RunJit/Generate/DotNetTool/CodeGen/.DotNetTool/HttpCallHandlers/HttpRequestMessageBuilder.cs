@@ -38,7 +38,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddSingletonIfNotExists<HttpRequestMessageBuilder>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class HttpRequestMessageBuilder
                                             {
                                                 internal HttpRequestMessage BuildFrom(HttpMethod method,
@@ -48,7 +48,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                 {
                                                     var content = payload.IsNotNull() ? GetContent(payload, payloadParameterName) : null;
                                                     return new HttpRequestMessage(method, uri) { Version = HttpVersion.Version11, VersionPolicy = HttpVersionPolicy.RequestVersionOrLower, Content = content };
-                                        
+
                                                     static HttpContent GetContent(object? payload, string payloadParameterName)
                                                     {
                                                         return payload switch

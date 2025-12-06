@@ -31,7 +31,7 @@ namespace RunJit.Cli.Services
         {
             var folderStartIndex = FindSolutionFolderStartIndex(solutionFileAsLines, folderName);
 
-            if (folderStartIndex == -1)
+            if (folderStartIndex.EqualsTo(-1))
             {
                 // Folder does not exist -> create it
                 InsertNewSolutionFolderBlock(solutionFileAsLines, folderName, solutionFile,
@@ -73,7 +73,7 @@ namespace RunJit.Cli.Services
             var nestedProjects = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
             InsertFolderRecursivelyIntoSolution(solutionFile, solutionLines, rootNode,
-                                                                nestedProjects);
+                                                nestedProjects);
 
             // 3) Write or update GlobalSection(NestedProjects) with child=parent mappings
             if (nestedProjects.Count > 0)
@@ -158,7 +158,7 @@ namespace RunJit.Cli.Services
 
             for (var i = folderStartIndex + 1; i < solutionLines.Count; i++)
             {
-                if (solutionLines[i].TrimStart().StartsWith("EndProject", StringComparison.OrdinalIgnoreCase))
+                if (solutionLines[i].TrimStart().StartWith("EndProject"))
                 {
                     projectEndIndex = i;
 
@@ -166,7 +166,7 @@ namespace RunJit.Cli.Services
                 }
             }
 
-            if (projectEndIndex == -1)
+            if (projectEndIndex.EqualsTo(-1))
             {
                 throw new InvalidOperationException("Could not find 'EndProject' for existing solution folder.");
             }
@@ -177,14 +177,14 @@ namespace RunJit.Cli.Services
 
             for (var i = folderStartIndex + 1; i < projectEndIndex; i++)
             {
-                if (solutionLines[i].TrimStart().StartsWith("ProjectSection(SolutionItems)", StringComparison.OrdinalIgnoreCase))
+                if (solutionLines[i].TrimStart().StartWith("ProjectSection(SolutionItems)"))
                 {
                     sectionStartIndex = i;
 
                     // locate EndProjectSection
-                    for (var j = i + 1; j <= projectEndIndex; j++)
+                    for (var j = i + 1; j.IsLessOrEqual(projectEndIndex); j++)
                     {
-                        if (solutionLines[j].TrimStart().StartsWith("EndProjectSection", StringComparison.OrdinalIgnoreCase))
+                        if (solutionLines[j].TrimStart().StartWith("EndProjectSection"))
                         {
                             sectionEndIndex = j;
 
@@ -196,7 +196,7 @@ namespace RunJit.Cli.Services
                 }
             }
 
-            if (sectionStartIndex == -1)
+            if (sectionStartIndex.EqualsTo(-1))
             {
                 // No ProjectSection => create one just before EndProject
                 sectionStartIndex = projectEndIndex;
@@ -221,11 +221,11 @@ namespace RunJit.Cli.Services
                 {
                     var line = solutionLines[i].Trim();
 
-                    if (!string.IsNullOrEmpty(line) && !line.StartsWith("EndProjectSection", StringComparison.OrdinalIgnoreCase))
+                    if (!line.IsNullOrEmpty() && !line.StartWith("EndProjectSection"))
                     {
                         var parts = line.Split('=');
 
-                        if (parts.Length == 2)
+                        if (parts.Length.EqualsTo(2))
                         {
                             existingFiles.Add(parts[0].Trim());
                         }
@@ -272,11 +272,11 @@ namespace RunJit.Cli.Services
             }
 
             var node = new FolderNode
-            {
-                Name = info.Name, // e.g. ".github", "ISSUE_TEMPLATE"
-                ParentName = parentFolderName,
-                FolderFullPath = info.FullName
-            };
+                       {
+                           Name = info.Name, // e.g. ".github", "ISSUE_TEMPLATE"
+                           ParentName = parentFolderName,
+                           FolderFullPath = info.FullName
+                       };
 
             // Gather all direct files
             // (Exclude hidden/system if desired)
@@ -316,26 +316,26 @@ namespace RunJit.Cli.Services
             // 2) Retrieve the GUID of this newly created (or existing) folder
             var childGuid = FindFolderGuidByName(solutionLines, node.Name);
 
-            if (string.IsNullOrEmpty(childGuid))
+            if (childGuid.IsNullOrEmpty())
             {
                 throw new InvalidOperationException($"Could not find GUID for solution folder '{node.Name}' after creation.");
             }
 
             // 3) If it has a parent, retrieve the parent's GUID and store child=parent in the dictionary
-            if (!string.IsNullOrEmpty(node.ParentName))
+            if (!node.ParentName.IsNullOrEmpty())
             {
                 // The parent must already exist in the .sln
                 var parentGuid = FindFolderGuidByName(solutionLines, node.ParentName);
 
-                if (!string.IsNullOrEmpty(parentGuid))
+                if (!parentGuid.IsNullOrEmpty())
                 {
                     // Record the child-parent relationship for NestedProjects
                     nestedProjectsMap[childGuid] = parentGuid;
                 }
 
                 // If the parent doesn't exist, that means the parent's creation is not done yet or
-                // there's a naming conflict. 
-                // In a more robust approach, you might handle that differently or 
+                // there's a naming conflict.
+                // In a more robust approach, you might handle that differently or
                 // reorder your folder creation so parents are always created first.
             }
 
@@ -379,16 +379,17 @@ namespace RunJit.Cli.Services
         }
 
         private void UpdateNestedProjectsSection(
-     List<string> lines,
-     Dictionary<string, string> nestedProjectsMap)
+            List<string> lines,
+            Dictionary<string, string> nestedProjectsMap)
         {
-            if (nestedProjectsMap.Count == 0)
+            if (nestedProjectsMap.Count.EqualsTo(0))
             {
                 return;
             }
 
             // 1) Locate top-level Global ... EndGlobal
             int globalIndex = lines.FindIndex(l => l.TrimStart().Equals("Global", StringComparison.OrdinalIgnoreCase));
+
             if (globalIndex < 0)
             {
                 throw new InvalidOperationException("Malformed .sln: missing top-level 'Global'.");
@@ -396,6 +397,7 @@ namespace RunJit.Cli.Services
 
             int endGlobalIndex = lines.FindIndex(globalIndex + 1, l =>
                                                                       l.TrimStart().Equals("EndGlobal", StringComparison.OrdinalIgnoreCase));
+
             if (endGlobalIndex < 0)
             {
                 throw new InvalidOperationException("Malformed .sln: missing top-level 'EndGlobal'.");
@@ -407,28 +409,32 @@ namespace RunJit.Cli.Services
             int nestedStartIndex = -1;
             int nestedEndIndex = -1;
             int i = globalIndex + 1;
+
             while (i < endGlobalIndex)
             {
                 var line = lines[i].TrimStart();
-                if (line.StartsWith("GlobalSection(", StringComparison.OrdinalIgnoreCase))
+
+                if (line.StartWith("GlobalSection("))
                 {
                     // e.g. "GlobalSection(SolutionConfigurationPlatforms) = preSolution"
                     // or    "GlobalSection(NestedProjects) = preSolution"
 
                     // Check if it's NestedProjects:
-                    if (line.StartsWith("GlobalSection(NestedProjects)", StringComparison.OrdinalIgnoreCase))
+                    if (line.StartWith("GlobalSection(NestedProjects)"))
                     {
                         nestedStartIndex = i;
 
                         // find matching EndGlobalSection
                         for (int j = i + 1; j < endGlobalIndex; j++)
                         {
-                            if (lines[j].TrimStart().StartsWith("EndGlobalSection", StringComparison.OrdinalIgnoreCase))
+                            if (lines[j].TrimStart().StartWith("EndGlobalSection"))
                             {
                                 nestedEndIndex = j;
+
                                 break;
                             }
                         }
+
                         // IMPORTANT: break the while-loop if we found the NestedProjects section
                         break;
                     }
@@ -436,21 +442,25 @@ namespace RunJit.Cli.Services
                     {
                         // Some other GlobalSection(...) => skip until its matching EndGlobalSection
                         int sectionClose = -1;
+
                         for (int j = i + 1; j < endGlobalIndex; j++)
                         {
-                            if (lines[j].TrimStart().StartsWith("EndGlobalSection", StringComparison.OrdinalIgnoreCase))
+                            if (lines[j].TrimStart().StartWith("EndGlobalSection"))
                             {
                                 sectionClose = j;
+
                                 break;
                             }
                         }
-                        if (sectionClose == -1)
+
+                        if (sectionClose.EqualsTo(-1))
                         {
                             throw new InvalidOperationException("Malformed .sln: 'GlobalSection(...)' without matching 'EndGlobalSection'.");
                         }
 
                         // jump i just past this section
                         i = sectionClose + 1;
+
                         continue;
                     }
                 }
@@ -461,16 +471,18 @@ namespace RunJit.Cli.Services
                 }
             }
 
-            if (nestedStartIndex == -1)
+            if (nestedStartIndex.EqualsTo(-1))
             {
                 // 3) No NestedProjects section found -> create one at top-level, just before EndGlobal
                 var newSection = new List<string>();
                 newSection.Add("\tGlobalSection(NestedProjects) = preSolution");
+
                 // child -> parent lines
                 foreach (var kvp in nestedProjectsMap)
                 {
                     newSection.Add($"\t\t{kvp.Key} = {kvp.Value}");
                 }
+
                 newSection.Add("\tEndGlobalSection");
 
                 lines.InsertRange(endGlobalIndex, newSection);
@@ -480,14 +492,17 @@ namespace RunJit.Cli.Services
                 // 4) We have an existing NestedProjects section from nestedStartIndex..nestedEndIndex
                 // Add new lines before the EndGlobalSection
                 var existing = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
                 for (int lineIndex = nestedStartIndex + 1; lineIndex < nestedEndIndex; lineIndex++)
                 {
                     var row = lines[lineIndex].Trim();
+
                     // e.g. "{childGuid} = {parentGuid}"
-                    if (!row.StartsWith("EndGlobalSection", StringComparison.OrdinalIgnoreCase))
+                    if (!row.StartWith("EndGlobalSection"))
                     {
                         var parts = row.Split('=');
-                        if (parts.Length == 2)
+
+                        if (parts.Length.EqualsTo(2))
                         {
                             existing.Add(parts[0].Trim());
                         }
@@ -496,6 +511,7 @@ namespace RunJit.Cli.Services
 
                 // Insert any missing lines
                 var newLines = new List<string>();
+
                 foreach (var kvp in nestedProjectsMap)
                 {
                     if (!existing.Contains(kvp.Key))
@@ -503,6 +519,7 @@ namespace RunJit.Cli.Services
                         newLines.Add($"\t\t{kvp.Key} = {kvp.Value}");
                     }
                 }
+
                 if (newLines.Count > 0)
                 {
                     lines.InsertRange(nestedEndIndex, newLines);

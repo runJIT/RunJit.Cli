@@ -18,7 +18,7 @@ namespace RunJit.Cli.New.MinimalApiProject
     }
 
     internal sealed class NewMinimalApiProjectService(ConsoleService consoleService,
-                                                     MinimalApiProjectCreator newMinimalApiProjectService)
+                                                      MinimalApiProjectCreator newMinimalApiProjectService)
     {
         public async Task<int> HandleAsync(NewMinimalApiProjectParameters parameters)
         {

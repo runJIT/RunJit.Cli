@@ -34,7 +34,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
                                                                                   [("$Unique$DomainName$Name$", Unique$DomainName$Name)]);
         }
 
-        private IEnumerable<Difference> IgnoreAutoValues(IImmutableList<Difference> differences)
+        private IEnumerable<Difference> IgnoreAutoValues(ImmutableList<Difference> differences)
         {
             foreach (var difference in differences)
             {

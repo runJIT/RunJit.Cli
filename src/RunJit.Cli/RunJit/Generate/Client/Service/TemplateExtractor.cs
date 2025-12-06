@@ -30,10 +30,8 @@ namespace RunJit.Cli.RunJit.Generate.Client
     internal sealed class TemplateExtractor() : ITemplateExtractor
     {
         public Task ExtractToAsync(DirectoryInfo directoryInfo,
-                                         ClientParameters clientGenParameters)
+                                   ClientParameters clientGenParameters)
         {
-
-
             // Normal mode !!
             // To avoid api start and more
             //var auth = await mediator.SendAsync(new GetTokenByStorageCache()).ConfigureAwait(false);

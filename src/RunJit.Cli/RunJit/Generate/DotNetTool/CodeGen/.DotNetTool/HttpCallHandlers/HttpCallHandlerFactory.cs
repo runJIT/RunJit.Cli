@@ -33,11 +33,11 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                 {
                                                     services.AddResponseTypeHandleStrategy();
                                                     services.AddHttpRequestMessageBuilder();
-                                        
+
                                                     services.AddSingletonIfNotExists<HttpCallHandlerFactory>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class HttpCallHandlerFactory(ResponseTypeHandleStrategy responseTypeHandleStrategy,
                                                                                          HttpRequestMessageBuilder httpRequestMessageBuilder)
                                             {

@@ -72,6 +72,7 @@ namespace RunJit.Cli.Test.SystemTest
                 yield return request.ProjectName;
                 yield return "--target-directory";
                 yield return request.TargetDirectory;
+
                 // yield return "--start-ide";
             }
         }

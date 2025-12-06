@@ -19,7 +19,7 @@
 //            stringBuilder.AppendLine("Here is the next part code i need to be documentated:");
 //            stringBuilder.AppendLine();
 //            stringBuilder.AppendLine(codeSnippet);
-            
+
 //            var message = stringBuilder.ToString();
 
 //            var result = await gptClient.PostMessageAsync(message);
@@ -35,7 +35,7 @@
 //            services.AddSingletonIfNotExists<DocuEndpointCommand>();
 //        }
 //    }
-    
+
 //    /// <summary>
 //    /// Documentation command for endpoints.
 //    /// </summary>
@@ -46,20 +46,20 @@
 //                                           We have not to document the c# class we have to create the detailed summary for the endpoint.
 //                                           Important i use the docu result in an automated process. Prepare the result in away that
 //                                           i can easisly reuse it.
-                                           
+
 //                                           I will give you a sample how such a docu looks like:
-                                           
+
 //                                           Retrieves a collection of form configurations available to the authenticated user.
-                                           
+
 //                                           This endpoint supports optional filtering using the `title` query parameter. If provided, the system returns only those form configurations where the title matches the specified value. The title filter is case-sensitive and expects a non-empty, non-whitespace string.
-                                           
+
 //                                           If `title` is not provided, no filtering is applied and all configurations are returned.
-                                           
+
 //                                           ### Query Parameters
 //                                           - `title` (optional): Filters the results by form title.
 //                                           - Must not be empty (`""`) or whitespace-only (`" "`).
 //                                           - Examples of valid titles: `"This is a cool project"`, `"Hello world"`.
-                                           
+
 //                                           ### Responses
 //                                           - `200 OK`: Request successful, returns a list of form configurations.
 //                                           - `400 Bad Request`: Invalid query parameter (e.g., `title` is empty or only whitespace).
@@ -70,15 +70,15 @@
 //                                           - `500 Internal Server Error`: A generic server error occurred while processing the request.
 //                                           - `503 Service Unavailable`: The server is temporarily unavailable or under maintenance.
 //                                           - `504 Gateway Timeout`: The request timed out at the infrastructure level (e.g., AWS or reverse proxy); may return an HTML error page.
-                                           
+
 //                                           ### Authorization
 //                                           This endpoint requires a valid bearer token. The authenticated user must have permission to read form configurations.
-                                           
+
 //                                           ### Use Cases
 //                                           - Listing all available form templates in UI tools.
 //                                           - Filtering forms based on project or use-case titles.
 //                                           - Preloading forms metadata for editing or preview.
-                                           
+
 //                                           For best results, ensure all query parameters follow the expected format. Omitting optional filters will result in the full dataset being returned.
 //                                           """;
 
@@ -87,7 +87,7 @@
 //        {
 //        }
 //    }
-    
+
 //    public static class AddDocuCommandCommandExtension
 //    {
 //        public static void AddDocuCommandCommand(this IServiceCollection services)
@@ -114,7 +114,7 @@
 //            services.AddSingletonIfNotExists<DocuQueryCommand>();
 //        }
 //    }
-    
+
 //    /// <summary>
 //    /// Documentation command for queries.
 //    /// </summary>
@@ -133,7 +133,7 @@
 //            services.AddSingletonIfNotExists<DocuValidationCommand>();
 //        }
 //    }
-    
+
 //    /// <summary>
 //    /// Documentation command for validations.
 //    /// </summary>
@@ -151,11 +151,11 @@
 //                                                IConfiguration configuration)
 //        {
 //            services.AddGptClient(configuration);
-            
+
 //            services.AddSingletonIfNotExists<DocuMapperCommand>();
 //        }
 //    }
-    
+
 //    /// <summary>
 //    /// Documentation command for mappers.
 //    /// </summary>
@@ -166,7 +166,6 @@
 //        {
 //        }
 //    }
-
 
 //    public static class AddAiDocuServiceExtension
 //    {
@@ -182,7 +181,7 @@
 //            services.AddSingletonIfNotExists<AiDocuService>();
 //        }
 //    }
-    
+
 //    /// <summary>
 //    /// The AiDocuService aggregates all the individual documentation commands and provides a simple facade.
 //    /// </summary>
@@ -203,3 +202,5 @@
 //        internal Task<string> DocuMapperAsync(string codeSnippet) => docuMapperCommand.ExecuteAsync(codeSnippet);
 //    }
 //}
+
+

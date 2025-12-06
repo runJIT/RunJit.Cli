@@ -22,18 +22,16 @@
 //        public string ApiKey { get; init; } = string.Empty;
 //    }
 
-
 //    public static class AddGptClientExtension
 //    {
 //        public static void AddGptClient(this IServiceCollection services,
 //                                        IConfiguration configuration)
 //        {
 //            services.AddGptSettings(configuration);
-            
+
 //            services.AddSingletonIfNotExists<GptClient>();
 //        }
 //    }
-    
 
 //    internal class GptClient(IHttpClientFactory httpClientFactory,
 //                             GptSettings settings)
@@ -127,3 +125,5 @@
 //        public string? Content { get; set; }
 //    }
 //}
+
+

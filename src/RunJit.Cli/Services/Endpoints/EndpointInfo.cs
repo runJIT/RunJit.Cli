@@ -23,15 +23,15 @@ namespace RunJit.Cli.Services.Endpoints
 
         public required string RelativeUrl { get; init; } = string.Empty;
 
-        public required IImmutableList<Parameter> Parameters { get; init; } = ImmutableList<Parameter>.Empty;
+        public ImmutableList<Parameter> Parameters { get; init; } = ImmutableList<Parameter>.Empty;
 
         public required RequestType? RequestType { get; init; }
 
         public required ResponseType ResponseType { get; init; }
 
-        public required IImmutableList<ProduceResponseTypes> ProduceResponseTypes { get; init; } = ImmutableList<ProduceResponseTypes>.Empty;
+        public ImmutableList<ProduceResponseTypes> ProduceResponseTypes { get; init; } = ImmutableList<ProduceResponseTypes>.Empty;
 
-        public required IImmutableList<DeclarationBase> Models { get; init; } = ImmutableList<DeclarationBase>.Empty;
+        public ImmutableList<DeclarationBase> Models { get; init; } = ImmutableList<DeclarationBase>.Empty;
 
         public ObsoleteInfo? ObsoleteInfo { get; init; }
     }
@@ -41,7 +41,7 @@ namespace RunJit.Cli.Services.Endpoints
     [DebuggerDisplay("{GroupName}")]
     public record EndpointGroup
     {
-        public IImmutableList<EndpointInfo> Endpoints { get; init; } = ImmutableList<EndpointInfo>.Empty;
+        public ImmutableList<EndpointInfo> Endpoints { get; init; } = ImmutableList<EndpointInfo>.Empty;
 
         public required string GroupName { get; init; } = string.Empty;
 

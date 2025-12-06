@@ -22,7 +22,7 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
                                         using System.Collections.Immutable;
                                         using AspNetCore.Simple.MsTest.Sdk;
                                         using Extensions.Pack;
-                                        
+
                                         namespace $namespace$.$dotNetToolName$.Health.GetHealthStatus
                                         {
                                             [TestClass]
@@ -43,7 +43,7 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
                                                                               "GetHealthStatus.json", 
                                                                               differenceFunc:IgnoreValues);
                                                 }
-                                        
+
                                                 /// <summary>
                                                 /// Tests the '$dotNetToolNameLower$ health gethealthstatus' command with different output formats and writes the output to a specified file.
                                                 /// Asserts the output against the expected JSON file.
@@ -81,7 +81,7 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
                                                                               $"GetHealthStatusAs{format}.json",
                                                                               IgnoreValues);
                                                 }
-                                        
+
                                                 private IEnumerable<Difference> IgnoreValues(IImmutableList<Difference> arg)
                                                 {
                                                     foreach (var difference in arg)
@@ -90,27 +90,27 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
                                                         {
                                                             continue;
                                                         }
-                                        
+
                                                         if (difference.MemberPath.Contains("totalDuration"))
                                                         {
                                                             continue;
                                                         }
-                                        
+
                                                         yield return difference;
                                                     }
                                                 }
                                             }
                                         }
-                                        
+
                                         """;
 
         private const string expectedJsonOutput = """
-                                              {
-                                                "status": "Healthy",
-                                                "totalDuration": "00:00:00.0000015",
-                                                "entries": {}
-                                              }
-                                              """;
+                                                  {
+                                                    "status": "Healthy",
+                                                    "totalDuration": "00:00:00.0000015",
+                                                    "entries": {}
+                                                  }
+                                                  """;
 
         private const string expectedJsonAsStringOutput = """
                                                           "{\u0022status\u0022:\u0022Healthy\u0022,\u0022totalDuration\u0022:\u002200:00:00.0000015\u0022,\u0022entries\u0022:{}}"
@@ -123,7 +123,8 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
         {
             // 1. GlobalSetup
             // Find health status test
-            var healthCheckTest = projectFileInfo.Directory!.EnumerateFiles("GetHealthStatusTest.cs",SearchOption.AllDirectories).FirstOrDefault();
+            var healthCheckTest = projectFileInfo.Directory!.EnumerateFiles("GetHealthStatusTest.cs", SearchOption.AllDirectories).FirstOrDefault();
+
             if (healthCheckTest.IsNull())
             {
                 return;
@@ -143,9 +144,10 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
 
             // Update responses with expected results
             var jsonFiles = projectFileInfo.Directory!.EnumerateFiles("GetHealthStatus*.json", SearchOption.AllDirectories).ToList();
+
             foreach (var jsonFile in jsonFiles)
             {
-                if(jsonFile.Name.Contains("JsonAsString"))
+                if (jsonFile.Name.Contains("JsonAsString"))
                 {
                     await File.WriteAllTextAsync(jsonFile.FullName, expectedJsonAsStringOutput).ConfigureAwait(false);
                 }

@@ -17,14 +17,14 @@ namespace RunJit.Cli.RunJit.Update.Nuget
     internal interface IUpdateNugetPackageService
     {
         Task UpdateNugetPackageAsync(OutdatedNugetResponse outdatedNugetResponse,
-                                     IImmutableList<string> packagesToIgnore);
+                                     ImmutableList<string> packagesToIgnore);
     }
 
     internal sealed class UpdateNugetPackageService(ConsoleService consoleService,
                                                     IDotNet dotnet) : IUpdateNugetPackageService
     {
         public async Task UpdateNugetPackageAsync(OutdatedNugetResponse outdatedNugetResponse,
-                                                  IImmutableList<string> packagesToIgnore)
+                                                  ImmutableList<string> packagesToIgnore)
         {
             // for each outdated package we need to update the package
             foreach (var project in outdatedNugetResponse.Projects)
@@ -33,14 +33,14 @@ namespace RunJit.Cli.RunJit.Update.Nuget
                 {
                     foreach (var package in framework.TopLevelPackages)
                     {
-                        if (packagesToIgnore.Any(p => p.ToUpperInvariant() == package.Id.ToUpperInvariant()))
+                        if (packagesToIgnore.Any(p => p.ToUpperInvariant().EqualsTo(package.Id.ToUpperInvariant())))
                         {
                             consoleService.WriteSuccess($"Skip package: {package.Id} because it was on the ignore list");
 
                             continue;
                         }
 
-                        if (package.ResolvedVersion == package.LatestVersion)
+                        if (package.ResolvedVersion.EqualsTo(package.LatestVersion))
                         {
                             continue;
                         }

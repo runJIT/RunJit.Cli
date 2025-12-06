@@ -47,7 +47,8 @@ namespace RunJit.Cli.Update.TargetPlatform
 
             var availablePlatforms = platformProvider.GetSupportedPlatforms();
 
-            var matchingPlatform = availablePlatforms.FirstOrDefault(p => p == parameters.Platform);
+            var matchingPlatform = availablePlatforms.FirstOrDefault(p => p.EqualsTo(parameters.Platform));
+
             if (matchingPlatform.IsNull())
             {
                 throw new RunJitException($"Platform: {parameters.Platform} is not supported. Supported platforms are: {Environment.NewLine}{availablePlatforms.Flatten(Environment.NewLine)}");

@@ -88,7 +88,7 @@ namespace RunJit.Cli.New.NugetProject
             // Get or create a PropertyGroup element
             var propertyGroup = projectElement.Elements("PropertyGroup").FirstOrDefault();
 
-            if (propertyGroup == null)
+            if (propertyGroup.IsNull())
             {
                 propertyGroup = new XElement("PropertyGroup");
                 projectElement.Add(propertyGroup);
@@ -148,7 +148,7 @@ namespace RunJit.Cli.New.NugetProject
         {
             var element = parent.Element(elementName);
 
-            if (element == null)
+            if (element.IsNull())
             {
                 element = new XElement(elementName, value);
                 parent.Add(element);
@@ -168,9 +168,9 @@ namespace RunJit.Cli.New.NugetProject
             // Find an existing ItemGroup with a <None> element matching the Include attribute
             var itemGroup = projectElement.Elements("ItemGroup")
                                           .FirstOrDefault(ig => ig.Elements("None")
-                                                                  .Any(n => n.Attribute("Include")?.Value == itemInclude));
+                                                                  .Any(n => n.Attribute("Include")?.Value.EqualsTo(itemInclude) ?? false));
 
-            if (itemGroup == null)
+            if (itemGroup.IsNull())
             {
                 // If not found, create a new ItemGroup and add the <None> element
                 itemGroup = new XElement("ItemGroup");
@@ -184,7 +184,7 @@ namespace RunJit.Cli.New.NugetProject
             {
                 // Update existing <None> element
                 var noneElement = itemGroup.Elements("None")
-                                           .First(n => n.Attribute("Include")?.Value == itemInclude);
+                                           .First(n => n.Attribute("Include")?.Value.EqualsTo(itemInclude) ?? false);
 
                 SetOrUpdateElement(noneElement, "Pack", packValue);
                 SetOrUpdateElement(noneElement, "PackagePath", packagePath);

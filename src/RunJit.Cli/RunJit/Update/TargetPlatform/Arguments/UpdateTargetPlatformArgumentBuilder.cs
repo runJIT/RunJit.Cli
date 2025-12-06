@@ -21,6 +21,7 @@ namespace RunJit.Cli.Update.TargetPlatform
         public IEnumerable<System.CommandLine.Argument> Build()
         {
             yield break;
+
             // yield return BuildSourceOption();
         }
 

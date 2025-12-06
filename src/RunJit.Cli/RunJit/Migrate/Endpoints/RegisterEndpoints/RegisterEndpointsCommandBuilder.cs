@@ -33,8 +33,9 @@ namespace RunJit.Cli.Migrate.Endpoints.RegisterEndpoints
             command.Handler = CommandHandler.Create<string, string, string>((solution,
                                                                              webApiProject,
                                                                              domainNamePlural) => handler.HandleAsync(new RegisterEndpointsParameters(solution ?? string.Empty,
-                                                                                                                                                               webApiProject ?? string.Empty,
-                                                                                                                                                               domainNamePlural ?? string.Empty)));
+                                                                                                                                                      webApiProject ?? string.Empty,
+                                                                                                                                                      domainNamePlural ?? string.Empty)));
+
             return command;
         }
     }

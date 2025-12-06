@@ -21,8 +21,8 @@ namespace RunJit.Cli.Services
 
     internal sealed class ControllerParser(MethodParser methodParser)
     {
-        public IImmutableList<ControllerInfo> ExtractFrom(IImmutableList<CSharpSyntaxTree> syntaxTrees,
-                                                          IImmutableList<Type> reflectionTypes)
+        public ImmutableList<ControllerInfo> ExtractFrom(ImmutableList<CSharpSyntaxTree> syntaxTrees,
+                                                         ImmutableList<Type> reflectionTypes)
         {
             // 1. Detect all controllers. Derived class like Controller, ControllerBase, ODataController and so on
             var controllers = syntaxTrees.GetAllControllers();
@@ -33,14 +33,14 @@ namespace RunJit.Cli.Services
             return controllerInfos;
         }
 
-        private IEnumerable<ControllerInfo> Parse(IImmutableList<Class> controllers,
-                                                  IImmutableList<Type> reflectionTypes,
-                                                  IImmutableList<CSharpSyntaxTree> syntaxTrees)
+        private IEnumerable<ControllerInfo> Parse(ImmutableList<Class> controllers,
+                                                  ImmutableList<Type> reflectionTypes,
+                                                  ImmutableList<CSharpSyntaxTree> syntaxTrees)
         {
             foreach (var controller in controllers)
             {
                 // 0. Reflection controller
-                var controllerType = reflectionTypes.FirstOrDefault(type => type.FullName == controller.FullQualifiedName);
+                var controllerType = reflectionTypes.FirstOrDefault(type => type.FullName.EqualsTo(controller.FullQualifiedName));
 
                 if (controllerType.IsNull())
                 {
@@ -48,12 +48,12 @@ namespace RunJit.Cli.Services
                 }
 
                 // 1. Extract meta infos version, base url and son on.
-                var version = controller.Attributes.FirstOrDefault(a => a.Name == "ApiVersion")?.Arguments?.FirstOrDefault()?.Trim('"') ?? "1.0";
+                var version = controller.Attributes.FirstOrDefault(a => a.Name.EqualsTo("ApiVersion"))?.Arguments?.FirstOrDefault()?.Trim('"') ?? "1.0";
 
                 var normalizedVersion = $"V{version.Replace(".0", string.Empty) // V1.0 => V1
                                                    .Replace(".", "_")}"; // V1.1 => V1_1}"
 
-                var baseUrl = controller.Attributes.FirstOrDefault(a => a.Name == "Route")?.Arguments.FirstOrDefault()?.Replace("{version:apiVersion}", version.ToLowerInvariant()).Trim('"') ?? string.Empty;
+                var baseUrl = controller.Attributes.FirstOrDefault(a => a.Name.EqualsTo("Route"))?.Arguments.FirstOrDefault()?.Replace("{version:apiVersion}", version.ToLowerInvariant()).Trim('"') ?? string.Empty;
 
                 // 2. Now parse all methods
                 var methodReflection = controllerType.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance).ToImmutableList();

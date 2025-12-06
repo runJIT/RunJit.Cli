@@ -45,11 +45,9 @@ namespace RunJit.Cli.Services
                 }
                 catch (Exception)
                 {
-
                     Thread.Sleep(500);
                     Directory.Move(directoryInfo.FullName, newRootFolder.FullName);
                 }
-
             }
 
             var folders = newRootFolder.EnumerateDirectories("*.*", SearchOption.AllDirectories).ToList();

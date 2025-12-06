@@ -48,7 +48,7 @@ namespace RunJit.Cli.RunJit.Update.ResharperSettings
             var repos = parameters.GitRepos.Split(';');
             var orginalStartFolder = parameters.WorkingDirectory.IsNotNullOrWhiteSpace() ? parameters.WorkingDirectory : Environment.CurrentDirectory;
 
-            if (Directory.Exists(orginalStartFolder) == false)
+            if (Directory.Exists(orginalStartFolder).EqualsTo(false))
             {
                 Directory.CreateDirectory(orginalStartFolder);
             }
@@ -95,7 +95,7 @@ namespace RunJit.Cli.RunJit.Update.ResharperSettings
                 {
                     var existingFileContent = await File.ReadAllTextAsync(resharperSettingsFile.FullName).ConfigureAwait(false);
 
-                    if (resharperSettings.Length == existingFileContent.Length)
+                    if (resharperSettings.Length.EqualsTo(existingFileContent.Length))
                     {
                         consoleService.WriteSuccess($"Solution: {solutionFile.FullName} R# setting already up to date nothing to update !");
 

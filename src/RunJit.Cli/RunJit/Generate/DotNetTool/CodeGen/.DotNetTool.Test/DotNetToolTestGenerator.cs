@@ -26,7 +26,7 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
     }
 
     internal sealed class DotNetToolTestGenerator(IDotNet dotNet,
-                                           IEnumerable<IDotNetToolTestSpecificCodeGen> codeGenerators)
+                                                  IEnumerable<IDotNetToolTestSpecificCodeGen> codeGenerators)
     {
         internal async Task<FileInfo> GenerateAsync(SolutionFile solutionFile,
                                                     FileInfo netToolProject,
@@ -42,10 +42,11 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
             var sourceFolder = solutionFileInfo.Directory!.EnumerateDirectories("src").FirstOrDefault();
             var sourceFolderPart = sourceFolder.IsNull() ? string.Empty : sourceFolder.Name;
 
-            var dotNetToolTestProjectFileInfo = new FileInfo(Path.Combine(solutionFileInfo.Directory!.FullName, sourceFolderPart, dotNetToolTestProjectName, $"{dotNetToolTestProjectName}.csproj"));
+            var dotNetToolTestProjectFileInfo = new FileInfo(Path.Combine(solutionFileInfo.Directory!.FullName, sourceFolderPart, dotNetToolTestProjectName,
+                                                                          $"{dotNetToolTestProjectName}.csproj"));
 
             // 3. Check if cli test project already exists
-            var dotNetToolTestProject = solutionFile.UnitTestProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant() == dotNetToolTestProjectName.ToLowerInvariant());
+            var dotNetToolTestProject = solutionFile.UnitTestProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant().EqualsTo(dotNetToolTestProjectName.ToLowerInvariant()));
 
             // Important if a test project already exists we cant do a lot because some developers
             // maybe already have changed some code which we would override
@@ -97,7 +98,8 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
             // 7. Add needed project references
             await dotNet.AddProjectReference(netToolProject, dotNetToolTestProjectFileInfo).ConfigureAwait(false);
 
-            var webApiProject = solutionFile.ProductiveProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion == solutionFile.SolutionFileInfo.FileNameWithoutExtenion);
+            var webApiProject = solutionFile.ProductiveProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.EqualsTo(solutionFile.SolutionFileInfo.FileNameWithoutExtenion));
+
             if (webApiProject != null)
             {
                 await dotNet.AddProjectReference(webApiProject.ProjectFileInfo.Value, dotNetToolTestProjectFileInfo).ConfigureAwait(false);
@@ -113,7 +115,8 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
             {
                 foreach (var codeGenerator in codeGenerators)
                 {
-                    await codeGenerator.GenerateAsync(dotNetToolTestProjectFileInfo, xdocument, dotNetToolInfos, webApiProject).ConfigureAwait(false);
+                    await codeGenerator.GenerateAsync(dotNetToolTestProjectFileInfo, xdocument, dotNetToolInfos,
+                                                      webApiProject).ConfigureAwait(false);
                 }
             }
 

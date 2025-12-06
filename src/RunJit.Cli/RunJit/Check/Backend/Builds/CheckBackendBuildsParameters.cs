@@ -12,7 +12,7 @@ namespace RunJit.Cli.RunJit.Check.Backend.Builds
     }
 
     internal sealed record CheckBackendBuildsParameters(string SolutionFile,
-                                                 string GitRepos,
-                                                 string WorkingDirectory,
-                                                 string IgnorePackages);
+                                                        string GitRepos,
+                                                        string WorkingDirectory,
+                                                        string IgnorePackages);
 }

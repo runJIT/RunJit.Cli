@@ -36,7 +36,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddSingletonIfNotExists<$command-name$Handler>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class $command-name$Handler(OutputService outputService$dependencies$)
                                             {       
                                                 public async Task HandleAsync($command-name$Parameters parameters, CancellationToken cancellationToken = default)

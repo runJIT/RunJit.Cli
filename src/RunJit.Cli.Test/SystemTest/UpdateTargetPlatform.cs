@@ -32,7 +32,7 @@ namespace RunJit.Cli.Test.SystemTest
     }
 
     internal sealed record UpdateTargetPlatform(string solution,
-                                            int version) : ICommand;
+                                                int version) : ICommand;
 
     internal sealed class UpdateTargetPlatformHandler : ICommandHandler<UpdateTargetPlatform>
     {
@@ -66,8 +66,8 @@ namespace RunJit.Cli.Test.SystemTest
     }
 
     internal sealed record UpdateTargetPlatformForGitRepos(string GitRepos,
-                                                       string WorkingDirectory,
-                                                       string Platform) : ICommand;
+                                                           string WorkingDirectory,
+                                                           string Platform) : ICommand;
 
     internal sealed class UpdateTargetPlatformForGitReposHandler : ICommandHandler<UpdateTargetPlatformForGitRepos>
     {

@@ -31,7 +31,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddSingletonIfNotExists<OutputWriter>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class OutputWriter(ConsoleService consoleService)
                                             {
                                                 internal async Task WriteAsync(string value, 
@@ -43,7 +43,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                         consoleService.WriteSuccess(value);
                                                         return;
                                                     }
-                                        
+
                                                     if (fileInfo.Directory.IsNull() ||
                                                         fileInfo.Directory.Name.IsNullOrWhiteSpace())
                                                     {
@@ -52,14 +52,14 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                                                           ("FileInfo", fileInfo.FullName),
                                                                                           ("Output", value));
                                                     }
-                                        
+
                                                     if (fileInfo.Directory.NotExists())
                                                     {
                                                         fileInfo.Directory.Create();
                                                     }
-                                        
+
                                                     await File.WriteAllTextAsync(fileInfo.FullName, value, cancellationToken).ConfigureAwait(false);
-                                        
+
                                                     consoleService.WriteSuccess(fileInfo.FullName);
                                                 }
                                             }

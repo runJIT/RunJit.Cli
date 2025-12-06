@@ -25,10 +25,10 @@ namespace RunJit.Cli.Update.TargetPlatform
             //    if it is null or whitespace we check current directory
             var solutionFile = findSolutionFile.Find(parameters.SolutionFile);
 
-
             // 2. We need a global json
             var globalJsonFilePath = Path.Combine(solutionFile.Directory!.FullName, "global.json");
             var globalJsonFileInfo = new FileInfo(globalJsonFilePath);
+
             if (globalJsonFileInfo.NotExists())
             {
                 var template = EmbeddedFile.GetFileContentFrom("RunJit.Update.TargetPlatform.Templates.global.json");
@@ -45,6 +45,7 @@ namespace RunJit.Cli.Update.TargetPlatform
             // FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine3.21 AS build
             // WORKDIR /src
             var dockerFiles = solutionFile.Directory!.EnumerateFiles("Dockerfile");
+
             foreach (var dockerFile in dockerFiles)
             {
                 var lines = await File.ReadAllLinesAsync(dockerFile.FullName);
@@ -76,7 +77,6 @@ namespace RunJit.Cli.Update.TargetPlatform
 
                 File.WriteAllLines(dockerFile.FullName, lines);
             }
-
 
             consoleService.WriteSuccess($"Solution: {solutionFile.FullName} migrated to: {parameters.Platform}");
         }

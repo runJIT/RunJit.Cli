@@ -29,8 +29,8 @@ namespace RunJit.Cli.New.NugetProject
     }
 
     internal sealed class NugetProjectCreator(NugetProjectsCodeGen minimalApiProjectsCodeGen,
-                                            IDotNet dotNet,
-                                            IDEService ideService)
+                                              IDotNet dotNet,
+                                              IDEService ideService)
 
     {
         internal async Task<FileInfo> GenerateProjectAsync(NewNugetProjectParameters newNugetProjectParameters)
@@ -52,6 +52,7 @@ namespace RunJit.Cli.New.NugetProject
 
             // 5. Check if solution was created
             var targetSolutionFile = new FileInfo(Path.Combine(newNugetProjectParameters.TargetDirectoryInfo.FullName, solutionFileName));
+
             if (targetSolutionFile.NotExists())
             {
                 throw new RunJitException($"The target solution: {targetSolutionFile.FullName} was not found please check if the Web-Api solution was successfully created and if so, check the path of the creation.");
@@ -59,15 +60,16 @@ namespace RunJit.Cli.New.NugetProject
 
             // 6. Parse solution and setup project infos
             var parsedSolution = new SolutionFileInfo(targetSolutionFile.FullName).Parse();
+
             var minimalApiProjectInfos = new NugetProjectInfos
-            {
-                ProjectName = newNugetProjectParameters.ProjectName,
-                ContractProjectName = $"{newNugetProjectParameters.ProjectName}.Contracts",
-                NetVersion = newNugetProjectParameters.TargetFramework < 9 ? $"net9.0" : $"net{newNugetProjectParameters.TargetFramework}.0",
-                Name = newNugetProjectParameters.ProjectName,
-                NormalizedName = newNugetProjectParameters.ProjectName,
-                RepoName = newNugetProjectParameters.ProjectName.Split(".").Select(part => part.ToLower()).Flatten("-")
-            };
+                                         {
+                                             ProjectName = newNugetProjectParameters.ProjectName,
+                                             ContractProjectName = $"{newNugetProjectParameters.ProjectName}.Contracts",
+                                             NetVersion = newNugetProjectParameters.TargetFramework < 9 ? $"net9.0" : $"net{newNugetProjectParameters.TargetFramework}.0",
+                                             Name = newNugetProjectParameters.ProjectName,
+                                             NormalizedName = newNugetProjectParameters.ProjectName,
+                                             RepoName = newNugetProjectParameters.ProjectName.Split(".").Select(part => part.ToLower()).Flatten("-")
+                                         };
 
             // 7. Run all code generators
             await minimalApiProjectsCodeGen.GenerateAsync(parsedSolution, minimalApiProjectInfos).ConfigureAwait(false);
@@ -79,7 +81,7 @@ namespace RunJit.Cli.New.NugetProject
             if (newNugetProjectParameters.StartIde)
             {
                 // ideService.LaunchIdeFireAndForget(parsedSolution.SolutionFileInfo.Value);
-                await ideService.LaunchIdeAsync(parsedSolution.SolutionFileInfo.Value).ConfigureAwait(false);    
+                await ideService.LaunchIdeAsync(parsedSolution.SolutionFileInfo.Value).ConfigureAwait(false);
             }
 
             return parsedSolution.SolutionFileInfo.Value;

@@ -54,27 +54,22 @@ namespace RunJit.Cli.Generate.DotNetTool
                                  DotNetToolInfos dotNetToolInfos)
         {
             // Any call to a http instance is never sync like like without a Task - we never do blocking API calls !!
-            var normalizedReturnType = endpointInfo.ResponseType.Original == "Task<ActionResult>" ||
-                                       endpointInfo.ResponseType.Original == "Task<IActionResult>" ||
-                                       endpointInfo.ResponseType.Original == "ActionResult" ||
-                                       endpointInfo.ResponseType.Original == "IActionResult" ||
-                                       endpointInfo.ResponseType.Original == "void"
+            var normalizedReturnType = endpointInfo.ResponseType.Original.EqualsTo("Task<ActionResult>") || endpointInfo.ResponseType.Original.EqualsTo("Task<IActionResult>") || endpointInfo.ResponseType.Original.EqualsTo("ActionResult") || endpointInfo.ResponseType.Original.EqualsTo("IActionResult") || endpointInfo.ResponseType.Original.EqualsTo("void")
                                            ? "Task"
                                            : endpointInfo.ResponseType.Original;
 
             normalizedReturnType = normalizedReturnType.StartWith("Task").IsFalse() ? $"Task<{normalizedReturnType}>" : normalizedReturnType;
 
-            var httpCallReturnType = endpointInfo.ResponseType.Normalized.Contains("ActionResult") ||
-                                     endpointInfo.ResponseType.Normalized.ToLowerInvariant() == "void" ? string.Empty :
-                                     normalizedReturnType == "Task" ? string.Empty : normalizedReturnType.Replace("Task<", "<");
+            var httpCallReturnType = endpointInfo.ResponseType.Normalized.Contains("ActionResult") || endpointInfo.ResponseType.Normalized.ToLowerInvariant().EqualsTo("void") ? string.Empty :
+                                     normalizedReturnType.EqualsTo("Task") ? string.Empty : normalizedReturnType.Replace("Task<", "<");
 
             var payload = _httpActionWithPayloads.Contains(endpointInfo.HttpAction) ? ", payload" : string.Empty;
             var httpClientCall = _httpActionWithPayloads.Contains(endpointInfo.HttpAction) ? $"{endpointInfo.HttpAction}AsJson" : endpointInfo.HttpAction;
 
             // ToDo: detect which parameter is the payload !!
-            var fromBody = endpointInfo.Parameters.FirstOrDefault(p => p.Attributes.Any(a => a.Name == "FromBody"));
+            var fromBody = endpointInfo.Parameters.FirstOrDefault(p => p.Attributes.Any(a => a.Name.EqualsTo("FromBody")));
 
-            var parameterBody = endpointInfo.Parameters.FirstOrDefault(p => endpointInfo.RequestType?.Type.Name == p.Type);
+            var parameterBody = endpointInfo.Parameters.FirstOrDefault(p => endpointInfo.RequestType!.Type.EqualsTo(p.Type));
 
             var payloadParameter = fromBody.IsNotNull() ? fromBody.Name : parameterBody?.Name;
             payloadParameter = payloadParameter.IsNullOrWhiteSpace() ? "null" : payloadParameter;
@@ -89,7 +84,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                  ? endpointInfo.Parameters.Select(p =>
                                                                   {
                                                                       var defaultValue = p.IsOptional ? $" = {p.DefaultValue}" : string.Empty;
-                                                                      var nullable = p.DefaultValue == "null" ? p.Type.EndWith("?") ? string.Empty : "?" : string.Empty;
+                                                                      var nullable = p.DefaultValue.EqualsTo("null") ? p.Type.EndWith("?") ? string.Empty : "?" : string.Empty;
                                                                       var parameter = $"{p.Type}{nullable} {p.Name}{defaultValue}";
                                                                       parameter = parameter.Replace("IFormFile", nameof(InMemoryFileAsStream));
 
@@ -98,7 +93,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                  : string.Empty;
 
             var attributes = endpointInfo.ObsoleteInfo.IsNotNull() ? $"""[Obsolete("{endpointInfo.ObsoleteInfo.Info}")]""" : string.Empty;
-            var cancellationTokenParameter = endpointInfo.Parameters.FirstOrDefault(p => p.Type == nameof(CancellationToken));
+            var cancellationTokenParameter = endpointInfo.Parameters.FirstOrDefault(p => p.Type.EqualsTo(nameof(CancellationToken)));
             var cancellationToken = cancellationTokenParameter.IsNotNull() ? cancellationTokenParameter.Name : $"{nameof(CancellationToken)}.{nameof(CancellationToken.None)}";
 
             var parameterAsVariables = endpointInfo.Parameters.Where(p => p.Name.Contains("cancellation", StringComparison.OrdinalIgnoreCase).IsFalse())

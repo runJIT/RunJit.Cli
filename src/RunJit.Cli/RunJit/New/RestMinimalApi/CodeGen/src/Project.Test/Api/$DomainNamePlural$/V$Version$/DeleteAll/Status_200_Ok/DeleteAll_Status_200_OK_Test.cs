@@ -55,7 +55,7 @@ namespace $ProjectName$.Test.Api.$DomainNamePlural$.V1
             return Client.AssertDeleteAsync($"$BasePath$/v1/$DomainNamePluralLower$?$QueryPropertyNameLower$={Unique$DomainName$Name}");
         }
 
-        private IEnumerable<Difference> IgnoreAutoValues(IImmutableList<Difference> differences)
+        private IEnumerable<Difference> IgnoreAutoValues(ImmutableList<Difference> differences)
         {
             foreach (var difference in differences)
             {

@@ -28,28 +28,28 @@ namespace RunJit.Cli.New.MinimalApiProject
         private Option DotNetVersion()
         {
             return new Option(new[] { "--target-framework", "-tf" }, "The .Net version for the new minimal api. Sample: 9")
-            {
-                Required = false,
-                Argument = new Argument<int>("targetFramework") { Description = "The .Net version for the new minimal api. Sample: 9" }
-            };
+                   {
+                       Required = false,
+                       Argument = new Argument<int>("targetFramework") { Description = "The .Net version for the new minimal api. Sample: 9" }
+                   };
         }
 
         private Option BasePath()
         {
             return new Option(new[] { "--base-path", "-bp" }, "The base path for the new minimal api. Sample: \"api/core\"")
-            {
-                Required = true,
-                Argument = new Argument<string>("basePath") { Description = "The base path for the new minimal api. Sample: \"api/core\"" }
-            };
+                   {
+                       Required = true,
+                       Argument = new Argument<string>("basePath") { Description = "The base path for the new minimal api. Sample: \"api/core\"" }
+                   };
         }
 
         private Option TargetDirectory()
         {
             return new Option(new[] { "--target-directory", "-td" }, @"The target directory where the new minimal api project will be created. Sample: D:\Projects\DotNetToolGen")
-            {
-                Required = false,
-                Argument = new Argument<DirectoryInfo>("targetDirectory") { Description = @"The target directory where the new minimal api project will be created. Sample: D:\Projects\DotNetToolGen" }
-            };
+                   {
+                       Required = false,
+                       Argument = new Argument<DirectoryInfo>("targetDirectory") { Description = @"The target directory where the new minimal api project will be created. Sample: D:\Projects\DotNetToolGen" }
+                   };
         }
 
         private Option BuildUseVisualStudioOption()
@@ -65,19 +65,19 @@ namespace RunJit.Cli.New.MinimalApiProject
         private Option Solution()
         {
             return new Option(new[] { "--solution", "-s" }, @"File path to your backend solution where your api is implemented. Sample: D:\Projects\DotNetToolGen\DotNetToolGen.sln")
-            {
-                Required = false,
-                Argument = new Argument<FileInfo>("solution") { Description = @"File path to your backend solution where your api is implemented. Sample: D:\Projects\DotNetToolGen\DotNetToolGen.sln" }
-            };
+                   {
+                       Required = false,
+                       Argument = new Argument<FileInfo>("solution") { Description = @"File path to your backend solution where your api is implemented. Sample: D:\Projects\DotNetToolGen\DotNetToolGen.sln" }
+                   };
         }
 
         private Option ProjectName()
         {
             return new Option(new[] { "--project-name", "-pn" }, "The name of your new minimal api backend project (i.e. \"Siemens.Core\", \"Siemens.DataManagement\", ...)")
-            {
-                Required = true,
-                Argument = new Argument<string>("projectName") { Description = "The name of your new minimal api backend project (i.e. \"Siemens.Core\", \"Siemens.DataManagement\", ...)" }
-            };
+                   {
+                       Required = true,
+                       Argument = new Argument<string>("projectName") { Description = "The name of your new minimal api backend project (i.e. \"Siemens.Core\", \"Siemens.DataManagement\", ...)" }
+                   };
         }
     }
 }

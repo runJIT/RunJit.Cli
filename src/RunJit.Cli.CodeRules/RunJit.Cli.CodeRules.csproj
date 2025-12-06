@@ -11,6 +11,6 @@
         <PackageReference Include="ConsoleTables" Version="2.6.2" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
         <PackageReference Include="MSTest" Version="3.10.4" />
-        <PackageReference Include="Solution.Parser" Version="3.0.3" />
+        <PackageReference Include="Solution.Parser" Version="3.0.7" />
     </ItemGroup>
 </Project>

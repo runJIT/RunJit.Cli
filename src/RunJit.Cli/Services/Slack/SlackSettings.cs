@@ -23,10 +23,10 @@ namespace RunJit.Cli.Services.Slack
         public string Token { get; init; } = string.Empty;
 
         public SlackChannel PullRequestChannel { get; init; } = new()
-        {
-            Id = "C04JMJ7UCHX",
-            Name = "#backend-pullrequests"
-        };
+                                                                {
+                                                                    Id = "C04JMJ7UCHX",
+                                                                    Name = "#backend-pullrequests"
+                                                                };
     }
 
     public record SlackChannel

@@ -20,7 +20,7 @@ namespace RunJit.Cli.New.NugetProject
     }
 
     internal sealed class NugetProjectTestGenerator(IDotNet dotNet,
-                                                  IEnumerable<INugetProjectTestSpecificCodeGen> codeGenerators)
+                                                    IEnumerable<INugetProjectTestSpecificCodeGen> codeGenerators)
     {
         internal async Task<FileInfo> GenerateAsync(SolutionFile solutionFile,
                                                     FileInfo webApiProjectFileInfo,
@@ -31,10 +31,12 @@ namespace RunJit.Cli.New.NugetProject
 
             // 2. Expected test project
             var testProjectName = $"{minimalApiProjectInfos.ProjectName}.Test";
-            var testProjectFileInfo = new FileInfo(Path.Combine(solutionFileInfo.Directory!.FullName, "src", testProjectName, $"{testProjectName}.csproj"));
+
+            var testProjectFileInfo = new FileInfo(Path.Combine(solutionFileInfo.Directory!.FullName, "src", testProjectName,
+                                                                $"{testProjectName}.csproj"));
 
             // 3. Check if cli test project already exists
-            var dotNetToolTestProject = solutionFile.UnitTestProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant() == testProjectName.ToLowerInvariant());
+            var dotNetToolTestProject = solutionFile.UnitTestProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant().EqualsTo(testProjectName.ToLowerInvariant()));
 
             // 4. Important if a test project already exists we cant do a lot because some developers
             //    maybe already have changed some code which we would override
@@ -67,7 +69,7 @@ namespace RunJit.Cli.New.NugetProject
             //    <PackageReference Include="MSTest.TestAdapter" Version="3.10.4" />
             //    <PackageReference Include="MSTest.TestFramework" Version="3.10.4" />
             //    </ItemGroup>
-            
+
             // 6. Add required nuget packages into project
             await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "AspNetCore.Simple.MsTest.Sdk", "6.1.9").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(testProjectFileInfo.FullName, "Microsoft.NET.Test.Sdk", "17.14.1").ConfigureAwait(false);
@@ -88,7 +90,8 @@ namespace RunJit.Cli.New.NugetProject
             {
                 foreach (var codeGenerator in codeGenerators)
                 {
-                    await codeGenerator.GenerateAsync(testProjectFileInfo, solutionFileInfo, xdocument, minimalApiProjectInfos).ConfigureAwait(false);
+                    await codeGenerator.GenerateAsync(testProjectFileInfo, solutionFileInfo, xdocument,
+                                                      minimalApiProjectInfos).ConfigureAwait(false);
                 }
             }
 

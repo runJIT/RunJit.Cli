@@ -30,30 +30,30 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                 private static readonly JsonEncodedText Status = JsonEncodedText.Encode("status");
                                                 private static readonly JsonEncodedText Detail = JsonEncodedText.Encode("detail");
                                                 private static readonly JsonEncodedText Instance = JsonEncodedText.Encode("instance");
-                                        
+
                                                 [UnconditionalSuppressMessage("Trimmer", "IL2026", Justification = "Trimmer does not allow annotating overriden methods with annotations different from the ones in base type.")]
                                                 public override ProblemDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
                                                 {
                                                     var problemDetails = new ProblemDetails();
-                                        
+
                                                     if (reader.TokenType != JsonTokenType.StartObject)
                                                     {
                                                         throw new JsonException("Unexcepted end when reading JSON.");
                                                     }
-                                        
+
                                                     while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
                                                     {
                                                         ReadValue(ref reader, problemDetails, options);
                                                     }
-                                        
+
                                                     if (reader.TokenType != JsonTokenType.EndObject)
                                                     {
                                                         throw new JsonException("Unexcepted end when reading JSON.");
                                                     }
-                                        
+
                                                     return problemDetails;
                                                 }
-                                        
+
                                                 [UnconditionalSuppressMessage("Trimmer", "IL2026", Justification = "Trimmer does not allow annotating overriden methods with annotations different from the ones in base type.")]
                                                 public override void Write(Utf8JsonWriter writer, ProblemDetails value, JsonSerializerOptions options)
                                                 {
@@ -61,7 +61,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     WriteProblemDetails(writer, value, options);
                                                     writer.WriteEndObject();
                                                 }
-                                        
+
                                                 [RequiresUnreferencedCode("JSON serialization and deserialization of ProblemDetails.Extensions might require types that cannot be statically analyzed.")]
                                                 internal static void ReadValue(ref Utf8JsonReader reader, ProblemDetails value, JsonSerializerOptions options)
                                                 {
@@ -100,7 +100,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                         value.Extensions[key] = JsonSerializer.Deserialize<object>(ref reader, options);
                                                     }
                                                 }
-                                        
+
                                                 internal static bool TryReadStringProperty(ref Utf8JsonReader reader, JsonEncodedText propertyName, [NotNullWhen(true)] out string? value)
                                                 {
                                                     if (!reader.ValueTextEquals(propertyName.EncodedUtf8Bytes))
@@ -108,12 +108,12 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                         value = default;
                                                         return false;
                                                     }
-                                        
+
                                                     reader.Read();
                                                     value = reader.GetString()!;
                                                     return true;
                                                 }
-                                        
+
                                                 [RequiresUnreferencedCode("JSON serialization and deserialization of ProblemDetails.Extensions might require types that cannot be statically analyzed.")]
                                                 internal static void WriteProblemDetails(Utf8JsonWriter writer, ProblemDetails value, JsonSerializerOptions options)
                                                 {
@@ -121,27 +121,27 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     {
                                                         writer.WriteString(JsonEncodedType, value.Type);
                                                     }
-                                        
+
                                                     if (value.Title != null)
                                                     {
                                                         writer.WriteString(Title, value.Title);
                                                     }
-                                        
+
                                                     if (value.Status != null)
                                                     {
                                                         writer.WriteNumber(Status, value.Status.Value);
                                                     }
-                                        
+
                                                     if (value.Detail != null)
                                                     {
                                                         writer.WriteString(Detail, value.Detail);
                                                     }
-                                        
+
                                                     if (value.Instance != null)
                                                     {
                                                         writer.WriteString(Instance, value.Instance);
                                                     }
-                                        
+
                                                     foreach (var kvp in value.Extensions)
                                                     {
                                                         writer.WritePropertyName(kvp.Key);
@@ -160,7 +160,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                 /// </summary>
                                                 [JsonPropertyName("type")]
                                                 internal string? Type { get; set; }
-                                        
+
                                                 /// <summary>
                                                 /// A short, human-readable summary of the problem type. It SHOULD NOT change from occurrence to occurrence
                                                 /// of the problem, except for purposes of localization(e.g., using proactive content negotiation;
@@ -168,25 +168,25 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                 /// </summary>
                                                 [JsonPropertyName("title")]
                                                 internal string? Title { get; set; }
-                                        
+
                                                 /// <summary>
                                                 /// The HTTP status code([RFC7231], Section 6) generated by the origin server for this occurrence of the problem.
                                                 /// </summary>
                                                 [JsonPropertyName("status")]
                                                 internal int? Status { get; set; }
-                                        
+
                                                 /// <summary>
                                                 /// A human-readable explanation specific to this occurrence of the problem.
                                                 /// </summary>
                                                 [JsonPropertyName("detail")]
                                                 internal string? Detail { get; set; }
-                                        
+
                                                 /// <summary>
                                                 /// A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.
                                                 /// </summary>
                                                 [JsonPropertyName("instance")]
                                                 internal string? Instance { get; set; }
-                                        
+
                                                 /// <summary>
                                                 /// Gets the <see cref="IDictionary{TKey, TValue}"/> for extension members.
                                                 /// <para>

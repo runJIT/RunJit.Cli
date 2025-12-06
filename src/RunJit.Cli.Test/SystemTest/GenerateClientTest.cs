@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using AspNetCore.Simple.Sdk.Mediator;
 using Extensions.Pack;
 using Microsoft.CodeAnalysis;
@@ -36,22 +36,20 @@ namespace RunJit.Cli.Test.SystemTest
 
         //[Ignore("Dev only")]
         [TestMethod]
-        [DataRow(@"D:\AzureDevOps\AspNetCore.MinimalApi.Sdk\AspNetCore.MinimalApi.Sdk.sln")]
-        [DataRow(@"D:\GitHub\RunJit.Api\RunJit.Api.sln")]
-        [DataRow(@"D:\Siemens\pulse-core\PulseCore.sln")]
-        [DataRow(@"D:\Siemens\pulse-flow\Pulse.Flow.sln")]
-        [DataRow(@"D:\AzureDevOps\SoftwareOne.Workshop.November.2023\RunJit\UserManagement\UserManagement.sln")]
-        [DataRow(@"D:\Siemens\pulse-sustainability\Pulse.Sustainability.sln")]
-        [DataRow("/Users/z003m9sc/Documents/RiderProjects/SiemensGPT/siemensgpt-backend/SiemensGPT.sln")]
-        [DataRow("/Users/z003m9sc/Documents/RiderProjects/PulseCloud/pulse-nexus/Pulse.Nexus.sln")]
-        [DataRow(@"D:\Siemens\pulse-fieldingtool\Pulse.FieldingTool.sln")]
-        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-core\Sdc.Core.sln")]
         [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln")]
         public Task Generate_Client_Of_Existing_Solution_For(string solutionPath)
         {
-            return Mediator.SendAsync(new GenerateClient(new FileInfo(solutionPath), false));
+            return Mediator.SendAsync(new GenerateClient(new FileInfo(solutionPath), false, false));
         }
-        
+
+        //[Ignore("Dev only")]
+        [TestMethod]
+        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln")]
+        public Task Generate_Client_From_Open_Api_Json_File(string solutionPath)
+        {
+            return Mediator.SendAsync(new GenerateClient(new FileInfo(solutionPath), true, false));
+        }
+
         [Ignore("Dev only")]
         [TestMethod]
         public async Task Next_Level_Parsing()
@@ -63,9 +61,9 @@ namespace RunJit.Cli.Test.SystemTest
             var workspace = MSBuildWorkspace.Create();
             var solution = await workspace.OpenSolutionAsync(solutionPath).ConfigureAwait(false);
 
-            var project = solution.Projects.FirstOrDefault(p => p.Name == "MinimalApi");
+            var project = solution.Projects.FirstOrDefault(p => p.Name.EqualsTo("MinimalApi"));
 
-            if (project == null)
+            if (project.IsNull())
             {
                 Console.WriteLine("Project not found.");
 
@@ -76,7 +74,7 @@ namespace RunJit.Cli.Test.SystemTest
             var compilation = await project.GetCompilationAsync().ConfigureAwait(false);
 
             // Find the document and the syntax tree
-            var document = project.Documents.FirstOrDefault(d => d.Name == "GetAllToDoEndpoints.cs");
+            var document = project.Documents.FirstOrDefault(d => d.Name.EqualsTo("GetAllToDoEndpoints.cs"));
             Assert.IsNotNull(document);
 
             var syntaxTree = await document.GetSyntaxTreeAsync().ConfigureAwait(false);
@@ -93,11 +91,11 @@ namespace RunJit.Cli.Test.SystemTest
                                       .OfType<ReturnStatementSyntax>()
                                       .Last();
 
-            var returnExpression = returnStatement.Expression as InvocationExpressionSyntax;
+            var returnExpression = returnStatement.Expression.As<InvocationExpressionSyntax>();
 
             Assert.IsNotNull(returnExpression);
 
-            var methodSymbol = semanticModel.GetSymbolInfo(returnExpression).Symbol as IMethodSymbol;
+            var methodSymbol = semanticModel.GetSymbolInfo(returnExpression).Symbol.As<IMethodSymbol>();
             var returnType = methodSymbol?.ReturnType;
 
             Console.WriteLine($"Return type: {returnType}");
@@ -105,6 +103,7 @@ namespace RunJit.Cli.Test.SystemTest
     }
 
     internal sealed record GenerateClient(FileInfo SolutionFile,
+                                          bool UseOpenApiJson = false,
                                           bool BuildBeforeGenerate = true) : ICommand;
 
     internal sealed class GenerateClientHandler : ICommandHandler<GenerateClient>
@@ -134,6 +133,11 @@ namespace RunJit.Cli.Test.SystemTest
             yield return "client";
             yield return "--solution";
             yield return request.SolutionFile.FullName;
+
+            if (request.UseOpenApiJson)
+            {
+                yield return "--use-open-api-json";
+            }
 
             if (request.BuildBeforeGenerate)
             {

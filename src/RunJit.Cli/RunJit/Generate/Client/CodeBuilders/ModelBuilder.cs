@@ -36,9 +36,7 @@ namespace RunJit.Cli.Generate.Client
                                 string projectName,
                                 string clientName)
         {
-            var @namespace = controller.ControllerInfo.Version.IsNotNull() ?
-                                 $"{projectName}.{ClientGenConstants.Api}.{controller.ControllerInfo.GroupName}.{controller.ControllerInfo.Version.Normalized}" :
-                                 $"{projectName}.{ClientGenConstants.Api}.{controller.ControllerInfo.GroupName}";
+            var @namespace = controller.ControllerInfo.Version.IsNotNull() ? $"{projectName}.{ClientGenConstants.Api}.{controller.ControllerInfo.GroupName}.{controller.ControllerInfo.Version.Normalized}" : $"{projectName}.{ClientGenConstants.Api}.{controller.ControllerInfo.GroupName}";
 
             var model = _modelTemplate.Replace("$projectName$", projectName)
                                       .Replace("$clientName$", clientName)

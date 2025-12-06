@@ -61,13 +61,13 @@ namespace RunJit.Cli.Services
 
     //    public required string RelativeUrl { get; init; }  --> MapPut("todos",
 
-    //    public required IImmutableList<Parameter> Parameters { get; init; } = ImmutableList<Parameter>.Empty;
+    //    public required ImmutableList<Parameter> Parameters { get; init; } = ImmutableList<Parameter>.Empty;
 
     //    public required RequestType? RequestType { get; init; } --> parameter body which is not a native .Net type :)
 
     //    public required ResponseType ResponseType { get; init; } --> return Results.Ok(getAllToDosQuery.Execute());
 
-    //    public required IImmutableList<ProduceResponseTypes> ProduceResponseTypes { get; init; }  --> .Produces(400, typeof(ProblemDetails))
+    //    public required ImmutableList<ProduceResponseTypes> ProduceResponseTypes { get; init; }  --> .Produces(400, typeof(ProblemDetails))
 
     //    public ImmutableList<DeclarationBase> Models { get; init; } = ImmutableList<DeclarationBase>.Empty;
     //}
@@ -81,9 +81,9 @@ namespace RunJit.Cli.Services
                                                     ".MapPut(", ".MapPatch("
                                                 };
 
-        internal IImmutableList<EndpointInfo> ExtractFrom(IImmutableList<CSharpSyntaxTree> syntaxTrees,
-                                                          IImmutableList<Type> reflectionTypes,
-                                                          bool addHealthEndpoint = true)
+        internal ImmutableList<EndpointInfo> ExtractFrom(ImmutableList<CSharpSyntaxTree> syntaxTrees,
+                                                         ImmutableList<Type> reflectionTypes,
+                                                         bool addHealthEndpoint = true)
         {
             var basePath = FindBasePath(syntaxTrees);
 
@@ -94,30 +94,30 @@ namespace RunJit.Cli.Services
             if (addHealthEndpoint)
             {
                 var healthEndpoint = new EndpointInfo
-                {
-                    BaseUrl = basePath,
-                    DomainName = "Health",
-                    GroupName = "Health",
-                    HttpAction = "Get",
-                    ResponseType = new ResponseType("HealthStatusResponse",
+                                     {
+                                         BaseUrl = basePath,
+                                         DomainName = "Health",
+                                         GroupName = "Health",
+                                         HttpAction = "Get",
+                                         ResponseType = new ResponseType("HealthStatusResponse",
                                                                          "HealthStatusResponse"),
-                    ProduceResponseTypes = ImmutableList<ProduceResponseTypes>.Empty,
-                    RelativeUrl = "health",
-                    Name = "GetHealthStatusAsync",
-                    Models = ImmutableList.Create(new DeclarationBase("HealthStatusResponse",
-                                                                                           "HealthStatusResponse",
-                                                                                           """
-                                                                                           public sealed record HealthStatusResponse(string Status,
-                                                                                                                                     string TotalDuration,
-                                                                                                                                     Dictionary<string, object> Entries);
-                                                                                           """,
-                                                                                           string.Empty)),
-                    Version = null,
-                    SwaggerOperationId = "getHealthStatus",
-                    Parameters = ImmutableList<Parameter>.Empty,
-                    RequestType = null,
-                    ObsoleteInfo = null
-                };
+                                         ProduceResponseTypes = ImmutableList<ProduceResponseTypes>.Empty,
+                                         RelativeUrl = "health",
+                                         Name = "GetHealthStatusAsync",
+                                         Models = new DeclarationBase("HealthStatusResponse",
+                                                                      "HealthStatusResponse",
+                                                                      """
+                                                                      public sealed record HealthStatusResponse(string Status,
+                                                                                                                string TotalDuration,
+                                                                                                                Dictionary<string, object> Entries);
+                                                                      """,
+                                                                      string.Empty).AsImmutableList().ToImmutableList(),
+                                         Version = null,
+                                         SwaggerOperationId = "getHealthStatus",
+                                         Parameters = ImmutableList<Parameter>.Empty,
+                                         RequestType = null,
+                                         ObsoleteInfo = null
+                                     };
 
                 endpointMappings = endpointMappings.Add(healthEndpoint);
             }
@@ -130,7 +130,7 @@ namespace RunJit.Cli.Services
             //return controllerInfos;
         }
 
-        internal string FindBasePath(IImmutableList<CSharpSyntaxTree> syntaxTrees)
+        internal string FindBasePath(ImmutableList<CSharpSyntaxTree> syntaxTrees)
         {
             var pattern = @"UsePathBase\(\$""([^""]+)""\)";
 
@@ -149,9 +149,9 @@ namespace RunJit.Cli.Services
             return string.Empty;
         }
 
-        private IImmutableList<EndpointInfo> GetAllStatements(string basePath,
-                                                              IImmutableList<CSharpSyntaxTree> syntaxTrees,
-                                                              IImmutableList<Type> reflectionTypes)
+        private ImmutableList<EndpointInfo> GetAllStatements(string basePath,
+                                                             ImmutableList<CSharpSyntaxTree> syntaxTrees,
+                                                             ImmutableList<Type> reflectionTypes)
         {
             var listStatements = ImmutableList<EndpointInfo>.Empty;
 
@@ -159,7 +159,7 @@ namespace RunJit.Cli.Services
             {
                 foreach (var @class in syntaxTree.Classes)
                 {
-                    if (@class.Name.ToLower() == "startup")
+                    if (@class.Name.ToLower().EqualsTo("startup"))
                     {
                         continue;
                     }
@@ -173,7 +173,8 @@ namespace RunJit.Cli.Services
                                 if (methodStatement.Contains(mapAction))
                                 {
                                     var version = ExtractVersion(methodStatement);
-                                    var produceResponseTypes = ExtractProduceResponseTypes(methodStatement);
+                                    var produceResponseTypes = ExtractProduceResponseTypes(methodStatement).ToImmutableList();
+
                                     // var payloads = ExtractPayload(methodStatement).ToList();
                                     var normalizedBasePath = basePath.Replace("{apiVersion:apiVersion}", version.Original);
                                     var relativeUrl = ExtractRelativeUrl(methodStatement);
@@ -185,25 +186,24 @@ namespace RunJit.Cli.Services
                                     var payloads = allParameters.Where(p => p.Type.EndsWith("Request")).Select(p => p.Type).ToList();
 
                                     var allUsedModels = GetAllUsedModels(produceResponseTypes, syntaxTrees, reflectionTypes,
-                                                                         version, payloads);
-
+                                                                         version, payloads).ToImmutableList();
 
                                     var endpointInfo = new EndpointInfo
-                                    {
-                                        Name = ExtractName(methodStatement),
-                                        DomainName = ExtractDomainName(methodStatement),
-                                        Version = version,
-                                        BaseUrl = normalizedBasePath,
-                                        GroupName = ExtractGroupName(methodStatement),
-                                        SwaggerOperationId = ExtractSwaggerOperationId(methodStatement, version),
-                                        HttpAction = ExtractHttpAction(methodStatement),
-                                        RelativeUrl = url,
-                                        Parameters = parameters,
-                                        RequestType = ExtractRequestType(payloads, allUsedModels, reflectionTypes),
-                                        ResponseType = ExtractResponseType(produceResponseTypes),
-                                        ProduceResponseTypes = produceResponseTypes,
-                                        Models = allUsedModels
-                                    };
+                                                       {
+                                                           Name = ExtractName(methodStatement),
+                                                           DomainName = ExtractDomainName(methodStatement),
+                                                           Version = version,
+                                                           BaseUrl = normalizedBasePath,
+                                                           GroupName = ExtractGroupName(methodStatement),
+                                                           SwaggerOperationId = ExtractSwaggerOperationId(methodStatement, version),
+                                                           HttpAction = ExtractHttpAction(methodStatement),
+                                                           RelativeUrl = url,
+                                                           Parameters = parameters,
+                                                           RequestType = ExtractRequestType(payloads, allUsedModels, reflectionTypes),
+                                                           ResponseType = ExtractResponseType(produceResponseTypes),
+                                                           ProduceResponseTypes = produceResponseTypes,
+                                                           Models = allUsedModels
+                                                       };
 
                                     listStatements = listStatements.Add(endpointInfo);
                                 }
@@ -216,11 +216,11 @@ namespace RunJit.Cli.Services
             return listStatements;
         }
 
-        private IImmutableList<DeclarationBase> GetAllUsedModels(IImmutableList<ProduceResponseTypes> produceResponseTypes,
-                                                                 IImmutableList<CSharpSyntaxTree> syntaxTrees,
-                                                                 IImmutableList<Type> reflectionTypes,
-                                                                 VersionInfo versionInfo,
-                                                                 IEnumerable<string> payloads)
+        private ImmutableList<DeclarationBase> GetAllUsedModels(ImmutableList<ProduceResponseTypes> produceResponseTypes,
+                                                                ImmutableList<CSharpSyntaxTree> syntaxTrees,
+                                                                ImmutableList<Type> reflectionTypes,
+                                                                VersionInfo versionInfo,
+                                                                IEnumerable<string> payloads)
         {
             var responseType = produceResponseTypes.FirstOrDefault(p => p.StatusCode >= 200 && p.StatusCode < 300)?.Type;
 
@@ -233,8 +233,8 @@ namespace RunJit.Cli.Services
 
             var allModelsToFind = payloads.Concat(responseType).ToList();
 
-            var classes = syntaxTrees.SelectMany(tree => tree.Classes).Where(c => allModelsToFind.Any(x => x == c.Name) && c.FullQualifiedName.Contains(versionInfo.Normalized)).ToList();
-            var records = syntaxTrees.SelectMany(tree => tree.Records).Where(c => allModelsToFind.Any(x => x == c.Name) && c.FullQualifiedName.Contains(versionInfo.Normalized)).ToList();
+            var classes = syntaxTrees.SelectMany(tree => tree.Classes).Where(c => allModelsToFind.Any(x => x.EqualsTo(c.Name)) && c.FullQualifiedName.Contains(versionInfo.Normalized)).ToList();
+            var records = syntaxTrees.SelectMany(tree => tree.Records).Where(c => allModelsToFind.Any(x => x.EqualsTo(c.Name)) && c.FullQualifiedName.Contains(versionInfo.Normalized)).ToList();
 
             var allTypes = classes.Concat(records).OfType<DeclarationBase>().ToImmutableList();
 
@@ -246,7 +246,7 @@ namespace RunJit.Cli.Services
             return result;
         }
 
-        private ResponseType ExtractResponseType(IImmutableList<ProduceResponseTypes> produceResponseTypes)
+        private ResponseType ExtractResponseType(ImmutableList<ProduceResponseTypes> produceResponseTypes)
         {
             var responseType = produceResponseTypes.FirstOrDefault(p => p.StatusCode >= 200 && p.StatusCode < 300)?.Type;
 
@@ -327,7 +327,7 @@ namespace RunJit.Cli.Services
             return normalizedUrl;
         }
 
-        private IImmutableList<Parameter> ExtractParameters(string code)
+        private ImmutableList<Parameter> ExtractParameters(string code)
         {
             // Parse the source code.
             var parameters = ImmutableList.CreateBuilder<Parameter>();
@@ -386,7 +386,7 @@ namespace RunJit.Cli.Services
             return parameters.ToImmutable();
         }
 
-        private IImmutableList<Parameter> ExtractQueryParameters(string code)
+        private ImmutableList<Parameter> ExtractQueryParameters(string code)
         {
             // Parse the source code.
             var parameters = ImmutableList.CreateBuilder<Parameter>();
@@ -429,7 +429,7 @@ namespace RunJit.Cli.Services
             // 2. Find the local function "HandleAsync".
             var handleAsyncMethod = root.DescendantNodes()
                                         .OfType<LocalFunctionStatementSyntax>()
-                                        .FirstOrDefault(m => m.Identifier.Text == "HandleAsync");
+                                        .FirstOrDefault(m => m.Identifier.Text.EqualsTo("HandleAsync"));
 
             if (handleAsyncMethod != null)
             {
@@ -454,7 +454,6 @@ namespace RunJit.Cli.Services
                                           .SelectMany(attrList => attrList.Attributes)
                                           .Any(attr => attr.Name.ToString().Contains("FromUrl"));
 
-
                     // If parameter name matches one extracted from the URL or is marked with [FromUrl], classify it as URL.
                     if (hasFromUrl || urlParameters.Contains(paramName).IsFalse())
                     {
@@ -465,7 +464,6 @@ namespace RunJit.Cli.Services
 
             return parameters.ToImmutable();
         }
-
 
         private static IEnumerable<Parameter> Parse(IEnumerable<string> parameters)
         {
@@ -481,12 +479,12 @@ namespace RunJit.Cli.Services
                 var defaultValue = isOptional ? parameter.Split(" = ").Last() : null;
 
                 var attribute = parameter.StartsWith('[')
-                                    ? ImmutableList.Create(new Attribute(splitted[0].TrimStart('[').TrimEnd(']'), ImmutableList<string>.Empty, parameter,
-                                                                         string.Empty))
+                                    ? new Attribute(splitted[0].TrimStart('[').TrimEnd(']'), ImmutableList<string>.Empty, parameter,
+                                                    string.Empty).AsImmutableList()
                                     : ImmutableList<Attribute>.Empty;
 
-                var type = splitted.Length == 3 ? splitted[1] : splitted[0];
-                var name = splitted.Length == 3 ? splitted[2] : splitted[1];
+                var type = splitted.Length.EqualsTo(3) ? splitted[1] : splitted[0];
+                var name = splitted.Length.EqualsTo(3) ? splitted[2] : splitted[1];
 
                 yield return new Parameter(type, name, attribute,
                                            parameter, isOptional, defaultValue,
@@ -506,16 +504,16 @@ namespace RunJit.Cli.Services
             var defaultValue = isOptional ? parameter.Split(" = ").Last() : null;
 
             var attribute = parameter.StartsWith('[')
-                                ? ImmutableList.Create(new Attribute(splitted[0].TrimStart('[').TrimEnd(']'), ImmutableList<string>.Empty, parameter,
-                                                                     string.Empty))
+                                ? new Attribute(splitted[0].TrimStart('[').TrimEnd(']'), ImmutableList<string>.Empty, parameter,
+                                                string.Empty).AsImmutableList()
                                 : ImmutableList<Attribute>.Empty;
 
-            var type = splitted.Length == 3 ? splitted[1] : splitted[0];
-            var name = splitted.Length == 3 ? splitted[2] : splitted[1];
+            var type = splitted.Length.EqualsTo(3) ? splitted[1] : splitted[0];
+            var name = splitted.Length.EqualsTo(3) ? splitted[2] : splitted[1];
 
             return new Parameter(type, name, attribute,
-                          parameter, isOptional, defaultValue,
-                          string.Empty);
+                                 parameter, isOptional, defaultValue,
+                                 string.Empty);
         }
 
         private static bool IsPrimitiveType(string typeName)
@@ -539,12 +537,12 @@ namespace RunJit.Cli.Services
                              };
 
             // Check against the list
-            return basicTypes.Contains(typeName) || Type.GetType(typeName)?.IsPrimitive == true;
+            return basicTypes.Contains(typeName) || (Type.GetType(typeName)?.IsPrimitive).EqualsTo(true);
         }
 
         private RequestType? ExtractRequestType(List<string> payloads,
-                                                IImmutableList<DeclarationBase> models,
-                                                IImmutableList<Type> reflectionTypes)
+                                                ImmutableList<DeclarationBase> models,
+                                                ImmutableList<Type> reflectionTypes)
         {
             // Implement logic to extract request type
             var match = models.FirstOrDefault(m => payloads.Contains(m.Name));
@@ -554,14 +552,14 @@ namespace RunJit.Cli.Services
                 return null;
             }
 
-            var reflectionType = reflectionTypes.First(item => item.FullName == match.FullQualifiedName);
+            var reflectionType = reflectionTypes.First(item => item.FullName.EqualsTo(match.FullQualifiedName));
 
-            return new RequestType(match, reflectionType);
+            return new RequestType(match, reflectionType.Name);
         }
 
         //private ResponseType ExtractResponseType(string code,
-        //                                         IImmutableList<CSharpSyntaxTree> syntaxTrees,
-        //                                         IImmutableList<Type> reflectionTypes)
+        //                                         ImmutableList<CSharpSyntaxTree> syntaxTrees,
+        //                                         ImmutableList<Type> reflectionTypes)
         //{
         //    //return endpoints.MapGet("todos", ([FromServices] GetAllToDosQuery getAllToDosQuery) =>
         //    //                        {
@@ -576,7 +574,7 @@ namespace RunJit.Cli.Services
         //    return new ResponseType("", "");
         //}
 
-        private IImmutableList<ProduceResponseTypes> ExtractProduceResponseTypes(string code)
+        private ImmutableList<ProduceResponseTypes> ExtractProduceResponseTypes(string code)
         {
             var produceResponseTypes = ImmutableList.CreateBuilder<ProduceResponseTypes>();
 
@@ -600,7 +598,7 @@ namespace RunJit.Cli.Services
 
             foreach (Match match in matches)
             {
-                if (match.Groups.Count == 3)
+                if (match.Groups.Count.EqualsTo(3))
                 {
                     var type = match.Groups[1].Value;
                     var statusCode = match.Groups[2].Value;

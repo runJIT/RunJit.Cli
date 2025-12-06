@@ -53,7 +53,6 @@ namespace RunJit.Cli.Services.Resharper
 
                     if (version.IsNotNull())
                     {
-                        
                         yield return $"api_005C{domain}_005Cmodels";
                         yield return $"api_005C{domain}_005Crequests";
                         yield return $"api_005C{domain}_005Cresponses";
@@ -64,7 +63,6 @@ namespace RunJit.Cli.Services.Resharper
                         yield return $"api_005C{domain}_005C{version}_005Crequests";
                         yield return $"api_005C{domain}_005C{version}_005Cresponses";
                     }
-
                 }
             }
 

@@ -21,7 +21,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
                                                    ModelsToFilesWriter modelsToFileWriter)
     {
         internal async Task CreateAsync(DirectoryInfo domainFolder,
-                                        IImmutableList<GeneratedClientCodeForController> endpoints,
+                                        ImmutableList<GeneratedClientCodeForController> endpoints,
                                         string projectName,
                                         string clientName,
                                         FileInfo facadeFileInfo)
@@ -35,7 +35,8 @@ namespace RunJit.Cli.RunJit.Generate.Client
                 {
                     // Dirty hack :/
                     var syntaxTree = endpoint.SyntaxTree.Replace($" {domainFolder.Name}", $" {domainFolder.Name}Facade")
-                                                        .Replace($"Add{domainFolder.Name}", $"Add{domainFolder.Name}Facade");
+                                             .Replace($"Add{domainFolder.Name}", $"Add{domainFolder.Name}Facade");
+
                     await File.WriteAllTextAsync(facadeFileInfo.FullName, syntaxTree).ConfigureAwait(false);
 
                     var modelFolder = modelFolderBuilder.Build(facadeFileInfo.Directory!);
@@ -43,7 +44,8 @@ namespace RunJit.Cli.RunJit.Generate.Client
                     var modelsToWrite = endpoint.ControllerInfo.Endpoints.SelectMany(m => m.Models).ToImmutableList();
 
                     // 4. Write all models to files
-                    await modelsToFileWriter.WriteAsync(modelFolder, endpoint, modelsToWrite, projectName, clientName).ConfigureAwait(false);
+                    await modelsToFileWriter.WriteAsync(modelFolder, endpoint, modelsToWrite,
+                                                        projectName, clientName).ConfigureAwait(false);
 
                     continue;
                 }
@@ -62,7 +64,8 @@ namespace RunJit.Cli.RunJit.Generate.Client
                 var dataTypes = endpoint.ControllerInfo.Endpoints.SelectMany(m => m.Models).ToImmutableList();
 
                 // 4. Write all models to files
-                await modelsToFileWriter.WriteAsync(modelsFolder, endpoint, dataTypes, projectName, clientName).ConfigureAwait(false);
+                await modelsToFileWriter.WriteAsync(modelsFolder, endpoint, dataTypes,
+                                                    projectName, clientName).ConfigureAwait(false);
             }
         }
     }

@@ -32,18 +32,18 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddJsonFormatterStrategy();
                                                     services.AddJsonIndentedFormatterStrategy();
                                                     services.AddJsonAsStringFormatterStrategy();
-                                        
+
                                                     services.AddSingletonIfNotExists<OutputFormatter>();
                                                 }
                                             }
-                                        
+
                                             internal enum FormatType
                                             {
                                                 Json,
                                                 JsonIndented,
                                                 JsonAsString,
                                             }
-                                        
+
                                             internal sealed class OutputFormatter(IEnumerable<IOutputFormatterStrategy> stringFormatterStrategies)
                                             {
                                                 internal string Format(string value,
@@ -51,7 +51,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                 {
                                                     // 1. Find the strategy that can handle the format type
                                                     var strategies = stringFormatterStrategies.Where(s => s.CanHandle(formatType)).ToImmutableList();
-                                        
+
                                                     // 2. If we have no matched we throw problem details exception
                                                     if (strategies.IsEmpty())
                                                     {
@@ -60,7 +60,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                                                           ("Format", formatType),
                                                                                           ("String", value));
                                                     }
-                                        
+
                                                     // 3. If we have more than one matched we throw problem details exception
                                                     if (strategies.Count > 1)
                                                     {
@@ -70,20 +70,20 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                                                           ("String", value),
                                                                                           ("Strategies", strategies.Select(s => s.GetType().Name)));
                                                     }
-                                        
+
                                                     // 4. If we have one matched we format the value and return it
                                                     return strategies[0].Format(value, formatType);
                                                 }
                                             }
-                                        
+
                                             internal interface IOutputFormatterStrategy
                                             {
                                                 bool CanHandle(FormatType formatType);
-                                        
+
                                                 string Format(string value,
                                                               FormatType formatType);
                                             }
-                                        
+
                                             internal static class AddJsonFormatterStrategyExtension
                                             {
                                                 internal static void AddJsonFormatterStrategy(this IServiceCollection services)
@@ -91,14 +91,14 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddSingletonIfNotExists<IOutputFormatterStrategy, JsonFormatterStrategy>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class JsonFormatterStrategy : IOutputFormatterStrategy
                                             {
                                                 public bool CanHandle(FormatType formatType)
                                                 {
                                                     return formatType == FormatType.Json;
                                                 }
-                                        
+
                                                 public string Format(string value,
                                                                      FormatType formatType)
                                                 {
@@ -109,15 +109,15 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                                                           $"The string formatter strategy: {nameof(JsonFormatterStrategy)} can not process your request",
                                                                                           ("CanHandle", FormatType.Json));
                                                     }
-                                        
+
                                                     // 2. Format incoming JSON string
                                                     using var doc = JsonDocument.Parse(value);
-                                        
+
                                                     // 3. return the formatted json
                                                     return doc.ToJson();
                                                 }
                                             }
-                                        
+
                                             internal static class AddJsonIndentedFormatterStrategyExtension
                                             {
                                                 internal static void AddJsonIndentedFormatterStrategy(this IServiceCollection services)
@@ -125,14 +125,14 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddSingletonIfNotExists<IOutputFormatterStrategy, JsonIndentedFormatterStrategy>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class JsonIndentedFormatterStrategy : IOutputFormatterStrategy
                                             {
                                                 public bool CanHandle(FormatType formatType)
                                                 {
                                                     return formatType == FormatType.JsonIndented;
                                                 }
-                                        
+
                                                 public string Format(string value,
                                                                      FormatType formatType)
                                                 {
@@ -143,15 +143,15 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                                                           $"The string formatter strategy: {nameof(JsonIndentedFormatterStrategy)} can not process your request",
                                                                                           ("CanHandle", FormatType.JsonIndented));
                                                     }
-                                        
+
                                                     // 2. Format incoming JSON string
                                                     using var doc = JsonDocument.Parse(value);
-                                        
+
                                                     // 3. Return the formatted json
                                                     return doc.ToJsonIntended();
                                                 }
                                             }
-                                        
+
                                             internal static class AddJsonAsStringFormatterStrategyExtension
                                             {
                                                 internal static void AddJsonAsStringFormatterStrategy(this IServiceCollection services)
@@ -159,7 +159,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddSingletonIfNotExists<IOutputFormatterStrategy, JsonAsStringFormatterStrategy>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class JsonAsStringFormatterStrategy : IOutputFormatterStrategy
                                             {
                                                 private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions()
@@ -167,12 +167,12 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     WriteIndented = false,
                                                     Converters = { new JsonStringEnumConverter() }
                                                 };
-                                        
+
                                                 public bool CanHandle(FormatType formatType)
                                                 {
                                                     return formatType == FormatType.JsonAsString;
                                                 }
-                                        
+
                                                 public string Format(string value,
                                                                      FormatType formatType)
                                                 {
@@ -183,20 +183,20 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                                                           $"The string formatter strategy: {nameof(JsonAsStringFormatterStrategy)} can not process your request",
                                                                                           ("CanHandle", FormatType.JsonAsString));
                                                     }
-                                        
-                                        
+
+
                                                     // 2. Convert into object
                                                     using var doc = JsonDocument.Parse(value);
-                                        
+
                                                     // 3. Serialize into json with specific options
                                                     var json = JsonSerializer.Serialize(doc, _jsonSerializerOptions);
-                                        
+
                                                     // 4. Escape double quotes
                                                     json = json.Replace("\"", "\\\"");
-                                        
+
                                                     // 5. Wrap it in double quotes to produce the desired output
                                                     json = $"\"{json}\"";
-                                        
+
                                                     // 6. Return the formatted json
                                                     return json;
                                                 }

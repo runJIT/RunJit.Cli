@@ -30,12 +30,12 @@ namespace RunJit.Cli.Generate.Client
                                                               {
                                                                   return;
                                                               }
-                                                  
+
                                                               using var provider = services.BuildServiceProvider();
-                                                  
+
                                                               // Now we check if a serializer options was already registered for global use
                                                               var jsonSerializerOptions = provider.GetService<JsonSerializerOptions>();
-                                                  
+
                                                               if (jsonSerializerOptions.IsNull())
                                                               {
                                                                   // Fallback setup
@@ -47,21 +47,21 @@ namespace RunJit.Cli.Generate.Client
                                                                                               NumberHandling = JsonNumberHandling.AllowReadingFromString,
                                                                                               Converters = { new JsonStringEnumConverter() }
                                                                                           };
-                                                  
+
                                                                   services.AddSingletonIfNotExists(jsonSerializerOptions);
                                                               }
-                                                  
+
                                                               // ToDo: Need to think how to share the API serializer settings with the
                                                               //       client side here
                                                               services.AddSingletonIfNotExists<IJsonSerializer, JsonSerializer>();
                                                           }
                                                       }
-                                                  
+
                                                       [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, AllowMultiple = false)]
                                                       public class ShowJsonOnErrorAttribute : Attribute
                                                       {
                                                       }
-                                                  
+
                                                       internal interface IJsonSerializer
                                                       {
                                                           /// <summary>
@@ -75,7 +75,7 @@ namespace RunJit.Cli.Generate.Client
                                                           /// for <typeparamref name="T"/> or its serializable members.
                                                           /// </exception>
                                                           string Serialize<T>(T source);
-                                                  
+
                                                           /// <summary>
                                                           /// Converts the provided value into a <see cref="string"/>.
                                                           /// </summary>
@@ -89,7 +89,7 @@ namespace RunJit.Cli.Generate.Client
                                                           /// </exception>
                                                           string? SerializeOrDefault<T>(T source,
                                                                                         string? defaultValue = default);
-                                                  
+
                                                           /// <summary>
                                                           /// Parses the text representing a single JSON value into a <typeparamref name="T"/>.
                                                           /// </summary>
@@ -114,7 +114,7 @@ namespace RunJit.Cli.Generate.Client
                                                           /// for <typeparamref name="T"/> or its serializable members.
                                                           /// </exception>
                                                           T Deserialize<T>(string json);
-                                                  
+
                                                           /// <summary>
                                                           /// Parses the text representing a single JSON value into a <typeparamref name="T"/>.
                                                           /// </summary>
@@ -141,7 +141,7 @@ namespace RunJit.Cli.Generate.Client
                                                           /// </exception>
                                                           T? DeserializeOrDefault<T>(string json,
                                                                                      T? defaultValue = default);
-                                                  
+
                                                           /// <summary>
                                                           /// Parses the text representing a single JSON value into a <paramref name="returnType"/>.
                                                           /// </summary>
@@ -167,7 +167,7 @@ namespace RunJit.Cli.Generate.Client
                                                           /// </exception>
                                                           object Deserialize<T>(string json,
                                                                                 Type returnType);
-                                                  
+
                                                           /// <summary>
                                                           /// Parses the text representing a single JSON value into a <paramref name="returnType"/>.
                                                           /// </summary>
@@ -196,7 +196,7 @@ namespace RunJit.Cli.Generate.Client
                                                                                        Type returnType,
                                                                                        object? defaultValue = default);
                                                       }
-                                                  
+
                                                       internal sealed class JsonSerializer(ILogger<JsonSerializer> logger,
                                                                                            JsonSerializerOptions jsonSerializerOptions) : IJsonSerializer
                                                       {
@@ -204,7 +204,7 @@ namespace RunJit.Cli.Generate.Client
                                                           {
                                                               return System.Text.Json.JsonSerializer.Serialize(source, jsonSerializerOptions);
                                                           }
-                                                  
+
                                                           public string? SerializeOrDefault<T>(T source,
                                                                                                string? defaultValue = default)
                                                           {
@@ -215,16 +215,16 @@ namespace RunJit.Cli.Generate.Client
                                                               catch (Exception e)
                                                               {
                                                                   logger.LogError(e, e.Message);
-                                                  
+
                                                                   return defaultValue;
                                                               }
                                                           }
-                                                  
+
                                                           public T Deserialize<T>(string json)
                                                           {
                                                               T? deserializeResult = default;
                                                               var errorMessage = string.Empty;
-                                                  
+
                                                               try
                                                               {
                                                                   deserializeResult = System.Text.Json.JsonSerializer.Deserialize<T>(json, jsonSerializerOptions);
@@ -233,12 +233,12 @@ namespace RunJit.Cli.Generate.Client
                                                               {
                                                                   errorMessage = e.Message;
                                                               }
-                                                  
+
                                                               if (deserializeResult.IsNull())
                                                               {
                                                                   var securityCritical = typeof(T).GetCustomAttribute<ShowJsonOnErrorAttribute>();
                                                                   var jsonString = securityCritical.IsNotNull() ? json : "Hidden cause of security critical infos";
-                                                  
+
                                                                   // Not cool :(
                                                                   throw new Siemens.AspNet.ErrorHandling.Contracts.InternalServerErrorDetailsException("Could not deserialize your json string into expected type",
                                                                                                                                                        $"Could not deserialize your json string into expected type: {typeof(T).Name}",
@@ -248,17 +248,17 @@ namespace RunJit.Cli.Generate.Client
                                                                                                                                                        ("TypeFullName", typeof(T).FullName ?? string.Empty),
                                                                                                                                                        ("Info", $"Add [{nameof(ShowJsonOnErrorAttribute)}] to your type to see json. But be careful of security critical infos"));
                                                               }
-                                                  
+
                                                               return deserializeResult;
                                                           }
-                                                  
+
                                                           public T? DeserializeOrDefault<T>(string json,
                                                                                             T? defaultValue = default)
                                                           {
                                                               try
                                                               {
                                                                   var deserializeResult = System.Text.Json.JsonSerializer.Deserialize<T>(json, jsonSerializerOptions);
-                                                  
+
                                                                   return deserializeResult;
                                                               }
                                                               catch (Exception)
@@ -266,13 +266,13 @@ namespace RunJit.Cli.Generate.Client
                                                                   return defaultValue;
                                                               }
                                                           }
-                                                  
+
                                                           public object Deserialize<T>(string json,
                                                                                        Type returnType)
                                                           {
                                                               object? deserializeResult = default(T);
                                                               var errorMessage = string.Empty;
-                                                  
+
                                                               try
                                                               {
                                                                   deserializeResult = System.Text.Json.JsonSerializer.Deserialize(json, returnType, jsonSerializerOptions);
@@ -281,12 +281,12 @@ namespace RunJit.Cli.Generate.Client
                                                               {
                                                                   errorMessage = e.Message;
                                                               }
-                                                  
+
                                                               if (deserializeResult.IsNull())
                                                               {
                                                                   var securityCritical = typeof(T).GetCustomAttribute<ShowJsonOnErrorAttribute>();
                                                                   var jsonString = securityCritical.IsNotNull() ? json : "Hidden cause of security critical infos";
-                                                  
+
                                                                   throw new Siemens.AspNet.ErrorHandling.Contracts.InternalServerErrorDetailsException("Could not deserialize your json string into expected type",
                                                                                                                                                        $"Could not deserialize your json string into expected type: {typeof(T).Name}",
                                                                                                                                                        ("Exception", errorMessage),
@@ -295,10 +295,10 @@ namespace RunJit.Cli.Generate.Client
                                                                                                                                                        ("TypeFullName", typeof(T).FullName ?? string.Empty),
                                                                                                                                                        ("Info", $"Add [{nameof(ShowJsonOnErrorAttribute)}] to your type to see json. But be careful of security critical infos"));
                                                               }
-                                                  
+
                                                               return deserializeResult;
                                                           }
-                                                  
+
                                                           public object? DeserializeOrDefault(string json,
                                                                                               Type returnType,
                                                                                               object? defaultValue = default)
@@ -306,7 +306,7 @@ namespace RunJit.Cli.Generate.Client
                                                               try
                                                               {
                                                                   var deserializeResult = System.Text.Json.JsonSerializer.Deserialize(json, returnType, jsonSerializerOptions);
-                                                  
+
                                                                   return deserializeResult;
                                                               }
                                                               catch (Exception)

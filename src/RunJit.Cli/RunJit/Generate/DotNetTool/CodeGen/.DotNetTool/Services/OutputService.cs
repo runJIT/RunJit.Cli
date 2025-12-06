@@ -28,11 +28,11 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                 {
                                                     services.AddOutputFormatter();
                                                     services.AddOutputWriter();
-                                        
+
                                                     services.AddSingletonIfNotExists<OutputService>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class OutputService(OutputFormatter outputFormatter,
                                                                                 OutputWriter outputWriter)
                                             {
@@ -43,7 +43,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                 {
                                                     // 1. Format the string into expected format
                                                     var formattedString = outputFormatter.Format(value, formatType);
-                                        
+
                                                     // 3. Write the formatted string to the output
                                                     await outputWriter.WriteAsync(formattedString, fileInfo, cancellationToken).ConfigureAwait(false);
                                                 }

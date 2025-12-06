@@ -41,11 +41,11 @@ namespace RunJit.Cli.Test.SystemTest
 
             await Mediator.SendAsync(new GenerateCustomEndpoint(webAppProject.ProjectFileInfo.Value.Directory!, endpointData, true)).ConfigureAwait(false);
 
-            // 3. Test if generated solution can be build :) 
+            // 3. Test if generated solution can be build :)
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFile.FullName}").ConfigureAwait(false);
         }
 
-        private static async Task WalkThroughTree(IImmutableList<Template> templates)
+        private static async Task WalkThroughTree(ImmutableList<Template> templates)
         {
             foreach (var endpointDataTemplate in templates)
             {

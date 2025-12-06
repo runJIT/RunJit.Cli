@@ -24,7 +24,7 @@ namespace RunJit.Cli
             var parser = commandLineBuilder.Build();
 
             // We automatically add a version command
-            var option = parser.Configuration.RootCommand.Options.Single(o => o.Name == "version").As<Option?>();
+            var option = parser.Configuration.RootCommand.Options.Single(o => o.Name.EqualsTo("version")).As<Option?>();
             option?.AddAlias("-v");
 
             // Fix or update command parameter

@@ -25,22 +25,19 @@ namespace RunJit.Cli.New.NugetProject
         private Option DotNetVersion()
         {
             return new Option(new[] { "--target-framework", "-tf" }, "The .Net version for the new minimal api. Sample: 9")
-            {
-                Required = false,
-                Argument = new Argument<int>("targetFramework") { Description = "The .Net version for the new minimal api. Sample: 9" }
-            };
+                   {
+                       Required = false,
+                       Argument = new Argument<int>("targetFramework") { Description = "The .Net version for the new minimal api. Sample: 9" }
+                   };
         }
 
         private Option TargetDirectory()
         {
             return new Option(new[] { "--target-directory", "-td" }, @"The target directory where the new minimal api project will be created. Sample: D:\Projects\DotNetToolGen")
-            {
-                Required = false,
-                Argument = new Argument<DirectoryInfo>("targetDirectory")
-                {
-                    Description = @"The target directory where the new minimal api project will be created. Sample: D:\Projects\DotNetToolGen"
-                }
-            };
+                   {
+                       Required = false,
+                       Argument = new Argument<DirectoryInfo>("targetDirectory") { Description = @"The target directory where the new minimal api project will be created. Sample: D:\Projects\DotNetToolGen" }
+                   };
         }
 
         private Option StartIdeAfterGeneration()
@@ -51,13 +48,10 @@ namespace RunJit.Cli.New.NugetProject
         private Option ProjectName()
         {
             return new Option(new[] { "--project-name", "-pn" }, "The name of your new minimal api backend project (i.e. \"Siemens.Core\", \"Siemens.DataManagement\", ...)")
-            {
-                Required = true,
-                Argument = new Argument<string>("projectName")
-                {
-                    Description = "The name of your new minimal api backend project (i.e. \"Siemens.Core\", \"Siemens.DataManagement\", ...)"
-                }
-            };
+                   {
+                       Required = true,
+                       Argument = new Argument<string>("projectName") { Description = "The name of your new minimal api backend project (i.e. \"Siemens.Core\", \"Siemens.DataManagement\", ...)" }
+                   };
         }
     }
 }

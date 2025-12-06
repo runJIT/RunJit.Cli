@@ -23,7 +23,7 @@ namespace RunJit.Cli.Generate.Client
     {
         private readonly string _propertyTemplate = EmbeddedFile.GetFileContentFrom("RunJit.Generate.Client.Templates.property.rps");
 
-        internal string BuildFrom(IImmutableList<GeneratedFacade> facades)
+        internal string BuildFrom(ImmutableList<GeneratedFacade> facades)
         {
             var parameters = facades.Select(f => _propertyTemplate.Replace("$name$", $"{f.FacadeName}")
                                                                   .Replace("$version$", f.Domain))

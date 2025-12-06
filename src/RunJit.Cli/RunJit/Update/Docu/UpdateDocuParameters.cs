@@ -12,7 +12,7 @@ namespace RunJit.Cli.Update.Docu
     }
 
     internal sealed record UpdateDocuParameters(string SolutionFile,
-                                                      string GitRepos,
-                                                      string WorkingDirectory,
-                                                      string IgnorePackages);
+                                                string GitRepos,
+                                                string WorkingDirectory,
+                                                string IgnorePackages);
 }

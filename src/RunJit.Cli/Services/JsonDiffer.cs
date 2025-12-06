@@ -8,16 +8,18 @@ namespace RunJit.Cli.Services
     // Introduce an enum to categorize the type of mismatch.
     public enum MismatchType
     {
-        ValueDifference,   // Both values exist but are not equal.
-        MissingInFirst,    // The value is missing in the first JSON.
-        MissingInSecond    // The value is missing in the second JSON.
+        ValueDifference, // Both values exist but are not equal.
+
+        MissingInFirst, // The value is missing in the first JSON.
+
+        MissingInSecond // The value is missing in the second JSON.
     }
 
     // Update the Difference record to include the mismatch type.
     public sealed record Difference(string MemberPath,
-                                       string? Value1,
-                                       string? Value2,
-                                       MismatchType MismatchType);
+                                    string? Value1,
+                                    string? Value2,
+                                    MismatchType MismatchType);
 
     public static class AddJsonDifferExtension
     {
@@ -29,37 +31,37 @@ namespace RunJit.Cli.Services
 
     public interface IJsonDiffer
     {
-        IImmutableList<Difference> FindDifferences(string json1,
-                                                   string json2);
+        ImmutableList<Difference> FindDifferences(string json1,
+                                                  string json2);
 
         // Updated native differences method to include mismatch type.
         Dictionary<string, (JToken?, JToken?, MismatchType)> FindDifferencesNative(string json1,
-                                                                                    string json2);
+                                                                                   string json2);
     }
 
     internal sealed class JsonDiffer : IJsonDiffer
     {
-        public IImmutableList<Difference> FindDifferences(string json1,
-                                                          string json2)
+        public ImmutableList<Difference> FindDifferences(string json1,
+                                                         string json2)
         {
             var differences = FindDifferencesNative(json1, json2);
 
             var simpleDifferences = differences.Select(item =>
-                new Difference(
-                    item.Key,
-                    item.Value.Item1?.ToString(),
-                    item.Value.Item2?.ToString(),
-                    item.Value.Item3));
+                                                           new Difference(item.Key,
+                                                                          item.Value.Item1?.ToString(),
+                                                                          item.Value.Item2?.ToString(),
+                                                                          item.Value.Item3));
 
             return simpleDifferences.ToImmutableList();
         }
 
         public Dictionary<string, (JToken?, JToken?, MismatchType)> FindDifferencesNative(string json1,
-                                                                                            string json2)
+                                                                                          string json2)
         {
             var differences = new Dictionary<string, (JToken?, JToken?, MismatchType)>();
 
-            CompareTokens(JToken.Parse(json1), JToken.Parse(json2), differences, "");
+            CompareTokens(JToken.Parse(json1), JToken.Parse(json2), differences,
+                          "");
 
             return differences;
         }
@@ -75,24 +77,27 @@ namespace RunJit.Cli.Services
             }
 
             // Handle cases where one token is missing.
-            if (token1 == null || token1.IsNull())
+            if (token1.IsNull() || token1.IsNull())
             {
                 differences[path] = (null, token2, MismatchType.MissingInFirst);
+
                 return;
             }
 
-            if (token2 == null || token2.IsNull())
+            if (token2.IsNull() || token2.IsNull())
             {
                 differences[path] = (token1, null, MismatchType.MissingInSecond);
+
                 return;
             }
 
             switch (token1.Type)
             {
                 case JTokenType.Object:
-                    if (token2.Type != JTokenType.Object)
+                    if (token2.Type.NotEqualsTo(JTokenType.Object))
                     {
                         differences[path] = (token1, token2, MismatchType.ValueDifference);
+
                         return;
                     }
 
@@ -105,13 +110,14 @@ namespace RunJit.Cli.Services
                         var propertyPath = AppendPath(path, property.Key);
                         var token2Value = obj2.GetValueOrDefault(property.Key);
 
-                        if (token2Value == null)
+                        if (token2Value.IsNull())
                         {
                             differences[propertyPath] = (property.Value, null, MismatchType.MissingInSecond);
                         }
                         else
                         {
-                            CompareTokens(property.Value, token2Value, differences, propertyPath);
+                            CompareTokens(property.Value, token2Value, differences,
+                                          propertyPath);
                         }
                     }
 
@@ -120,7 +126,7 @@ namespace RunJit.Cli.Services
                     {
                         var propertyPath = AppendPath(path, property.Key);
 
-                        if (obj1[property.Key] == null)
+                        if (obj1[property.Key].IsNull())
                         {
                             differences[propertyPath] = (null, property.Value, MismatchType.MissingInFirst);
                         }
@@ -129,9 +135,10 @@ namespace RunJit.Cli.Services
                     break;
 
                 case JTokenType.Array:
-                    if (token2.Type != JTokenType.Array)
+                    if (token2.Type.NotEqualsTo(JTokenType.Array))
                     {
                         differences[path] = (token1, token2, MismatchType.ValueDifference);
+
                         return;
                     }
 
@@ -159,17 +166,18 @@ namespace RunJit.Cli.Services
                             indexPath = AppendPath(path, $"[{i}]");
                         }
 
-                        if (i >= array1.Count)
+                        if (array1.Count.IsLessOrEqual(i))
                         {
                             differences[indexPath] = (null, array2[i], MismatchType.MissingInFirst);
                         }
-                        else if (i >= array2.Count)
+                        else if (array2.Count.IsLessOrEqual(i))
                         {
                             differences[indexPath] = (array1[i], null, MismatchType.MissingInSecond);
                         }
                         else
                         {
-                            CompareTokens(array1[i], array2[i], differences, indexPath);
+                            CompareTokens(array1[i], array2[i], differences,
+                                          indexPath);
                         }
                     }
 
@@ -178,6 +186,7 @@ namespace RunJit.Cli.Services
                 default:
                     // For primitive types, record the difference as a value difference.
                     differences[path] = (token1, token2, MismatchType.ValueDifference);
+
                     break;
             }
         }
@@ -185,13 +194,13 @@ namespace RunJit.Cli.Services
         private string AppendPath(string path,
                                   string addition)
         {
-            if (string.IsNullOrEmpty(path))
+            if (path.IsNullOrEmpty())
             {
                 return addition;
             }
 
             // If the addition represents an array index, don't add a dot.
-            if (addition.First() == '[')
+            if (addition.First().EqualsTo('['))
             {
                 return $"{path}{addition}";
             }

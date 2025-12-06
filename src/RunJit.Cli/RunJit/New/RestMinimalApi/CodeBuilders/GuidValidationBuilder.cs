@@ -31,20 +31,21 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.CodeBuilders
                 requestName.StartsWith("DeleteById"))
             {
                 yield return """
-                             if (request.$PropertyName$.IsEmpty())
-                             {
-                                 var errorDetails = new ValidationErrorDetails()
-                                 {
-                                     CurrentValue = request.$PropertyName$,
-                                     Errors = [$"{nameof(request.$PropertyName$)} must not be empty."],
-                                     Samples = [Guid.NewGuid(), Guid.NewGuid()],
-                                 };
-                             
-                                 yield return (nameof(request.$PropertyName$), errorDetails);
-                             }
-                             """.Replace("$PropertyName$", propertyName)
-                                .Replace("$PropertyNameLower$", propertyNameLower)
-                                .Replace("$DomainNamePluralLower$", createRestApiInfos.DomainNamePluralLower);
+                    if (request.$PropertyName$.IsEmpty())
+                    {
+                        var errorDetails = new ValidationErrorDetails()
+                        {
+                            CurrentValue = request.$PropertyName$,
+                            Errors = [$"{nameof(request.$PropertyName$)} must not be empty."],
+                            Samples = [Guid.NewGuid(), Guid.NewGuid()],
+                        };
+
+                        yield return (nameof(request.$PropertyName$), errorDetails);
+                    }
+                    """.Replace("$PropertyName$", propertyName)
+                       .Replace("$PropertyNameLower$", propertyNameLower)
+                       .Replace("$DomainNamePluralLower$", createRestApiInfos.DomainNamePluralLower);
+
                 yield break;
             }
 
@@ -54,40 +55,39 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.CodeBuilders
                 // Query type validation
                 // NULL is default -> so if i dont want to filter i dont set the query parameter so it is NULL per default
                 yield return """
-                             if (request.$PropertyName$.IsNull())
-                             {
-                                 var errorDetails = new ValidationErrorDetails()
-                                 {
-                                     CurrentValue = request.$PropertyName$,
-                                     Errors = [$"{nameof(request.$PropertyName$)} must not be empty. We are not allowing to delete all data without filter. To filter results, provide a valid $PropertyNameLower$ (e.g., DELETE /$DomainNamePluralLower$?$PropertyNameLower$=Hello)."],
-                                     Samples = [Guid.NewGuid(), Guid.NewGuid()],
-                                 };
+                    if (request.$PropertyName$.IsNull())
+                    {
+                        var errorDetails = new ValidationErrorDetails()
+                        {
+                            CurrentValue = request.$PropertyName$,
+                            Errors = [$"{nameof(request.$PropertyName$)} must not be empty. We are not allowing to delete all data without filter. To filter results, provide a valid $PropertyNameLower$ (e.g., DELETE /$DomainNamePluralLower$?$PropertyNameLower$=Hello)."],
+                            Samples = [Guid.NewGuid(), Guid.NewGuid()],
+                        };
 
-                                 yield return (nameof(request.$PropertyName$), errorDetails);
-                             }
-                             """.Replace("$PropertyName$", propertyName)
-                                .Replace("$PropertyNameLower$", propertyNameLower)
-                                .Replace("$DomainNamePluralLower$", createRestApiInfos.DomainNamePluralLower);
+                        yield return (nameof(request.$PropertyName$), errorDetails);
+                    }
+                    """.Replace("$PropertyName$", propertyName)
+                       .Replace("$PropertyNameLower$", propertyNameLower)
+                       .Replace("$DomainNamePluralLower$", createRestApiInfos.DomainNamePluralLower);
 
                 yield break;
             }
 
             yield return """
-                         if (request.$PropertyName$.IsEmpty())
-                         {
-                             var errorDetails = new ValidationErrorDetails()
-                             {
-                                 CurrentValue = request.$PropertyName$,
-                                 Errors = [$"{nameof(request.$PropertyName$)} must not be empty."],
-                                 Samples = [Guid.NewGuid(), Guid.NewGuid()],
-                             };
-                         
-                             yield return (nameof(request.$PropertyName$), errorDetails);
-                         }
-                         """.Replace("$PropertyName$", propertyName)
-                             .Replace("$PropertyNameLower$", propertyNameLower)
-                             .Replace("$DomainNamePluralLower$", createRestApiInfos.DomainNamePluralLower);
+                if (request.$PropertyName$.IsEmpty())
+                {
+                    var errorDetails = new ValidationErrorDetails()
+                    {
+                        CurrentValue = request.$PropertyName$,
+                        Errors = [$"{nameof(request.$PropertyName$)} must not be empty."],
+                        Samples = [Guid.NewGuid(), Guid.NewGuid()],
+                    };
 
+                    yield return (nameof(request.$PropertyName$), errorDetails);
+                }
+                """.Replace("$PropertyName$", propertyName)
+                   .Replace("$PropertyNameLower$", propertyNameLower)
+                   .Replace("$DomainNamePluralLower$", createRestApiInfos.DomainNamePluralLower);
         }
     }
 }

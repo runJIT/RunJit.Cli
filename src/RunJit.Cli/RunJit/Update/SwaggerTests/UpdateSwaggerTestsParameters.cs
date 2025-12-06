@@ -12,7 +12,7 @@ namespace RunJit.Cli.RunJit.Update.SwaggerTests
     }
 
     internal sealed record UpdateSwaggerTestsParameters(string SolutionFile,
-                                                 string GitRepos,
-                                                 string WorkingDirectory,
-                                                 string IgnorePackages);
+                                                        string GitRepos,
+                                                        string WorkingDirectory,
+                                                        string IgnorePackages);
 }

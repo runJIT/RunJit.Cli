@@ -55,14 +55,14 @@ namespace RunJit.Cli.RunJit.Update.Nuget
     public class Framework
     {
         // public string Framework { get; init; } = string.Empty;
-        public IImmutableList<TopLevelPackage> TopLevelPackages { get; init; } = ImmutableList<TopLevelPackage>.Empty;
+        public ImmutableList<TopLevelPackage> TopLevelPackages { get; init; } = ImmutableList<TopLevelPackage>.Empty;
     }
 
     public class Project
     {
         public string Path { get; init; } = string.Empty;
 
-        public IImmutableList<Framework> Frameworks { get; init; } = ImmutableList<Framework>.Empty;
+        public ImmutableList<Framework> Frameworks { get; init; } = ImmutableList<Framework>.Empty;
     }
 
     public class OutdatedNugetResponse
@@ -71,9 +71,9 @@ namespace RunJit.Cli.RunJit.Update.Nuget
 
         public string Parameters { get; init; } = string.Empty;
 
-        public IImmutableList<string> Sources { get; init; } = ImmutableList<string>.Empty;
+        public ImmutableList<string> Sources { get; init; } = ImmutableList<string>.Empty;
 
-        public IImmutableList<Project> Projects { get; init; } = ImmutableList<Project>.Empty;
+        public ImmutableList<Project> Projects { get; init; } = ImmutableList<Project>.Empty;
     }
 
     public class TopLevelPackage

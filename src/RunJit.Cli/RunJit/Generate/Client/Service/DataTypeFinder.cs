@@ -15,12 +15,12 @@ namespace RunJit.Cli.RunJit.Generate.Client
     }
 
     internal sealed record DeclarationToType(DeclarationBase Declaration,
-                                      Type Type);
+                                             Type Type);
 
     public class DataTypeFinder
     {
-        internal IImmutableList<DeclarationToType> FindDataType(MethodInfo methodInfo,
-                                                                IImmutableList<CSharpSyntaxTree> syntaxTrees)
+        internal ImmutableList<DeclarationToType> FindDataType(MethodInfo methodInfo,
+                                                               ImmutableList<CSharpSyntaxTree> syntaxTrees)
         {
             var parameters = methodInfo.GetParameters().Select(p => p.ParameterType);
             var declaredTypes = parameters.Concat(methodInfo.ReturnType).ToImmutableList();
@@ -38,13 +38,13 @@ namespace RunJit.Cli.RunJit.Generate.Client
             return allModels;
         }
 
-        internal IImmutableList<DeclarationToType> FindDataType(IImmutableList<string> fullqualifiedNames,
-                                                                IImmutableList<CSharpSyntaxTree> syntaxTrees,
-                                                                IImmutableList<Type> reflectionTypes)
+        internal ImmutableList<DeclarationToType> FindDataType(ImmutableList<string> fullqualifiedNames,
+                                                               ImmutableList<CSharpSyntaxTree> syntaxTrees,
+                                                               ImmutableList<Type> reflectionTypes)
         {
             var alreadyFound = new List<string>();
 
-            var types = reflectionTypes.Where(t => fullqualifiedNames.Contains(t.FullName)).ToImmutableList();
+            var types = reflectionTypes.Where(t => fullqualifiedNames.Contains(t.FullName!)).ToImmutableList();
 
             var allTypesWithAllSubTypes = GetAllSubTypes(types, alreadyFound).ToImmutableList();
 
@@ -56,7 +56,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
             return allModels;
         }
 
-        private IEnumerable<Type> GetAllSubTypes(IImmutableList<Type> types,
+        private IEnumerable<Type> GetAllSubTypes(ImmutableList<Type> types,
                                                  List<string> alreadyFound)
         {
             foreach (var type in types)

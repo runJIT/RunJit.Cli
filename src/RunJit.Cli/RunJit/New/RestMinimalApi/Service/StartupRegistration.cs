@@ -27,6 +27,7 @@ namespace RunJit.Cli.New.RestMinimalApi
             if (startupFileInfo.NotExists())
             {
                 consoleService.WriteError($"Expected startup: {startupPath} to register new api endpoint does not exist");
+
                 return;
             }
 
@@ -49,7 +50,8 @@ namespace RunJit.Cli.New.RestMinimalApi
             var newSyntaxTree = syntaxTree.SyntaxTree;
             var methods = syntaxTree.Classes.SelectMany(c => c.Methods).ToList();
 
-            var addApiMethod = methods.FirstOrDefault(m => m.Name == "AddApi");
+            var addApiMethod = methods.FirstOrDefault(m => m.Name.EqualsTo("AddApi"));
+
             if (addApiMethod.IsNotNull())
             {
                 var newRegistration = $"services.Add{createRestApiInfos.DomainNamePlural}(configuration);";
@@ -62,10 +64,10 @@ namespace RunJit.Cli.New.RestMinimalApi
 
                     newSyntaxTree = newSyntaxTree.Replace(orgLines, flattenString);
                 }
-
             }
 
-            var mapMethod = methods.FirstOrDefault(m => m.Name == "MapApi");
+            var mapMethod = methods.FirstOrDefault(m => m.Name.EqualsTo("MapApi"));
+
             if (mapMethod.IsNotNull())
             {
                 var mapRegistration = $"endpoints.Map{createRestApiInfos.DomainNamePlural}();";
@@ -79,7 +81,6 @@ namespace RunJit.Cli.New.RestMinimalApi
                     newSyntaxTree = newSyntaxTree.Replace(orgLines, flattenString);
                 }
             }
-
 
             var newUsing = $"using {createRestApiInfos.ProjectName}.Api.{createRestApiInfos.DomainNamePlural};";
 
@@ -98,7 +99,6 @@ namespace RunJit.Cli.New.RestMinimalApi
                     newSyntaxTree = newSyntaxTree.Replace(originalUsings.ToFlattenString(Environment.NewLine), newUsings);
                 }
             }
-
 
             //internal static class Startup
             //{

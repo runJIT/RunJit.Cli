@@ -4,7 +4,7 @@ namespace RunJit.Cli.RunJit.Generate.CustomEndpoint
 {
     public record EndpointData
     {
-        public IImmutableList<Template> Templates { get; init; } = ImmutableList<Template>.Empty;
+        public ImmutableList<Template> Templates { get; init; } = ImmutableList<Template>.Empty;
     }
 
     public record EndpointAction
@@ -15,18 +15,18 @@ namespace RunJit.Cli.RunJit.Generate.CustomEndpoint
 
         public string DomainActionName { get; init; } = string.Empty;
 
-        public required IImmutableList<string> QueryParameters { get; init; } = ImmutableList<string>.Empty;
+        public ImmutableList<string> QueryParameters { get; init; } = ImmutableList<string>.Empty;
 
-        public required IImmutableList<string> AllowedResourceTypes { get; init; } = ImmutableList<string>.Empty;
+        public ImmutableList<string> AllowedResourceTypes { get; init; } = ImmutableList<string>.Empty;
     }
 
     public record Template
     {
         public required string Folder { get; init; }
 
-        public IImmutableList<CodeFile> Files { get; init; } = ImmutableList<CodeFile>.Empty;
+        public ImmutableList<CodeFile> Files { get; init; } = ImmutableList<CodeFile>.Empty;
 
-        public IImmutableList<Template> Templates { get; init; } = ImmutableList<Template>.Empty;
+        public ImmutableList<Template> Templates { get; init; } = ImmutableList<Template>.Empty;
     }
 
     public record CodeFile
@@ -37,8 +37,8 @@ namespace RunJit.Cli.RunJit.Generate.CustomEndpoint
     }
 
     internal sealed record UrlParameter(string Name,
-                                 string Type);
+                                        string Type);
 
     internal sealed record QueryParameter(string Name,
-                                   string Type);
+                                          string Type);
 }

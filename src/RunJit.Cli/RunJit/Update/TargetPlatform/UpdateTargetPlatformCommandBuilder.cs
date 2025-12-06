@@ -31,9 +31,10 @@ namespace RunJit.Cli.Update.TargetPlatform
             argumentsBuilder.Build().ToList().ForEach(argument => command.AddArgument(argument));
 
             command.Handler = CommandHandler.Create<string, string, string, string>((solutionFile,
-                                                                                  gitRepos,
-                                                                                  workingDirectory,
-                                                                                  platform) => updateTargetPlatform.HandleAsync(new UpdateTargetPlatformParameters(solutionFile, gitRepos, workingDirectory, platform)));
+                                                                                     gitRepos,
+                                                                                     workingDirectory,
+                                                                                     platform) => updateTargetPlatform.HandleAsync(new UpdateTargetPlatformParameters(solutionFile, gitRepos, workingDirectory,
+                                                                                                                                                                      platform)));
 
             return command;
         }

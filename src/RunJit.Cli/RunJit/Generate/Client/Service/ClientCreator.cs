@@ -14,7 +14,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
 {
     // Api.Client
     // -> Api
-    //    -> Projects 
+    //    -> Projects
     //      -> V1
     //        -> Models
     //          -> GetAllProjectsResponse.cs
@@ -30,15 +30,15 @@ namespace RunJit.Cli.RunJit.Generate.Client
     //        -> UserV1.cs
     // -> Client.cs
     // -> ClientFactory.cs
-    public record GeneratedClient(IImmutableList<GeneratedFacade> Facades,
+    public record GeneratedClient(ImmutableList<GeneratedFacade> Facades,
                                   string SyntaxTree);
 
-    public record GeneratedFacade(IImmutableList<GeneratedClientCodeForController> Endpoints,
+    public record GeneratedFacade(ImmutableList<GeneratedClientCodeForController> Endpoints,
                                   string SyntaxTree,
                                   string Domain,
                                   string FacadeName);
 
-    public record GeneratedFacades(IImmutableList<GeneratedFacade> ControllerInfos);
+    public record GeneratedFacades(ImmutableList<GeneratedFacade> ControllerInfos);
 
     public record GeneratedClientCodeForController(EndpointGroup ControllerInfo,
                                                    string SyntaxTree,
@@ -75,6 +75,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
             services.AddHttpCallHandlerFactory();
 
             services.AddJsonSerializerBuilder();
+            services.AddOpenApiJsonFileParser();
 
             services.AddSingletonIfNotExists<ClientCreator>();
         }
@@ -97,7 +98,8 @@ namespace RunJit.Cli.RunJit.Generate.Client
                                         CurlBuilder curlBuilder,
                                         RequestPrinter requestPrinter,
                                         HttpCallHandler httpCallHandler,
-                                        HttpCallHandlerFactory httpCallHandlerFactory)
+                                        HttpCallHandlerFactory httpCallHandlerFactory,
+                                        OpenApiJsonFileParser openApiJsonFileParser)
     {
         internal async Task GenerateClientAsync(Client client,
                                                 FileInfo clientSolution)
@@ -118,6 +120,14 @@ namespace RunJit.Cli.RunJit.Generate.Client
 
             // 3. Get all types which are declared in the API assembly - Need to unique ident the types for client generation.
             var types = apiTypeLoader.GetAllTypesFrom(parsedSolution);
+
+            if (client.UseOpenApiJson)
+            {
+                // Logic to get open api json
+                var openApiJsonFile = new FileInfo(@"D:\Siemens\siemens-data-cloud-backend-console\src\Sdc.Console.Test\OpenApi\Responses\V1.json");
+                var endpointsFromOpenApiJson = openApiJsonFileParser.ExtractFrom("api/console", allSyntaxTrees, types, openApiJsonFile);
+                Console.WriteLine(endpointsFromOpenApiJson.Count);
+            }
 
             // 4. Sync nuget packages - New feature we check which packages are predefined in the template
             //   and sync them up to the parent solution in which it will be included
@@ -219,7 +229,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
 
     internal static class ControllerInfosExtensions
     {
-        internal static IImmutableList<EndpointGroup> ToEndpointInfos(this IImmutableList<ControllerInfo> controllerInfos)
+        internal static ImmutableList<EndpointGroup> ToEndpointInfos(this ImmutableList<ControllerInfo> controllerInfos)
         {
             var endpointGroups = ImmutableList.CreateBuilder<EndpointGroup>();
 
@@ -234,11 +244,11 @@ namespace RunJit.Cli.RunJit.Generate.Client
                 }
 
                 var endpointGroup = new EndpointGroup
-                {
-                    GroupName = controllerInfo.GroupName,
-                    Endpoints = endpoints.ToImmutable(),
-                    Version = controllerInfo.Version
-                };
+                                    {
+                                        GroupName = controllerInfo.GroupName,
+                                        Endpoints = endpoints.ToImmutable(),
+                                        Version = controllerInfo.Version
+                                    };
 
                 endpointGroups.Add(endpointGroup);
             }
@@ -256,22 +266,22 @@ namespace RunJit.Cli.RunJit.Generate.Client
             var obsoleteValue = methodInfo.Attributes.FirstOrDefault(a => a.Name.StartsWith("Obsolete"))?.Arguments.FirstOrDefault();
 
             var endpoint = new EndpointInfo
-            {
-                ResponseType = methodInfo.ResponseType,
-                BaseUrl = methodInfo.RelativeUrl,
-                DomainName = methodInfo.Name,
-                HttpAction = methodInfo.HttpAction,
-                GroupName = groupName,
-                Parameters = methodInfo.Parameters,
-                SwaggerOperationId = methodInfo.SwaggerOperationId,
-                ProduceResponseTypes = methodInfo.ProduceResponseTypes,
-                RequestType = methodInfo.RequestType,
-                Version = versionInfo,
-                ObsoleteInfo = obsoleteValue.IsNull() ? null : new ObsoleteInfo(obsoleteValue),
-                Models = methodInfo.Models,
-                Name = methodInfo.Name,
-                RelativeUrl = methodInfo.RelativeUrl
-            };
+                           {
+                               ResponseType = methodInfo.ResponseType,
+                               BaseUrl = methodInfo.RelativeUrl,
+                               DomainName = methodInfo.Name,
+                               HttpAction = methodInfo.HttpAction,
+                               GroupName = groupName,
+                               Parameters = methodInfo.Parameters,
+                               SwaggerOperationId = methodInfo.SwaggerOperationId,
+                               ProduceResponseTypes = methodInfo.ProduceResponseTypes,
+                               RequestType = methodInfo.RequestType,
+                               Version = versionInfo,
+                               ObsoleteInfo = obsoleteValue.IsNull() ? null : new ObsoleteInfo(obsoleteValue),
+                               Models = methodInfo.Models,
+                               Name = methodInfo.Name,
+                               RelativeUrl = methodInfo.RelativeUrl
+                           };
 
             return endpoint;
         }

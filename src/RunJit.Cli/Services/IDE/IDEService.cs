@@ -33,7 +33,7 @@ namespace RunJit.Cli.Services
         {
             Task.Run(() => LaunchIdeAsync(solutionPath));
         }
-        
+
         public async Task LaunchIdeAsync(FileInfo solutionPath)
         {
             // Find the first installed IDE, ordered by the defined priority.
@@ -42,6 +42,7 @@ namespace RunJit.Cli.Services
                                    .ToList();
 
             var ideToStart = availableIde.FirstOrDefault();
+
             if (ideToStart.IsNotNull())
             {
                 Console.WriteLine($"{ideToStart.Name} is available. Launching it...");

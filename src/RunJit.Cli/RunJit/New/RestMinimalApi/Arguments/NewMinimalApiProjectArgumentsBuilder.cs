@@ -25,7 +25,7 @@ namespace RunJit.Cli.RunJit.Check.Backend.Builds
                    {
                        Name = "solutionFileOrGitRepos",
                        Description = @"Please pass your absolute path to your solution file (sample: D:\Siemens\siemens-aspnet-errorhandler\Siemens.AspNet.ErrorHandler.sln) or git repository urls (sample: 'https://github.siemens.cloud/sdc/siemens-aspnet-errorhandler.git' or multiple 'codecommit::eu-central-1://pulse-datamanagement;https://github.siemens.cloud/sdc/siemens-aspnet-errorhandler.git' separated by ';'",
-            };
+                   };
         }
     }
 }

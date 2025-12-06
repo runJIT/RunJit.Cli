@@ -50,5 +50,5 @@ namespace RunJit.Cli.RunJit.Zip
     }
 
     internal sealed record ZipParameters(DirectoryInfo Directory,
-                                  FileInfo ZipFile);
+                                         FileInfo ZipFile);
 }

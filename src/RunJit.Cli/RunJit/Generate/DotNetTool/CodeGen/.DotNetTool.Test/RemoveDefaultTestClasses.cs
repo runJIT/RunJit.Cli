@@ -20,9 +20,9 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
     internal sealed class RemoveDefaultTestClasses(ConsoleService consoleService) : IDotNetToolTestSpecificCodeGen
     {
         public Task GenerateAsync(FileInfo projectFileInfo,
-                                        XDocument projectDocument,
-                                        DotNetToolInfos dotNetToolInfos,
-                                        ProjectFile? webApiProject)
+                                  XDocument projectDocument,
+                                  DotNetToolInfos dotNetToolInfos,
+                                  ProjectFile? webApiProject)
         {
             // Test1
             // MSTestSettings.cs

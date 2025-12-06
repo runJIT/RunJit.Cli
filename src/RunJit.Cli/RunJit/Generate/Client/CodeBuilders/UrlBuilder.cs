@@ -35,7 +35,7 @@ namespace RunJit.Cli.Generate.Client
             var httpMethodRoute = httpAttribute?.Arguments.FirstOrDefault()?.Trim('"') ?? string.Empty;
             var relativeUrl = $"{baseUrl.TrimEnd('/')}/{httpMethodRoute.TrimStart('/')}";
 
-            var routeOnMethod = method.Attributes.FirstOrDefault(a => a.Name == "Route")?.Arguments.FirstOrDefault()?.Trim('"');
+            var routeOnMethod = method.Attributes.FirstOrDefault(a => a.Name.EqualsTo("Route"))?.Arguments.FirstOrDefault()?.Trim('"');
 
             if (routeOnMethod.IsNotNullOrWhiteSpace())
             {

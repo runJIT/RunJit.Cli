@@ -12,7 +12,7 @@ namespace RunJit.Cli.RunJit.Update.Nuget
     }
 
     internal sealed record UpdateNugetParameters(string SolutionFile,
-                                          string GitRepos,
-                                          string WorkingDirectory,
-                                          string IgnorePackages);
+                                                 string GitRepos,
+                                                 string WorkingDirectory,
+                                                 string IgnorePackages);
 }

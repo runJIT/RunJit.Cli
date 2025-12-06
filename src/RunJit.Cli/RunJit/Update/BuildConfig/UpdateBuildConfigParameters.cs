@@ -12,6 +12,6 @@ namespace RunJit.Cli.RunJit.Update.BuildConfig
     }
 
     internal sealed record UpdateBuildConfigParameters(string SolutionFile,
-                                                string GitRepos,
-                                                string WorkingDirectory);
+                                                       string GitRepos,
+                                                       string WorkingDirectory);
 }

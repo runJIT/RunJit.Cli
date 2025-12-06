@@ -44,6 +44,7 @@ namespace RunJit.Cli.Generate.DotNetTool
             services.AddProjectSettingsCodeGen();
 
             services.AddProjectEmbeddedFilesCodeGen();
+
             // services.AddProjectTypeCodeGen();
 
             // HttpCallHandlers
@@ -70,8 +71,8 @@ namespace RunJit.Cli.Generate.DotNetTool
     }
 
     internal sealed class DotNetToolGenerator(IDotNet dotNet,
-                                       IEnumerable<IDotNetToolSpecificCodeGen> codeGenerators,
-                                       SolutionCodeCleanup solutionCodeCleanup)
+                                              IEnumerable<IDotNetToolSpecificCodeGen> codeGenerators,
+                                              SolutionCodeCleanup solutionCodeCleanup)
     {
         public async Task<FileInfo> GenerateAsync(SolutionFile solutionFile,
                                                   DotNetToolInfos dotNetToolInfos)
@@ -82,7 +83,7 @@ namespace RunJit.Cli.Generate.DotNetTool
             // 1. Check if cli project already exists
             //    Depending on new restriction of microsoft we can not just check the .Net.Web.Sdk
             //    so we need to check the implementation
-            var dotNetToolProject = solutionFile.ProductiveProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant() == dotNetToolInfos.ProjectName.ToLowerInvariant());
+            var dotNetToolProject = solutionFile.ProductiveProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant().EqualsTo(dotNetToolInfos.ProjectName.ToLowerInvariant()));
 
             if (dotNetToolProject.IsNotNull())
             {
@@ -99,6 +100,7 @@ namespace RunJit.Cli.Generate.DotNetTool
             var sourceFolderPart = sourceFolder.IsNull() ? string.Empty : sourceFolder.Name;
 
             var netToolFolder = new DirectoryInfo(Path.Combine(solutionFileInfo.Directory!.FullName, sourceFolderPart, dotNetToolInfos.ProjectName));
+
             if (netToolFolder.Exists)
             {
                 netToolFolder.Delete(true);
@@ -117,7 +119,6 @@ namespace RunJit.Cli.Generate.DotNetTool
             {
                 throw new RunJitException($"Expected .NetTool project does not exists. {dotnetToolProject.FullName}");
             }
-
 
             // 6. Add required nuget packages into project
             await dotNet.AddNugetPackageAsync(dotnetToolProject.FullName, "System.CommandLine", "0.3.0-alpha.20054.1").ConfigureAwait(false);

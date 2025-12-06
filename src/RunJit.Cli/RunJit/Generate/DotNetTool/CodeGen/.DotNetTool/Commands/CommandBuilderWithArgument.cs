@@ -63,8 +63,8 @@ namespace $namespace$
 
             var commandHandler = commandHandlerBuilder.Build(commandInfo);
 
-            var interfaceImplementation = parentCommandInfo.IsNull() || commandInfo == parentCommandInfo ? string.Empty : $" : I{parentCommandInfo.NormalizedName}SubCommandBuilder";
-            var commandRegistration = parentCommandInfo.IsNull() || commandInfo == parentCommandInfo ? $"{commandInfo.NormalizedName}CommandBuilder" : $"I{parentCommandInfo.NormalizedName}SubCommandBuilder, {commandInfo.NormalizedName}CommandBuilder";
+            var interfaceImplementation = parentCommandInfo.IsNull() || commandInfo.EqualsTo(parentCommandInfo) ? string.Empty : $" : I{parentCommandInfo.NormalizedName}SubCommandBuilder";
+            var commandRegistration = parentCommandInfo.IsNull() || commandInfo.EqualsTo(parentCommandInfo) ? $"{commandInfo.NormalizedName}CommandBuilder" : $"I{parentCommandInfo.NormalizedName}SubCommandBuilder, {commandInfo.NormalizedName}CommandBuilder";
 
             var newTemplate = Template.Replace("$command-name$", commandInfo.NormalizedName)
                                       .Replace("$command-argument-name$", commandInfo.NormalizedName.ToLowerInvariant())

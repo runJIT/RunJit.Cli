@@ -30,10 +30,10 @@ namespace RunJit.Cli.Services
                                        ParameterNormalizer parameterNormalizer,
                                        ResponseTypeNormalizer responseTypeNormalizer)
     {
-        internal IImmutableList<MethodInfos> Parse(IImmutableList<Method> methods,
-                                                   string baseUrl,
-                                                   IImmutableList<MethodInfo> reflectionTypes,
-                                                   IImmutableList<CSharpSyntaxTree> syntaxTrees)
+        internal ImmutableList<MethodInfos> Parse(ImmutableList<Method> methods,
+                                                  string baseUrl,
+                                                  ImmutableList<MethodInfo> reflectionTypes,
+                                                  ImmutableList<CSharpSyntaxTree> syntaxTrees)
         {
             // Only methods which represents a http endpoint
             var publicMethods = methods.Where(m => m.Attributes.Any(attribute => attribute.Name.StartWith("Http"))).ToImmutableList();
@@ -44,11 +44,11 @@ namespace RunJit.Cli.Services
 
         private MethodInfos Parse(Method method,
                                   string baseUrl,
-                                  IImmutableList<MethodInfo> reflectionTypes,
-                                  IImmutableList<CSharpSyntaxTree> syntaxTrees)
+                                  ImmutableList<MethodInfo> reflectionTypes,
+                                  ImmutableList<CSharpSyntaxTree> syntaxTrees)
         {
-            IImmutableList<MethodInfo> methods = reflectionTypes.Where(m => m.Name == method.Name &&
-                                                                            m.GetParameters().Length == method.Parameters.Count).ToImmutableList();
+            ImmutableList<MethodInfo> methods = reflectionTypes.Where(m => m.Name.EqualsTo(method.Name) &&
+                                                                           m.GetParameters().Length.EqualsTo(method.Parameters.Count)).ToImmutableList();
 
             // Simple workaround fallback -> this is a bug in the code method name and parameter same !
             if (methods.Count > 1)
@@ -64,7 +64,7 @@ namespace RunJit.Cli.Services
             var methodReflection = methods[0];
             var httpAttribute = method.Attributes.FirstOrDefault(a => a.Name.StartWith("Http"));
             var httpAction = httpAttribute?.Name.Replace("Http", string.Empty) ?? string.Empty;
-            var swaggerOperation = method.Attributes.FirstOrDefault(a => a.Name == "SwaggerOperation");
+            var swaggerOperation = method.Attributes.FirstOrDefault(a => a.Name.EqualsTo("SwaggerOperation"));
             var swaggerOperationId = swaggerOperation?.Arguments.FirstOrDefault(a => a.Contains("OperationId"))?.Split("=").Last().Replace(@"""", string.Empty)?.Trim() ?? string.Empty;
             var produceResponseType = GetProduceResponseType(method);
             var relativeUrl = urlBuilder.BuildFrom(baseUrl, method);
@@ -89,9 +89,9 @@ namespace RunJit.Cli.Services
                    };
         }
 
-        private static IImmutableList<ProduceResponseTypes> GetProduceResponseType(Method method)
+        private static ImmutableList<ProduceResponseTypes> GetProduceResponseType(Method method)
         {
-            var produceResponseType = method.Attributes.Where(attribute => attribute.Name == "ProducesResponseType")
+            var produceResponseType = method.Attributes.Where(attribute => attribute.Name.EqualsTo("ProducesResponseType"))
                                             .Select(produce =>
                                                     {
                                                         var type = produce.Arguments.FirstOrDefault() ?? string.Empty;
@@ -103,8 +103,8 @@ namespace RunJit.Cli.Services
             return produceResponseType;
         }
 
-        private IImmutableList<MethodInfo> FilterByReturnType(IImmutableList<MethodInfo> methods,
-                                                              Method method)
+        private ImmutableList<MethodInfo> FilterByReturnType(ImmutableList<MethodInfo> methods,
+                                                             Method method)
         {
             var filteredMethods = methods.Where(m =>
                                                 {

@@ -105,7 +105,6 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
                     outputFolder.Create();
                 }
 
-
                 // Default test case
                 await File.WriteAllTextAsync(Path.Combine(outputFolder.FullName, $"{commandInfo.NormalizedName}.json"), "{}").ConfigureAwait(false);
 

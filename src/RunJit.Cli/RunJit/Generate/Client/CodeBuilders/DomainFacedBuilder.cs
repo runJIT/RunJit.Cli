@@ -51,9 +51,9 @@ namespace RunJit.Cli.Generate.Client
     {
         private readonly string _facadeTemplate = EmbeddedFile.GetFileContentFrom("RunJit.Generate.Client.Templates.facade.rps");
 
-        public IImmutableList<GeneratedFacade> BuildFrom(IImmutableList<GeneratedClientCodeForController> generatedClientCodeForEndpoints,
-                                                         string projectName,
-                                                         string clientName)
+        public ImmutableList<GeneratedFacade> BuildFrom(ImmutableList<GeneratedClientCodeForController> generatedClientCodeForEndpoints,
+                                                        string projectName,
+                                                        string clientName)
         {
             // UserV1, UserV2, ProjectsV1, ProjectsV2
             // Each domain one facade
@@ -71,7 +71,6 @@ namespace RunJit.Cli.Generate.Client
                                           string projectName,
                                           string clientName)
         {
-
             var domain = groupedEndpoints.Key;
             var neutralDomain = domain.Replace("Controller", string.Empty);
             var serviceRegistrations = serviceRegistrationBuilder.BuildFrom(groupedEndpoints);
@@ -80,6 +79,7 @@ namespace RunJit.Cli.Generate.Client
             var properties = propertiesBuilder.BuildFrom(groupedEndpoints);
 
             var @namespace = $"{projectName}.{ClientGenConstants.Api}.{neutralDomain}";
+
             var usings = groupedEndpoints.Select(endpoint =>
                                                  {
                                                      if (endpoint.ControllerInfo.Version.IsNull())
@@ -88,8 +88,8 @@ namespace RunJit.Cli.Generate.Client
                                                      }
 
                                                      return $"using {@namespace}.{endpoint.ControllerInfo.Version.Normalized};";
-
                                                  }).Flatten(Environment.NewLine);
+
             var facadeName = $"{neutralDomain}Facade";
 
             var facadeClass = _facadeTemplate.Replace("$name$", facadeName)
@@ -102,7 +102,8 @@ namespace RunJit.Cli.Generate.Client
                                              .Replace("$namespace$", @namespace)
                                              .Replace("$usings$", usings);
 
-            return new GeneratedFacade(groupedEndpoints.ToImmutableList(), facadeClass, neutralDomain, facadeName);
+            return new GeneratedFacade(groupedEndpoints.ToImmutableList(), facadeClass, neutralDomain,
+                                       facadeName);
         }
     }
 }

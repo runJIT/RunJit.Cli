@@ -42,11 +42,11 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddHttpClient();
                                                     services.Add$dotNetToolName$HttpClientSettings(configuration);
                                                     services.AddHttpCallHandlerFactory();
-                                        
+
                                                     services.AddSingletonIfNotExists<$dotNetToolName$HttpClientFactory>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class $dotNetToolName$HttpClientFactory(IHttpClientFactory httpClientFactory,
                                                                                                 $dotNetToolName$HttpClientSettings aspNetCoreMinimalApiSdkClientSettings,
                                                                                                 HttpCallHandlerFactory httpCallHandlerFactory)
@@ -58,7 +58,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     "x-",
                                                     "Referer"
                                                 ];
-                                        
+
                                                 internal HttpCallHandler CreateFrom(HttpRequest httpRequest)
                                                 {
                                                     var httpClient = httpClientFactory.CreateClient();
@@ -70,14 +70,14 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                             httpClient.DefaultRequestHeaders.Add(headerEntry.Key, headerEntry.Value.FirstOrDefault() ?? string.Empty);
                                                         }
                                                     });
-                                        
+
                                                     httpClient.BaseAddress = new Uri(aspNetCoreMinimalApiSdkClientSettings.BaseAddress);
-                                        
+
                                                     var httpClientHandler = httpCallHandlerFactory.CreateFrom(httpClient);
-                                        
+
                                                     return httpClientHandler;
                                                 }
-                                        
+
                                                 internal HttpCallHandler CreateFrom(string schema, string token)
                                                 {
                                                     return CreateFrom($"{schema} {token}");
@@ -100,7 +100,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     return httpClientHandler;
                                                 }
                                             }
-                                        
+
                                             internal static class Add$dotNetToolName$HttpClientSettingsExtension
                                             {
                                                 internal static void Add$dotNetToolName$HttpClientSettings(this IServiceCollection services,
@@ -110,11 +110,11 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     {
                                                         clientSettings = new $dotNetToolName$HttpClientSettings();
                                                     }
-                                        
+
                                                     services.AddSingletonIfNotExists(clientSettings);
                                                 }
                                             }
-                                        
+
                                             internal sealed record $dotNetToolName$HttpClientSettings
                                             {
                                                 public string BaseAddress { get; init; } = "http://staging/api/$dotNetToolName$/";

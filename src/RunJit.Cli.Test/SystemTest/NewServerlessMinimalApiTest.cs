@@ -34,7 +34,7 @@ namespace RunJit.Cli.Test.SystemTest
             // await DotNetTool.AssertRunAsync("dotnet", $"test {solutionFileInfo.FullName}").ConfigureAwait(false);
 
             // 4. Create Client
-            await Mediator.SendAsync(new GenerateClient(solutionFileInfo, false));
+            await Mediator.SendAsync(new GenerateClient(solutionFileInfo, false, false));
 
             // 5. Create .Net tool
             await Mediator.SendAsync(new GenerateDotNetTool(solutionFileInfo, toolName));
@@ -85,13 +85,14 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
             // 2. Add rest api
-            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, ProjectEntityModel, "Name", "Projects", basePath));
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, ProjectEntityModel, "Name",
+                                                           "Projects", basePath));
 
             // 3. Assert that solution can be build and needed for client as well
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFileInfo.FullName}").ConfigureAwait(false);
 
             // 4. Create Client
-            await Mediator.SendAsync(new GenerateClient(solutionFileInfo, false));
+            await Mediator.SendAsync(new GenerateClient(solutionFileInfo, false, false));
 
             // 5. Create .Net tool
             await Mediator.SendAsync(new GenerateDotNetTool(solutionFileInfo, toolName));
@@ -114,9 +115,9 @@ namespace RunJit.Cli.Test.SystemTest
     }
 
     internal sealed record NewMinimalApiProject(string ProjectName,
-                                            string basePath,
-                                            string TargetDirectory = "",
-                                            string ExpectedErrorMessage = "") : ICommand<FileInfo>;
+                                                string basePath,
+                                                string TargetDirectory = "",
+                                                string ExpectedErrorMessage = "") : ICommand<FileInfo>;
 
     internal sealed class NewMinimalApiProjectHandler : ICommandHandler<NewMinimalApiProject, FileInfo>
     {

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using AspNetCore.Simple.MsTest.Sdk;
 using Extensions.Pack;
 using Microsoft.Extensions.DependencyInjection;
 using PluralizeService.Core;
@@ -11,6 +10,7 @@ using RunJit.Cli.Services;
 using RunJit.Cli.Services.Resharper;
 using Solution.Parser.CSharp;
 using Solution.Parser.Solution;
+using Attribute = Solution.Parser.CSharp.Attribute;
 using CSharpSyntaxTree = Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree;
 
 namespace RunJit.Cli.New.RestMinimalApi
@@ -18,30 +18,52 @@ namespace RunJit.Cli.New.RestMinimalApi
     internal sealed record CreateRestApiInfos
     {
         internal required string ProjectName { get; init; }
+
         internal required string DomainModelCode { get; init; }
+
         internal required string EntityModelCode { get; init; }
+
         internal required string DomainNameLower { get; init; }
+
         internal required string DomainName { get; init; }
+
         internal required string DomainNamePlural { get; init; }
+
         internal required string DomainNamePluralLower { get; init; }
+
         internal required string PropertyMappings { get; init; }
+
         internal required string PropertiesWithoutId { get; init; }
+
         internal required string IdPropertyName { get; init; }
+
         internal required string QueryPropertyName { get; init; }
+
         internal required string QueryPropertyNameLower { get; init; }
+
         internal required string MigrationScript { get; init; }
+
         internal required string TestRequestJson { get; init; }
+
         internal required string TestResponseJson { get; init; }
+
         internal required int Version { get; init; }
+
         internal required string BasePath { get; init; }
 
         // NEW WIP validation checks
         internal string CreateRequestValidations { get; init; } = string.Empty;
+
         internal string DeleteAllRequestValidations { get; init; } = string.Empty;
+
         internal string DeleteByIdRequestValidations { get; init; } = string.Empty;
+
         internal string GetAllRequestValidations { get; init; } = string.Empty;
+
         internal string GetByIdRequestValidations { get; init; } = string.Empty;
+
         internal string PatchRequestValidations { get; init; } = string.Empty;
+
         internal string UpdateRequestValidations { get; init; } = string.Empty;
     }
 
@@ -72,7 +94,8 @@ namespace RunJit.Cli.New.RestMinimalApi
             services.AddGenerateMigrationScript();
             services.AddApiNamespaceProviderCleanup();
             services.AddDatabaseNamespaceProviderCleanup();
-            services.AddSimpleValidationCodeBuilder(); ;
+            services.AddSimpleValidationCodeBuilder();
+            ;
 
             services.AddSingletonIfNotExists<NewRestMinimalApiService>();
         }
@@ -91,7 +114,6 @@ namespace RunJit.Cli.New.RestMinimalApi
             {
                 throw new RunJitException($@"Your passed {nameof(NewRestMinimalApiParameters.SolutionFilesOrGitRepos)} is null, empty or whitespace. Please pass your absolute path to your solution file (sample: D:\\Siemens\\siemens-aspnet-errorhandler\\Siemens.AspNet.ErrorHandler.sln\\) or git repository urls (sample: 'https://github.siemens.cloud/sdc/siemens-aspnet-errorhandler.git' or multiple 'codecommit::eu-central-1://pulse-datamanagement;https://github.siemens.cloud/sdc/siemens-aspnet-errorhandler.git' separated by ';'");
             }
-
 
             // Check if it is a solution file
             var splittedValues = parameters.SolutionFilesOrGitRepos.Split(";", StringSplitOptions.RemoveEmptyEntries);
@@ -119,23 +141,20 @@ namespace RunJit.Cli.New.RestMinimalApi
                 throw new RunJitException($"Query property name must not be null, empty or whitespace");
             }
 
-
             var syntaxTree = parameters.DbEntityModel.EndsWith(".cs") ? CSharpSyntaxTree.ParseText(await File.ReadAllTextAsync(parameters.DbEntityModel)) : CSharpSyntaxTree.ParseText(parameters.DbEntityModel);
             var simplifiedSyntaxTree = syntaxTree.Parse(string.Empty);
 
-
             if (simplifiedSyntaxTree.Records.IsEmpty())
             {
-
                 var sample = """
                              [DynamoDBTable("Project")]
                              public record ProjectEntity
                              {
                                  [DynamoDBHashKey]
                                  public Guid ProjectId { get; init; } = Guid.Empty;
-                             
+
                                  public string Name { get; init; } = string.Empty;
-                             
+
                                  public string Description { get; init; } = string.Empty;
                              }
                              """;
@@ -145,16 +164,15 @@ namespace RunJit.Cli.New.RestMinimalApi
 
             if (simplifiedSyntaxTree.Records.Count > 1)
             {
-
                 var sample = """
                              [DynamoDBTable("Project")]
                              public record ProjectEntity
                              {
                                  [DynamoDBHashKey]
                                  public Guid ProjectId { get; init; } = Guid.Empty;
-                             
+
                                  public string Name { get; init; } = string.Empty;
-                             
+
                                  public string Description { get; init; } = string.Empty;
                              }
                              """;
@@ -164,7 +182,7 @@ namespace RunJit.Cli.New.RestMinimalApi
 
             var record = simplifiedSyntaxTree.Records.First();
 
-            var queryPropertyName = record.Properties.FirstOrDefault(p => p.Name == parameters.QueryProperty);
+            var queryPropertyName = record.Properties.FirstOrDefault(p => p.Name.EqualsTo(parameters.QueryProperty));
 
             if (queryPropertyName.IsNull())
             {
@@ -173,16 +191,15 @@ namespace RunJit.Cli.New.RestMinimalApi
 
             if (record.Attributes.Any(a => a.Name.Contains("DynamoDBTable").IsFalse()))
             {
-
                 var sample = """
                              [DynamoDBTable("Project")]
                              public record ProjectEntity
                              {
                                  [DynamoDBHashKey]
                                  public Guid ProjectId { get; init; } = Guid.Empty;
-                             
+
                                  public string Name { get; init; } = string.Empty;
-                             
+
                                  public string Description { get; init; } = string.Empty;
                              }
                              """;
@@ -191,18 +208,18 @@ namespace RunJit.Cli.New.RestMinimalApi
             }
 
             var hashKeyPropertyId = record.Properties.FirstOrDefault(p => p.SyntaxTree.Contains("DynamoDBHashKey"));
+
             if (hashKeyPropertyId.IsNull())
             {
-
                 var sample = """
                              [DynamoDBTable("Project")]
                              public record ProjectEntity
                              {
                                  [DynamoDBHashKey]
                                  public Guid ProjectId { get; init; } = Guid.Empty;
-                             
+
                                  public string Name { get; init; } = string.Empty;
-                             
+
                                  public string Description { get; init; } = string.Empty;
                              }
                              """;
@@ -212,16 +229,15 @@ namespace RunJit.Cli.New.RestMinimalApi
 
             if (record.Name.EndsWith("Entity").IsFalse())
             {
-
                 var sample = """
                              [DynamoDBTable("Project")]
                              public record ProjectEntity
                              {
                                  [DynamoDBHashKey]
                                  public Guid ProjectId { get; init; } = Guid.Empty;
-                             
+
                                  public string Name { get; init; } = string.Empty;
-                             
+
                                  public string Description { get; init; } = string.Empty;
                              }
                              """;
@@ -229,29 +245,32 @@ namespace RunJit.Cli.New.RestMinimalApi
                 throw new RunJitException($"Your provided record type does not have the correct post fix 'Entity'. Sample: {Environment.NewLine}{sample}");
             }
 
-            var queryProperties = new Property("string", parameters.QueryProperty, true,
-                                              ImmutableList.Create<Modifier>(Modifier.Public),
-                                              $"public string {parameters.QueryProperty} {{ get; init; }}",
-                                              string.Empty, string.Empty).ToIList();
-
-
+            var queryProperties = new Property("string",
+                                               parameters.QueryProperty,
+                                               true,
+                                               true,
+                                               false,
+                                               Modifier.Public.AsImmutableList(),
+                                               ImmutableList<Attribute>.Empty,
+                                               $"public string {parameters.QueryProperty} {{ get; init; }}",
+                                               string.Empty,
+                                               string.Empty).ToIList();
 
             var properties = record.Properties;
             var propertiesWithoutId = properties.Where(p => p.Name.NotEqualsTo(hashKeyPropertyId.Name)).ToList();
             var propertiesWithoutIdAsString = propertiesWithoutId.Select(p => p.SyntaxTree.Split(Environment.NewLine).Last()).Flatten($"{Environment.NewLine}");
             var allPropertiesNeutral = properties.Select(p => p.SyntaxTree.Split(Environment.NewLine).Last()).Flatten($"{Environment.NewLine}");
-            var domainModel = $@"public record {record.Name.Replace("Entity", string.Empty)}                                 
+
+            var domainModel = $@"public record {record.Name.Replace("Entity", string.Empty)}
                                 {{
                                 {allPropertiesNeutral}
                                 }}
                                 ".FormatSyntaxTree();
 
-
             var domainNamePlural = PluralizationProvider.Pluralize(parameters.DomainName);
             var domainName = PluralizationProvider.Singularize(parameters.DomainName);
 
             var propertyMapping = propertiesWithoutId.Select(property => $"{property.Name} = source.{property.Name},").Flatten(Environment.NewLine);
-
 
             // For each solution file and git repo
             // we integrate the new apis
@@ -260,13 +279,16 @@ namespace RunJit.Cli.New.RestMinimalApi
                 if (splittedValue.EndsWith(".sln").IsFalse())
                 {
                     consoleService.WriteError($@"We are currently support only solution files to add new web apis. Your passed value: {splittedValue} is not a valid solution file path. Sample: D:\Siemens\siemens-aspnet-errorhandler\Siemens.AspNet.ErrorHandler.sln");
+
                     continue;
                 }
 
                 var solutionFileInfo = new FileInfo(splittedValue);
+
                 if (solutionFileInfo.NotExists())
                 {
                     consoleService.WriteError($@"Your passed solution file does not exist: {solutionFileInfo.FullName}");
+
                     continue;
                 }
 
@@ -274,7 +296,7 @@ namespace RunJit.Cli.New.RestMinimalApi
 
                 var programFile = parsedClientSolution.ProductiveProjects.FirstOrDefault(p =>
                                                                                          {
-                                                                                             var program = p.CSharpFileInfos.FirstOrDefault(f => f.Value.NameWithoutExtension() == "Program");
+                                                                                             var program = p.CSharpFileInfos.FirstOrDefault(f => f.Value.NameWithoutExtension().EqualsTo("Program"));
 
                                                                                              if (program.IsNotNull())
                                                                                              {
@@ -288,7 +310,6 @@ namespace RunJit.Cli.New.RestMinimalApi
 
                                                                                              return false;
                                                                                          });
-
 
                 if (programFile.IsNull())
                 {
@@ -304,32 +325,32 @@ namespace RunJit.Cli.New.RestMinimalApi
 
                 var migrationScript = generateMigrationScript.Generate(record);
 
-
                 var testPayloadJson = propertiesWithoutId
-                                                .ToDictionary(item => item.Name, item =>
-                                                                                 {
-                                                                                     if (item.Name == queryPropertyName.Name)
-                                                                                     {
-                                                                                         return $"$Unique{domainName}Name$";
-                                                                                     }
-                                                                                     return item.Name;
-                                                                                 })
-                                                .ToJsonIntended();
+                                      .ToDictionary(item => item.Name, item =>
+                                                                       {
+                                                                           if (item.Name.EqualsTo(queryPropertyName.Name))
+                                                                           {
+                                                                               return $"$Unique{domainName}Name$";
+                                                                           }
+
+                                                                           return item.Name;
+                                                                       })
+                                      .ToJsonIntended();
 
                 var testResponseAsJson = properties.ToDictionary(item => item.Name, item =>
-                                                                                  {
-                                                                                      if (item.Name == hashKeyPropertyId.Name)
-                                                                                      {
-                                                                                          return Guid.NewGuid().ToString();
-                                                                                      }
+                                                                                    {
+                                                                                        if (item.Name.EqualsTo(hashKeyPropertyId.Name))
+                                                                                        {
+                                                                                            return Guid.NewGuid().ToString();
+                                                                                        }
 
-                                                                                      if (item.Name == queryPropertyName.Name)
-                                                                                      {
-                                                                                          return $"$Unique{domainName}Name$";
-                                                                                      }
+                                                                                        if (item.Name.EqualsTo(queryPropertyName.Name))
+                                                                                        {
+                                                                                            return $"$Unique{domainName}Name$";
+                                                                                        }
 
-                                                                                      return item.Name;
-                                                                                  }).ToJsonIntended();
+                                                                                        return item.Name;
+                                                                                    }).ToJsonIntended();
 
                 var createRestApiInfos = new CreateRestApiInfos
                 {
@@ -381,13 +402,11 @@ namespace RunJit.Cli.New.RestMinimalApi
                     await restMinimalApiTestSpecificCodeGen.GenerateAsync(solutionFileInfo, testProject.ProjectFileInfo.Value, createRestApiInfos);
                 }
 
-
                 await solutionCodeCleanup.CleanupSolutionAsync(solutionFileInfo).ConfigureAwait(false);
 
                 // 3. Write success message
                 consoleService.WriteSuccess($"Enjoy your new rest api endpoint :)");
             }
-
 
             return 0;
         }

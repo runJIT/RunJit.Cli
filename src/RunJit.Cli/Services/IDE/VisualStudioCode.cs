@@ -19,6 +19,7 @@ namespace RunJit.Cli.Services
         private readonly IDotNet _dotNet;
 
         public string Name => "Visual Studio Code";
+
         public int Priority => 3;
 
         private readonly Lazy<FileInfo?> _cachedCodeFile;
@@ -67,7 +68,7 @@ namespace RunJit.Cli.Services
         {
             var vsFile = _cachedCodeFile.Value;
 
-            if (vsFile == null)
+            if (vsFile.IsNull())
             {
                 return Task.CompletedTask;
             }

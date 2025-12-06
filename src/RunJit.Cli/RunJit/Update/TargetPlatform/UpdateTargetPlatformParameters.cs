@@ -12,7 +12,7 @@ namespace RunJit.Cli.Update.TargetPlatform
     }
 
     internal sealed record UpdateTargetPlatformParameters(string SolutionFile,
-                                                   string GitRepos,
-                                                   string WorkingDirectory,
-                                                   string Platform);
+                                                          string GitRepos,
+                                                          string WorkingDirectory,
+                                                          string Platform);
 }

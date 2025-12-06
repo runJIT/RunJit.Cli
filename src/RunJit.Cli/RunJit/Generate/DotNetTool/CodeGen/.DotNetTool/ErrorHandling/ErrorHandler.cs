@@ -34,7 +34,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddSingletonIfNotExists<ErrorHandler>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class ErrorHandler(ConsoleService consoleService)
                                             {
                                                 internal async Task HandleErrorsAsync(InvocationContext context, Func<InvocationContext, Task> next)
@@ -65,19 +65,19 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                         context.ResultCode = 1;
                                                     }
                                                 }
-                                        
+
                                                 private static Exception FindMostSuitableException(Exception exception)
                                                 {
                                                     if (exception is ProblemDetailsException)
                                                     {
                                                         return exception;
                                                     }
-                                        
+
                                                     if (exception.InnerException != null)
                                                     {
                                                         return FindMostSuitableException(exception.InnerException);
                                                     }
-                                        
+
                                                     return exception;
                                                 }
                                             }

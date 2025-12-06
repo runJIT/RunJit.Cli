@@ -29,7 +29,8 @@ namespace RunJit.Cli.New.NugetProject
             command.Handler = CommandHandler.Create<bool, string, DirectoryInfo, int>((startIde,
                                                                                        projectName,
                                                                                        targetDirectory,
-                                                                                       targetFramework) => minimalApiProjectService.HandleAsync(new NewNugetProjectParameters(startIde, projectName, targetDirectory, targetFramework)));
+                                                                                       targetFramework) => minimalApiProjectService.HandleAsync(new NewNugetProjectParameters(startIde, projectName, targetDirectory,
+                                                                                                                                                                              targetFramework)));
 
             return command;
         }

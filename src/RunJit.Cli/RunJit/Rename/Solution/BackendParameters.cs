@@ -12,6 +12,6 @@ namespace RunJit.Cli.RunJit.Rename.Solution
     }
 
     internal sealed record BackendParameters(string FileOrFolder,
-                                      string OldName,
-                                      string NewName);
+                                             string OldName,
+                                             string NewName);
 }

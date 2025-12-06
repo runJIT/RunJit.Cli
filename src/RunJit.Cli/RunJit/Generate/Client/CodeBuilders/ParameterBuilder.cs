@@ -21,7 +21,7 @@ namespace RunJit.Cli.Generate.Client
     // AdminFacade adminFacade, AliveFacade aliveFacade
     internal sealed class ParameterBuilder
     {
-        internal string BuildFrom(IImmutableList<GeneratedFacade> facades)
+        internal string BuildFrom(ImmutableList<GeneratedFacade> facades)
         {
             var parameters = facades.Select(f => $"{f.FacadeName} " + $"{f.FacadeName}".FirstCharToLower())
                                     .Flatten(", ");

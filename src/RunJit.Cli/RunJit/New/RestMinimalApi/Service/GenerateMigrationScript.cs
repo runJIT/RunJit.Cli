@@ -19,18 +19,18 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.Service
         internal string Generate(Record record)
         {
             var tableAttribute = record.Attributes.FirstOrDefault(a => a.Name.Contains("DynamoDBTable"));
+
             if (tableAttribute.IsNull())
             {
-
                 var sample = """
                              [DynamoDBTable("Project")]
                              public record ProjectEntity
                              {
                                  [DynamoDBHashKey]
                                  public Guid ProjectId { get; init; } = Guid.Empty;
-                             
+
                                  public string Name { get; init; } = string.Empty;
-                             
+
                                  public string Description { get; init; } = string.Empty;
                              }
                              """;
@@ -39,18 +39,18 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.Service
             }
 
             var tableName = tableAttribute.Arguments.FirstOrDefault();
+
             if (tableName.IsNull())
             {
-
                 var sample = """
                              [DynamoDBTable("Project")]
                              public record ProjectEntity
                              {
                                  [DynamoDBHashKey]
                                  public Guid ProjectId { get; init; } = Guid.Empty;
-                             
+
                                  public string Name { get; init; } = string.Empty;
-                             
+
                                  public string Description { get; init; } = string.Empty;
                              }
                              """;
@@ -60,7 +60,8 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.Service
 
             // 1. Get hashkey
             var hashKey = record.Properties.FirstOrDefault(p => p.SyntaxTree.Contains("DynamoDBHashKey"));
-            if (hashKey == null)
+
+            if (hashKey.IsNull())
             {
                 var sample = """
                              [DynamoDBTable("Project")]
@@ -68,9 +69,9 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.Service
                              {
                                  [DynamoDBHashKey]
                                  public Guid ProjectId { get; init; } = Guid.Empty;
-                             
+
                                  public string Name { get; init; } = string.Empty;
-                             
+
                                  public string Description { get; init; } = string.Empty;
                              }
                              """;
@@ -82,10 +83,7 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.Service
             var rangeKey = record.Properties.FirstOrDefault(p => p.SyntaxTree.Contains("DynamoDBRangeKey"));
 
             // Build attribute definitions
-            var attributeDefs = new List<string>
-        {
-            $"AttributeName={hashKey.Name},AttributeType={MapType(hashKey.Type)}"
-        };
+            var attributeDefs = new List<string> { $"AttributeName={hashKey.Name},AttributeType={MapType(hashKey.Type)}" };
 
             // Add range key definition if exists
             if (rangeKey != null)
@@ -94,10 +92,7 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.Service
             }
 
             // Build key schema definitions
-            var keySchema = new List<string>
-        {
-            $"AttributeName={hashKey.Name},KeyType=HASH"
-        };
+            var keySchema = new List<string> { $"AttributeName={hashKey.Name},KeyType=HASH" };
 
             if (rangeKey != null)
             {
@@ -120,12 +115,12 @@ namespace RunJit.Cli.RunJit.New.RestMinimalApi.Service
 
         private string MapType(string typeName)
         {
-            if (typeName == "string" || typeName == nameof(Guid))
+            if (typeName.EqualsTo("string") || typeName.EqualsTo(nameof(Guid)))
             {
                 return "S";
             }
 
-            if (typeName == "int" || typeName == "long" || typeName == "decimal" || typeName == "double")
+            if (typeName.EqualsTo("int") || typeName.EqualsTo("long") || typeName.EqualsTo("decimal") || typeName.EqualsTo("double"))
             {
                 return "N";
             }

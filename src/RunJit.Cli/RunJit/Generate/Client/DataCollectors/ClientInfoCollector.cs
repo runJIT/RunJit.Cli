@@ -34,14 +34,13 @@ namespace RunJit.Cli.RunJit.Generate.Client
             // 1. Request backend solution
             var solutionFileInfo = solutionFileExists ? clientGenParameters.SolutionFile : collectSolutionPath.Collect();
 
-            // If integrate into source solution we enter the solution file :) 
+            // If integrate into source solution we enter the solution file :)
             var targetDirectory = solutionFileInfo;
 
             var projectName = $"{solutionFileInfo.NameWithoutExtension()}.Client";
             var dotnetToolName = new DotNetToolName("dotnet-clientgen", "clientgen");
 
-            return new Client(projectName, dotnetToolName, solutionFileInfo,
-                              targetDirectory);
+            return new Client(projectName, dotnetToolName, solutionFileInfo, targetDirectory, clientGenParameters.UseOpenApiJson);
         }
     }
 }

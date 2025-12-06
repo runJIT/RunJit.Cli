@@ -50,12 +50,12 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
             parametersFile = $"{commandInfo.NormalizedName}.json";
 
             var cliCall = cliCallPath;
+
             var callWithArgs = commandInfo.EndpointInfo.IsNotNull() &&
                                (commandInfo.EndpointInfo.Parameters.Any() ||
                                 commandInfo.EndpointInfo.RequestType.IsNotNull());
 
             var cliCallWithArgument = callWithArgs ? $"{cliCall.ToLowerInvariant()} {parametersFile}" : $"{cliCall.ToLowerInvariant()}";
-
 
             var cliCallWithArgumentAndOutput = $"{cliCallWithArgument}";
 

@@ -7,5 +7,6 @@ namespace RunJit.Cli.RunJit.Generate.Client
     public record Client(string ProjectName,
                          DotNetToolName DotNetToolName,
                          FileInfo SolutionFileInfo,
-                         FileSystemInfo TargetDirectory);
+                         FileSystemInfo TargetDirectory,
+                         bool UseOpenApiJson);
 }

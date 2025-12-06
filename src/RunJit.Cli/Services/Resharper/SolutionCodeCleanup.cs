@@ -27,7 +27,7 @@ namespace RunJit.Cli.Services.Resharper
                 consoleService.WriteInfo($"Try to install {ResharperToolName} for code inspection and cleanups");
                 var installResult = await dotnetTool.InstallAsync(ResharperToolName).ConfigureAwait(false);
 
-                if (installResult.ExitCode == 0)
+                if (installResult.ExitCode.EqualsTo(0))
                 {
                     consoleService.WriteSuccess($"Installation of the {ResharperToolName} was successful.{Environment.NewLine}{installResult.Output}");
                 }
@@ -41,7 +41,7 @@ namespace RunJit.Cli.Services.Resharper
                 consoleService.WriteInfo($"Try to update {ResharperToolName} for code inspection and cleanups");
                 var updateResult = await dotnetTool.UpdateAsync(ResharperToolName).ConfigureAwait(false);
 
-                if (updateResult.ExitCode == 0)
+                if (updateResult.ExitCode.EqualsTo(0))
                 {
                     consoleService.WriteSuccess($"Installation of the {ResharperToolName} was successful.{Environment.NewLine}{updateResult.Output}");
                 }
@@ -84,7 +84,7 @@ namespace RunJit.Cli.Services.Resharper
             var cleanupResult = await dotnetTool.RunAsync(jbTool.FullName, $"cleanupcode {solutionFile.FullName} --settings={dotSettingsFile.FullName}").ConfigureAwait(false);
 
             // 7. Print execution result
-            if (cleanupResult.ExitCode == 0)
+            if (cleanupResult.ExitCode.EqualsTo(0))
             {
                 consoleService.WriteSuccess($"C# Code cleanup in solution {solutionFile.FullName} was successful");
             }

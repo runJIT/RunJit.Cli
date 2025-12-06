@@ -28,7 +28,8 @@ namespace RunJit.Cli.Test.SystemTest
             var solutionFile = await Mediator.SendAsync(new NewMinimalApiProject("Minimal.Api.Endpoints", "api/endpoints")).ConfigureAwait(false);
 
             // 2. Add rest api
-            await Mediator.SendAsync(new NewMinimalRestApi(solutionFile.FullName, ApiKey, "Name", "ApiKeys", "api-keys"));
+            await Mediator.SendAsync(new NewMinimalRestApi(solutionFile.FullName, ApiKey, "Name",
+                                                           "ApiKeys", "api-keys"));
 
             // 3. After renaming all should be fine if we try to build the solution
             await DotNetTool.AssertRunAsync("dotnet", $"build {solutionFile.FullName}").ConfigureAwait(false);

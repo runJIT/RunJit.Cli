@@ -32,39 +32,39 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                 {
                                                     // 1. Setup startup
                                                     var startup = new Startup();
-                                        
+
                                                     // 2. Setup service collection
                                                     var services = new ServiceCollection();
-                                        
+
                                                     // 3. Setup configuration builder
                                                     var configurationBuilder = new ConfigurationBuilder();
-                                        
+
                                                     // 3.1 We are using embedded appsettings cause of deployments of .net tool.
                                                     var appsettingsAsStream = typeof(AppBuilder).Assembly.GetEmbeddedFileAsStream("appsettings.json");
                                                     var jsonStreamConfigurationSource = new JsonStreamConfigurationSource
                                                     {
                                                         Stream = appsettingsAsStream
                                                     };
-                                        
+
                                                     // 3.2 Add json stream configuration source
                                                     configurationBuilder.Add(jsonStreamConfigurationSource);
-                                        
+
                                                     // 3.3 Add optional possibility to overwrite settings with appsettings.json in 
                                                     //     current directory / Manual post config after installation
                                                     configurationBuilder.AddJsonFile(Path.Combine(Environment.CurrentDirectory, "appsettings.json"), optional: true);
-                                        
+
                                                     // 3.4 Add environment variables. With this we can overwrite all used settings :)
                                                     configurationBuilder.AddEnvironmentVariables();
-                                        
+
                                                     // 3.5 Add user secrets. With this we can overwrite all used settings :)
                                                     configurationBuilder.AddUserSecrets(typeof(AppBuilder).Assembly);
-                                        
+
                                                     // 4. Build configuration
                                                     var configuration = configurationBuilder.Build();
-                                        
+
                                                     // 5. Call startup to configure and setup the .net tool
                                                     startup.ConfigureServices(services, configuration);
-                                        
+
                                                     // 6. Service interceptor for custom setups
                                                     serviceInterceptor(services, configuration);
                                                     

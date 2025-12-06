@@ -50,7 +50,7 @@ namespace RunJit.Cli.RunJit.Cleanup.Code
             var repos = parameters.GitRepos.Split(';');
             var orginalStartFolder = parameters.WorkingDirectory.IsNotNullOrWhiteSpace() ? parameters.WorkingDirectory : Environment.CurrentDirectory;
 
-            if (Directory.Exists(orginalStartFolder) == false)
+            if (Directory.Exists(orginalStartFolder).EqualsTo(false))
             {
                 Directory.CreateDirectory(orginalStartFolder);
             }

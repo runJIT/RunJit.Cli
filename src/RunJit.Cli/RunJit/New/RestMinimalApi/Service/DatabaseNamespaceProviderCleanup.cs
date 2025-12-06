@@ -14,7 +14,7 @@ namespace RunJit.Cli.New.RestMinimalApi
     }
 
     internal sealed class DatabaseNamespaceProviderCleanup(ConsoleService consoleService,
-                                                   NamespaceProvider namespaceProvider) : IRestMinimalApiSpecificCodeGen, IRestMinimalApiTestSpecificCodeGen
+                                                           NamespaceProvider namespaceProvider) : IRestMinimalApiSpecificCodeGen, IRestMinimalApiTestSpecificCodeGen
     {
         public Task GenerateAsync(FileInfo solutionFileInfo,
                                   FileInfo webApiProject,
@@ -52,6 +52,7 @@ namespace RunJit.Cli.New.RestMinimalApi
                 // Since level 3 everything have to be set to NamespaceProvider false
 
                 var split = relativePath.Split(Path.DirectorySeparatorChar);
+
                 if (split.Length < 3)
                 {
                     continue;

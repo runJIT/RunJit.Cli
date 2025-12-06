@@ -12,13 +12,14 @@ namespace RunJit.Cli.Services
             services.AddSingletonIfNotExists<IIDE, Rider>();
         }
     }
-    
+
     // JetBrains Rider implementation with lazy caching.
     internal class Rider : IIDE
     {
         private readonly IDotNet _dotNet;
 
         public string Name => "JetBrains Rider";
+
         public int Priority => 2;
 
         private readonly Lazy<FileInfo?> _cachedRiderFile;
@@ -54,7 +55,7 @@ namespace RunJit.Cli.Services
                     // Remove "JetBrains Rider" and trim to get the version part.
                     string suffix = folderName.Replace("JetBrains Rider", "").Trim();
 
-                    if (!string.IsNullOrEmpty(suffix))
+                    if (!suffix.IsNullOrEmpty())
                     {
                         if (Version.TryParse(suffix, out var version))
                         {
@@ -100,7 +101,7 @@ namespace RunJit.Cli.Services
         {
             var vsFile = _cachedRiderFile.Value;
 
-            if (vsFile == null)
+            if (vsFile.IsNull())
             {
                 return Task.CompletedTask;
             }

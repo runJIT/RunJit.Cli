@@ -28,7 +28,7 @@ namespace RunJit.Cli.Generate.Client
     {
         private const string FromQuery = "FromQuery";
 
-        internal string BuildFrom(IImmutableList<Parameter> method)
+        internal string BuildFrom(ImmutableList<Parameter> method)
         {
             var queryParams = CollectQueryParam(method).ToImmutableList();
 
@@ -42,7 +42,7 @@ namespace RunJit.Cli.Generate.Client
             return $"?{queryParamsFlatten}";
         }
 
-        private IEnumerable<string> CollectQueryParam(IImmutableList<Parameter> parameters)
+        private IEnumerable<string> CollectQueryParam(ImmutableList<Parameter> parameters)
         {
             foreach (var parameter in parameters)
             {

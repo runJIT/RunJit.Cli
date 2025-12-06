@@ -34,7 +34,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddSingletonIfNotExists<ISpecificResponseTypeHandler, JsonResponseTypeHandler>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class JsonResponseTypeHandler : ISpecificResponseTypeHandler
                                             {
                                                 public bool CanHandle<TResult>(HttpResponseMessage responseMessage)
@@ -43,7 +43,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                            typeof(TResult) != typeof(byte[]) &&
                                                            typeof(TResult) != typeof(FileStreamResult);
                                                 }
-                                        
+
                                                 public async Task<TResult> HandleAsync<TResult>(HttpResponseMessage responseMessage,
                                                                                                 HttpMethod httpMethod,
                                                                                                 HttpClient httpClient,

@@ -25,11 +25,11 @@ namespace RunJit.Cli.RunJit.Localize.Strings
     internal sealed class StringLocalizer(ExtractStringsToLocalize extractStringsToLocalize)
     {
         // Hint: This is a prototype to check if we are able to do a full automation of the localization process.
-        //       
+        //
         //       This fixture allows you to localize all exception messages in all available language files.
         //       This code parse all the exception message strings out and create the keys and its default language "english" -> "en"
         //       into the language files.
-        public async Task LocalizeAsync(IImmutableList<string> languages,
+        public async Task LocalizeAsync(ImmutableList<string> languages,
                                         string solutionPath)
         {
             // 1. Extract all declared strings in exceptions.
@@ -60,7 +60,7 @@ namespace RunJit.Cli.RunJit.Localize.Strings
                     }
 
                     // Per default all text are english so no translation is needed
-                    if (language == "en")
+                    if (language.EqualsTo("en"))
                     {
                         await File.WriteAllTextAsync(languageFile.FullName, projectWithStringsToLocalize.TextToLocalize.ToJsonIntended());
 
@@ -118,7 +118,7 @@ namespace RunJit.Cli.RunJit.Localize.Strings
             var root = syntaxTree.GetRoot();
 
             return root.DescendantNodes().OfType<ThrowStatementSyntax>()
-                       .Where(ts => ts.Expression is ObjectCreationExpressionSyntax);
+                       .Where(ts => ts.Expression!.Is<ObjectCreationExpressionSyntax>());
         }
 
         private static MethodDeclarationSyntax? GetContainingMethod(SyntaxNode? node)
@@ -158,8 +158,7 @@ namespace RunJit.Cli.RunJit.Localize.Strings
             var methodDeclaration = GetContainingMethod(throwStatement);
             var classDeclaration = GetContainingClass(throwStatement);
 
-            if (methodDeclaration == null ||
-                classDeclaration == null)
+            if (methodDeclaration.IsNull() || classDeclaration.IsNull())
             {
                 yield break;
             }
@@ -178,14 +177,14 @@ namespace RunJit.Cli.RunJit.Localize.Strings
             var methodName = methodDeclaration.Identifier.Text;
 
             // Get the exception type
-            var objectCreation = throwStatement.Expression as ObjectCreationExpressionSyntax;
+            var objectCreation = throwStatement.Expression.As<ObjectCreationExpressionSyntax>();
 
             if (objectCreation.IsNull())
             {
                 yield break;
             }
 
-            var constructorSymbol = semanticModel.GetSymbolInfo(objectCreation).Symbol as IMethodSymbol;
+            var constructorSymbol = semanticModel.GetSymbolInfo(objectCreation).Symbol.As<IMethodSymbol>();
 
             if (constructorSymbol.IsNull())
             {
@@ -202,7 +201,7 @@ namespace RunJit.Cli.RunJit.Localize.Strings
             {
                 var argument = objectCreation.ArgumentList.Arguments[i];
 
-                if (constructorSymbol.Parameters.Length <= i)
+                if (constructorSymbol.Parameters.Length.IsLessOrEqual(i))
                 {
                     break;
                 }
@@ -220,7 +219,7 @@ namespace RunJit.Cli.RunJit.Localize.Strings
                     var stringValue = literalExpression.Token.ValueText;
 
                     // Combine the fully qualified class name, method name, exception type, and parameter name, and text value itself
-                    // Sample: 
+                    // Sample:
                     // throw new ArgumentException("This is the exception message");
                     // MyAssembly.MyNamespace.MyClass.MyMethod.ArgumentException.Message.This is the exception message
                     var parameterKey = $"{fullyQualifiedClassName}.{methodName}.{constructorSymbol.ContainingType.Name}.{parameterName}.{stringValue}";
@@ -243,12 +242,12 @@ namespace RunJit.Cli.RunJit.Localize.Strings
     internal sealed class ExtractStringsToLocalize
     {
         // Hint: This is a prototype to check if we are able to do a full automation of the localization process.
-        //       
+        //
         //       This fixture allows you to localize all exception messages in all available language files.
         //       This code parse all the exception message strings out and create the keys and its default language "english" -> "en"
         //       into the language files.
-        public async Task<IImmutableList<StringsToLocalize>> ExtractLocalizableStrings(IImmutableList<string> languages,
-                                                                                       string solutionPath)
+        public async Task<ImmutableList<StringsToLocalize>> ExtractLocalizableStrings(ImmutableList<string> languages,
+                                                                                      string solutionPath)
         {
             var builder = ImmutableList.CreateBuilder<StringsToLocalize>();
 
@@ -319,7 +318,7 @@ namespace RunJit.Cli.RunJit.Localize.Strings
             var root = syntaxTree.GetRoot();
 
             return root.DescendantNodes().OfType<ThrowStatementSyntax>()
-                       .Where(ts => ts.Expression is ObjectCreationExpressionSyntax);
+                       .Where(ts => ts.Expression!.Is<ObjectCreationExpressionSyntax>());
         }
 
         private static MethodDeclarationSyntax? GetContainingMethod(SyntaxNode? node)
@@ -359,8 +358,7 @@ namespace RunJit.Cli.RunJit.Localize.Strings
             var methodDeclaration = GetContainingMethod(throwStatement);
             var classDeclaration = GetContainingClass(throwStatement);
 
-            if (methodDeclaration == null ||
-                classDeclaration == null)
+            if (methodDeclaration.IsNull() || classDeclaration.IsNull())
             {
                 yield break;
             }
@@ -379,14 +377,14 @@ namespace RunJit.Cli.RunJit.Localize.Strings
             var methodName = methodDeclaration.Identifier.Text;
 
             // Get the exception type
-            var objectCreation = throwStatement.Expression as ObjectCreationExpressionSyntax;
+            var objectCreation = throwStatement.Expression.As<ObjectCreationExpressionSyntax>();
 
             if (objectCreation.IsNull())
             {
                 yield break;
             }
 
-            var constructorSymbol = semanticModel.GetSymbolInfo(objectCreation).Symbol as IMethodSymbol;
+            var constructorSymbol = semanticModel.GetSymbolInfo(objectCreation).Symbol.As<IMethodSymbol>();
 
             if (constructorSymbol.IsNull())
             {
@@ -403,7 +401,7 @@ namespace RunJit.Cli.RunJit.Localize.Strings
             {
                 var argument = objectCreation.ArgumentList.Arguments[i];
 
-                if (constructorSymbol.Parameters.Length <= i)
+                if (constructorSymbol.Parameters.Length.IsLessOrEqual(i))
                 {
                     break;
                 }
@@ -421,7 +419,7 @@ namespace RunJit.Cli.RunJit.Localize.Strings
                     var stringValue = literalExpression.Token.ValueText;
 
                     // Combine the fully qualified class name, method name, exception type, and parameter name, and text value itself
-                    // Sample: 
+                    // Sample:
                     // throw new ArgumentException("This is the exception message");
                     // MyAssembly.MyNamespace.MyClass.MyMethod.ArgumentException.Message.This is the exception message
                     var parameterKey = $"{fullyQualifiedClassName}.{methodName}.{constructorSymbol.ContainingType.Name}.{parameterName}.{stringValue}";
@@ -434,8 +432,8 @@ namespace RunJit.Cli.RunJit.Localize.Strings
     }
 
     internal sealed record TextToTranslate(string Key,
-                                    string Text);
+                                           string Text);
 
     internal sealed record StringsToLocalize(Project Project,
-                                      Dictionary<string, string> TextToLocalize);
+                                             Dictionary<string, string> TextToLocalize);
 }

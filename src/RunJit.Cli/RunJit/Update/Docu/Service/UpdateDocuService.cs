@@ -9,7 +9,8 @@ namespace RunJit.Cli.Update.Docu
 {
     internal static class AddUpdateDocuServiceExtension
     {
-        internal static void AddUpdateDocuService(this IServiceCollection services, IConfiguration configuration)
+        internal static void AddUpdateDocuService(this IServiceCollection services,
+                                                  IConfiguration configuration)
         {
             services.AddConsoleService();
 

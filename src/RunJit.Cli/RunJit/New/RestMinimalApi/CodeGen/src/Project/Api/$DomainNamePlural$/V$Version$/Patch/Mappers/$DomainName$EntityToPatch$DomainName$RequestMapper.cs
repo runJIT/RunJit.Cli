@@ -24,7 +24,7 @@ namespace $ProjectName$.Api.$DomainNamePlural$.V$Version$
             return $DomainNameLower$;
         }
 
-        public IImmutableList<Patch$DomainName$Request> MapFrom(IEnumerable<$DomainName$Entity> sources)
+        public ImmutableList<Patch$DomainName$Request> MapFrom(IEnumerable<$DomainName$Entity> sources)
         {
             return sources.Select(MapFrom).ToImmutableList();
         }

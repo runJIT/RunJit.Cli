@@ -342,8 +342,10 @@ namespace RunJit.Cli.Test.SystemTest
 
         //[DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
         //[DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Users", "Name", UserEntityModel)]
-        [DataRow("Sdc.UserManagement", "api/usermanagement", "um", "Users", "Email", UserEntity)]
-        [DataRow("Sdc.Console", "api/console", "sdc-console", "Compliances", "MyItApplicationId", ComplianceEntityModel)]
+        [DataRow("Sdc.UserManagement", "api/usermanagement", "um",
+                    "Users", "Email", UserEntity)]
+        [DataRow("Sdc.Console", "api/console", "sdc-console",
+                    "Compliances", "MyItApplicationId", ComplianceEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_New_Solution(string projectName,
                                                                     string basePath,
                                                                     string toolName,
@@ -353,9 +355,11 @@ namespace RunJit.Cli.Test.SystemTest
         {
             var targetDirectory = Path.Combine(Environment.CurrentDirectory, projectName);
             targetDirectory = "/Users/z003m9sc/Documents/RiderProjects/siemens-data-cloud-backend-console";
+
             // 1. Create new solution and projects
             // var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
             var solutionFileInfo = new FileInfo(Path.Combine(targetDirectory, "Sdc.Console.sln"));
+
             // 2. Add rest api
             await Mediator.SendAsync(new NewMinimalRestApi(solutionFileInfo.FullName, entityModel, queryPropertyName,
                                                            domainName, basePath));
@@ -368,8 +372,10 @@ namespace RunJit.Cli.Test.SystemTest
         }
 
         [TestMethod]
-        [DataRow("Sdc.Core", "api/core", "Core", "Projects", "Name", ProjectEntityModel)]
-        [DataRow("Sdc.UserManagement", "api/core", "um", "Users", "Name", UserEntityModel)]
+        [DataRow("Sdc.Core", "api/core", "Core",
+                    "Projects", "Name", ProjectEntityModel)]
+        [DataRow("Sdc.UserManagement", "api/core", "um",
+                    "Users", "Name", UserEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_Solution_From_File(string projectName,
                                                                           string basePath,
                                                                           string toolName,
@@ -380,6 +386,7 @@ namespace RunJit.Cli.Test.SystemTest
             var targetDirectory = "/Users/z003m9sc/Documents/RiderProjects/siemens-data-cloud-backend-core/Sdc.Core.sln";
             var x = Path.Combine(Environment.CurrentDirectory, projectName);
             Console.WriteLine(x);
+
             // 1. Create new solution and projects
             var solutionFileInfo = await Mediator.SendAsync(new NewMinimalApiProject(projectName, basePath, targetDirectory)).ConfigureAwait(false);
 
@@ -513,10 +520,10 @@ namespace RunJit.Cli.Test.SystemTest
         //                                            }
         //                                            """;
 
-
         // 2. the test executes the cli commands to add a new rest api into an existing solution
         [TestMethod]
-        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln", "api/console", "Compliances", "MyItApplicationId", ComplianceEntityModel)]
+        [DataRow(@"D:\Siemens\siemens-data-cloud-backend-console\Sdc.Console.sln", "api/console", "Compliances",
+                    "MyItApplicationId", ComplianceEntityModel)]
         public async Task Should_Add_New_Rest_Api_Into_Existing_Solution(string solutionFilePath,
                                                                          string basePath,
                                                                          string domainName,

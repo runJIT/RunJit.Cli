@@ -35,7 +35,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
             foreach (var package in project.PackageReferences)
             {
                 // If package not included in the client csproj go next.
-                var otherPackages = allNugetPackagesInSolution.Where(p => p.Package.Include == package.Include).ToImmutableList();
+                var otherPackages = allNugetPackagesInSolution.Where(p => p.Package.Include.EqualsTo(package.Include)).ToImmutableList();
 
                 if (otherPackages.IsEmpty)
                 {

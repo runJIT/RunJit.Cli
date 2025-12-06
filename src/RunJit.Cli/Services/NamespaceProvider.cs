@@ -23,9 +23,6 @@ namespace RunJit.Cli.Services
                                         </wpf:ResourceDictionary>
                                         """;
 
-
-
-
         //private const string test = """
         //                            <wpf:ResourceDictionary xml:space="preserve"
         //                                                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -36,23 +33,20 @@ namespace RunJit.Cli.Services
         //                                True
         //                              </s:Boolean>
         //                            </wpf:ResourceDictionary>
-                                    
+
         //                            """;
-        
-        
-        
+
         internal void SetNamespaceProvider(FileInfo projectFile,
                                            string ns,
                                            bool nameSpaceProviderState)
         {
-            // R# needs to invert the Namespace provider UI = true means false in dot settings file :/ 
+            // R# needs to invert the Namespace provider UI = true means false in dot settings file :/
             var value = !nameSpaceProviderState;
-            
+
             // Use the full namespace as provided, converting parts to lower case
             var resharperIgnoreEntry = ns.Split('.')
                                          .Select(p => p.ToLowerInvariant().Replace("_", "_005F"))
                                          .Flatten("_005C");
-
 
             // Load or create the DotSettings XML document.
             var (document, filePath) = LoadOrCreateDotSettings(projectFile);
@@ -66,7 +60,7 @@ namespace RunJit.Cli.Services
             // Search for an existing element with this key.
             var existingElement = document.Root?
                                           .Elements()
-                                          .FirstOrDefault(e => e.Attribute(xNs + "Key")?.Value == keyValue);
+                                          .FirstOrDefault(e => e.Attribute(xNs + "Key")?.Value.EqualsTo(keyValue) ?? false);
 
             if (existingElement != null)
             {

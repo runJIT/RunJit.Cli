@@ -20,7 +20,7 @@ namespace RunJit.Cli.New.MinimalApiProject
     }
 
     internal sealed class MinimalApiProjectTestGenerator(IDotNet dotNet,
-                                                  IEnumerable<IMinimalApiProjectTestSpecificCodeGen> codeGenerators)
+                                                         IEnumerable<IMinimalApiProjectTestSpecificCodeGen> codeGenerators)
     {
         internal async Task<FileInfo> GenerateAsync(SolutionFile solutionFile,
                                                     FileInfo webApiProjectFileInfo,
@@ -31,10 +31,12 @@ namespace RunJit.Cli.New.MinimalApiProject
 
             // 2. Expected test project
             var testProjectName = $"{minimalApiProjectInfos.ProjectName}.Test";
-            var testProjectFileInfo = new FileInfo(Path.Combine(solutionFileInfo.Directory!.FullName, "src", testProjectName, $"{testProjectName}.csproj"));
+
+            var testProjectFileInfo = new FileInfo(Path.Combine(solutionFileInfo.Directory!.FullName, "src", testProjectName,
+                                                                $"{testProjectName}.csproj"));
 
             // 3. Check if cli test project already exists
-            var dotNetToolTestProject = solutionFile.UnitTestProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant() == testProjectName.ToLowerInvariant());
+            var dotNetToolTestProject = solutionFile.UnitTestProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant().EqualsTo(testProjectName.ToLowerInvariant()));
 
             // 4. Important if a test project already exists we cant do a lot because some developers
             //    maybe already have changed some code which we would override
@@ -91,7 +93,8 @@ namespace RunJit.Cli.New.MinimalApiProject
             {
                 foreach (var codeGenerator in codeGenerators)
                 {
-                    await codeGenerator.GenerateAsync(testProjectFileInfo, solutionFileInfo, xdocument, minimalApiProjectInfos).ConfigureAwait(false);
+                    await codeGenerator.GenerateAsync(testProjectFileInfo, solutionFileInfo, xdocument,
+                                                      minimalApiProjectInfos).ConfigureAwait(false);
                 }
             }
 

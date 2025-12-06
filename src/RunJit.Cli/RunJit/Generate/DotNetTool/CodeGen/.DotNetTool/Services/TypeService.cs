@@ -25,12 +25,12 @@ namespace RunJit.Cli.Generate.DotNetTool
         private static IEnumerable<string> CollectPath(DirectoryInfo? startDirectoryInfo,
                                                        string name)
         {
-            if (startDirectoryInfo == null)
+            if (startDirectoryInfo.IsNull())
             {
                 yield break;
             }
 
-            if (startDirectoryInfo.Name != name)
+            if (startDirectoryInfo.Name.NotEqualsTo(name))
             {
                 // Hint: Structure in the solutions all was normalized, that first char is to upper.
                 yield return startDirectoryInfo.Name.FirstCharToUpper();

@@ -14,13 +14,13 @@
 //                             string normalizedName,
 //                             string description,
 //                             ArgumentInfo? argumentInfo,
-//                             IImmutableList<OptionInfo> options,
-//                             IImmutableList<CommandInfo> subCommands)
+//                             ImmutableList<OptionInfo> options,
+//                             ImmutableList<CommandInfo> subCommands)
 //        : InfoBase(value, name, normalizedName)
 //    {
-//        public IImmutableList<CommandInfo> SubCommands { get; } = subCommands;
+//        public ImmutableList<CommandInfo> SubCommands { get; } = subCommands;
 
-//        public IImmutableList<OptionInfo> Options { get; } = options;
+//        public ImmutableList<OptionInfo> Options { get; } = options;
 
 //        public ArgumentInfo? Argument { get; set; } = argumentInfo;
 

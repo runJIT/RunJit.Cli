@@ -17,8 +17,8 @@ namespace RunJit.Cli.Services.Endpoints
 
         public required string GroupName { get; init; } = string.Empty;
 
-        public required IImmutableList<MethodInfos> Methods { get; init; } = ImmutableList<MethodInfos>.Empty;
+        public ImmutableList<MethodInfos> Methods { get; init; } = ImmutableList<MethodInfos>.Empty;
 
-        public IImmutableList<Attribute> Attributes { get; set; } = ImmutableList<Attribute>.Empty;
+        public ImmutableList<Attribute> Attributes { get; set; } = ImmutableList<Attribute>.Empty;
     }
 }

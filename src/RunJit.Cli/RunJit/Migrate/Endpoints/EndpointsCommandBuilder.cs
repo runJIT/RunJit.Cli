@@ -24,6 +24,7 @@ namespace RunJit.Cli.Migrate.Endpoints
         {
             var endpointsCommand = new Command("endpoints", "Endpoints migration helpers.");
             endpointsSubCommandBuilders.ToList().ForEach(builder => endpointsCommand.AddCommand(builder.Build()));
+
             return endpointsCommand;
         }
     }

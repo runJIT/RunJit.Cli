@@ -3,5 +3,5 @@
 namespace RunJit.Cli.Services.Endpoints
 {
     public record RequestType(DeclarationBase Declaration,
-                              Type Type);
+                              string Type);
 }

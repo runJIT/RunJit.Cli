@@ -31,7 +31,7 @@ namespace RunJit.Cli.Services
                 {
                     retryCount++;
 
-                    if (retryCount >= maxRetries)
+                    if (maxRetries.IsLessOrEqual(retryCount))
                     {
                         Console.WriteLine("Max retries reached. Operation failed.");
 

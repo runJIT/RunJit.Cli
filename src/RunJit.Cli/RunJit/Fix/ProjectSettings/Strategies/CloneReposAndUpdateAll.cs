@@ -51,7 +51,7 @@ namespace RunJit.Cli.Fix.ProjectSettings
             var repos = parameters.GitRepos.Split(';');
             var orginalStartFolder = parameters.WorkingDirectory.IsNotNullOrWhiteSpace() ? parameters.WorkingDirectory : Environment.CurrentDirectory;
 
-            if (Directory.Exists(orginalStartFolder) == false)
+            if (Directory.Exists(orginalStartFolder).EqualsTo(false))
             {
                 Directory.CreateDirectory(orginalStartFolder);
             }
@@ -104,9 +104,11 @@ namespace RunJit.Cli.Fix.ProjectSettings
                 {
                     // 1. Remove all existing once if they exist but not in the correct area
                     var elements = new[] { "IsPackable", "IsPublishable", "IsTestProject" };
+
                     foreach (var elementName in elements)
                     {
                         var elementNode = testProject.Document.ElementsBy(elementName);
+
                         if (elementNode.IsNotNull())
                         {
                             elementNode.Remove();

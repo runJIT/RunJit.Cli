@@ -54,17 +54,17 @@ namespace RunJit.Cli.Services.Git
 
         Task PushAsync(string branchName);
 
-        Task<IImmutableList<BranchInfo>> ListBranchesAsync();
+        Task<ImmutableList<BranchInfo>> ListBranchesAsync();
 
-        Task DeleteBranchesAsync(IImmutableList<BranchInfo> branches);
+        Task DeleteBranchesAsync(ImmutableList<BranchInfo> branches);
 
-        Task<IImmutableList<BranchInfo>> GetRemoteBranchesAsync();
+        Task<ImmutableList<BranchInfo>> GetRemoteBranchesAsync();
 
         Task InitAsync();
 
-        Task<IImmutableList<BranchInfo>> GetAllBranchesAsync();
+        Task<ImmutableList<BranchInfo>> GetAllBranchesAsync();
 
-        Task<IImmutableList<BranchInfo>> GetLocalBranchesAsync();
+        Task<ImmutableList<BranchInfo>> GetLocalBranchesAsync();
 
         Task FetchAsync();
     }
@@ -148,7 +148,7 @@ namespace RunJit.Cli.Services.Git
             return RunGitCommandAsync($@"push origin ""{branchName}""");
         }
 
-        public async Task<IImmutableList<BranchInfo>> ListBranchesAsync()
+        public async Task<ImmutableList<BranchInfo>> ListBranchesAsync()
         {
             var listBranchOutput = await RunGitCommandAsync("branch -r").ConfigureAwait(false);
             var splitResult = listBranchOutput.Split(Environment.NewLine);
@@ -167,13 +167,13 @@ namespace RunJit.Cli.Services.Git
             return branches;
         }
 
-        public async Task<IImmutableList<BranchInfo>> GetAllBranchesAsync()
+        public async Task<ImmutableList<BranchInfo>> GetAllBranchesAsync()
         {
             var listBranchOutput = await RunGitCommandAsync("branch -a").ConfigureAwait(false);
             var splitResult = listBranchOutput.Split(Environment.NewLine);
             var branchNames = splitResult.Select(x => x.Replace("origin/", string.Empty)).Select(x => x.Trim()).Where(x => x.IsNotNullOrWhiteSpace()).ToList();
 
-            var activeBranch = branchNames.FirstOrDefault(b => b.StartsWith("*", StringComparison.OrdinalIgnoreCase));
+            var activeBranch = branchNames.FirstOrDefault(b => b.StartWith("*"));
 
             var branches = branchNames.Select(b => new BranchInfo(b.Split("* ").Last(), b.EqualsTo(activeBranch)))
                                       .ToImmutableList();
@@ -181,13 +181,13 @@ namespace RunJit.Cli.Services.Git
             return branches;
         }
 
-        public async Task<IImmutableList<BranchInfo>> GetLocalBranchesAsync()
+        public async Task<ImmutableList<BranchInfo>> GetLocalBranchesAsync()
         {
             var listBranchOutput = await RunGitCommandAsync("branch").ConfigureAwait(false);
             var splitResult = listBranchOutput.Split(Environment.NewLine);
             var branchNames = splitResult.Select(x => x.Replace("origin/", string.Empty)).Select(x => x.Trim()).Where(x => x.IsNotNullOrWhiteSpace()).ToList();
 
-            var activeBranch = branchNames.FirstOrDefault(b => b.StartsWith("*", StringComparison.OrdinalIgnoreCase));
+            var activeBranch = branchNames.FirstOrDefault(b => b.StartWith("*"));
 
             var branches = branchNames.Select(b => new BranchInfo(b.Split("* ").Last(), b.EqualsTo(activeBranch)))
                                       .ToImmutableList();
@@ -200,7 +200,7 @@ namespace RunJit.Cli.Services.Git
             return RunGitCommandAsync("fetch -p");
         }
 
-        public async Task<IImmutableList<BranchInfo>> GetRemoteBranchesAsync()
+        public async Task<ImmutableList<BranchInfo>> GetRemoteBranchesAsync()
         {
             var listBranchOutput = await RunGitCommandAsync("branch -r").ConfigureAwait(false);
             var splitResult = listBranchOutput.Split(Environment.NewLine);
@@ -220,7 +220,7 @@ namespace RunJit.Cli.Services.Git
             return RunGitCommandAsync("init");
         }
 
-        public async Task DeleteBranchesAsync(IImmutableList<BranchInfo> branches)
+        public async Task DeleteBranchesAsync(ImmutableList<BranchInfo> branches)
         {
             foreach (var branchInfo in branches)
             {

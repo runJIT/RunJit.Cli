@@ -13,13 +13,13 @@ namespace RunJit.Cli.New.NugetProject
             services.AddProcessService();
             services.AddNugetProjectCreator();
             services.AddNugetProjectContractsGenerator();
-            
+
             services.AddSingletonIfNotExists<NewNugetProjectService>();
         }
     }
 
     internal sealed class NewNugetProjectService(ConsoleService consoleService,
-                                                NugetProjectCreator newNugetProjectService)
+                                                 NugetProjectCreator newNugetProjectService)
     {
         public async Task<int> HandleAsync(NewNugetProjectParameters parameters)
         {
@@ -36,10 +36,10 @@ namespace RunJit.Cli.New.NugetProject
             //}
 
             var newParameters = parameters with
-            {
-                TargetDirectoryInfo = parameters.TargetDirectoryInfo ?? new DirectoryInfo(Environment.CurrentDirectory),
-                TargetFramework = parameters.TargetFramework < 9 ? 9 : parameters.TargetFramework
-            };
+                                {
+                                    TargetDirectoryInfo = parameters.TargetDirectoryInfo ?? new DirectoryInfo(Environment.CurrentDirectory),
+                                    TargetFramework = parameters.TargetFramework < 9 ? 9 : parameters.TargetFramework
+                                };
 
             // 1. Build client generator from parameters
             var projectName = $"{parameters.ProjectName}";

@@ -33,14 +33,14 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddSingletonIfNotExists<ISpecificResponseTypeHandler, NotOkResponseTypeHandler>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class NotOkResponseTypeHandler : ISpecificResponseTypeHandler
                                             {
                                                 public bool CanHandle<TResult>(HttpResponseMessage responseMessage)
                                                 {
                                                     return responseMessage.IsSuccessStatusCode.IsFalse();
                                                 }
-                                        
+
                                                 public async Task<TResult> HandleAsync<TResult>(HttpResponseMessage responseMessage,
                                                                                                 HttpMethod httpMethod,
                                                                                                 HttpClient httpClient,

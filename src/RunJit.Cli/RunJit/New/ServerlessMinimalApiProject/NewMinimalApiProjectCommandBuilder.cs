@@ -27,12 +27,12 @@ namespace RunJit.Cli.New.MinimalApiProject
             optionsBuilder.Build().ToList().ForEach(option => command.AddOption(option));
 
             command.Handler = CommandHandler.Create<bool, bool, string, string, DirectoryInfo, int>((usevisualstudio,
-                                                                                                build,
-                                                                                                projectName,
-                                                                                                basePath,
-                                                                                                targetDirectory,
-                                                                                                targetFramework) => minimalApiProjectService.HandleAsync(new NewMinimalApiProjectParameters(usevisualstudio, build, projectName,
-                                                                                                                                                                                              basePath, targetDirectory, targetFramework)));
+                                                                                                     build,
+                                                                                                     projectName,
+                                                                                                     basePath,
+                                                                                                     targetDirectory,
+                                                                                                     targetFramework) => minimalApiProjectService.HandleAsync(new NewMinimalApiProjectParameters(usevisualstudio, build, projectName,
+                                                                                                                                                                                                 basePath, targetDirectory, targetFramework)));
 
             return command;
         }

@@ -21,8 +21,8 @@ namespace RunJit.Cli.Fix.ProjectSettings
 
     internal sealed class FixProjectSettingsCommandBuilder(IFixProjectSettings updateService,
 
-                                                             // IFixProjectSettingsArgumentsBuilder argumentsBuilder,
-                                                             IFixProjectSettingsOptionsBuilder optionsBuilder) : IFixSubCommandBuilder
+                                                           // IFixProjectSettingsArgumentsBuilder argumentsBuilder,
+                                                           IFixProjectSettingsOptionsBuilder optionsBuilder) : IFixSubCommandBuilder
     {
         public Command Build()
         {
@@ -34,7 +34,7 @@ namespace RunJit.Cli.Fix.ProjectSettings
                                                                                      gitRepos,
                                                                                      workingDirectory,
                                                                                      ignorePackages) => updateService.HandleAsync(new FixProjectSettingsParameters(solution ?? string.Empty, gitRepos ?? string.Empty, workingDirectory ?? string.Empty,
-                                                                                                                                                                     ignorePackages ?? string.Empty)));
+                                                                                                                                                                   ignorePackages ?? string.Empty)));
 
             return command;
         }

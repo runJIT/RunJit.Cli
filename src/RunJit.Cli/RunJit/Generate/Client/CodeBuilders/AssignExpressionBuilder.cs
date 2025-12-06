@@ -22,7 +22,7 @@ namespace RunJit.Cli.Generate.Client
     // BulkResources = bulkResourcesFacade;
     internal sealed class AssignExpressionBuilder
     {
-        internal string BuildFrom(IImmutableList<GeneratedFacade> facades)
+        internal string BuildFrom(ImmutableList<GeneratedFacade> facades)
         {
             var assignments = facades.Select(f => $"\t\t\t{f.Domain}".FirstCharToUpper() + " = " + $"{f.FacadeName};".FirstCharToLower())
                                      .Flatten(Environment.NewLine);

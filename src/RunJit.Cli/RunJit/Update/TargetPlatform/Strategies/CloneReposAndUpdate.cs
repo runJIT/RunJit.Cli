@@ -56,19 +56,19 @@ namespace RunJit.Cli.Update.TargetPlatform
 
             var availablePlatforms = platformProvider.GetSupportedPlatforms();
 
-            var matchingPlatform = availablePlatforms.FirstOrDefault(p => p == parameters.Platform);
+            var matchingPlatform = availablePlatforms.FirstOrDefault(p => p.EqualsTo(parameters.Platform));
+
             if (matchingPlatform.IsNull())
             {
                 throw new RunJitException($"Platform: {parameters.Platform} is not supported. Supported platforms are: {Environment.NewLine}{availablePlatforms.Flatten(Environment.NewLine)}");
             }
-
 
             // 1. Check if solution file is the file or directory
             //    if it is null or whitespace we check current directory
             var repos = parameters.GitRepos.Split(';');
             var orginalStartFolder = parameters.WorkingDirectory.IsNotNullOrWhiteSpace() ? parameters.WorkingDirectory : Environment.CurrentDirectory;
 
-            if (Directory.Exists(orginalStartFolder) == false)
+            if (Directory.Exists(orginalStartFolder).EqualsTo(false))
             {
                 Directory.CreateDirectory(orginalStartFolder);
             }
@@ -124,8 +124,8 @@ namespace RunJit.Cli.Update.TargetPlatform
 
                 // 12. Create pull request
                 var pullRequest = await awsCodeCommit.CreatePullRequestAsync($"Update target platform to: {matchingPlatform}",
-                                                           $"Update target platform to: {matchingPlatform}",
-                                                           qualityUpdateNugetPackages).ConfigureAwait(false);
+                                                                             $"Update target platform to: {matchingPlatform}",
+                                                                             qualityUpdateNugetPackages).ConfigureAwait(false);
 
                 var slackApiClient = new SlackServiceBuilder().UseApiToken(slackSettings.Token)
                                                               .GetApiClient();
@@ -137,10 +137,10 @@ namespace RunJit.Cli.Update.TargetPlatform
                 // var existingMessage = historyResponse.Messages.FirstOrDefault(m => m.Text.Contains($"{moduleName}: Update .Net version to:"));
 
                 await slackApiClient.Chat.PostMessage(new Message
-                {
-                    Text = $"{moduleName}: Upgrade target platfrom to: {parameters.Platform}{Environment.NewLine}<{pullRequest.AbsoluteUrl}>",
-                    Channel = slackSettings.PullRequestChannel.Name
-                });
+                                                      {
+                                                          Text = $"{moduleName}: Upgrade target platfrom to: {parameters.Platform}{Environment.NewLine}<{pullRequest.AbsoluteUrl}>",
+                                                          Channel = slackSettings.PullRequestChannel.Name
+                                                      });
 
                 consoleService.WriteSuccess($"Solution: {solutionFile.FullName} was upgraded to deployment platform: {matchingPlatform}");
             }

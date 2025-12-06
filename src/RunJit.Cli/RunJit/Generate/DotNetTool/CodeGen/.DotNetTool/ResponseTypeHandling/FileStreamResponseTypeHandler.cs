@@ -35,7 +35,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddSingletonIfNotExists<ISpecificResponseTypeHandler, FileStreamResponseType>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class FileStreamResponseType : ISpecificResponseTypeHandler
                                             {
                                                 public async Task<TResult> HandleAsync<TResult>(HttpResponseMessage responseMessage,
@@ -56,7 +56,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     var fileStreamResult = new FileStreamResult(content, MediaTypeNames.Application.Octet) { FileDownloadName = fileName };
                                                     return fileStreamResult.Cast<TResult>();
                                                 }
-                                        
+
                                                 public bool CanHandle<TResult>(HttpResponseMessage responseMessage)
                                                 {
                                                     return responseMessage.IsSuccessStatusCode &&

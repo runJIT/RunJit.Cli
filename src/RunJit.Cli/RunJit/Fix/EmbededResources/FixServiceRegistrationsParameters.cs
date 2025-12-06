@@ -12,7 +12,7 @@ namespace RunJit.Cli.RunJit.Fix.EmbededResources
     }
 
     internal sealed record FixEmbeddedResourcesParameters(string SolutionFile,
-                                                   string GitRepos,
-                                                   string WorkingDirectory,
-                                                   string IgnorePackages);
+                                                          string GitRepos,
+                                                          string WorkingDirectory,
+                                                          string IgnorePackages);
 }

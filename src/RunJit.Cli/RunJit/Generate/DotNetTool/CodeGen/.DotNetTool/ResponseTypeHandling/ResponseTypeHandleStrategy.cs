@@ -35,21 +35,21 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddJsonResponseTypeHandler();
                                                     services.AddFileStreamResponseTypeHandler();
                                                     services.AddByteArrayResponseTypeHandler();
-                                        
+
                                                     services.AddSingletonIfNotExists<ResponseTypeHandleStrategy>();
                                                 }
                                             }
-                                        
+
                                             internal interface ISpecificResponseTypeHandler
                                             {
                                                 bool CanHandle<TResult>(HttpResponseMessage responseMessage);
-                                        
+
                                                 Task<TResult> HandleAsync<TResult>(HttpResponseMessage responseMessage,
                                                                                    HttpMethod httpMethod,
                                                                                    HttpClient httpClient,
                                                                                    string url);
                                             }
-                                        
+
                                             internal sealed class ResponseTypeHandleStrategy(IEnumerable<ISpecificResponseTypeHandler> responseHandlers)
                                             {
                                                 public Task<TResult> HandleAsync<TResult>(HttpResponseMessage responseMessage,
@@ -64,7 +64,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                                                           $"No response handler was found to handle expected response type: '{typeof(TResult).Name}'",
                                                                                           ("Response type", typeof(TResult).Name));
                                                     }
-                                        
+
                                                     if (matchingResponseHandlers.Count > 1)
                                                     {
                                                         throw new ProblemDetailsException("More than one reponse handlers was found for expected response type",
@@ -72,7 +72,7 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                                                           ("Response type", typeof(TResult).Name),
                                                                                           ("ResponseHandlers", matchingResponseHandlers.Select(handler => handler.GetType().Name).ToImmutableList()));
                                                     }
-                                        
+
                                                     var result = matchingResponseHandlers[0].HandleAsync<TResult>(responseMessage, httpMethod, httpClient, url);
                                                     return result;
                                                 }

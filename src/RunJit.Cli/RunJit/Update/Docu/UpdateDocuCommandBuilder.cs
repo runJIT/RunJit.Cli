@@ -9,7 +9,8 @@ namespace RunJit.Cli.Update.Docu
 {
     internal static class AddUpdateDocuCommandBuilderExtension
     {
-        internal static void AddUpdateDocuCommandBuilder(this IServiceCollection services, IConfiguration configuration)
+        internal static void AddUpdateDocuCommandBuilder(this IServiceCollection services,
+                                                         IConfiguration configuration)
         {
             services.AddUpdateDocuArgumentsBuilder();
             services.AddUpdateDocuBuildsOptionsBuilder();
@@ -20,7 +21,7 @@ namespace RunJit.Cli.Update.Docu
     }
 
     internal sealed class UpdateDocuCommandBuilder(UpdateDocuBuildsOptionsBuilder checkBackendBuildsOptionsBuilder,
-                                                         UpdateDocuService checkBackendBuilds) : IUpdateSubCommandBuilder
+                                                   UpdateDocuService checkBackendBuilds) : IUpdateSubCommandBuilder
     {
         public Command Build()
         {
@@ -33,7 +34,7 @@ namespace RunJit.Cli.Update.Docu
                                                                                           gitRepos,
                                                                                           workingDirectory,
                                                                                           ignorePackages) => checkBackendBuilds.HandleAsync(new UpdateDocuParameters(solution ?? string.Empty, gitRepos ?? string.Empty, workingDirectory ?? string.Empty,
-                                                                                                                                                                           ignorePackages ?? string.Empty)));
+                                                                                                                                                                     ignorePackages ?? string.Empty)));
 
             return checkCommand;
         }

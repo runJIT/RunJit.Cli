@@ -87,7 +87,7 @@ namespace RunJit.Cli.Test.SystemTest
     }
 
     internal sealed record UpdateDocuForGitRepos(string GitRepos,
-                                                              string WorkingDirectory) : ICommand;
+                                                 string WorkingDirectory) : ICommand;
 
     internal sealed class UpdateDocuForGitReposHandler : ICommandHandler<UpdateDocuForGitRepos>
     {

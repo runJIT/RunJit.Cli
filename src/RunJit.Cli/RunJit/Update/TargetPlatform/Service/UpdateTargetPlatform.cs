@@ -9,7 +9,8 @@ namespace RunJit.Cli.Update.TargetPlatform
 {
     internal static class AddUpdateTargetPlatformExtension
     {
-        internal static void AddUpdateTargetPlatform(this IServiceCollection services, IConfiguration configuration)
+        internal static void AddUpdateTargetPlatform(this IServiceCollection services,
+                                                     IConfiguration configuration)
         {
             services.AddConsoleService();
             services.AddUpdateTargetPlatformParameters();

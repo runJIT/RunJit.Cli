@@ -30,14 +30,14 @@ namespace RunJit.Cli.Generate.DotNetTool
                                                     services.AddSingletonIfNotExists<$dotNetToolName$ArgumentFixer>();
                                                 }
                                             }
-                                        
+
                                             internal sealed class $dotNetToolName$ArgumentFixer
                                             {
                                                 internal string[] Fix(string[] args)
                                                 {
                                                     var defaultArgs = new[] { "$dotnettoolnamelower$" };
                                                     var newArgs = defaultArgs.Concat(args).Distinct().ToList();
-                                        
+
                                                     return newArgs.ToArray();
                                                 }
                                             }

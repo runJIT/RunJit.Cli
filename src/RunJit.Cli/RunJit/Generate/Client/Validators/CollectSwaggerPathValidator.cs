@@ -45,7 +45,7 @@ namespace RunJit.Cli.RunJit.Generate.Client
             // we got url to fetch swagger json by http client
             if (value.StartWith("http"))
             {
-                if (Uri.TryCreate(normalizedValue, UriKind.Absolute, out var uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps).IsFalse())
+                if (Uri.TryCreate(normalizedValue, UriKind.Absolute, out var uriResult) && (uriResult.Scheme.EqualsTo(Uri.UriSchemeHttp) || uriResult.Scheme.EqualsTo(Uri.UriSchemeHttps)).IsFalse())
                 {
                     yield return $"Your uri path to fetch swagger: '{value}' is not valid. Please use correct uri path.";
 

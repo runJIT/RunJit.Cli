@@ -90,7 +90,7 @@ namespace RunJit.Cli.RunJit.Update.CodeRules
                 var branches = await git.GetRemoteBranchesAsync().ConfigureAwait(false);
                 var localBranches = await git.GetLocalBranchesAsync().ConfigureAwait(false);
 
-                if (localBranches.Any(b => b.IsActiveBranch && b.Name == branchName).IsFalse())
+                if (localBranches.Any(b => b.IsActiveBranch && b.Name.EqualsTo(branchName)).IsFalse())
                 {
                     var legacyBranches = branches.Where(b => b.Name.Contains(branchName, StringComparison.OrdinalIgnoreCase)).ToImmutableList();
 
@@ -127,7 +127,6 @@ namespace RunJit.Cli.RunJit.Update.CodeRules
             using var zipArchive = new ZipArchive(codeRuleAsFileStream, ZipArchiveMode.Read);
             zipArchive.ExtractToDirectory(tempFolder.FullName);
 
-           
             Environment.CurrentDirectory = currentRepoEnvironment;
 
             //foreach (var file in tempFolder.EnumerateFiles("*.cs", SearchOption.AllDirectories))

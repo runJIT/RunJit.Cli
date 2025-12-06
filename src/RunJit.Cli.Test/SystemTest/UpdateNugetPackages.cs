@@ -78,12 +78,14 @@ namespace RunJit.Cli.Test.SystemTest
             yield return parameters.solution;
         }
     }
-    
-    internal sealed record UpdateBackendNugetPackagesForGitRepos(string GitRepos, string WorkingDirectory) : ICommand;
+
+    internal sealed record UpdateBackendNugetPackagesForGitRepos(string GitRepos,
+                                                                 string WorkingDirectory) : ICommand;
 
     internal sealed class UpdateBackendNugetPackagesForGitReposHandler : ICommandHandler<UpdateBackendNugetPackagesForGitRepos>
     {
-        public async Task Handle(UpdateBackendNugetPackagesForGitRepos request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateBackendNugetPackagesForGitRepos request,
+                                 CancellationToken cancellationToken)
         {
             await using var sw = new StringWriter();
             Console.SetOut(sw);

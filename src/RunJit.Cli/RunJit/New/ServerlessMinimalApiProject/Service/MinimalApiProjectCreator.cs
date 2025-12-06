@@ -50,6 +50,7 @@ namespace RunJit.Cli.New.MinimalApiProject
 
             // 5. Check if solution was created
             var targetSolutionFile = new FileInfo(Path.Combine(minimalApiProjectParameters.TargetDirectoryInfo.FullName, solutionFileName));
+
             if (targetSolutionFile.NotExists())
             {
                 throw new RunJitException($"The target solution: {targetSolutionFile.FullName} was not found please check if the Web-Api solution was successfully created and if so, check the path of the creation.");
@@ -57,14 +58,15 @@ namespace RunJit.Cli.New.MinimalApiProject
 
             // 6. Parse solution and setup project infos
             var parsedSolution = new SolutionFileInfo(targetSolutionFile.FullName).Parse();
+
             var minimalApiProjectInfos = new MinimalApiProjectInfos
-            {
-                ProjectName = minimalApiProjectParameters.ProjectName,
-                NetVersion = minimalApiProjectParameters.TargetFramework < 9 ? $"net9.0" : $"net{minimalApiProjectParameters.TargetFramework}.0",
-                BasePath = minimalApiProjectParameters.BasePath,
-                Name = minimalApiProjectParameters.ProjectName,
-                NormalizedName = minimalApiProjectParameters.ProjectName,
-            };
+                                         {
+                                             ProjectName = minimalApiProjectParameters.ProjectName,
+                                             NetVersion = minimalApiProjectParameters.TargetFramework < 9 ? $"net9.0" : $"net{minimalApiProjectParameters.TargetFramework}.0",
+                                             BasePath = minimalApiProjectParameters.BasePath,
+                                             Name = minimalApiProjectParameters.ProjectName,
+                                             NormalizedName = minimalApiProjectParameters.ProjectName,
+                                         };
 
             // 7. Run all code generators
             await minimalApiProjectsCodeGen.GenerateAsync(parsedSolution, minimalApiProjectParameters, minimalApiProjectInfos).ConfigureAwait(false);

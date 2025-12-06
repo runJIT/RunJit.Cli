@@ -55,7 +55,7 @@ namespace RunJit.Cli.RunJit.Fix.EmbededResources
 
                 // Get all <EmbeddedResource Include="API\CalculateCo2\ExcelFiles\co2-sample-invalid.xlsx"> from csprojXml
                 // and extract the file extension name
-                var allEmbeddedFiles = csprojXml.Descendants().Where(e => e.Name.LocalName == "EmbeddedResource").Select(node => node.Attribute("Include")?.Value).FilterNullObjects().ToList();
+                var allEmbeddedFiles = csprojXml.Descendants().Where(e => e.Name.LocalName.EqualsTo("EmbeddedResource")).Select(node => node.Attribute("Include")?.Value).FilterNullObjects().ToList();
                 var fileExtensions = allEmbeddedFiles.Select(file => file.Split('.').Last()).Distinct().Where(x => x.EndsWith("*").IsFalse()).ToList();
 
                 var xmlElements = csprojXml.Descendants().Where(e => fileExtensions.Any(extension => e.Attributes().Any(a => a.Value.Contains($".{extension}") ||
@@ -68,7 +68,7 @@ namespace RunJit.Cli.RunJit.Fix.EmbededResources
 
                 foreach (var fileExtension in fileExtensions)
                 {
-                    var sqlElement = csprojXml.Descendants().FirstOrDefault(e => e.Name.LocalName == "EmbeddedResource" && e.Attribute("Include")?.Value == $@"**\*.{fileExtension}");
+                    var sqlElement = csprojXml.Descendants().FirstOrDefault(e => e.Name.LocalName.EqualsTo("EmbeddedResource") && (e.Attribute("Include")?.Value).EqualsTo($@"**\*.{fileExtension}"));
 
                     if (sqlElement.IsNull())
                     {

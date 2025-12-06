@@ -39,7 +39,7 @@ namespace RunJit.Cli.New.NugetProject
             // 1. Check if cli project already exists
             //    Depending on new restriction of microsoft we can not just check the .Net.Web.Sdk
             //    so we need to check the implementation
-            var dotNetToolProject = solutionFile.ProductiveProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant() == minimalApiProjectInfos.ProjectName.ToLowerInvariant());
+            var dotNetToolProject = solutionFile.ProductiveProjects.FirstOrDefault(p => p.ProjectFileInfo.FileNameWithoutExtenion.ToLowerInvariant().EqualsTo(minimalApiProjectInfos.ProjectName.ToLowerInvariant()));
 
             if (dotNetToolProject.IsNotNull())
             {
@@ -77,10 +77,10 @@ namespace RunJit.Cli.New.NugetProject
             await dotNet.AddNugetPackageAsync(libraryProjectFileInfo.FullName, "GitVersion.MsBuild", "5.12.0").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(libraryProjectFileInfo.FullName, "Microsoft.Extensions.DependencyInjection", "9.0.3").ConfigureAwait(false);
             await dotNet.AddNugetPackageAsync(libraryProjectFileInfo.FullName, "Microsoft.Extensions.Configuration", "9.0.3").ConfigureAwait(false);
-            
+
             // 7. Add needed project references
             await dotNet.AddProjectReference(contractProject, libraryProjectFileInfo).ConfigureAwait(false);
-            
+
             // 7. Load csproj content to avoid multiple IO write actions to disk which cause io exceptions
             var xdocument = XDocument.Load(libraryProjectFileInfo.FullName);
 
@@ -103,6 +103,5 @@ namespace RunJit.Cli.New.NugetProject
             // 12. Return the created csproj file
             return libraryProjectFileInfo;
         }
-    
     }
 }

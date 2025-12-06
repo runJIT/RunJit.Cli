@@ -38,14 +38,14 @@ namespace RunJit.Cli.Generate.DotNetTool.DotNetTool.Test
             isPackable.Value = "false";
             var isPublishable = new XElement("IsPublishable");
             isPublishable.Value = "false";
-            
+
             var isTestProject = new XElement("IsTestProject");
             isTestProject.Value = "true";
-            
+
             propertyGroup.Add(isPackable);
             propertyGroup.Add(isPublishable);
             propertyGroup.Add(isTestProject);
-            
+
             // 3. Add the comment and new PropertyGroup to the root of the project file
             projectDocument.Root!.Add(toolEmbeddedFileSettingsComment, propertyGroup);
 

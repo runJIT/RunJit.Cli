@@ -83,7 +83,7 @@ Sample:             internal static class Add{service.Class.Name}Extension
 
                     var missingRegistrationsOf = simpleDependencies.Where(dependency =>
                                                                           {
-                                                                              var registrationName = servicesWithRegistrations.FirstOrDefault(reg => reg.Registration?.Name == $"Add{dependency.Type}");
+                                                                              var registrationName = servicesWithRegistrations.FirstOrDefault(reg => (reg.Registration?.Name).EqualsTo($"Add{dependency.Type}"));
 
                                                                               var neutralName = registrationName.Registration.IsNull() ? dependency.Type.TrimStart('I').ToLowerInvariant() : registrationName.Registration?.Name.ToLowerInvariant() ?? string.Empty;
 

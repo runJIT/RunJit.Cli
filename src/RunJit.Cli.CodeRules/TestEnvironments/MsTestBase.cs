@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using Argument.Check;
+using Extensions.Pack;
 using Solution.Parser.CSharp;
 using Solution.Parser.Solution;
 
@@ -8,16 +9,16 @@ namespace RunJit.Cli.CodeRules
     [TestClass]
     public abstract class MsTestBase
     {
-        protected static IImmutableList<CSharpSyntaxTree> ProductiveCodeSyntaxTreesToAnaylze { get; private set; } =
+        protected static ImmutableList<CSharpSyntaxTree> ProductiveCodeSyntaxTreesToAnaylze { get; private set; } =
             ImmutableList<CSharpSyntaxTree>.Empty;
 
-        protected static IImmutableList<CSharpSyntaxTree> TestCodeSyntaxTrees { get; private set; } =
+        protected static ImmutableList<CSharpSyntaxTree> TestCodeSyntaxTrees { get; private set; } =
             ImmutableList<CSharpSyntaxTree>.Empty;
 
-        protected static IImmutableList<CSharpSyntaxTree> ProductiveCodeSyntaxTrees { get; private set; } =
+        protected static ImmutableList<CSharpSyntaxTree> ProductiveCodeSyntaxTrees { get; private set; } =
             ImmutableList<CSharpSyntaxTree>.Empty;
 
-        protected static IImmutableList<CSharpSyntaxTree> AllSyntaxTrees { get; private set; } =
+        protected static ImmutableList<CSharpSyntaxTree> AllSyntaxTrees { get; private set; } =
             ImmutableList<CSharpSyntaxTree>.Empty;
 
         [AssemblyInitialize]
@@ -29,12 +30,12 @@ namespace RunJit.Cli.CodeRules
             var parsedSolution = sSolutionFileInfo.Parse();
 
             ProductiveCodeSyntaxTrees = parsedSolution.ProductiveProjects
-                                                      .Where(p => p.ProjectFileInfo.FileNameWithoutExtenion == "AspNetCore.Simple.ClientGenerator")
+                                                      .Where(p => p.ProjectFileInfo.FileNameWithoutExtenion.EqualsTo("AspNetCore.Simple.ClientGenerator"))
                                                       .SelectMany(p => p.CSharpFileInfos)
                                                       .Select(c => c.Parse())
                                                       .ToImmutableList();
 
-            TestCodeSyntaxTrees = parsedSolution.UnitTestProjects.Where(p => p.ProjectFileInfo.FileNameWithoutExtenion == "AspNetCore.Simple.ClientGenerator.Tests")
+            TestCodeSyntaxTrees = parsedSolution.UnitTestProjects.Where(p => p.ProjectFileInfo.FileNameWithoutExtenion.EqualsTo("AspNetCore.Simple.ClientGenerator.Tests"))
                                                 .SelectMany(p => p.CSharpFileInfos)
                                                 .Select(c => c.Parse())
                                                 .ToImmutableList();

@@ -44,17 +44,16 @@ namespace RunJit.Cli.New.NugetProject
 
             // !! WIP !!
 
-
-
             var solutionFileLines = await File.ReadAllLinesAsync(solutionFile.FullName).ConfigureAwait(false);
             var solutionFilesAsLines = solutionFileLines.IsNull() ? new List<string>() : solutionFileLines.ToList();
 
             // GitHub we add anything
             // Recursive directory / files structure into solution files
             // is insane sick > comes later
-            var gitHub = solutionFile.Directory!.EnumerateDirectories().FirstOrDefault(item => item.Name == ".github");
+            var gitHub = solutionFile.Directory!.EnumerateDirectories().FirstOrDefault(item => item.Name.EqualsTo(".github"));
+
             if (gitHub.IsNotNull())
-            {   
+            {
                 solutionFileService.AddOrUpdateSolutionFolderRecursively(solutionFile, solutionFilesAsLines, gitHub);
             }
 
@@ -63,38 +62,43 @@ namespace RunJit.Cli.New.NugetProject
             foreach (var fileInfo in filesOnSolutionRoot)
             {
                 // Any markdown we will add to docs
-                if (fileInfo.Extension == ".md")
+                if (fileInfo.Extension.EqualsTo(".md"))
                 {
-                    solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "Docs", fileInfo);
+                    solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "Docs",
+                                                                                         fileInfo);
+
                     continue;
                 }
 
-                if (fileInfo.Extension == ".DotSettings")
+                if (fileInfo.Extension.EqualsTo(".DotSettings"))
                 {
-                    solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "Resharper", fileInfo);
+                    solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "Resharper",
+                                                                                         fileInfo);
+
                     continue;
                 }
 
-                if (fileInfo.Extension == ".gitignore" ||
-                    fileInfo.Name == "commitlint.config.js" ||
-                    fileInfo.Name == "repolinter.json")
+                if (fileInfo.Extension.EqualsTo(".gitignore") || fileInfo.Name.EqualsTo("commitlint.config.js") || fileInfo.Name.EqualsTo("repolinter.json"))
                 {
-                    solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "Git", fileInfo);
+                    solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "Git",
+                                                                                         fileInfo);
+
                     continue;
                 }
 
-                if (fileInfo.Extension == ".editorconfig" ||
-                    fileInfo.Extension == ".runsettings" ||
-                    fileInfo.Name == "global.json" ||
-                    fileInfo.Name == "Directory.Build.props")
+                if (fileInfo.Extension.EqualsTo(".editorconfig") || fileInfo.Extension.EqualsTo(".runsettings") || fileInfo.Name.EqualsTo("global.json") || fileInfo.Name.EqualsTo("Directory.Build.props"))
                 {
-                    solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "SolutionItems", fileInfo);
+                    solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "SolutionItems",
+                                                                                         fileInfo);
+
                     continue;
                 }
-                
-                if (fileInfo.Name == "Dockerfile")
+
+                if (fileInfo.Name.EqualsTo("Dockerfile"))
                 {
-                    solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "Docker", fileInfo);
+                    solutionFilesAsLines = solutionFileService.AddOrUpdateSolutionFolder(solutionFilesAsLines, solutionFile, "Docker",
+                                                                                         fileInfo);
+
                     continue;
                 }
             }

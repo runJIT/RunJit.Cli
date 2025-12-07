@@ -33,8 +33,7 @@ namespace RunJit.Cli.Services
         ///     Main entrypoint: parses an OpenAPI JSON wrapper and returns all EndpointInfos.
         /// </summary>
         public ImmutableList<EndpointInfo> ExtractFrom(string basePath,
-                                                       ImmutableList<CSharpSyntaxTree> syntaxTrees, // currently unused, kept for compatibility
-                                                       ImmutableList<Type> reflectionTypes, // currently unused, kept for compatibility
+                                                       string @namespace,
                                                        FileInfo openApiJsonFileInfo)
         {
             var fileContent = File.ReadAllText(openApiJsonFileInfo.FullName);

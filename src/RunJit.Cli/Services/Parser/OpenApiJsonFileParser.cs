@@ -50,7 +50,9 @@ namespace RunJit.Cli.Services
             _componentRecords = ParseAllComponentSchemas(openApiDoc, DefaultGeneratedNamespace);
 
             // 2) Convert paths/operations into EndpointInfo
-            return ConvertOpenApiToEndpointInfos(openApiDoc, basePath);
+            var result = ConvertOpenApiToEndpointInfos(openApiDoc, basePath);
+
+            return result;
         }
 
         // -------------------------------------------------------------------------
@@ -98,14 +100,19 @@ namespace RunJit.Cli.Services
 
                 var normalizedPropertyName = propName.FirstCharToUpper();
 
+                // Until we know how to get the required info
+                var isRequired = propSchema.Nullable.IsFalse();
+                var required = isRequired ? "required " : string.Empty;
+                var nullableNotation = propSchema.Nullable ? "?" : string.Empty;
+
                 var prop = new Property(propertyType,
                                         normalizedPropertyName,
                                         true,
-                                        true,
-                                        false,
-                                        [Modifier.Public],
+                                        isRequired,
+                                        propSchema.Nullable,
+                                        isRequired ? [Modifier.Public, Modifier.Required] : [Modifier.Public],
                                         ImmutableList<Attribute>.Empty,
-                                        $"public {propertyType} {normalizedPropertyName} {{ get; init; }}",
+                                        $"public {required}{propertyType}{nullableNotation} {normalizedPropertyName} {{ get; init; }}",
                                         string.Empty,
                                         string.Empty);
 
@@ -118,7 +125,7 @@ namespace RunJit.Cli.Services
 
             var record = new Record(ns,
                                     name,
-                                    ImmutableList<Modifier>.Empty,
+                                    [Modifier.Public],
                                     ImmutableList<Constructor>.Empty,
                                     propertiesBuilder.ToImmutable(),
                                     ImmutableList<Method>.Empty,
@@ -137,9 +144,26 @@ namespace RunJit.Cli.Services
                                     string.Empty,
                                     string.Empty);
 
+            record = ToRecordSyntaxTree(record);
+
             bucket[name] = record;
 
             return record;
+        }
+
+        private Record ToRecordSyntaxTree(Record record)
+        {
+            var properties = record.Properties.Select(p => p.SyntaxTree).Flatten(Environment.NewLine);
+
+            var syntaxTree = @$"public sealed record {record.Name}
+                               {{
+                                    {properties}
+                               }}
+                               ".FormatSyntaxTree();
+
+            var newRecord = record with { SyntaxTree = syntaxTree };
+
+            return newRecord;
         }
 
         /// <summary>
@@ -178,7 +202,7 @@ namespace RunJit.Cli.Services
                                                     rootNamespace,
                                                     bucket);
 
-                return $"List<{innerType}>";
+                return $"ImmutableList<{innerType}>";
             }
 
             // Inline object → create a nested Record with synthetic name: Parent_Property
@@ -205,7 +229,7 @@ namespace RunJit.Cli.Services
                 return "object";
             }
 
-            return type switch
+            var result = type switch
             {
                 "integer" when string.Equals(format, "int64", StringComparison.OrdinalIgnoreCase) => "long",
                 "integer" => "int",
@@ -214,9 +238,12 @@ namespace RunJit.Cli.Services
                 "boolean" => "bool",
                 "string" when string.Equals(format, "date-time", StringComparison.OrdinalIgnoreCase) => "DateTimeOffset",
                 "string" when string.Equals(format, "date", StringComparison.OrdinalIgnoreCase) => "DateTime",
+                "string" when string.Equals(format, "uuid", StringComparison.OrdinalIgnoreCase) => "Guid",
                 "string" => "string",
-                _ => "object"
+                _ => type
             };
+
+            return result;
         }
 
         // -------------------------------------------------------------------------
@@ -233,29 +260,82 @@ namespace RunJit.Cli.Services
                 {
                     var httpMethod = operationType.ToString().ToUpperInvariant();
 
+                    var extractRequestType = ExtractRequestType(operation);
+                    var extractResponseType = ExtractResponseType(operation);
+                    var allModels = GetAllModels(extractResponseType, extractRequestType).ToImmutableList();
+
                     var endpoint = new EndpointInfo
-                    {
-                        Name = ExtractNameFromOperation(operation),
-                        DomainName = ExtractDomainNameFromOperationId(operation.OperationId),
-                        Version = ExtractVersionFromPath(openApiPath),
-                        BaseUrl = basePath,
-                        GroupName = ExtractGroupName(operation),
-                        SwaggerOperationId = operation.OperationId ?? string.Empty,
-                        HttpAction = httpMethod,
-                        RelativeUrl = BuildRelativeUrl(basePath, openApiPath),
-                        Parameters = ExtractParameters(operation),
-                        RequestType = ExtractRequestType(operation),
-                        ResponseType = ExtractResponseType(operation),
-                        ProduceResponseTypes = ExtractProduceResponseTypes(operation),
-                        Models = ImmutableList<DeclarationBase>.Empty,
-                        ObsoleteInfo = ExtractObsolete(operation)
-                    };
+                                   {
+                                       Name = ExtractNameFromOperation(operation),
+                                       DomainName = ExtractDomainNameFromOperationId(operation.OperationId),
+                                       Version = ExtractVersionFromPath(openApiPath),
+                                       BaseUrl = basePath,
+                                       GroupName = ExtractGroupName(operation),
+                                       SwaggerOperationId = operation.OperationId ?? string.Empty,
+                                       HttpAction = httpMethod,
+                                       RelativeUrl = BuildRelativeUrl(basePath, openApiPath),
+                                       Parameters = ExtractParameters(operation),
+                                       RequestType = extractRequestType,
+                                       ResponseType = extractResponseType,
+                                       ProduceResponseTypes = ExtractProduceResponseTypes(operation),
+                                       Models = allModels,
+                                       ObsoleteInfo = ExtractObsolete(operation)
+                                   };
 
                     builder.Add(endpoint);
                 }
             }
 
             return builder.ToImmutable();
+        }
+
+        private IEnumerable<DeclarationBase> GetAllModels(ResponseType extractResponseType,
+                                                          RequestType? extractRequestType)
+        {
+            // ToDo we have to collect it recursivly
+            if (extractRequestType.IsNotNull())
+            {
+                yield return extractRequestType.Declaration;
+
+                var allRequestTypeModels = FindAllTypesForDeclaration(extractRequestType.Declaration);
+                foreach (var allRequestTypeModel in allRequestTypeModels)
+                {
+                    yield return allRequestTypeModel;
+                }
+            }
+
+            if (_componentRecords.TryGetValue(extractResponseType.Original, out var type))
+            {
+                yield return type;
+
+                var allResponseModels = FindAllTypesForDeclaration(type);
+                foreach (var responseModel in allResponseModels)
+                {
+                    yield return responseModel;
+                }
+            }
+        }
+
+
+        private IEnumerable<Record> FindAllTypesForDeclaration(DeclarationBase declarationBase)
+        {
+            var propertyType = declarationBase.As<Interface>();
+            if (propertyType.IsNull())
+            {
+                yield break;
+            }
+
+            foreach (var propertyTypeProperty in propertyType.Properties)
+            {
+                if (_componentRecords.TryGetValue(propertyTypeProperty.Type, out var type))
+                {
+                    var allRecords = FindAllTypesForDeclaration(type);
+                    foreach (var record in allRecords)
+                    {
+                        yield return record;
+                    }
+                }
+            }
         }
 
         private string ExtractNameFromOperation(OpenApiOperation op)

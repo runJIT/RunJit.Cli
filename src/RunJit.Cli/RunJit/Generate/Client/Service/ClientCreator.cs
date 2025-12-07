@@ -3,6 +3,7 @@ using Argument.Check;
 using Extensions.Pack;
 using Microsoft.Extensions.DependencyInjection;
 using RunJit.Cli.Generate.Client;
+using RunJit.Cli.RunJit.Localize.Strings;
 using RunJit.Cli.Services;
 using RunJit.Cli.Services.Endpoints;
 using RunJit.Cli.Services.Resharper;
@@ -121,36 +122,43 @@ namespace RunJit.Cli.RunJit.Generate.Client
             // 3. Get all types which are declared in the API assembly - Need to unique ident the types for client generation.
             var types = apiTypeLoader.GetAllTypesFrom(parsedSolution);
 
+            var mappedToEndpoints = ImmutableList<EndpointGroup>.Empty;
+
+            // 6. Get project name
+            var projectName = clientProject.ProjectFileInfo.Value.NameWithoutExtension();
+
             if (client.UseOpenApiJson)
             {
                 // Logic to get open api json
                 var openApiJsonFile = new FileInfo(@"D:\Siemens\siemens-data-cloud-backend-console\src\Sdc.Console.Test\OpenApi\Responses\V1.json");
                 var endpointsFromOpenApiJson = openApiJsonFileParser.ExtractFrom("api/console", allSyntaxTrees, types, openApiJsonFile);
                 Console.WriteLine(endpointsFromOpenApiJson.Count);
+
+                // 5.3 organize endpoints
+                mappedToEndpoints = organizeMinimalEndpoints.Reorganize(endpointsFromOpenApiJson);
             }
+            else
+            {
+                // 4. Sync nuget packages - New feature we check which packages are predefined in the template
+                //   and sync them up to the parent solution in which it will be included
+                await nugetUpdater.UpdateAsync(parsedSolution, clientProject).ConfigureAwait(false);
+                await nugetUpdater.UpdateAsync(parsedSolution, clientTestProject).ConfigureAwait(false);
 
-            // 4. Sync nuget packages - New feature we check which packages are predefined in the template
-            //   and sync them up to the parent solution in which it will be included
-            await nugetUpdater.UpdateAsync(parsedSolution, clientProject).ConfigureAwait(false);
-            await nugetUpdater.UpdateAsync(parsedSolution, clientTestProject).ConfigureAwait(false);
+                // 5. Get all controllers
+                var controllerInfosOrg = controllerParser.ExtractFrom(allSyntaxTrees, types).OrderBy(controller => controller.Name).ToImmutableList();
 
-            // 5. Get all controllers
-            var controllerInfosOrg = controllerParser.ExtractFrom(allSyntaxTrees, types).OrderBy(controller => controller.Name).ToImmutableList();
+                // 5.1 New to reorganize the controllers to get the correct domain name
+                var controllerInfos = restructureController.Reorganize(controllerInfosOrg);
 
-            // 5.1 New to reorganize the controllers to get the correct domain name
-            var controllerInfos = restructureController.Reorganize(controllerInfosOrg);
+                // 5.2 Get all minimal endpoints
+                var endpoints = minimalApiEndpointParser.ExtractFrom(allSyntaxTrees, types).OrderBy(controller => controller.Name).ToImmutableList();
 
-            // 5.2 Get all minimal endpoints
-            var endpoints = minimalApiEndpointParser.ExtractFrom(allSyntaxTrees, types).OrderBy(controller => controller.Name).ToImmutableList();
+                // 5.3 organize endpoints
+                var organizedEndpoints = organizeMinimalEndpoints.Reorganize(endpoints);
 
-            // 5.3 organize endpoints
-            var organizedEndpoints = organizeMinimalEndpoints.Reorganize(endpoints);
-
-            // 6. Get project name
-            var projectName = clientProject.ProjectFileInfo.Value.NameWithoutExtension();
-
-            // NEW !! TEST
-            var mappedToEndpoints = organizedEndpoints.Any() ? organizedEndpoints : controllerInfos.ToEndpointInfos();
+                // NEW !! TEST
+                mappedToEndpoints = organizedEndpoints.Any() ? organizedEndpoints : controllerInfos.ToEndpointInfos();
+            }
 
             // 7. Collect all endpoints
             var allEndpoints = endpointClientGenerator.Create(mappedToEndpoints, projectName, clientName);
@@ -244,11 +252,11 @@ namespace RunJit.Cli.RunJit.Generate.Client
                 }
 
                 var endpointGroup = new EndpointGroup
-                                    {
-                                        GroupName = controllerInfo.GroupName,
-                                        Endpoints = endpoints.ToImmutable(),
-                                        Version = controllerInfo.Version
-                                    };
+                {
+                    GroupName = controllerInfo.GroupName,
+                    Endpoints = endpoints.ToImmutable(),
+                    Version = controllerInfo.Version
+                };
 
                 endpointGroups.Add(endpointGroup);
             }
@@ -266,22 +274,22 @@ namespace RunJit.Cli.RunJit.Generate.Client
             var obsoleteValue = methodInfo.Attributes.FirstOrDefault(a => a.Name.StartsWith("Obsolete"))?.Arguments.FirstOrDefault();
 
             var endpoint = new EndpointInfo
-                           {
-                               ResponseType = methodInfo.ResponseType,
-                               BaseUrl = methodInfo.RelativeUrl,
-                               DomainName = methodInfo.Name,
-                               HttpAction = methodInfo.HttpAction,
-                               GroupName = groupName,
-                               Parameters = methodInfo.Parameters,
-                               SwaggerOperationId = methodInfo.SwaggerOperationId,
-                               ProduceResponseTypes = methodInfo.ProduceResponseTypes,
-                               RequestType = methodInfo.RequestType,
-                               Version = versionInfo,
-                               ObsoleteInfo = obsoleteValue.IsNull() ? null : new ObsoleteInfo(obsoleteValue),
-                               Models = methodInfo.Models,
-                               Name = methodInfo.Name,
-                               RelativeUrl = methodInfo.RelativeUrl
-                           };
+            {
+                ResponseType = methodInfo.ResponseType,
+                BaseUrl = methodInfo.RelativeUrl,
+                DomainName = methodInfo.Name,
+                HttpAction = methodInfo.HttpAction,
+                GroupName = groupName,
+                Parameters = methodInfo.Parameters,
+                SwaggerOperationId = methodInfo.SwaggerOperationId,
+                ProduceResponseTypes = methodInfo.ProduceResponseTypes,
+                RequestType = methodInfo.RequestType,
+                Version = versionInfo,
+                ObsoleteInfo = obsoleteValue.IsNull() ? null : new ObsoleteInfo(obsoleteValue),
+                Models = methodInfo.Models,
+                Name = methodInfo.Name,
+                RelativeUrl = methodInfo.RelativeUrl
+            };
 
             return endpoint;
         }
